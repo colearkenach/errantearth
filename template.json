@@ -1,0 +1,117 @@
+{
+  "Actor": {
+    "types": ["character"],
+    "character": {
+      "name": "",
+      "gender": "",
+      "occ": "",
+      "level": 1,
+      "xp": 0,
+      "nextLevel": 0,
+      "alignment": "",
+      "psionicLevel": "None",
+      "attributes": {
+        "iq":  { "value": 0 },
+        "me":  { "value": 0 },
+        "ma":  { "value": 0 },
+        "ps":  { "value": 0 },
+        "pp":  { "value": 0 },
+        "pe":  { "value": 0 },
+        "pb":  { "value": 0 },
+        "spd": { "value": 0 }
+      },
+      "hp":     { "value": 0, "max": 0 },
+      "isp":    { "value": 0, "max": 0 },
+      "ppe":    { "value": 0, "max": 0 },
+      "hunger": { "value": 100, "max": 100 },
+
+      "skillBonuses": {
+        "iqBonus": 0,
+        "trustIntimidate": 0,
+        "charmImpress": 0
+      },
+      "skills": {
+        "occ":       [],
+        "occRelated": [],
+        "secondary": []
+      },
+
+      "handToHand": {
+        "type": "Basic",
+        "attacks": 0,
+        "initiative": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "pullRoll": 0,
+        "perception": 0,
+        "extras": []
+      },
+      "savingThrows": {
+        "spell":       { "base": 12,       "bonus": 0 },
+        "ritual":      { "base": 16,       "bonus": 0 },
+        "psionics":    { "base": 15,       "bonus": 0 },
+        "drugPoison":  { "base": 15,       "bonus": 0 },
+        "insanity":    { "base": 12,       "bonus": 0 },
+        "possession":  { "base": 12,       "bonus": 0 },
+        "horrorFactor":{ "base": "Varies", "bonus": 0 },
+        "death":       { "base": "Varies", "bonus": 0 },
+        "extras": []
+      },
+
+      "weapons": {
+        "modern":  [],
+        "ancient": []
+      },
+
+      "armor": {
+        "primary":   { "name": "", "locations": { "mainBody": { "current": 0, "max": 0 }, "head": { "current": 0, "max": 0 }, "leftArm": { "current": 0, "max": 0 }, "rightArm": { "current": 0, "max": 0 }, "leftLeg": { "current": 0, "max": 0 }, "rightLeg": { "current": 0, "max": 0 } }, "extras": [] },
+        "secondary": { "name": "", "locations": { "mainBody": { "current": 0, "max": 0 }, "head": { "current": 0, "max": 0 }, "leftArm": { "current": 0, "max": 0 }, "rightArm": { "current": 0, "max": 0 }, "leftLeg": { "current": 0, "max": 0 }, "rightLeg": { "current": 0, "max": 0 } }, "extras": [] }
+      },
+
+      "powerArmor": {
+        "name": "",
+        "handToHand": {
+          "type": "Basic",
+          "attacks": 0,
+          "initiative": 0,
+          "damage": 0,
+          "strike": 0,
+          "parry": 0,
+          "dodge": 0,
+          "pullRoll": 0,
+          "extras": []
+        },
+        "armor": {
+          "mainBody":  { "current": 0, "max": 0 },
+          "head":      { "current": 0, "max": 0 },
+          "leftArm":   { "current": 0, "max": 0 },
+          "rightArm":  { "current": 0, "max": 0 },
+          "leftLeg":   { "current": 0, "max": 0 },
+          "rightLeg":  { "current": 0, "max": 0 },
+          "extras": []
+        },
+        "weapons": []
+      },
+
+      "powers": [],
+
+      "currency": {
+        "coalition":     0,
+        "ngmi":          0,
+        "blackMarket":   0,
+        "universalTrade":0,
+        "goldSilver":    0,
+        "other":         0
+      },
+      "equipment": "",
+      "augments":  "",
+      "notes":     ""
+    }
+  },
+  "Item": {
+    "types": [],
+    "templates": {}
+  }
+}

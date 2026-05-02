@@ -1,0 +1,38 @@
+{
+  "id": "errantearth",
+  "title": "Errant Earth",
+  "description": "A system for playing Errant Earth TTRPG in Foundry VTT",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Jeremy H.",
+      "discord": "ColeArkenach"
+    }
+  ],
+  "compatibility": {
+    "minimum": 12,
+    "verified": "13",
+    "maximum": "13"
+  },
+  "esmodules": [
+    "errantearth.js"
+  ],
+  "styles": [
+    "styles/errantearth.css"
+  ],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  },
+  "primaryTokenAttribute": "hp",
+  "secondaryTokenAttribute": "ppe",
+  "license": "LICENSE"
+}

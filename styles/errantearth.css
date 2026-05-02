@@ -1,0 +1,283 @@
+/* ============================================================
+   Errant Earth — RIFTS-style character sheet
+   ============================================================ */
+
+.ee-sheet {
+  --ee-red:    #8b1a1a;
+  --ee-red-2:  #6f1414;
+  --ee-bar:    #8b1a1a;
+  --ee-gray:   #b8b8b8;
+  --ee-line:   #555;
+  --ee-bg:     #f4f4f4;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 6px;
+  background: var(--ee-bg);
+  font-family: "Signika", sans-serif;
+  font-size: 13px;
+  color: #111;
+}
+
+/* ---------------- Banner ---------------- */
+.ee-banner {
+  position: relative;
+  height: 70px;
+  border: 2px solid var(--ee-red);
+  background: linear-gradient(90deg, #1a1a2a, #3a1a2a);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.ee-banner-img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  cursor: pointer;
+  border-right: 2px solid var(--ee-red);
+}
+.ee-banner-title {
+  flex: 1;
+  text-align: left;
+  padding-left: 16px;
+  color: var(--ee-red);
+  font-family: "Signika", sans-serif;
+  font-weight: 900;
+  font-size: 36px;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+/* ---------------- Section bars / blocks ---------------- */
+.ee-bar {
+  background: var(--ee-red);
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 6px 0 4px 0;
+  padding: 4px 6px;
+  border: 1px solid #000;
+  font-size: 14px;
+}
+.ee-subbar {
+  background: #555;
+  color: #fff;
+  text-align: center;
+  margin: 4px 0;
+  padding: 3px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.ee-block {
+  border: 1px solid var(--ee-line);
+  background: #ddd;
+  padding: 4px;
+}
+
+/* ---------------- Rows ---------------- */
+.ee-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  background: #ddd;
+}
+.ee-row > label {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ee-row input[type="text"],
+.ee-row input[type="number"],
+.ee-row select {
+  height: 22px;
+  padding: 0 4px;
+  border: 1px solid #888;
+  background: #fff;
+  flex: 0 1 auto;
+  min-width: 50px;
+}
+.ee-row input[type="text"] { min-width: 90px; }
+
+.ee-attrs input  { width: 44px; text-align: center; }
+.ee-pools input  { width: 50px; text-align: center; }
+
+/* ---------------- Tabs ---------------- */
+.ee-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--ee-red);
+  background: #ccc;
+}
+.ee-tabs .item {
+  flex: 1;
+  text-align: center;
+  padding: 6px 0;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: #444;
+  border-right: 1px solid #999;
+}
+.ee-tabs .item:last-child { border-right: none; }
+.ee-tabs .item.active {
+  background: #fff;
+  color: var(--ee-red);
+  border-bottom: 2px solid #fff;
+  margin-bottom: -2px;
+}
+
+.sheet-body { background: #fff; }
+.sheet-body .tab { padding: 4px; }
+
+/* ---------------- Tables ---------------- */
+.ee-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 12px;
+}
+.ee-table thead th {
+  background: #ccc;
+  border: 1px solid #888;
+  padding: 2px 4px;
+  text-align: left;
+  font-weight: 600;
+}
+.ee-table td {
+  border: 1px solid #ccc;
+  padding: 1px 2px;
+}
+.ee-table input {
+  width: 100%;
+  height: 20px;
+  border: none;
+  background: transparent;
+  padding: 0 3px;
+  box-sizing: border-box;
+}
+.ee-table input:focus { background: #fff8c6; outline: none; }
+.ee-total {
+  text-align: center;
+  font-weight: 700;
+  background: #f0f0f0;
+}
+
+.ee-add {
+  background: none;
+  color: var(--ee-red);
+  border: none;
+  padding: 2px 4px;
+  cursor: pointer;
+  font-weight: 700;
+  text-align: left;
+  width: auto;
+}
+.ee-add:hover { text-decoration: underline; }
+
+/* ---------------- Skills tab ---------------- */
+.ee-skill-bonuses {
+  background: #ddd;
+  border: 1px solid #888;
+  margin-bottom: 6px;
+}
+.ee-skill-bonuses input {
+  width: 50px;
+  text-align: center;
+  background: #f0f0f0;
+}
+.ee-skill-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+.ee-skill-col h3 {
+  margin: 0 0 2px 0;
+  font-size: 13px;
+  color: #333;
+  border-bottom: 1px solid #888;
+}
+
+/* ---------------- Combat tab ---------------- */
+.ee-combat-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: 6px;
+}
+.ee-panel {
+  border: 1px solid var(--ee-line);
+  background: #fafafa;
+  padding: 4px;
+}
+.ee-panel h3 {
+  background: var(--ee-red);
+  color: #fff;
+  margin: -4px -4px 4px -4px;
+  padding: 3px 6px;
+  font-size: 13px;
+  text-align: center;
+  font-weight: 700;
+}
+.ee-kv {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+.ee-kv > label {
+  flex: 1;
+  white-space: nowrap;
+  font-weight: 600;
+  color: #333;
+}
+.ee-kv input {
+  width: 60px;
+  height: 20px;
+  border: 1px solid #888;
+  background: #fff;
+}
+.ee-kv input[type="text"] { width: 120px; }
+
+.ee-armor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 6px;
+}
+.ee-pa-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: 6px;
+}
+
+/* ---------------- Powers tab ---------------- */
+.ee-powers-table input { font-size: 12px; }
+.ee-powers-table td:nth-child(7) input { min-width: 200px; }
+
+/* ---------------- Misc tab ---------------- */
+.ee-misc-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 6px;
+}
+.ee-equipment textarea,
+.ee-bigtext {
+  width: 100%;
+  min-height: 90px;
+  padding: 4px;
+  border: 1px solid #888;
+  background: #fff;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 12px;
+}
+.ee-bigtext { min-height: 110px; }
+
+/* delete buttons */
+[data-action="delete-row"] {
+  color: #aa1818;
+  cursor: pointer;
+  padding: 0 4px;
+}
+[data-action="delete-row"]:hover { color: #f00; }
