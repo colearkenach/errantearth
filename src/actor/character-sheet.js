@@ -32,6 +32,16 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return table[pb] ?? 0;
   }
 
+  /** Coerce a value that may be an object with numeric keys back into an array. */
+  static _toArray(v) {
+    if (Array.isArray(v)) return v;
+    if (v && typeof v === "object") return Object.keys(v)
+      .filter(k => /^\d+$/.test(k))
+      .sort((a, b) => Number(a) - Number(b))
+      .map(k => v[k]);
+    return [];
+  }
+
   async getData(options) {
     const ctx = await super.getData(options);
     const sys = ctx.actor.system;
@@ -47,8 +57,10 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       charmImpress: ErrantEarthCharacterSheet.charmImpress(pb)
     };
 
+    const toArr = ErrantEarthCharacterSheet._toArray;
+
     // Auto-compute skill totals: Base + PerLvl * (Level - 1) + IQ bonus.
-    const computeRows = (rows) => (rows ?? []).map((r, i) => {
+    const computeRows = (rows) => toArr(rows).map((r, i) => {
       const base   = Number(r.base   ?? 0);
       const perLvl = Number(r.perLvl ?? 0);
       const total  = base + perLvl * Math.max(0, level - 1) + ctx.derived.iqBonus;
@@ -59,6 +71,20 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       occRelated: computeRows(sys.skills?.occRelated),
       secondary:  computeRows(sys.skills?.secondary)
     };
+
+    // Normalize every other array-shaped collection used by the template so
+    // {{#each}} keeps working even after Foundry's merge corrupts them.
+    ctx.system = foundry.utils.deepClone(sys);
+    ctx.system.handToHand.extras = toArr(sys.handToHand?.extras);
+    ctx.system.savingThrows.extras = toArr(sys.savingThrows?.extras);
+    ctx.system.weapons.modern = toArr(sys.weapons?.modern);
+    ctx.system.weapons.ancient = toArr(sys.weapons?.ancient);
+    ctx.system.armor.primary.extras = toArr(sys.armor?.primary?.extras);
+    ctx.system.armor.secondary.extras = toArr(sys.armor?.secondary?.extras);
+    ctx.system.powerArmor.handToHand.extras = toArr(sys.powerArmor?.handToHand?.extras);
+    ctx.system.powerArmor.armor.extras = toArr(sys.powerArmor?.armor?.extras);
+    ctx.system.powerArmor.weapons = toArr(sys.powerArmor?.weapons);
+    ctx.system.powers = toArr(sys.powers);
 
     return ctx;
   }
@@ -72,7 +98,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   }
 
   _getArrayPath(path) {
-    return path.split(".").reduce((o, k) => (o ? o[k] : undefined), this.actor.system);
+    const raw = path.split(".").reduce((o, k) => (o ? o[k] : undefined), this.actor.system);
+    return ErrantEarthCharacterSheet._toArray(raw);
   }
 
   async _onAddRow(ev) {
@@ -80,7 +107,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const btn = ev.currentTarget;
     const path = btn.dataset.path;
     const kind = btn.dataset.kind;
-    const arr  = foundry.utils.deepClone(this._getArrayPath(path) ?? []);
+    const arr  = foundry.utils.deepClone(this._getArrayPath(path));
     arr.push(this._blankRow(kind));
     await this.actor.update({ [`system.${path}`]: arr });
   }
@@ -90,7 +117,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const btn  = ev.currentTarget;
     const path = btn.dataset.path;
     const idx  = Number(btn.dataset.index);
-    const arr  = foundry.utils.deepClone(this._getArrayPath(path) ?? []);
+    const arr  = foundry.utils.deepClone(this._getArrayPath(path));
     arr.splice(idx, 1);
     await this.actor.update({ [`system.${path}`]: arr });
   }
@@ -109,9 +136,32 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     }
   }
 
-  /** Persist auto-computed bonus fields so they show numerically in inputs even when read-only. */
+  /**
+   * Coerce any object whose keys are all sequential integers into a real
+   * array, recursively. Foundry's mergeObject treats arrays atomically but
+   * merges objects — so once an array field has been written via a flattened
+   * "system.path.0.field" key it becomes {"0": ...} and stays that way unless
+   * we re-send it as an array.
+   */
+  static _coerceArrays(v) {
+    if (v === null || typeof v !== "object") return v;
+    if (Array.isArray(v)) return v.map(ErrantEarthCharacterSheet._coerceArrays);
+    const keys = Object.keys(v);
+    const numeric = keys.length > 0 && keys.every(k => /^\d+$/.test(k));
+    if (numeric) {
+      const arr = [];
+      for (const k of keys.sort((a, b) => Number(a) - Number(b))) {
+        arr.push(ErrantEarthCharacterSheet._coerceArrays(v[k]));
+      }
+      return arr;
+    }
+    const out = {};
+    for (const k of keys) out[k] = ErrantEarthCharacterSheet._coerceArrays(v[k]);
+    return out;
+  }
+
   async _updateObject(event, formData) {
-    const expanded = foundry.utils.expandObject(formData);
-    return super._updateObject(event, foundry.utils.flattenObject(expanded));
+    const expanded = ErrantEarthCharacterSheet._coerceArrays(foundry.utils.expandObject(formData));
+    return this.document.update(expanded);
   }
 }
