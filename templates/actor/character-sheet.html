@@ -88,6 +88,7 @@
     <a class="item" data-tab="skills">Skills</a>
     <a class="item" data-tab="combat">Combat</a>
     <a class="item" data-tab="powers">Powers</a>
+    <a class="item" data-tab="vehicle">Vehicle</a>
     <a class="item" data-tab="misc">Misc</a>
   </nav>
 
@@ -227,11 +228,13 @@
               <tr><td>Spell:</td>        <td><input type="text" name="system.savingThrows.spell.base"        value="{{system.savingThrows.spell.base}}"/></td>        <td><input type="number" name="system.savingThrows.spell.bonus"        value="{{system.savingThrows.spell.bonus}}"/></td></tr>
               <tr><td>Ritual:</td>       <td><input type="text" name="system.savingThrows.ritual.base"       value="{{system.savingThrows.ritual.base}}"/></td>       <td><input type="number" name="system.savingThrows.ritual.bonus"       value="{{system.savingThrows.ritual.bonus}}"/></td></tr>
               <tr><td>Psionics:</td>     <td><input type="text" name="system.savingThrows.psionics.base"     value="{{system.savingThrows.psionics.base}}"/></td>     <td><input type="number" name="system.savingThrows.psionics.bonus"     value="{{system.savingThrows.psionics.bonus}}"/></td></tr>
-              <tr><td>Drug/Poison:</td>  <td><input type="text" name="system.savingThrows.drugPoison.base"   value="{{system.savingThrows.drugPoison.base}}"/></td>   <td><input type="number" name="system.savingThrows.drugPoison.bonus"   value="{{system.savingThrows.drugPoison.bonus}}"/></td></tr>
-              <tr><td>Insanity:</td>     <td><input type="text" name="system.savingThrows.insanity.base"     value="{{system.savingThrows.insanity.base}}"/></td>     <td><input type="number" name="system.savingThrows.insanity.bonus"     value="{{system.savingThrows.insanity.bonus}}"/></td></tr>
-              <tr><td>Possession:</td>   <td><input type="text" name="system.savingThrows.possession.base"   value="{{system.savingThrows.possession.base}}"/></td>   <td><input type="number" name="system.savingThrows.possession.bonus"   value="{{system.savingThrows.possession.bonus}}"/></td></tr>
-              <tr><td>Horror Factor:</td><td><input type="text" name="system.savingThrows.horrorFactor.base" value="{{system.savingThrows.horrorFactor.base}}"/></td> <td><input type="number" name="system.savingThrows.horrorFactor.bonus" value="{{system.savingThrows.horrorFactor.bonus}}"/></td></tr>
-              <tr><td>Death:</td>        <td><input type="text" name="system.savingThrows.death.base"        value="{{system.savingThrows.death.base}}"/></td>        <td><input type="number" name="system.savingThrows.death.bonus"        value="{{system.savingThrows.death.bonus}}"/></td></tr>
+              <tr><td>Toxins/Poisons:</td><td><input type="text" name="system.savingThrows.drugPoison.base"   value="{{system.savingThrows.drugPoison.base}}"/></td>   <td><input type="number" name="system.savingThrows.drugPoison.bonus"   value="{{system.savingThrows.drugPoison.bonus}}"/></td></tr>
+              <tr><td>Harmful Drugs:</td> <td><input type="text" name="system.savingThrows.harmfulDrugs.base" value="{{system.savingThrows.harmfulDrugs.base}}"/></td> <td><input type="number" name="system.savingThrows.harmfulDrugs.bonus" value="{{system.savingThrows.harmfulDrugs.bonus}}"/></td></tr>
+              <tr><td>Insanity:</td>      <td><input type="text" name="system.savingThrows.insanity.base"     value="{{system.savingThrows.insanity.base}}"/></td>     <td><input type="number" name="system.savingThrows.insanity.bonus"     value="{{system.savingThrows.insanity.bonus}}"/></td></tr>
+              <tr><td>Possession:</td>    <td><input type="text" name="system.savingThrows.possession.base"   value="{{system.savingThrows.possession.base}}"/></td>   <td><input type="number" name="system.savingThrows.possession.bonus"   value="{{system.savingThrows.possession.bonus}}"/></td></tr>
+              <tr><td>Horror Factor:</td> <td><input type="text" name="system.savingThrows.horrorFactor.base" value="{{system.savingThrows.horrorFactor.base}}"/></td> <td><input type="number" name="system.savingThrows.horrorFactor.bonus" value="{{system.savingThrows.horrorFactor.bonus}}"/></td></tr>
+              <tr><td>Coma/Death:</td>    <td><input type="text" name="system.savingThrows.death.base"        value="{{system.savingThrows.death.base}}"/></td>        <td><input type="number" name="system.savingThrows.death.bonus"        value="{{system.savingThrows.death.bonus}}"/></td></tr>
+              <tr><td>Pain:</td>          <td><input type="text" name="system.savingThrows.pain.base"         value="{{system.savingThrows.pain.base}}"/></td>         <td><input type="number" name="system.savingThrows.pain.bonus"         value="{{system.savingThrows.pain.bonus}}"/></td></tr>
               {{#each system.savingThrows.extras}}
               <tr>
                 <td><input type="text"   name="system.savingThrows.extras.{{@index}}.name"  value="{{name}}" placeholder="Save"/></td>
@@ -286,6 +289,25 @@
             </tbody>
           </table>
           <button type="button" class="ee-add" data-action="add-row" data-path="weapons.ancient" data-kind="ancientWeapon">+ Add</button>
+
+          <h3>Weapon Proficiencies</h3>
+          <table class="ee-table">
+            <thead><tr><th>Name</th><th>Aimed</th><th>Burst</th><th>Parry</th><th>Range</th><th>Damage Rate</th><th></th></tr></thead>
+            <tbody>
+              {{#each system.weaponProficiencies}}
+              <tr>
+                <td><input type="text" name="system.weaponProficiencies.{{@index}}.name"       value="{{name}}"/></td>
+                <td><input type="text" name="system.weaponProficiencies.{{@index}}.aimed"      value="{{aimed}}"/></td>
+                <td><input type="text" name="system.weaponProficiencies.{{@index}}.burst"      value="{{burst}}"/></td>
+                <td><input type="text" name="system.weaponProficiencies.{{@index}}.parry"      value="{{parry}}"/></td>
+                <td><input type="text" name="system.weaponProficiencies.{{@index}}.range"      value="{{range}}"/></td>
+                <td><input type="text" name="system.weaponProficiencies.{{@index}}.damageRate" value="{{damageRate}}"/></td>
+                <td><a data-action="delete-row" data-path="weaponProficiencies" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies" data-kind="wp">+ Add</button>
         </div>
       </div>
 
@@ -445,6 +467,184 @@
         </tbody>
       </table>
       <button type="button" class="ee-add" data-action="add-row" data-path="powers" data-kind="power">+ Add</button>
+
+      <h2 class="ee-bar">PSIONIC ABILITIES</h2>
+      <div class="ee-psi-grid">
+        <div class="ee-panel">
+          <h3>Healing</h3>
+          <table class="ee-table">
+            <thead><tr><th>Name</th><th>ISP</th><th>Notes</th><th></th></tr></thead>
+            <tbody>
+              {{#each system.psionics.healing}}
+              <tr>
+                <td><input type="text" name="system.psionics.healing.{{@index}}.name"  value="{{name}}"/></td>
+                <td><input type="text" name="system.psionics.healing.{{@index}}.isp"   value="{{isp}}"/></td>
+                <td><input type="text" name="system.psionics.healing.{{@index}}.notes" value="{{notes}}"/></td>
+                <td><a data-action="delete-row" data-path="psionics.healing" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <button type="button" class="ee-add" data-action="add-row" data-path="psionics.healing" data-kind="psionic">+ Add</button>
+        </div>
+
+        <div class="ee-panel">
+          <h3>Sensitive</h3>
+          <table class="ee-table">
+            <thead><tr><th>Name</th><th>ISP</th><th>Notes</th><th></th></tr></thead>
+            <tbody>
+              {{#each system.psionics.sensitive}}
+              <tr>
+                <td><input type="text" name="system.psionics.sensitive.{{@index}}.name"  value="{{name}}"/></td>
+                <td><input type="text" name="system.psionics.sensitive.{{@index}}.isp"   value="{{isp}}"/></td>
+                <td><input type="text" name="system.psionics.sensitive.{{@index}}.notes" value="{{notes}}"/></td>
+                <td><a data-action="delete-row" data-path="psionics.sensitive" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <button type="button" class="ee-add" data-action="add-row" data-path="psionics.sensitive" data-kind="psionic">+ Add</button>
+        </div>
+
+        <div class="ee-panel">
+          <h3>Physical</h3>
+          <table class="ee-table">
+            <thead><tr><th>Name</th><th>ISP</th><th>Notes</th><th></th></tr></thead>
+            <tbody>
+              {{#each system.psionics.physical}}
+              <tr>
+                <td><input type="text" name="system.psionics.physical.{{@index}}.name"  value="{{name}}"/></td>
+                <td><input type="text" name="system.psionics.physical.{{@index}}.isp"   value="{{isp}}"/></td>
+                <td><input type="text" name="system.psionics.physical.{{@index}}.notes" value="{{notes}}"/></td>
+                <td><a data-action="delete-row" data-path="psionics.physical" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <button type="button" class="ee-add" data-action="add-row" data-path="psionics.physical" data-kind="psionic">+ Add</button>
+        </div>
+
+        <div class="ee-panel">
+          <h3>Super</h3>
+          <table class="ee-table">
+            <thead><tr><th>Name</th><th>ISP</th><th>Notes</th><th></th></tr></thead>
+            <tbody>
+              {{#each system.psionics.super}}
+              <tr>
+                <td><input type="text" name="system.psionics.super.{{@index}}.name"  value="{{name}}"/></td>
+                <td><input type="text" name="system.psionics.super.{{@index}}.isp"   value="{{isp}}"/></td>
+                <td><input type="text" name="system.psionics.super.{{@index}}.notes" value="{{notes}}"/></td>
+                <td><a data-action="delete-row" data-path="psionics.super" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <button type="button" class="ee-add" data-action="add-row" data-path="psionics.super" data-kind="psionic">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    {{!-- ===== VEHICLE TAB ===== --}}
+    <div class="tab" data-group="primary" data-tab="vehicle">
+      <h2 class="ee-bar">ROBOT / VEHICLE LOG</h2>
+
+      <div class="ee-row">
+        <label>Name:</label><input type="text" name="system.vehicle.name" value="{{system.vehicle.name}}"/>
+        <label>Type:</label><input type="text" name="system.vehicle.type" value="{{system.vehicle.type}}"/>
+      </div>
+
+      <div class="ee-pa-grid">
+        <div class="ee-panel">
+          <h3>Combat</h3>
+          <div class="ee-kv"><label># of Attacks:</label><input type="number" name="system.vehicle.handToHand.attacks" value="{{system.vehicle.handToHand.attacks}}"/></div>
+          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.vehicle.handToHand.initiative" value="{{system.vehicle.handToHand.initiative}}"/></div>
+          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.vehicle.handToHand.strike" value="{{system.vehicle.handToHand.strike}}"/></div>
+          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.vehicle.handToHand.parry" value="{{system.vehicle.handToHand.parry}}"/></div>
+          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.vehicle.handToHand.dodge" value="{{system.vehicle.handToHand.dodge}}"/></div>
+          <div class="ee-kv"><label>Roll:</label><input type="number" name="system.vehicle.handToHand.roll" value="{{system.vehicle.handToHand.roll}}"/></div>
+          <div class="ee-kv"><label>Tear:</label><input type="text" name="system.vehicle.handToHand.tear" value="{{system.vehicle.handToHand.tear}}"/></div>
+          <div class="ee-kv"><label>Restr. Punch:</label><input type="text" name="system.vehicle.handToHand.restrPunch" value="{{system.vehicle.handToHand.restrPunch}}"/></div>
+          <div class="ee-kv"><label>Punch:</label><input type="text" name="system.vehicle.handToHand.punch" value="{{system.vehicle.handToHand.punch}}"/></div>
+          <div class="ee-kv"><label>Power Punch:</label><input type="text" name="system.vehicle.handToHand.powerPunch" value="{{system.vehicle.handToHand.powerPunch}}"/></div>
+          <div class="ee-kv"><label>Kick:</label><input type="text" name="system.vehicle.handToHand.kick" value="{{system.vehicle.handToHand.kick}}"/></div>
+          <div class="ee-kv"><label>Leap Kick:</label><input type="text" name="system.vehicle.handToHand.leapKick" value="{{system.vehicle.handToHand.leapKick}}"/></div>
+          <div class="ee-kv"><label>Stomp:</label><input type="text" name="system.vehicle.handToHand.stomp" value="{{system.vehicle.handToHand.stomp}}"/></div>
+          <div class="ee-kv"><label>Body Flip/Throw:</label><input type="text" name="system.vehicle.handToHand.bodyFlip" value="{{system.vehicle.handToHand.bodyFlip}}"/></div>
+          <div class="ee-kv"><label>Body Block/Tackle:</label><input type="text" name="system.vehicle.handToHand.bodyBlock" value="{{system.vehicle.handToHand.bodyBlock}}"/></div>
+          {{#each system.vehicle.handToHand.extras}}
+          <div class="ee-kv">
+            <input type="text"   name="system.vehicle.handToHand.extras.{{@index}}.name"  value="{{name}}" placeholder="Bonus"/>
+            <input type="number" name="system.vehicle.handToHand.extras.{{@index}}.value" value="{{value}}"/>
+            <a data-action="delete-row" data-path="vehicle.handToHand.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
+          </div>
+          {{/each}}
+          <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.handToHand.extras" data-kind="h2hExtra">+ Add</button>
+        </div>
+
+        <div class="ee-panel">
+          <h3>Speed</h3>
+          <div class="ee-kv"><label>Flying (Space):</label><input type="text" name="system.vehicle.speed.flyingSpace" value="{{system.vehicle.speed.flyingSpace}}"/></div>
+          <div class="ee-kv"><label>Flying (Atm):</label><input type="text" name="system.vehicle.speed.flyingAtm" value="{{system.vehicle.speed.flyingAtm}}"/></div>
+          <div class="ee-kv"><label>FTL:</label><input type="text" name="system.vehicle.speed.ftl" value="{{system.vehicle.speed.ftl}}"/></div>
+          <div class="ee-kv"><label>Running:</label><input type="text" name="system.vehicle.speed.running" value="{{system.vehicle.speed.running}}"/></div>
+          <div class="ee-kv"><label>Range:</label><input type="text" name="system.vehicle.speed.range" value="{{system.vehicle.speed.range}}"/></div>
+
+          <h3>Statistical Data</h3>
+          <div class="ee-kv"><label>Height:</label><input type="text" name="system.vehicle.stats.height" value="{{system.vehicle.stats.height}}"/></div>
+          <div class="ee-kv"><label>Width:</label><input type="text" name="system.vehicle.stats.width" value="{{system.vehicle.stats.width}}"/></div>
+          <div class="ee-kv"><label>Length:</label><input type="text" name="system.vehicle.stats.length" value="{{system.vehicle.stats.length}}"/></div>
+          <div class="ee-kv"><label>Weight:</label><input type="text" name="system.vehicle.stats.weight" value="{{system.vehicle.stats.weight}}"/></div>
+          <div class="ee-kv"><label>Cargo:</label><input type="text" name="system.vehicle.stats.cargo" value="{{system.vehicle.stats.cargo}}"/></div>
+          <div class="ee-kv"><label>Power System:</label><input type="text" name="system.vehicle.stats.powerSystem" value="{{system.vehicle.stats.powerSystem}}"/></div>
+          <div class="ee-kv"><label>Value (New):</label><input type="text" name="system.vehicle.stats.valueNew" value="{{system.vehicle.stats.valueNew}}"/></div>
+          <div class="ee-kv"><label>Value (Used):</label><input type="text" name="system.vehicle.stats.valueUsed" value="{{system.vehicle.stats.valueUsed}}"/></div>
+        </div>
+
+        <div class="ee-panel">
+          <h3>Armor / D.C.</h3>
+          <div class="ee-kv"><label>A.R.:</label><input type="number" name="system.vehicle.armor.ar" value="{{system.vehicle.armor.ar}}"/></div>
+          <div class="ee-kv"><label>Sensor Bonus:</label><input type="text" name="system.vehicle.armor.sensorBonus" value="{{system.vehicle.armor.sensorBonus}}"/></div>
+          <div class="ee-kv"><label>Pilot's Comp.:</label><input type="text" name="system.vehicle.armor.pilotComp" value="{{system.vehicle.armor.pilotComp}}"/></div>
+          <table class="ee-table">
+            <thead><tr><th></th><th>Current</th><th>Max</th></tr></thead>
+            <tbody>
+              <tr><td>MainBody:</td> <td><input type="number" name="system.vehicle.armor.mainBody.current" value="{{system.vehicle.armor.mainBody.current}}"/></td><td><input type="number" name="system.vehicle.armor.mainBody.max" value="{{system.vehicle.armor.mainBody.max}}"/></td></tr>
+              <tr><td>Head:</td>     <td><input type="number" name="system.vehicle.armor.head.current"     value="{{system.vehicle.armor.head.current}}"/></td>    <td><input type="number" name="system.vehicle.armor.head.max"     value="{{system.vehicle.armor.head.max}}"/></td></tr>
+              <tr><td>Left Arm:</td> <td><input type="number" name="system.vehicle.armor.leftArm.current"  value="{{system.vehicle.armor.leftArm.current}}"/></td> <td><input type="number" name="system.vehicle.armor.leftArm.max"  value="{{system.vehicle.armor.leftArm.max}}"/></td></tr>
+              <tr><td>Right Arm:</td><td><input type="number" name="system.vehicle.armor.rightArm.current" value="{{system.vehicle.armor.rightArm.current}}"/></td><td><input type="number" name="system.vehicle.armor.rightArm.max" value="{{system.vehicle.armor.rightArm.max}}"/></td></tr>
+              <tr><td>Left Leg:</td> <td><input type="number" name="system.vehicle.armor.leftLeg.current"  value="{{system.vehicle.armor.leftLeg.current}}"/></td> <td><input type="number" name="system.vehicle.armor.leftLeg.max"  value="{{system.vehicle.armor.leftLeg.max}}"/></td></tr>
+              <tr><td>Right Leg:</td><td><input type="number" name="system.vehicle.armor.rightLeg.current" value="{{system.vehicle.armor.rightLeg.current}}"/></td><td><input type="number" name="system.vehicle.armor.rightLeg.max" value="{{system.vehicle.armor.rightLeg.max}}"/></td></tr>
+              {{#each system.vehicle.armor.extras}}
+              <tr>
+                <td><input type="text" name="system.vehicle.armor.extras.{{@index}}.name" value="{{name}}" placeholder="Location"/></td>
+                <td><input type="number" name="system.vehicle.armor.extras.{{@index}}.current" value="{{current}}"/></td>
+                <td><input type="number" name="system.vehicle.armor.extras.{{@index}}.max" value="{{max}}"/>
+                    <a data-action="delete-row" data-path="vehicle.armor.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.armor.extras" data-kind="armorExtra">+ Add</button>
+        </div>
+
+        <div class="ee-panel">
+          <h3>Weapon Systems</h3>
+          <table class="ee-table">
+            <thead><tr><th>Type</th><th>Damage</th><th>Ammo</th><th></th></tr></thead>
+            <tbody>
+              {{#each system.vehicle.weapons}}
+              <tr>
+                <td><input type="text" name="system.vehicle.weapons.{{@index}}.type"   value="{{type}}"/></td>
+                <td><input type="text" name="system.vehicle.weapons.{{@index}}.damage" value="{{damage}}"/></td>
+                <td><input type="text" name="system.vehicle.weapons.{{@index}}.ammo"   value="{{ammo}}"/></td>
+                <td><a data-action="delete-row" data-path="vehicle.weapons" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.weapons" data-kind="vehicleWeapon">+ Add</button>
+        </div>
+      </div>
     </div>
 
     {{!-- ===== MISC TAB ===== --}}
@@ -460,13 +660,50 @@
           <div class="ee-kv"><label>Universal Trade Credits:</label><input type="number" name="system.currency.universalTrade" value="{{system.currency.universalTrade}}"/></div>
           <div class="ee-kv"><label>Gold/Silver:</label><input type="number" name="system.currency.goldSilver" value="{{system.currency.goldSilver}}"/></div>
           <div class="ee-kv"><label>Other:</label><input type="number" name="system.currency.other" value="{{system.currency.other}}"/></div>
+          <div class="ee-kv"><label>Salary:</label><input type="text" name="system.money.salary" value="{{system.money.salary}}"/></div>
+          <div class="ee-kv"><label>Black Market Items:</label><input type="text" name="system.money.blackMarketItems" value="{{system.money.blackMarketItems}}"/></div>
         </div>
 
         <div class="ee-panel ee-equipment">
           <h3>Equipment</h3>
           <textarea name="system.equipment">{{system.equipment}}</textarea>
         </div>
+
+        <div class="ee-panel">
+          <h3>Outfits</h3>
+          <table class="ee-table">
+            <tbody>
+              {{#each system.money.outfits}}
+              <tr>
+                <td><input type="checkbox" name="system.money.outfits.{{@index}}.checked" data-dtype="Boolean" {{#if checked}}checked{{/if}}/></td>
+                <td><input type="text" name="system.money.outfits.{{@index}}.name" value="{{name}}"/></td>
+                <td><a data-action="delete-row" data-path="money.outfits" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <button type="button" class="ee-add" data-action="add-row" data-path="money.outfits" data-kind="outfit">+ Add</button>
+        </div>
       </div>
+
+      <h2 class="ee-bar">CONTACTS</h2>
+      <table class="ee-table">
+        <thead><tr><th>Name</th><th>Occupation</th><th>Notes</th><th></th></tr></thead>
+        <tbody>
+          {{#each system.contacts}}
+          <tr>
+            <td><input type="text" name="system.contacts.{{@index}}.name"       value="{{name}}"/></td>
+            <td><input type="text" name="system.contacts.{{@index}}.occupation" value="{{occupation}}"/></td>
+            <td><input type="text" name="system.contacts.{{@index}}.notes"      value="{{notes}}"/></td>
+            <td><a data-action="delete-row" data-path="contacts" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button type="button" class="ee-add" data-action="add-row" data-path="contacts" data-kind="contact">+ Add</button>
+
+      <h2 class="ee-bar">CHARACTER HISTORY</h2>
+      <textarea name="system.characterHistory" class="ee-bigtext">{{system.characterHistory}}</textarea>
 
       <h2 class="ee-bar">BIONICS / CYBERNETICS / BIO-WIZARDRY / PSYNETICS</h2>
       <textarea name="system.augments" class="ee-bigtext">{{system.augments}}</textarea>

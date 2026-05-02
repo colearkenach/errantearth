@@ -78,12 +78,12 @@
 
 /* ---------------- Rows ---------------- */
 .ee-row {
-display: flex;
-  flex-wrap: nowrap;
-  gap: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
   padding: 4px 6px;
   background: #ddd;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: baseline;
 }
 .ee-row > label {
@@ -102,8 +102,10 @@ display: flex;
 }
 .ee-row input[type="text"] { min-width: 90px; }
 
-.ee-attrs input  { width: 44px; text-align: center; }
-.ee-pools input  { width: 50px; text-align: center; }
+.ee-attrs input  { width: 44px; min-width: 44px; text-align: center; }
+.ee-pools input  { width: 48px; min-width: 48px; text-align: center; }
+.ee-pools > label,
+.ee-attrs > label { white-space: nowrap; }
 
 /* ---------------- Tabs ---------------- */
 .ee-tabs {
@@ -255,11 +257,16 @@ display: flex;
 /* ---------------- Powers tab ---------------- */
 .ee-powers-table input { font-size: 12px; }
 .ee-powers-table td:nth-child(7) input { min-width: 200px; }
+.ee-psi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
 
 /* ---------------- Misc tab ---------------- */
 .ee-misc-grid {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 220px 1fr 220px;
   gap: 6px;
 }
 .ee-equipment textarea,

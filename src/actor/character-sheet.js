@@ -79,12 +79,26 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.system.savingThrows.extras = toArr(sys.savingThrows?.extras);
     ctx.system.weapons.modern = toArr(sys.weapons?.modern);
     ctx.system.weapons.ancient = toArr(sys.weapons?.ancient);
+    ctx.system.weaponProficiencies = toArr(sys.weaponProficiencies);
     ctx.system.armor.primary.extras = toArr(sys.armor?.primary?.extras);
     ctx.system.armor.secondary.extras = toArr(sys.armor?.secondary?.extras);
     ctx.system.powerArmor.handToHand.extras = toArr(sys.powerArmor?.handToHand?.extras);
     ctx.system.powerArmor.armor.extras = toArr(sys.powerArmor?.armor?.extras);
     ctx.system.powerArmor.weapons = toArr(sys.powerArmor?.weapons);
     ctx.system.powers = toArr(sys.powers);
+    if (ctx.system.psionics) {
+      ctx.system.psionics.healing   = toArr(sys.psionics?.healing);
+      ctx.system.psionics.sensitive = toArr(sys.psionics?.sensitive);
+      ctx.system.psionics.physical  = toArr(sys.psionics?.physical);
+      ctx.system.psionics.super     = toArr(sys.psionics?.super);
+    }
+    if (ctx.system.vehicle) {
+      ctx.system.vehicle.handToHand.extras = toArr(sys.vehicle?.handToHand?.extras);
+      ctx.system.vehicle.armor.extras = toArr(sys.vehicle?.armor?.extras);
+      ctx.system.vehicle.weapons = toArr(sys.vehicle?.weapons);
+    }
+    ctx.system.contacts = toArr(sys.contacts);
+    if (ctx.system.money) ctx.system.money.outfits = toArr(sys.money?.outfits);
 
     return ctx;
   }
@@ -132,6 +146,11 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       case "armorExtra":    return { name: "", current: 0, max: 0 };
       case "power":         return { name: "", cost: "", range: "", saving: "", damage: "", duration: "", description: "" };
       case "paWeapon":      return { name: "", damage: "", ammo: "", strike: "", range: "", special: "" };
+      case "vehicleWeapon": return { type: "", damage: "", ammo: "" };
+      case "contact":       return { name: "", occupation: "", notes: "" };
+      case "outfit":        return { name: "", checked: false };
+      case "wp":            return { name: "", aimed: "", burst: "", parry: "", range: "", damageRate: "" };
+      case "psionic":       return { name: "", isp: "", notes: "" };
       default:              return { name: "" };
     }
   }
