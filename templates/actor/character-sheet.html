@@ -16,14 +16,17 @@
       <label>True Name:</label> <input type="text" name="system.trueName" value="{{system.trueName}}"/>
       <label>Race:</label>      <input type="text" name="system.race" value="{{system.race}}"/>
       <label>Gender:</label>    <input type="text" name="system.gender" value="{{system.gender}}"/>
-      <label>OCC:</label>       <input type="text" name="system.occ" value="{{system.occ}}"/>
-      <label>Alignment:</label> <input type="text" name="system.alignment" value="{{system.alignment}}"/>
     </div>
 
     <div class="ee-row">
+      <label>OCC:</label>       <input type="text" name="system.occ" value="{{system.occ}}"/>
+      <label>Alignment:</label> <input type="text" name="system.alignment" value="{{system.alignment}}"/>
       <label>Level:</label>     <input type="number" name="system.level" value="{{system.level}}" min="1"/>
       <label>XP:</label>        <input type="number" name="system.xp" value="{{system.xp}}"/>
       <label>Next Level:</label><input type="number" name="system.nextLevel" value="{{system.nextLevel}}"/>
+    </div>
+
+    <div class="ee-row">
       <label>Age:</label>       <input type="text" name="system.bio.age" value="{{system.bio.age}}"/>
       <label>Life Span:</label> <input type="text" name="system.bio.lifeSpan" value="{{system.bio.lifeSpan}}"/>
       <label>Height:</label>    <input type="text" name="system.bio.height" value="{{system.bio.height}}"/>
@@ -64,15 +67,18 @@
       <label>MDC:</label>
         <input type="number" name="system.mdc.value" value="{{system.mdc.value}}"/> /
         <input type="number" name="system.mdc.max"   value="{{system.mdc.max}}"/>
+      <label>Hunger:</label>
+        <input type="number" name="system.hunger.value" value="{{system.hunger.value}}"/> /
+        <input type="number" name="system.hunger.max"   value="{{system.hunger.max}}"/>
+    </div>
+
+    <div class="ee-row ee-pools">
       <label>ISP:</label>
         <input type="number" name="system.isp.value" value="{{system.isp.value}}"/> /
         <input type="number" name="system.isp.max"   value="{{system.isp.max}}"/>
       <label>PPE:</label>
         <input type="number" name="system.ppe.value" value="{{system.ppe.value}}"/> /
         <input type="number" name="system.ppe.max"   value="{{system.ppe.max}}"/>
-      <label>Hunger:</label>
-        <input type="number" name="system.hunger.value" value="{{system.hunger.value}}"/> /
-        <input type="number" name="system.hunger.max"   value="{{system.hunger.max}}"/>
       <label>Psionic Level:</label>
       <select name="system.psionicLevel">
         <option value="None"   {{#if (eq system.psionicLevel "None")}}selected{{/if}}>None</option>
