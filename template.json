@@ -3,6 +3,8 @@
     "types": ["character"],
     "character": {
       "name": "",
+      "trueName": "",
+      "race": "",
       "gender": "",
       "occ": "",
       "level": 1,
@@ -10,6 +12,19 @@
       "nextLevel": 0,
       "alignment": "",
       "psionicLevel": "None",
+      "bio": {
+        "age": "",
+        "height": "",
+        "weight": "",
+        "lifeSpan": "",
+        "chi": "",
+        "familyOrigin": "",
+        "environment": "",
+        "sentimentsGood": "",
+        "sentimentsEvil": "",
+        "nativeLanguages": "",
+        "insanity": ""
+      },
       "attributes": {
         "iq":  { "value": 0 },
         "me":  { "value": 0 },
@@ -21,9 +36,28 @@
         "spd": { "value": 0 }
       },
       "hp":     { "value": 0, "max": 0 },
+      "sdc":    { "value": 0, "max": 0 },
+      "mdc":    { "value": 0, "max": 0 },
       "isp":    { "value": 0, "max": 0 },
       "ppe":    { "value": 0, "max": 0 },
       "hunger": { "value": 100, "max": 100 },
+      "physical": {
+        "lift": "",
+        "carry": "",
+        "throwMax": "",
+        "throwFt": "",
+        "runMph": "",
+        "runMelees": "",
+        "swimMph": "",
+        "swimMelees": "",
+        "swimFtPerAttack": "",
+        "leapUp": "",
+        "leapAcross": "",
+        "flip": "",
+        "knockout": "",
+        "critical": "",
+        "death": ""
+      },
 
       "skillBonuses": {
         "iqBonus": 0,
@@ -66,8 +100,8 @@
       },
 
       "armor": {
-        "primary":   { "name": "", "locations": { "mainBody": { "current": 0, "max": 0 }, "head": { "current": 0, "max": 0 }, "leftArm": { "current": 0, "max": 0 }, "rightArm": { "current": 0, "max": 0 }, "leftLeg": { "current": 0, "max": 0 }, "rightLeg": { "current": 0, "max": 0 } }, "extras": [] },
-        "secondary": { "name": "", "locations": { "mainBody": { "current": 0, "max": 0 }, "head": { "current": 0, "max": 0 }, "leftArm": { "current": 0, "max": 0 }, "rightArm": { "current": 0, "max": 0 }, "leftLeg": { "current": 0, "max": 0 }, "rightLeg": { "current": 0, "max": 0 } }, "extras": [] }
+        "primary":   { "name": "", "ar": 0, "weight": "", "cost": "", "prowlPenalty": 0, "locations": { "mainBody": { "current": 0, "max": 0 }, "head": { "current": 0, "max": 0 }, "leftArm": { "current": 0, "max": 0 }, "rightArm": { "current": 0, "max": 0 }, "leftLeg": { "current": 0, "max": 0 }, "rightLeg": { "current": 0, "max": 0 } }, "extras": [] },
+        "secondary": { "name": "", "ar": 0, "weight": "", "cost": "", "prowlPenalty": 0, "locations": { "mainBody": { "current": 0, "max": 0 }, "head": { "current": 0, "max": 0 }, "leftArm": { "current": 0, "max": 0 }, "rightArm": { "current": 0, "max": 0 }, "leftLeg": { "current": 0, "max": 0 }, "rightLeg": { "current": 0, "max": 0 } }, "extras": [] }
       },
 
       "powerArmor": {

@@ -125,7 +125,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   _blankRow(kind) {
     switch (kind) {
       case "skill":         return { name: "", base: 0, perLvl: 0 };
-      case "modernWeapon":  return { name: "", damage: "", ammo: "", strike: "", range: "", special: "" };
+      case "modernWeapon":  return { name: "", damage: "", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
       case "ancientWeapon": return { name: "", damage: "", ammo: "", strike: "", parry: "", special: "" };
       case "saveExtra":     return { name: "", base: 0, bonus: 0 };
       case "h2hExtra":      return { name: "", value: 0 };

@@ -13,12 +13,34 @@
 
     <div class="ee-row">
       <label>Name:</label>      <input type="text" name="name" value="{{actor.name}}" data-dtype="String"/>
+      <label>True Name:</label> <input type="text" name="system.trueName" value="{{system.trueName}}"/>
+      <label>Race:</label>      <input type="text" name="system.race" value="{{system.race}}"/>
       <label>Gender:</label>    <input type="text" name="system.gender" value="{{system.gender}}"/>
       <label>OCC:</label>       <input type="text" name="system.occ" value="{{system.occ}}"/>
+      <label>Alignment:</label> <input type="text" name="system.alignment" value="{{system.alignment}}"/>
+    </div>
+
+    <div class="ee-row">
       <label>Level:</label>     <input type="number" name="system.level" value="{{system.level}}" min="1"/>
       <label>XP:</label>        <input type="number" name="system.xp" value="{{system.xp}}"/>
       <label>Next Level:</label><input type="number" name="system.nextLevel" value="{{system.nextLevel}}"/>
-      <label>Alignment:</label> <input type="text" name="system.alignment" value="{{system.alignment}}"/>
+      <label>Age:</label>       <input type="text" name="system.bio.age" value="{{system.bio.age}}"/>
+      <label>Life Span:</label> <input type="text" name="system.bio.lifeSpan" value="{{system.bio.lifeSpan}}"/>
+      <label>Height:</label>    <input type="text" name="system.bio.height" value="{{system.bio.height}}"/>
+      <label>Weight:</label>    <input type="text" name="system.bio.weight" value="{{system.bio.weight}}"/>
+      <label>Chi:</label>       <input type="text" name="system.bio.chi" value="{{system.bio.chi}}"/>
+    </div>
+
+    <div class="ee-row">
+      <label>Family Origin:</label>    <input type="text" name="system.bio.familyOrigin" value="{{system.bio.familyOrigin}}"/>
+      <label>Environment:</label>      <input type="text" name="system.bio.environment" value="{{system.bio.environment}}"/>
+      <label>Native Language(s):</label><input type="text" name="system.bio.nativeLanguages" value="{{system.bio.nativeLanguages}}"/>
+    </div>
+
+    <div class="ee-row">
+      <label>Sentiments — Good:</label><input type="text" name="system.bio.sentimentsGood" value="{{system.bio.sentimentsGood}}"/>
+      <label>Sentiments — Evil:</label><input type="text" name="system.bio.sentimentsEvil" value="{{system.bio.sentimentsEvil}}"/>
+      <label>Insanity:</label>         <input type="text" name="system.bio.insanity" value="{{system.bio.insanity}}"/>
     </div>
 
     <div class="ee-row ee-attrs">
@@ -36,6 +58,12 @@
       <label>HP:</label>
         <input type="number" name="system.hp.value" value="{{system.hp.value}}"/> /
         <input type="number" name="system.hp.max"   value="{{system.hp.max}}"/>
+      <label>SDC:</label>
+        <input type="number" name="system.sdc.value" value="{{system.sdc.value}}"/> /
+        <input type="number" name="system.sdc.max"   value="{{system.sdc.max}}"/>
+      <label>MDC:</label>
+        <input type="number" name="system.mdc.value" value="{{system.mdc.value}}"/> /
+        <input type="number" name="system.mdc.max"   value="{{system.mdc.max}}"/>
       <label>ISP:</label>
         <input type="number" name="system.isp.value" value="{{system.isp.value}}"/> /
         <input type="number" name="system.isp.max"   value="{{system.isp.max}}"/>
@@ -142,6 +170,31 @@
     <div class="tab" data-group="primary" data-tab="combat">
       <h2 class="ee-bar">COMBAT</h2>
 
+      <div class="ee-panel">
+        <h3>Physical Capabilities</h3>
+        <div class="ee-row">
+          <label>Lift (lbs):</label>  <input type="text" name="system.physical.lift"  value="{{system.physical.lift}}"/>
+          <label>Carry (lbs):</label> <input type="text" name="system.physical.carry" value="{{system.physical.carry}}"/>
+          <label>Throw Max (lbs):</label><input type="text" name="system.physical.throwMax" value="{{system.physical.throwMax}}"/>
+          <label>Throw (ft):</label>  <input type="text" name="system.physical.throwFt" value="{{system.physical.throwFt}}"/>
+        </div>
+        <div class="ee-row">
+          <label>Run (mph):</label>   <input type="text" name="system.physical.runMph"    value="{{system.physical.runMph}}"/>
+          <label>Run (max melees):</label><input type="text" name="system.physical.runMelees" value="{{system.physical.runMelees}}"/>
+          <label>Swim (mph):</label>  <input type="text" name="system.physical.swimMph"   value="{{system.physical.swimMph}}"/>
+          <label>Swim (max melees):</label><input type="text" name="system.physical.swimMelees" value="{{system.physical.swimMelees}}"/>
+          <label>Swim (ft/attack):</label><input type="text" name="system.physical.swimFtPerAttack" value="{{system.physical.swimFtPerAttack}}"/>
+        </div>
+        <div class="ee-row">
+          <label>Leap Up (ft):</label>    <input type="text" name="system.physical.leapUp"     value="{{system.physical.leapUp}}"/>
+          <label>Leap Across (ft):</label><input type="text" name="system.physical.leapAcross" value="{{system.physical.leapAcross}}"/>
+          <label>Flip (%):</label>        <input type="text" name="system.physical.flip"       value="{{system.physical.flip}}"/>
+          <label>Knockout:</label>        <input type="text" name="system.physical.knockout"   value="{{system.physical.knockout}}"/>
+          <label>Critical:</label>        <input type="text" name="system.physical.critical"   value="{{system.physical.critical}}"/>
+          <label>Death:</label>           <input type="text" name="system.physical.death"      value="{{system.physical.death}}"/>
+        </div>
+      </div>
+
       <div class="ee-combat-top">
         {{!-- Hand to Hand --}}
         <div class="ee-panel">
@@ -196,15 +249,17 @@
         <div class="ee-panel ee-weapons">
           <h3>Modern Weapons</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Range</th><th>Special</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Damage</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th></th></tr></thead>
             <tbody>
               {{#each system.weapons.modern}}
               <tr>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.name"    value="{{name}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.damage"  value="{{damage}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.ammo"    value="{{ammo}}"/></td>
+                <td><input type="text" name="system.weapons.modern.{{@index}}.payload" value="{{payload}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.strike"  value="{{strike}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.range"   value="{{range}}"/></td>
+                <td><input type="text" name="system.weapons.modern.{{@index}}.rate"    value="{{rate}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.special" value="{{special}}"/></td>
                 <td><a data-action="delete-row" data-path="weapons.modern" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
@@ -239,6 +294,10 @@
         <div class="ee-panel">
           <h3>Armor</h3>
           <div class="ee-kv"><label>Name:</label><input type="text" name="system.armor.primary.name" value="{{system.armor.primary.name}}"/></div>
+          <div class="ee-kv"><label>A.R.:</label><input type="number" name="system.armor.primary.ar" value="{{system.armor.primary.ar}}"/></div>
+          <div class="ee-kv"><label>Weight:</label><input type="text" name="system.armor.primary.weight" value="{{system.armor.primary.weight}}"/></div>
+          <div class="ee-kv"><label>Cost:</label><input type="text" name="system.armor.primary.cost" value="{{system.armor.primary.cost}}"/></div>
+          <div class="ee-kv"><label>Prowl Penalty (%):</label><input type="number" name="system.armor.primary.prowlPenalty" value="{{system.armor.primary.prowlPenalty}}"/></div>
           <table class="ee-table">
             <thead><tr><th></th><th>Current</th><th>Max</th></tr></thead>
             <tbody>
@@ -264,6 +323,10 @@
         <div class="ee-panel">
           <h3>Armor</h3>
           <div class="ee-kv"><label>Name:</label><input type="text" name="system.armor.secondary.name" value="{{system.armor.secondary.name}}"/></div>
+          <div class="ee-kv"><label>A.R.:</label><input type="number" name="system.armor.secondary.ar" value="{{system.armor.secondary.ar}}"/></div>
+          <div class="ee-kv"><label>Weight:</label><input type="text" name="system.armor.secondary.weight" value="{{system.armor.secondary.weight}}"/></div>
+          <div class="ee-kv"><label>Cost:</label><input type="text" name="system.armor.secondary.cost" value="{{system.armor.secondary.cost}}"/></div>
+          <div class="ee-kv"><label>Prowl Penalty (%):</label><input type="number" name="system.armor.secondary.prowlPenalty" value="{{system.armor.secondary.prowlPenalty}}"/></div>
           <table class="ee-table">
             <thead><tr><th></th><th>Current</th><th>Max</th></tr></thead>
             <tbody>

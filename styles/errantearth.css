@@ -78,12 +78,13 @@
 
 /* ---------------- Rows ---------------- */
 .ee-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+display: flex;
+  flex-wrap: nowrap;
   gap: 6px;
   padding: 4px 6px;
   background: #ddd;
+  justify-content: center;
+  align-items: baseline;
 }
 .ee-row > label {
   font-weight: 600;
