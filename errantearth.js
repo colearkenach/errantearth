@@ -32,6 +32,7 @@ Hooks.once("init", async () => {
     (val === undefined || val === null || val === "") ? fallback : val
   );
   Handlebars.registerHelper("eq", (a, b) => a === b);
+  Handlebars.registerHelper("eeChecked", (v) => v ? "checked" : "");
 
   Handlebars.registerHelper("eeSelectOptions", function (options, selected) {
     const sel = selected ?? "";

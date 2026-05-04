@@ -9,6 +9,8 @@
       "race": "",
       "gender": "",
       "occ": "",
+      "equippedRace": "",
+      "equippedOcc": "",
       "level": 1,
       "xp": 0,
       "nextLevel": 0,
@@ -392,7 +394,8 @@
       "duration": "",
       "range": "",
       "savingThrow": "",
-      "damage": ""
+      "damage": "",
+      "isMDC": false
     },
     "spell": {
       "description": "",
@@ -401,7 +404,8 @@
       "duration": "",
       "range": "",
       "savingThrow": "",
-      "damage": ""
+      "damage": "",
+      "isMDC": false
     },
     "weapon": {
       "category": "modern",
@@ -414,13 +418,19 @@
       "strike": "",
       "parry": "",
       "special": "",
-      "notes": ""
+      "notes": "",
+      "isMDC": false
     },
     "armor": {
       "ar": 0,
-      "mdc": {
-        "current": 0,
-        "max": 0
+      "isMDC": false,
+      "locations": {
+        "mainBody": { "current": 0, "max": 0 },
+        "head":     { "current": 0, "max": 0 },
+        "leftArm":  { "current": 0, "max": 0 },
+        "rightArm": { "current": 0, "max": 0 },
+        "leftLeg":  { "current": 0, "max": 0 },
+        "rightLeg": { "current": 0, "max": 0 }
       },
       "weight": "",
       "cost": "",
@@ -430,9 +440,14 @@
     "powerArmor": {
       "description": "",
       "ar": 0,
-      "mdc": {
-        "current": 0,
-        "max": 0
+      "isMDC": true,
+      "locations": {
+        "mainBody": { "current": 0, "max": 0 },
+        "head":     { "current": 0, "max": 0 },
+        "leftArm":  { "current": 0, "max": 0 },
+        "rightArm": { "current": 0, "max": 0 },
+        "leftLeg":  { "current": 0, "max": 0 },
+        "rightLeg": { "current": 0, "max": 0 }
       },
       "speed": "",
       "weight": "",
@@ -443,6 +458,7 @@
       "description": "",
       "vehicleType": "",
       "ar": 0,
+      "isMDC": true,
       "mdc": {
         "current": 0,
         "max": 0
@@ -459,14 +475,23 @@
       "size": "",
       "abilities": "",
       "bonuses": "",
-      "languages": ""
+      "languages": "",
+      "isMDC": false,
+      "attributeBonuses": {
+        "iq":  "",
+        "me":  "",
+        "ma":  "",
+        "ps":  "",
+        "pp":  "",
+        "pe":  "",
+        "pb":  "",
+        "spd": ""
+      }
     },
     "occ": {
       "description": "",
       "category": "",
-      "skillsOcc": "",
-      "skillsRelated": "",
-      "skillsSecondary": "",
+      "skills": [],
       "bonuses": "",
       "equipment": "",
       "money": ""
