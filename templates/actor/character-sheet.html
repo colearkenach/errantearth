@@ -123,7 +123,10 @@
                 <td><input type="number" name="system.skills.occ.{{_index}}.base"   value="{{base}}"/></td>
                 <td><input type="number" name="system.skills.occ.{{_index}}.perLvl" value="{{perLvl}}"/></td>
                 <td class="ee-total">{{total}}</td>
-                <td><a data-action="delete-row" data-path="skills.occ" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a></td>
+                <td class="ee-actions">
+                  <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
+                  <a data-action="delete-row" data-path="skills.occ" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
+                </td>
               </tr>
               {{/each}}
             </tbody>
@@ -142,7 +145,10 @@
                 <td><input type="number" name="system.skills.occRelated.{{_index}}.base"   value="{{base}}"/></td>
                 <td><input type="number" name="system.skills.occRelated.{{_index}}.perLvl" value="{{perLvl}}"/></td>
                 <td class="ee-total">{{total}}</td>
-                <td><a data-action="delete-row" data-path="skills.occRelated" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a></td>
+                <td class="ee-actions">
+                  <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
+                  <a data-action="delete-row" data-path="skills.occRelated" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
+                </td>
               </tr>
               {{/each}}
             </tbody>
@@ -161,7 +167,10 @@
                 <td><input type="number" name="system.skills.secondary.{{_index}}.base"   value="{{base}}"/></td>
                 <td><input type="number" name="system.skills.secondary.{{_index}}.perLvl" value="{{perLvl}}"/></td>
                 <td class="ee-total">{{total}}</td>
-                <td><a data-action="delete-row" data-path="skills.secondary" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a></td>
+                <td class="ee-actions">
+                  <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
+                  <a data-action="delete-row" data-path="skills.secondary" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
+                </td>
               </tr>
               {{/each}}
             </tbody>
@@ -204,15 +213,23 @@
         {{!-- Hand to Hand --}}
         <div class="ee-panel">
           <h3>Hand to Hand</h3>
-          <div class="ee-kv"><label>Type:</label><input type="text" name="system.handToHand.type" value="{{system.handToHand.type}}"/></div>
+          <div class="ee-kv"><label>Type:</label>
+            <select name="system.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.handToHand.type}}</select>
+          </div>
           <div class="ee-kv"><label>Attacks per Melee:</label><input type="number" name="system.handToHand.attacks" value="{{system.handToHand.attacks}}"/></div>
-          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.handToHand.initiative" value="{{system.handToHand.initiative}}"/></div>
+          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.handToHand.initiative" value="{{system.handToHand.initiative}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.initiative}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
           <div class="ee-kv"><label>Damage:</label><input type="number" name="system.handToHand.damage" value="{{system.handToHand.damage}}"/></div>
-          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.handToHand.strike" value="{{system.handToHand.strike}}"/></div>
-          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.handToHand.parry" value="{{system.handToHand.parry}}"/></div>
-          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.handToHand.dodge" value="{{system.handToHand.dodge}}"/></div>
-          <div class="ee-kv"><label>Pull/Roll:</label><input type="number" name="system.handToHand.pullRoll" value="{{system.handToHand.pullRoll}}"/></div>
-          <div class="ee-kv"><label>Perception:</label><input type="number" name="system.handToHand.perception" value="{{system.handToHand.perception}}"/></div>
+          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.handToHand.strike" value="{{system.handToHand.strike}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.strike}}" data-label="HtH Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.handToHand.parry" value="{{system.handToHand.parry}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.parry}}" data-label="HtH Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.handToHand.dodge" value="{{system.handToHand.dodge}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.dodge}}" data-label="HtH Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Pull/Roll:</label><input type="number" name="system.handToHand.pullRoll" value="{{system.handToHand.pullRoll}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.pullRoll}}" data-label="Pull/Roll" title="Roll Pull/Roll"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Perception:</label><input type="number" name="system.handToHand.perception" value="{{system.handToHand.perception}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.perception}}" data-label="Perception" title="Roll Perception"><i class="fas fa-dice-d20"></i></a></div>
           {{#each system.handToHand.extras}}
           <div class="ee-kv">
             <input type="text"   name="system.handToHand.extras.{{@index}}.name"  value="{{name}}" placeholder="Bonus name"/>
@@ -227,24 +244,27 @@
         <div class="ee-panel">
           <h3>Saving Throws</h3>
           <table class="ee-table">
-            <thead><tr><th></th><th>Base</th><th>Bonus</th></tr></thead>
+            <thead><tr><th></th><th>Base</th><th>Bonus</th><th>Roll</th></tr></thead>
             <tbody>
-              <tr><td>Spell:</td>        <td><input type="text" name="system.savingThrows.spell.base"        value="{{system.savingThrows.spell.base}}"/></td>        <td><input type="number" name="system.savingThrows.spell.bonus"        value="{{system.savingThrows.spell.bonus}}"/></td></tr>
-              <tr><td>Ritual:</td>       <td><input type="text" name="system.savingThrows.ritual.base"       value="{{system.savingThrows.ritual.base}}"/></td>       <td><input type="number" name="system.savingThrows.ritual.bonus"       value="{{system.savingThrows.ritual.bonus}}"/></td></tr>
-              <tr><td>Psionics:</td>     <td><input type="text" name="system.savingThrows.psionics.base"     value="{{system.savingThrows.psionics.base}}"/></td>     <td><input type="number" name="system.savingThrows.psionics.bonus"     value="{{system.savingThrows.psionics.bonus}}"/></td></tr>
-              <tr><td>Toxins/Poisons:</td><td><input type="text" name="system.savingThrows.drugPoison.base"   value="{{system.savingThrows.drugPoison.base}}"/></td>   <td><input type="number" name="system.savingThrows.drugPoison.bonus"   value="{{system.savingThrows.drugPoison.bonus}}"/></td></tr>
-              <tr><td>Harmful Drugs:</td> <td><input type="text" name="system.savingThrows.harmfulDrugs.base" value="{{system.savingThrows.harmfulDrugs.base}}"/></td> <td><input type="number" name="system.savingThrows.harmfulDrugs.bonus" value="{{system.savingThrows.harmfulDrugs.bonus}}"/></td></tr>
-              <tr><td>Insanity:</td>      <td><input type="text" name="system.savingThrows.insanity.base"     value="{{system.savingThrows.insanity.base}}"/></td>     <td><input type="number" name="system.savingThrows.insanity.bonus"     value="{{system.savingThrows.insanity.bonus}}"/></td></tr>
-              <tr><td>Possession:</td>    <td><input type="text" name="system.savingThrows.possession.base"   value="{{system.savingThrows.possession.base}}"/></td>   <td><input type="number" name="system.savingThrows.possession.bonus"   value="{{system.savingThrows.possession.bonus}}"/></td></tr>
-              <tr><td>Horror Factor:</td> <td><input type="text" name="system.savingThrows.horrorFactor.base" value="{{system.savingThrows.horrorFactor.base}}"/></td> <td><input type="number" name="system.savingThrows.horrorFactor.bonus" value="{{system.savingThrows.horrorFactor.bonus}}"/></td></tr>
-              <tr><td>Coma/Death:</td>    <td><input type="text" name="system.savingThrows.death.base"        value="{{system.savingThrows.death.base}}"/></td>        <td><input type="number" name="system.savingThrows.death.bonus"        value="{{system.savingThrows.death.bonus}}"/></td></tr>
-              <tr><td>Pain:</td>          <td><input type="text" name="system.savingThrows.pain.base"         value="{{system.savingThrows.pain.base}}"/></td>         <td><input type="number" name="system.savingThrows.pain.bonus"         value="{{system.savingThrows.pain.bonus}}"/></td></tr>
+              <tr><td>Spell:</td>        <td><input type="text" name="system.savingThrows.spell.base"        value="{{system.savingThrows.spell.base}}"/></td>        <td><input type="number" name="system.savingThrows.spell.bonus"        value="{{system.savingThrows.spell.bonus}}"/></td>        <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.spell.base}}"        data-bonus="{{system.savingThrows.spell.bonus}}"        data-label="Save vs Spell"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Ritual:</td>       <td><input type="text" name="system.savingThrows.ritual.base"       value="{{system.savingThrows.ritual.base}}"/></td>       <td><input type="number" name="system.savingThrows.ritual.bonus"       value="{{system.savingThrows.ritual.bonus}}"/></td>       <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.ritual.base}}"       data-bonus="{{system.savingThrows.ritual.bonus}}"       data-label="Save vs Ritual"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Psionics:</td>     <td><input type="text" name="system.savingThrows.psionics.base"     value="{{system.savingThrows.psionics.base}}"/></td>     <td><input type="number" name="system.savingThrows.psionics.bonus"     value="{{system.savingThrows.psionics.bonus}}"/></td>     <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.psionics.base}}"     data-bonus="{{system.savingThrows.psionics.bonus}}"     data-label="Save vs Psionics"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Toxins/Poisons:</td><td><input type="text" name="system.savingThrows.drugPoison.base"   value="{{system.savingThrows.drugPoison.base}}"/></td>   <td><input type="number" name="system.savingThrows.drugPoison.bonus"   value="{{system.savingThrows.drugPoison.bonus}}"/></td>   <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.drugPoison.base}}"   data-bonus="{{system.savingThrows.drugPoison.bonus}}"   data-label="Save vs Toxins/Poisons"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Harmful Drugs:</td> <td><input type="text" name="system.savingThrows.harmfulDrugs.base" value="{{system.savingThrows.harmfulDrugs.base}}"/></td> <td><input type="number" name="system.savingThrows.harmfulDrugs.bonus" value="{{system.savingThrows.harmfulDrugs.bonus}}"/></td> <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.harmfulDrugs.base}}" data-bonus="{{system.savingThrows.harmfulDrugs.bonus}}" data-label="Save vs Harmful Drugs"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Insanity:</td>      <td><input type="text" name="system.savingThrows.insanity.base"     value="{{system.savingThrows.insanity.base}}"/></td>     <td><input type="number" name="system.savingThrows.insanity.bonus"     value="{{system.savingThrows.insanity.bonus}}"/></td>     <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.insanity.base}}"     data-bonus="{{system.savingThrows.insanity.bonus}}"     data-label="Save vs Insanity"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Possession:</td>    <td><input type="text" name="system.savingThrows.possession.base"   value="{{system.savingThrows.possession.base}}"/></td>   <td><input type="number" name="system.savingThrows.possession.bonus"   value="{{system.savingThrows.possession.bonus}}"/></td>   <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.possession.base}}"   data-bonus="{{system.savingThrows.possession.bonus}}"   data-label="Save vs Possession"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Horror Factor:</td> <td><input type="text" name="system.savingThrows.horrorFactor.base" value="{{system.savingThrows.horrorFactor.base}}"/></td> <td><input type="number" name="system.savingThrows.horrorFactor.bonus" value="{{system.savingThrows.horrorFactor.bonus}}"/></td> <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.horrorFactor.base}}" data-bonus="{{system.savingThrows.horrorFactor.bonus}}" data-label="Save vs Horror Factor"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Coma/Death:</td>    <td><input type="text" name="system.savingThrows.death.base"        value="{{system.savingThrows.death.base}}"/></td>        <td><input type="number" name="system.savingThrows.death.bonus"        value="{{system.savingThrows.death.bonus}}"/></td>        <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.death.base}}"        data-bonus="{{system.savingThrows.death.bonus}}"        data-label="Save vs Coma/Death"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Pain:</td>          <td><input type="text" name="system.savingThrows.pain.base"         value="{{system.savingThrows.pain.base}}"/></td>         <td><input type="number" name="system.savingThrows.pain.bonus"         value="{{system.savingThrows.pain.bonus}}"/></td>         <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.pain.base}}"         data-bonus="{{system.savingThrows.pain.bonus}}"         data-label="Save vs Pain"><i class="fas fa-dice-d20"></i></a></td></tr>
               {{#each system.savingThrows.extras}}
               <tr>
                 <td><input type="text"   name="system.savingThrows.extras.{{@index}}.name"  value="{{name}}" placeholder="Save"/></td>
                 <td><input type="text"   name="system.savingThrows.extras.{{@index}}.base"  value="{{base}}"/></td>
-                <td><input type="number" name="system.savingThrows.extras.{{@index}}.bonus" value="{{bonus}}"/>
-                    <a data-action="delete-row" data-path="savingThrows.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                <td><input type="number" name="system.savingThrows.extras.{{@index}}.bonus" value="{{bonus}}"/></td>
+                <td>
+                  <a data-action="roll" data-roll-type="save" data-base="{{base}}" data-bonus="{{bonus}}" data-label="Save vs {{name}}"><i class="fas fa-dice-d20"></i></a>
+                  <a data-action="delete-row" data-path="savingThrows.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
+                </td>
               </tr>
               {{/each}}
             </tbody>
@@ -256,7 +276,7 @@
         <div class="ee-panel ee-weapons">
           <h3>Modern Weapons</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th>Roll</th><th></th></tr></thead>
             <tbody>
               {{#each system.weapons.modern}}
               <tr>
@@ -269,6 +289,10 @@
                 <td><input type="text" name="system.weapons.modern.{{@index}}.range"   value="{{range}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.rate"    value="{{rate}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.special" value="{{special}}"/></td>
+                <td class="ee-actions">
+                  <a data-action="roll" data-roll-type="d20"    data-bonus="{{strike}}"  data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                  <a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}"        title="Roll Damage"><i class="fas fa-burst"></i></a>
+                </td>
                 <td><a data-action="delete-row" data-path="weapons.modern" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
               {{/each}}
@@ -278,7 +302,7 @@
 
           <h3>Ancient Weapons</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th>Roll</th><th></th></tr></thead>
             <tbody>
               {{#each system.weapons.ancient}}
               <tr>
@@ -289,6 +313,11 @@
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.strike"  value="{{strike}}"/></td>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.parry"   value="{{parry}}"/></td>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.special" value="{{special}}"/></td>
+                <td class="ee-actions">
+                  <a data-action="roll" data-roll-type="d20"    data-bonus="{{strike}}"  data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                  <a data-action="roll" data-roll-type="d20"    data-bonus="{{parry}}"   data-label="{{name}} Parry"  title="Roll Parry"><i class="fas fa-shield-alt"></i></a>
+                  <a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}"        title="Roll Damage"><i class="fas fa-burst"></i></a>
+                </td>
                 <td><a data-action="delete-row" data-path="weapons.ancient" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
               {{/each}}
@@ -384,14 +413,21 @@
       <div class="ee-pa-grid">
         <div class="ee-panel">
           <h3>Hand to Hand</h3>
-          <div class="ee-kv"><label>Type:</label><input type="text" name="system.powerArmor.handToHand.type" value="{{system.powerArmor.handToHand.type}}"/></div>
+          <div class="ee-kv"><label>Type:</label>
+            <select name="system.powerArmor.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.powerArmor.handToHand.type}}</select>
+          </div>
           <div class="ee-kv"><label>Attacks per Melee:</label><input type="number" name="system.powerArmor.handToHand.attacks" value="{{system.powerArmor.handToHand.attacks}}"/></div>
-          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.powerArmor.handToHand.initiative" value="{{system.powerArmor.handToHand.initiative}}"/></div>
+          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.powerArmor.handToHand.initiative" value="{{system.powerArmor.handToHand.initiative}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.initiative}}" data-label="PA Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
           <div class="ee-kv"><label>Damage:</label><input type="number" name="system.powerArmor.handToHand.damage" value="{{system.powerArmor.handToHand.damage}}"/></div>
-          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.powerArmor.handToHand.strike" value="{{system.powerArmor.handToHand.strike}}"/></div>
-          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.powerArmor.handToHand.parry" value="{{system.powerArmor.handToHand.parry}}"/></div>
-          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.powerArmor.handToHand.dodge" value="{{system.powerArmor.handToHand.dodge}}"/></div>
-          <div class="ee-kv"><label>Pull/Roll:</label><input type="number" name="system.powerArmor.handToHand.pullRoll" value="{{system.powerArmor.handToHand.pullRoll}}"/></div>
+          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.powerArmor.handToHand.strike" value="{{system.powerArmor.handToHand.strike}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.strike}}" data-label="PA Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.powerArmor.handToHand.parry" value="{{system.powerArmor.handToHand.parry}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.parry}}" data-label="PA Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.powerArmor.handToHand.dodge" value="{{system.powerArmor.handToHand.dodge}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.dodge}}" data-label="PA Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Pull/Roll:</label><input type="number" name="system.powerArmor.handToHand.pullRoll" value="{{system.powerArmor.handToHand.pullRoll}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.pullRoll}}" data-label="PA Pull/Roll" title="Roll Pull/Roll"><i class="fas fa-dice-d20"></i></a></div>
           {{#each system.powerArmor.handToHand.extras}}
           <div class="ee-kv">
             <input type="text"   name="system.powerArmor.handToHand.extras.{{@index}}.name"  value="{{name}}" placeholder="Bonus"/>
@@ -429,7 +465,7 @@
         <div class="ee-panel ee-pa-weapons">
           <h3>Weapons</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Range</th><th>Special</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Range</th><th>Special</th><th>Roll</th><th></th></tr></thead>
             <tbody>
               {{#each system.powerArmor.weapons}}
               <tr>
@@ -440,6 +476,10 @@
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.strike"  value="{{strike}}"/></td>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.range"   value="{{range}}"/></td>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.special" value="{{special}}"/></td>
+                <td class="ee-actions">
+                  <a data-action="roll" data-roll-type="d20"    data-bonus="{{strike}}"  data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                  <a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}"        title="Roll Damage"><i class="fas fa-burst"></i></a>
+                </td>
                 <td><a data-action="delete-row" data-path="powerArmor.weapons" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
               {{/each}}
@@ -566,11 +606,16 @@
         <div class="ee-panel">
           <h3>Combat</h3>
           <div class="ee-kv"><label># of Attacks:</label><input type="number" name="system.vehicle.handToHand.attacks" value="{{system.vehicle.handToHand.attacks}}"/></div>
-          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.vehicle.handToHand.initiative" value="{{system.vehicle.handToHand.initiative}}"/></div>
-          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.vehicle.handToHand.strike" value="{{system.vehicle.handToHand.strike}}"/></div>
-          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.vehicle.handToHand.parry" value="{{system.vehicle.handToHand.parry}}"/></div>
-          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.vehicle.handToHand.dodge" value="{{system.vehicle.handToHand.dodge}}"/></div>
-          <div class="ee-kv"><label>Roll:</label><input type="number" name="system.vehicle.handToHand.roll" value="{{system.vehicle.handToHand.roll}}"/></div>
+          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.vehicle.handToHand.initiative" value="{{system.vehicle.handToHand.initiative}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.vehicle.handToHand.initiative}}" data-label="Vehicle Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.vehicle.handToHand.strike" value="{{system.vehicle.handToHand.strike}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.vehicle.handToHand.strike}}" data-label="Vehicle Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.vehicle.handToHand.parry" value="{{system.vehicle.handToHand.parry}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.vehicle.handToHand.parry}}" data-label="Vehicle Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.vehicle.handToHand.dodge" value="{{system.vehicle.handToHand.dodge}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.vehicle.handToHand.dodge}}" data-label="Vehicle Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Roll:</label><input type="number" name="system.vehicle.handToHand.roll" value="{{system.vehicle.handToHand.roll}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.vehicle.handToHand.roll}}" data-label="Vehicle Roll" title="Roll w/ Punch/Impact"><i class="fas fa-dice-d20"></i></a></div>
           <div class="ee-kv"><label>Tear:</label><input type="text" name="system.vehicle.handToHand.tear" value="{{system.vehicle.handToHand.tear}}"/></div>
           <div class="ee-kv"><label>Restr. Punch:</label><input type="text" name="system.vehicle.handToHand.restrPunch" value="{{system.vehicle.handToHand.restrPunch}}"/></div>
           <div class="ee-kv"><label>Punch:</label><input type="text" name="system.vehicle.handToHand.punch" value="{{system.vehicle.handToHand.punch}}"/></div>
@@ -639,7 +684,7 @@
         <div class="ee-panel">
           <h3>Weapon Systems</h3>
           <table class="ee-table">
-            <thead><tr><th>Type</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th></th></tr></thead>
+            <thead><tr><th>Type</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Roll</th><th></th></tr></thead>
             <tbody>
               {{#each system.vehicle.weapons}}
               <tr>
@@ -647,6 +692,9 @@
                 <td><select name="system.vehicle.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
                 <td><input type="text" name="system.vehicle.weapons.{{@index}}.damage" value="{{damage}}"/></td>
                 <td><input type="text" name="system.vehicle.weapons.{{@index}}.ammo"   value="{{ammo}}"/></td>
+                <td class="ee-actions">
+                  <a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{type}}" title="Roll Damage"><i class="fas fa-burst"></i></a>
+                </td>
                 <td><a data-action="delete-row" data-path="vehicle.weapons" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
               {{/each}}

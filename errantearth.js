@@ -47,6 +47,10 @@ Hooks.once("ready", async () => {
     "Miscreant": "miscreant", "Aberrant": "aberrant", "Diabolic": "diabolic"
   };
   const psiMap = { "None": "none", "Minor": "minor", "Major": "major", "Master": "master" };
+  const hthMap = {
+    "Basic": "basic", "Expert": "expert", "Martial Arts": "martialArts",
+    "Commando": "commando", "Assassin": "assassin"
+  };
 
   for (const actor of game.actors.contents) {
     if (actor.type !== "character") continue;
@@ -55,6 +59,10 @@ Hooks.once("ready", async () => {
     if (a && alignMap[a]) update["system.alignment"] = alignMap[a];
     const p = actor.system.psionicLevel;
     if (p && psiMap[p]) update["system.psionicLevel"] = psiMap[p];
+    const ht = actor.system.handToHand?.type;
+    if (ht && hthMap[ht]) update["system.handToHand.type"] = hthMap[ht];
+    const pht = actor.system.powerArmor?.handToHand?.type;
+    if (pht && hthMap[pht]) update["system.powerArmor.handToHand.type"] = hthMap[pht];
     if (Object.keys(update).length) await actor.update(update);
   }
 });

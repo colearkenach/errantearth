@@ -71,7 +71,7 @@
       },
 
       "handToHand": {
-        "type": "Basic",
+        "type": "basic",
         "attacks": 0,
         "initiative": 0,
         "damage": 0,
@@ -110,7 +110,7 @@
       "powerArmor": {
         "name": "",
         "handToHand": {
-          "type": "Basic",
+          "type": "basic",
           "attacks": 0,
           "initiative": 0,
           "damage": 0,
