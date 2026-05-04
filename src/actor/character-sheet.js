@@ -15,23 +15,46 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     });
   }
 
-  /** Standard RIFTS-style attribute bonus tables. Returns the % or modifier for a given attribute value. */
+  /** RIFTS attribute-bonus chart (p.281). Each table is keyed 16..30; values
+   *  beyond 30 are extended by the rules in "Attributes Beyond 30" (p.284). */
+  static _ATTR_TABLES = {
+    iqSkill:        { 16:2, 17:3, 18:4, 19:5, 20:6, 21:7, 22:8, 23:9, 24:10, 25:11, 26:12, 27:13, 28:14, 29:15, 30:16 },
+    mePsionic:      { 16:1, 17:1, 18:2, 19:2, 20:3, 21:3, 22:4, 23:4, 24:5, 25:5, 26:6, 27:6, 28:7, 29:7, 30:8 },
+    meInsanity:     { 16:1, 17:1, 18:2, 19:2, 20:3, 21:4, 22:5, 23:6, 24:7, 25:8, 26:9, 27:10, 28:11, 29:12, 30:13 },
+    maTrustPct:     { 16:40, 17:45, 18:50, 19:55, 20:60, 21:65, 22:70, 23:75, 24:80, 25:84, 26:88, 27:92, 28:94, 29:96, 30:97 },
+    psDamage:       { 16:1, 17:2, 18:3, 19:4, 20:5, 21:6, 22:7, 23:8, 24:9, 25:10, 26:11, 27:12, 28:13, 29:14, 30:15 },
+    ppParryDodge:   { 16:1, 17:1, 18:2, 19:2, 20:3, 21:3, 22:4, 23:4, 24:5, 25:5, 26:6, 27:6, 28:7, 29:7, 30:8 },
+    ppStrike:       { 16:1, 17:1, 18:2, 19:2, 20:3, 21:3, 22:4, 23:4, 24:5, 25:5, 26:6, 27:6, 28:7, 29:7, 30:8 },
+    peComaPct:      { 16:4, 17:5, 18:6, 19:8, 20:10, 21:12, 22:14, 23:16, 24:18, 25:20, 26:22, 27:24, 28:26, 29:28, 30:30 },
+    peMagicPoison:  { 16:1, 17:1, 18:2, 19:2, 20:3, 21:3, 22:4, 23:4, 24:5, 25:5, 26:6, 27:6, 28:7, 29:7, 30:8 },
+    pbCharmPct:     { 16:30, 17:35, 18:40, 19:45, 20:50, 21:55, 22:60, 23:65, 24:70, 25:75, 26:80, 27:83, 28:86, 29:90, 30:92 }
+  };
+
+  static _lookup(table, val) {
+    if (val < 16) return 0;
+    if (val <= 30) return table[val] ?? 0;
+    return table[30];
+  }
+
+  /** Beyond-30 extensions. Most caps at 30 except the few called out in the rules. */
   static iqSkillBonus(iq) {
-    if (iq < 16) return 0;
-    return (iq - 15) * 3;
+    const base = ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.iqSkill, iq);
+    if (iq <= 30) return base;
+    return base + Math.floor((iq - 30) / 5) * 2;
   }
-  static trustIntimidate(ma) {
-    const table = { 16: 50, 17: 55, 18: 60, 19: 65, 20: 70, 21: 75, 22: 80, 23: 84, 24: 88, 25: 92, 26: 94, 27: 96, 28: 97, 29: 98, 30: 99 };
-    if (ma < 16) return 0;
-    if (ma >= 30) return 99;
-    return table[ma] ?? 0;
+  static psionicSave(me)    { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.mePsionic, me); }
+  static insanitySave(me)   { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.meInsanity, me); }
+  static trustIntimidate(ma){ return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.maTrustPct, ma); }
+  static psDamage(ps)       { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.psDamage, ps); }
+  static ppParryDodge(pp)   { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.ppParryDodge, pp); }
+  static ppStrike(pp)       { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.ppStrike, pp); }
+  static peComaSave(pe) {
+    const base = ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.peComaPct, pe);
+    if (pe <= 30) return base;
+    return base + (pe - 30);
   }
-  static charmImpress(pb) {
-    const table = { 16: 25, 17: 30, 18: 35, 19: 40, 20: 45, 21: 50, 22: 55, 23: 60, 24: 65, 25: 70, 26: 75, 27: 80, 28: 84, 29: 88, 30: 92 };
-    if (pb < 16) return 0;
-    if (pb >= 30) return 92;
-    return table[pb] ?? 0;
-  }
+  static peMagicPoison(pe)  { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.peMagicPoison, pe); }
+  static charmImpress(pb)   { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.pbCharmPct, pb); }
 
   /** Coerce a value that may be an object with numeric keys back into an array. */
   static _toArray(v) {
@@ -48,15 +71,38 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const sys = ctx.actor.system;
     ctx.config = CONFIG.EE ?? {};
 
-    const iq = Number(sys.attributes?.iq?.value ?? 0);
-    const ma = Number(sys.attributes?.ma?.value ?? 0);
-    const pb = Number(sys.attributes?.pb?.value ?? 0);
+    const A = sys.attributes ?? {};
+    const iq = Number(A.iq?.value ?? 0);
+    const me = Number(A.me?.value ?? 0);
+    const ma = Number(A.ma?.value ?? 0);
+    const ps = Number(A.ps?.value ?? 0);
+    const pp = Number(A.pp?.value ?? 0);
+    const pe = Number(A.pe?.value ?? 0);
+    const pb = Number(A.pb?.value ?? 0);
     const level = Number(sys.level ?? 1);
+    const C = ErrantEarthCharacterSheet;
 
     ctx.derived = {
-      iqBonus: ErrantEarthCharacterSheet.iqSkillBonus(iq),
-      trustIntimidate: ErrantEarthCharacterSheet.trustIntimidate(ma),
-      charmImpress: ErrantEarthCharacterSheet.charmImpress(pb)
+      iqBonus:         C.iqSkillBonus(iq),
+      psionicSave:     C.psionicSave(me),
+      insanitySave:    C.insanitySave(me),
+      trustIntimidate: C.trustIntimidate(ma),
+      psDamage:        C.psDamage(ps),
+      ppStrike:        C.ppStrike(pp),
+      ppParryDodge:    C.ppParryDodge(pp),
+      peComaSave:      C.peComaSave(pe),
+      peMagicPoison:   C.peMagicPoison(pe),
+      charmImpress:    C.charmImpress(pb),
+      attrBonuses: {
+        iq:  C.iqSkillBonus(iq) ? `+${C.iqSkillBonus(iq)}% skills` : "",
+        me:  [C.psionicSave(me) ? `+${C.psionicSave(me)} psi` : "", C.insanitySave(me) ? `+${C.insanitySave(me)} insanity` : ""].filter(Boolean).join(", "),
+        ma:  C.trustIntimidate(ma) ? `${C.trustIntimidate(ma)}% trust/intim.` : "",
+        ps:  C.psDamage(ps) ? `+${C.psDamage(ps)} damage` : "",
+        pp:  [C.ppStrike(pp) ? `+${C.ppStrike(pp)} strike` : "", C.ppParryDodge(pp) ? `+${C.ppParryDodge(pp)} parry/dodge` : ""].filter(Boolean).join(", "),
+        pe:  [C.peComaSave(pe) ? `+${C.peComaSave(pe)}% coma/death` : "", C.peMagicPoison(pe) ? `+${C.peMagicPoison(pe)} magic/poison` : ""].filter(Boolean).join(", "),
+        pb:  C.charmImpress(pb) ? `${C.charmImpress(pb)}% charm/impress` : "",
+        spd: ""
+      }
     };
 
     const toArr = ErrantEarthCharacterSheet._toArray;
@@ -118,6 +164,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.equippedOccId  = sys.equippedOcc  ?? "";
     ctx.equippedRaceItem = ctx.equippedRaceId ? this.actor.items.get(ctx.equippedRaceId) : null;
     ctx.equippedOccItem  = ctx.equippedOccId  ? this.actor.items.get(ctx.equippedOccId)  : null;
+    ctx.isRCC = !!ctx.equippedOccItem?.system?.isRCC;
 
     return ctx;
   }
@@ -170,10 +217,20 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const item = this.actor.items.get(id);
     if (!item) return;
     if (item.type === "race") {
+      const equippedOccId = this.actor.system.equippedOcc;
+      const equippedOcc = equippedOccId ? this.actor.items.get(equippedOccId) : null;
+      if (equippedOcc?.system?.isRCC) {
+        return ui.notifications?.warn(`Cannot equip a Race while an RCC ("${equippedOcc.name}") is equipped.`);
+      }
       return this.actor.update({ "system.equippedRace": id, "system.race": item.name });
     }
     if (item.type === "occ") {
-      return this.actor.update({ "system.equippedOcc": id, "system.occ": item.name });
+      const update = { "system.equippedOcc": id, "system.occ": item.name };
+      if (item.system?.isRCC) {
+        update["system.equippedRace"] = "";
+        update["system.race"] = item.name;
+      }
+      return this.actor.update(update);
     }
   }
 

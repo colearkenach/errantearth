@@ -446,3 +446,6 @@ display: flex;
 .ee-equip-btn,.ee-unequip-btn{cursor:pointer;margin-right:4px;font-size:0.85em}
 .ee-equip-btn{color:#357}.ee-equip-btn:hover{color:#000}
 .ee-unequip-btn{color:#888}.ee-unequip-btn:hover{color:#000}
+.ee-attr-bonuses{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin:2px 0 6px;font-size:10px;color:#555}
+.ee-attr-bonus{text-align:center;font-style:italic;line-height:1.2;min-height:14px}
+.ee-rcc-locked{opacity:0.5;pointer-events:none}

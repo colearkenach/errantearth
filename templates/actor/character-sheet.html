@@ -69,6 +69,17 @@
       <input type="number" name="system.attributes.spd.value" value="{{system.attributes.spd.value}}"/>
     </div>
 
+    <div class="ee-row ee-attr-bonuses">
+      <span class="ee-attr-bonus" title="IQ bonus">{{derived.attrBonuses.iq}}</span>
+      <span class="ee-attr-bonus" title="ME bonus">{{derived.attrBonuses.me}}</span>
+      <span class="ee-attr-bonus" title="MA bonus">{{derived.attrBonuses.ma}}</span>
+      <span class="ee-attr-bonus" title="PS bonus">{{derived.attrBonuses.ps}}</span>
+      <span class="ee-attr-bonus" title="PP bonus">{{derived.attrBonuses.pp}}</span>
+      <span class="ee-attr-bonus" title="PE bonus">{{derived.attrBonuses.pe}}</span>
+      <span class="ee-attr-bonus" title="PB bonus">{{derived.attrBonuses.pb}}</span>
+      <span class="ee-attr-bonus"></span>
+    </div>
+
     <div class="ee-row ee-pools">
       <label>HP:</label>
         <input type="number" name="system.hp.value" value="{{system.hp.value}}"/> /
@@ -958,8 +969,10 @@
       </div>
 
       <div class="ee-panel">
-        <h3>Races <a class="ee-create-item" data-action="create-item" data-type="race" title="Create Race"><i class="fas fa-plus"></i></a></h3>
-        <ul class="ee-item-list">
+        <h3>Races <a class="ee-create-item" data-action="create-item" data-type="race" title="Create Race"><i class="fas fa-plus"></i></a>
+          {{#if isRCC}}<span class="ee-equipped-badge" title="Locked: an RCC is equipped">RCC locked</span>{{/if}}
+        </h3>
+        <ul class="ee-item-list {{#if isRCC}}ee-rcc-locked{{/if}}">
           {{#each itemsByType.race}}
           <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
@@ -983,6 +996,7 @@
           {{#each itemsByType.occ}}
           <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+            {{#if system.isRCC}}<span class="ee-equipped-badge" title="Racial Character Class">RCC</span>{{/if}}
             {{#if (eq id ../equippedOccId)}}<span class="ee-equipped-badge">Equipped</span>{{/if}}
             <span class="ee-actions">
               {{#if (eq id ../equippedOccId)}}
