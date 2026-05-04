@@ -14,13 +14,16 @@
     <div class="ee-row">
       <label>Name:</label>      <input type="text" name="name" value="{{actor.name}}" data-dtype="String"/>
       <label>True Name:</label> <input type="text" name="system.trueName" value="{{system.trueName}}"/>
-      <label>Race:</label>      <input type="text" name="system.race" value="{{system.race}}"/>
+      <label>Race:</label>      <input type="text" list="ee-race-list" name="system.race" value="{{system.race}}"/>
+      <datalist id="ee-race-list">{{eeDatalistOptions config.RACE_SUGGESTIONS}}</datalist>
       <label>Gender:</label>    <input type="text" name="system.gender" value="{{system.gender}}"/>
     </div>
 
     <div class="ee-row">
-      <label>OCC:</label>       <input type="text" name="system.occ" value="{{system.occ}}"/>
-      <label>Alignment:</label> <input type="text" name="system.alignment" value="{{system.alignment}}"/>
+      <label>OCC:</label>       <input type="text" list="ee-occ-list" name="system.occ" value="{{system.occ}}"/>
+      <datalist id="ee-occ-list">{{eeDatalistOptions config.OCC_SUGGESTIONS}}</datalist>
+      <label>Alignment:</label>
+      <select name="system.alignment">{{eeSelectOptions config.ALIGNMENTS system.alignment}}</select>
       <label>Level:</label>     <input type="number" name="system.level" value="{{system.level}}" min="1"/>
       <label>XP:</label>        <input type="number" name="system.xp" value="{{system.xp}}"/>
       <label>Next Level:</label><input type="number" name="system.nextLevel" value="{{system.nextLevel}}"/>
@@ -80,12 +83,7 @@
         <input type="number" name="system.ppe.value" value="{{system.ppe.value}}"/> /
         <input type="number" name="system.ppe.max"   value="{{system.ppe.max}}"/>
       <label>Psionic Level:</label>
-      <select name="system.psionicLevel">
-        <option value="None"   {{#if (eq system.psionicLevel "None")}}selected{{/if}}>None</option>
-        <option value="Minor"  {{#if (eq system.psionicLevel "Minor")}}selected{{/if}}>Minor</option>
-        <option value="Major"  {{#if (eq system.psionicLevel "Major")}}selected{{/if}}>Major</option>
-        <option value="Master" {{#if (eq system.psionicLevel "Master")}}selected{{/if}}>Master</option>
-      </select>
+      <select name="system.psionicLevel">{{eeSelectOptions config.PSIONIC_LEVELS system.psionicLevel}}</select>
     </div>
   </section>
 
@@ -258,11 +256,12 @@
         <div class="ee-panel ee-weapons">
           <h3>Modern Weapons</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Damage</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th></th></tr></thead>
             <tbody>
               {{#each system.weapons.modern}}
               <tr>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.name"    value="{{name}}"/></td>
+                <td><select name="system.weapons.modern.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.damage"  value="{{damage}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.ammo"    value="{{ammo}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.payload" value="{{payload}}"/></td>
@@ -279,11 +278,12 @@
 
           <h3>Ancient Weapons</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th></th></tr></thead>
             <tbody>
               {{#each system.weapons.ancient}}
               <tr>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.name"    value="{{name}}"/></td>
+                <td><select name="system.weapons.ancient.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.damage"  value="{{damage}}"/></td>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.ammo"    value="{{ammo}}"/></td>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.strike"  value="{{strike}}"/></td>
@@ -429,11 +429,12 @@
         <div class="ee-panel ee-pa-weapons">
           <h3>Weapons</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Range</th><th>Special</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Range</th><th>Special</th><th></th></tr></thead>
             <tbody>
               {{#each system.powerArmor.weapons}}
               <tr>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.name"    value="{{name}}"/></td>
+                <td><select name="system.powerArmor.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.damage"  value="{{damage}}"/></td>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.ammo"    value="{{ammo}}"/></td>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.strike"  value="{{strike}}"/></td>
@@ -455,12 +456,13 @@
       <h3 class="ee-subbar">Spells / Psionics / Abilities</h3>
       <table class="ee-table ee-powers-table">
         <thead>
-          <tr><th>Name</th><th>Cost</th><th>Range</th><th>Saving Throw</th><th>Damage</th><th>Duration</th><th>Description</th><th></th></tr>
+          <tr><th>Name</th><th>Source</th><th>Cost</th><th>Range</th><th>Saving Throw</th><th>Damage</th><th>Duration</th><th>Description</th><th></th></tr>
         </thead>
         <tbody>
           {{#each system.powers}}
           <tr>
             <td><input type="text" name="system.powers.{{@index}}.name"        value="{{name}}"/></td>
+            <td><select name="system.powers.{{@index}}.source">{{eeSelectOptions ../config.POWER_SOURCES source}}</select></td>
             <td><input type="text" name="system.powers.{{@index}}.cost"        value="{{cost}}"/></td>
             <td><input type="text" name="system.powers.{{@index}}.range"       value="{{range}}"/></td>
             <td><input type="text" name="system.powers.{{@index}}.saving"      value="{{saving}}"/></td>
@@ -556,7 +558,8 @@
 
       <div class="ee-row">
         <label>Name:</label><input type="text" name="system.vehicle.name" value="{{system.vehicle.name}}"/>
-        <label>Type:</label><input type="text" name="system.vehicle.type" value="{{system.vehicle.type}}"/>
+        <label>Type:</label>
+        <select name="system.vehicle.type">{{eeSelectOptions config.VEHICLE_TYPES system.vehicle.type}}</select>
       </div>
 
       <div class="ee-pa-grid">
@@ -636,11 +639,12 @@
         <div class="ee-panel">
           <h3>Weapon Systems</h3>
           <table class="ee-table">
-            <thead><tr><th>Type</th><th>Damage</th><th>Ammo</th><th></th></tr></thead>
+            <thead><tr><th>Type</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th></th></tr></thead>
             <tbody>
               {{#each system.vehicle.weapons}}
               <tr>
                 <td><input type="text" name="system.vehicle.weapons.{{@index}}.type"   value="{{type}}"/></td>
+                <td><select name="system.vehicle.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
                 <td><input type="text" name="system.vehicle.weapons.{{@index}}.damage" value="{{damage}}"/></td>
                 <td><input type="text" name="system.vehicle.weapons.{{@index}}.ammo"   value="{{ammo}}"/></td>
                 <td><a data-action="delete-row" data-path="vehicle.weapons" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
