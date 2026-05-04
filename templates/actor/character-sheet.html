@@ -309,6 +309,31 @@
           </table>
           <button type="button" class="ee-add" data-action="add-row" data-path="weapons.modern" data-kind="modernWeapon">+ Add</button>
 
+          {{#if weaponItemsModern.length}}
+          <h4>Modern Weapon Items</h4>
+          <table class="ee-table">
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Range</th><th>Rate</th><th>Roll</th><th></th></tr></thead>
+            <tbody>
+              {{#each weaponItemsModern}}
+              <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+                <td>{{lookup ../config.DAMAGE_TYPES system.damageType}}</td>
+                <td>{{system.damage}}</td>
+                <td>{{system.ammo}}</td>
+                <td>{{system.range}}</td>
+                <td>{{system.rate}}</td>
+                <td class="ee-actions">
+                  <a data-action="roll" data-roll-type="d20"    data-bonus="{{system.strike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                  <a data-action="roll" data-roll-type="damage" data-formula="{{system.damage}}" data-label="{{name}}"      title="Roll Damage"><i class="fas fa-burst"></i></a>
+                </td>
+                <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          {{/if}}
+          <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon Item"><i class="fas fa-plus"></i> Weapon Item</a>
+
           <h3>Ancient Weapons</h3>
           <table class="ee-table">
             <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th>Roll</th><th></th></tr></thead>
@@ -333,6 +358,30 @@
             </tbody>
           </table>
           <button type="button" class="ee-add" data-action="add-row" data-path="weapons.ancient" data-kind="ancientWeapon">+ Add</button>
+
+          {{#if weaponItemsAncient.length}}
+          <h4>Ancient Weapon Items</h4>
+          <table class="ee-table">
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Strike</th><th>Parry</th><th>Roll</th><th></th></tr></thead>
+            <tbody>
+              {{#each weaponItemsAncient}}
+              <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+                <td>{{lookup ../config.DAMAGE_TYPES system.damageType}}</td>
+                <td>{{system.damage}}</td>
+                <td>{{system.strike}}</td>
+                <td>{{system.parry}}</td>
+                <td class="ee-actions">
+                  <a data-action="roll" data-roll-type="d20"    data-bonus="{{system.strike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                  <a data-action="roll" data-roll-type="d20"    data-bonus="{{system.parry}}"  data-label="{{name}} Parry"  title="Roll Parry"><i class="fas fa-shield-alt"></i></a>
+                  <a data-action="roll" data-roll-type="damage" data-formula="{{system.damage}}" data-label="{{name}}"      title="Roll Damage"><i class="fas fa-burst"></i></a>
+                </td>
+                <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          {{/if}}
 
           <h3>Weapon Proficiencies</h3>
           <table class="ee-table">
@@ -416,6 +465,26 @@
         </div>
       </div>
 
+      {{#if itemsByType.armor.length}}
+      <h3 class="ee-subbar">Armor Items</h3>
+      <table class="ee-table">
+        <thead><tr><th>Name</th><th>AR</th><th>MDC</th><th>Prowl</th><th>Weight</th><th></th></tr></thead>
+        <tbody>
+          {{#each itemsByType.armor}}
+          <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+            <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+            <td>{{system.ar}}</td>
+            <td>{{system.mdc.current}}/{{system.mdc.max}}</td>
+            <td>{{system.prowlPenalty}}</td>
+            <td>{{system.weight}}</td>
+            <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{/if}}
+      <a class="ee-create-item" data-action="create-item" data-type="armor" title="Create Armor Item"><i class="fas fa-plus"></i> Armor Item</a>
+
       {{!-- Power Armor / Mech --}}
       <h2 class="ee-bar">POWER ARMOR / MECH</h2>
       <div class="ee-row"><label>Name:</label><input type="text" name="system.powerArmor.name" value="{{system.powerArmor.name}}"/></div>
@@ -497,6 +566,26 @@
           <button type="button" class="ee-add" data-action="add-row" data-path="powerArmor.weapons" data-kind="paWeapon">+ Add</button>
         </div>
       </div>
+
+      {{#if itemsByType.powerArmor.length}}
+      <h3 class="ee-subbar">Power Armor Items</h3>
+      <table class="ee-table">
+        <thead><tr><th>Name</th><th>AR</th><th>MDC</th><th>Speed</th><th>Weight</th><th></th></tr></thead>
+        <tbody>
+          {{#each itemsByType.powerArmor}}
+          <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+            <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+            <td>{{system.ar}}</td>
+            <td>{{system.mdc.current}}/{{system.mdc.max}}</td>
+            <td>{{system.speed}}</td>
+            <td>{{system.weight}}</td>
+            <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{/if}}
+      <a class="ee-create-item" data-action="create-item" data-type="powerArmor" title="Create Power Armor Item"><i class="fas fa-plus"></i> Power Armor Item</a>
     </div>
 
     {{!-- ===== POWERS TAB ===== --}}
@@ -524,6 +613,49 @@
         </tbody>
       </table>
       <button type="button" class="ee-add" data-action="add-row" data-path="powers" data-kind="power">+ Add</button>
+
+      {{#if itemsByType.spell.length}}
+      <h3 class="ee-subbar">Spell Items</h3>
+      <table class="ee-table">
+        <thead><tr><th>Name</th><th>Level</th><th>PPE</th><th>Range</th><th>Duration</th><th>Save</th><th>Damage</th><th></th></tr></thead>
+        <tbody>
+          {{#each itemsByType.spell}}
+          <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+            <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+            <td>{{system.level}}</td>
+            <td>{{system.ppeCost}}</td>
+            <td>{{system.range}}</td>
+            <td>{{system.duration}}</td>
+            <td>{{system.savingThrow}}</td>
+            <td>{{system.damage}}</td>
+            <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{/if}}
+      <a class="ee-create-item" data-action="create-item" data-type="spell" title="Create Spell Item"><i class="fas fa-plus"></i> Spell Item</a>
+
+      {{#if itemsByType.psionicPower.length}}
+      <h3 class="ee-subbar">Psionic Power Items</h3>
+      <table class="ee-table">
+        <thead><tr><th>Name</th><th>ISP</th><th>Range</th><th>Duration</th><th>Save</th><th>Damage</th><th></th></tr></thead>
+        <tbody>
+          {{#each itemsByType.psionicPower}}
+          <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+            <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+            <td>{{system.ispCost}}</td>
+            <td>{{system.range}}</td>
+            <td>{{system.duration}}</td>
+            <td>{{system.savingThrow}}</td>
+            <td>{{system.damage}}</td>
+            <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{/if}}
+      <a class="ee-create-item" data-action="create-item" data-type="psionicPower" title="Create Psionic Power Item"><i class="fas fa-plus"></i> Psionic Power Item</a>
 
       <h2 class="ee-bar">PSIONIC ABILITIES</h2>
       <div class="ee-psi-grid">
@@ -712,6 +844,27 @@
           <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.weapons" data-kind="vehicleWeapon">+ Add</button>
         </div>
       </div>
+
+      {{#if itemsByType.vehicle.length}}
+      <h3 class="ee-subbar">Vehicle Items</h3>
+      <table class="ee-table">
+        <thead><tr><th>Name</th><th>Type</th><th>AR</th><th>MDC</th><th>Speed</th><th>Cargo</th><th></th></tr></thead>
+        <tbody>
+          {{#each itemsByType.vehicle}}
+          <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+            <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+            <td>{{lookup ../config.VEHICLE_TYPES system.vehicleType}}</td>
+            <td>{{system.ar}}</td>
+            <td>{{system.mdc.current}}/{{system.mdc.max}}</td>
+            <td>{{system.speed}}</td>
+            <td>{{system.cargo}}</td>
+            <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{/if}}
+      <a class="ee-create-item" data-action="create-item" data-type="vehicle" title="Create Vehicle Item"><i class="fas fa-plus"></i> Vehicle Item</a>
     </div>
 
 
@@ -748,6 +901,66 @@
         <h3>Armor <a class="ee-create-item" data-action="create-item" data-type="armor" title="Create Armor"><i class="fas fa-plus"></i></a></h3>
         <ul class="ee-item-list">
           {{#each itemsByType.armor}}
+          <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+            <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="ee-panel">
+        <h3>Power Armor <a class="ee-create-item" data-action="create-item" data-type="powerArmor" title="Create Power Armor"><i class="fas fa-plus"></i></a></h3>
+        <ul class="ee-item-list">
+          {{#each itemsByType.powerArmor}}
+          <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+            <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="ee-panel">
+        <h3>Spells <a class="ee-create-item" data-action="create-item" data-type="spell" title="Create Spell"><i class="fas fa-plus"></i></a></h3>
+        <ul class="ee-item-list">
+          {{#each itemsByType.spell}}
+          <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+            <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="ee-panel">
+        <h3>Vehicles <a class="ee-create-item" data-action="create-item" data-type="vehicle" title="Create Vehicle"><i class="fas fa-plus"></i></a></h3>
+        <ul class="ee-item-list">
+          {{#each itemsByType.vehicle}}
+          <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+            <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="ee-panel">
+        <h3>Races <a class="ee-create-item" data-action="create-item" data-type="race" title="Create Race"><i class="fas fa-plus"></i></a></h3>
+        <ul class="ee-item-list">
+          {{#each itemsByType.race}}
+          <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+            <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="ee-panel">
+        <h3>OCCs <a class="ee-create-item" data-action="create-item" data-type="occ" title="Create OCC"><i class="fas fa-plus"></i></a></h3>
+        <ul class="ee-item-list">
+          {{#each itemsByType.occ}}
           <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
             <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>

@@ -102,12 +102,17 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.system.contacts = toArr(sys.contacts);
     if (ctx.system.money) ctx.system.money.outfits = toArr(sys.money?.outfits);
 
-    const itemBuckets = { psionicPower: [], weapon: [], armor: [], gear: [] };
+    const itemBuckets = {
+      psionicPower: [], spell: [], weapon: [], armor: [], powerArmor: [],
+      vehicle: [], race: [], occ: [], gear: []
+    };
     for (const item of this.actor.items) {
       const type = item.type in itemBuckets ? item.type : "gear";
       itemBuckets[type].push(item);
     }
     ctx.itemsByType = itemBuckets;
+    ctx.weaponItemsModern  = itemBuckets.weapon.filter(i => (i.system?.category ?? "modern") === "modern");
+    ctx.weaponItemsAncient = itemBuckets.weapon.filter(i => i.system?.category === "ancient");
 
     return ctx;
   }
@@ -138,8 +143,13 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const type = ev.currentTarget.dataset.type;
     const labels = {
       psionicPower: "Psionic Power",
+      spell: "Spell",
       weapon: "Weapon",
       armor: "Armor",
+      powerArmor: "Power Armor",
+      vehicle: "Vehicle",
+      race: "Race",
+      occ: "OCC",
       gear: "Gear"
     };
     const name = `New ${labels[type] ?? "Item"}`;

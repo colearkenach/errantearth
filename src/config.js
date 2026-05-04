@@ -62,3 +62,8 @@ EE.RACE_SUGGESTIONS = [
   "Human", "D-Bee", "Dragon Hatchling", "Psi-Stalker", "True Atlantean",
   "Wolfen", "Dog Boy", "Crazy", "Mutant"
 ];
+
+EE.WEAPON_CATEGORIES = {
+  modern:  "Modern",
+  ancient: "Ancient"
+};

@@ -376,8 +376,13 @@
   "Item": {
     "types": [
       "psionicPower",
+      "spell",
       "weapon",
       "armor",
+      "powerArmor",
+      "vehicle",
+      "race",
+      "occ",
       "gear"
     ],
     "templates": {},
@@ -385,14 +390,31 @@
       "description": "",
       "ispCost": 0,
       "duration": "",
-      "range": ""
+      "range": "",
+      "savingThrow": "",
+      "damage": ""
+    },
+    "spell": {
+      "description": "",
+      "level": 1,
+      "ppeCost": 0,
+      "duration": "",
+      "range": "",
+      "savingThrow": "",
+      "damage": ""
     },
     "weapon": {
+      "category": "modern",
       "damage": "",
       "damageType": "",
       "range": "",
       "ammo": "",
-      "rate": ""
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": ""
     },
     "armor": {
       "ar": 0,
@@ -400,12 +422,60 @@
         "current": 0,
         "max": 0
       },
+      "weight": "",
+      "cost": "",
+      "prowlPenalty": 0,
       "notes": ""
+    },
+    "powerArmor": {
+      "description": "",
+      "ar": 0,
+      "mdc": {
+        "current": 0,
+        "max": 0
+      },
+      "speed": "",
+      "weight": "",
+      "cost": "",
+      "notes": ""
+    },
+    "vehicle": {
+      "description": "",
+      "vehicleType": "",
+      "ar": 0,
+      "mdc": {
+        "current": 0,
+        "max": 0
+      },
+      "speed": "",
+      "weight": "",
+      "cargo": "",
+      "cost": "",
+      "notes": ""
+    },
+    "race": {
+      "description": "",
+      "lifespan": "",
+      "size": "",
+      "abilities": "",
+      "bonuses": "",
+      "languages": ""
+    },
+    "occ": {
+      "description": "",
+      "category": "",
+      "skillsOcc": "",
+      "skillsRelated": "",
+      "skillsSecondary": "",
+      "bonuses": "",
+      "equipment": "",
+      "money": ""
     },
     "gear": {
       "description": "",
       "quantity": 1,
-      "weight": ""
+      "weight": "",
+      "cost": ""
     }
   }
 }

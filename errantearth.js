@@ -17,7 +17,7 @@ Hooks.once("init", async () => {
 
 
   Items.registerSheet("errantearth", ErrantEarthItemSheet, {
-    types: ["psionicPower", "weapon", "armor", "gear"],
+    types: ["psionicPower", "spell", "weapon", "armor", "powerArmor", "vehicle", "race", "occ", "gear"],
     makeDefault: true,
     label: "Errant Earth Item Sheet"
   });
