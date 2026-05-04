@@ -295,3 +295,120 @@ display: flex;
   padding: 0 4px;
 }
 [data-action="delete-row"]:hover { color: #f00; }
+
+/* ---------------- Roll chat card ---------------- */
+.ee-roll-card {
+  --ee-card-red:   #8b1a1a;
+  --ee-card-bg:    #f4ecd8;
+  --ee-card-line:  #4a2a1a;
+  border: 2px solid var(--ee-card-line);
+  border-radius: 4px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0)) #f4ecd8;
+  font-family: "Signika", sans-serif;
+  color: #1a1a1a;
+  margin: 2px 0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+.ee-roll-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: linear-gradient(90deg, #1a1a2a, var(--ee-card-red));
+  color: #f4ecd8;
+  border-bottom: 2px solid var(--ee-card-line);
+}
+.ee-roll-card__portrait {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border: 1px solid #f4ecd8;
+  border-radius: 2px;
+  background: #000;
+  flex: 0 0 auto;
+}
+.ee-roll-card__heading { display: flex; flex-direction: column; min-width: 0; }
+.ee-roll-card__actor {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+.ee-roll-card__label {
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ee-roll-card__body { padding: 8px 10px; }
+.ee-roll-card__subtitle {
+  font-size: 11px;
+  font-style: italic;
+  color: #4a2a1a;
+  margin-bottom: 4px;
+}
+.ee-roll-card__formula {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.18);
+  border-radius: 3px;
+}
+.ee-roll-card__formula-text {
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: #333;
+}
+.ee-roll-card__total {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ee-card-red);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+.ee-roll-card__total.success { color: #1a6e2a; }
+.ee-roll-card__total.failure { color: #8b1a1a; }
+.ee-roll-card__dice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+.ee-roll-card__die {
+  display: inline-block;
+  min-width: 22px;
+  text-align: center;
+  padding: 2px 5px;
+  background: #fff;
+  border: 1px solid #4a2a1a;
+  border-radius: 3px;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 12px;
+}
+.ee-roll-card__die.ee-die-max { background: #d9efd2; border-color: #1a6e2a; color: #1a6e2a; }
+.ee-roll-card__die.ee-die-min { background: #f1cccc; border-color: #8b1a1a; color: #8b1a1a; }
+.ee-roll-card__outcome {
+  margin-top: 6px;
+  padding: 3px 6px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 3px;
+}
+.ee-roll-card__outcome--success { background: #d9efd2; color: #1a6e2a; border: 1px solid #1a6e2a; }
+.ee-roll-card__outcome--failure { background: #f1cccc; color: #8b1a1a; border: 1px solid #8b1a1a; }
+
+/* ---------------- Tooltip helper ---------------- */
+.ee-tooltip {
+  border-bottom: 1px dotted #666;
+  cursor: help;
+}

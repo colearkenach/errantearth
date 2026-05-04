@@ -50,14 +50,22 @@
     </div>
 
     <div class="ee-row ee-attrs">
-      <label>IQ:</label>  <input type="number" name="system.attributes.iq.value"  value="{{system.attributes.iq.value}}"/>
-      <label>ME:</label>  <input type="number" name="system.attributes.me.value"  value="{{system.attributes.me.value}}"/>
-      <label>MA:</label>  <input type="number" name="system.attributes.ma.value"  value="{{system.attributes.ma.value}}"/>
-      <label>PS:</label>  <input type="number" name="system.attributes.ps.value"  value="{{system.attributes.ps.value}}"/>
-      <label>PP:</label>  <input type="number" name="system.attributes.pp.value"  value="{{system.attributes.pp.value}}"/>
-      <label>PE:</label>  <input type="number" name="system.attributes.pe.value"  value="{{system.attributes.pe.value}}"/>
-      <label>PB:</label>  <input type="number" name="system.attributes.pb.value"  value="{{system.attributes.pb.value}}"/>
-      <label>SPD:</label> <input type="number" name="system.attributes.spd.value" value="{{system.attributes.spd.value}}"/>
+      <label class="ee-tooltip" data-tooltip="Intelligence Quotient — mental acuity, reasoning, and learning ability. Adds a skill bonus at 16+.">IQ:</label>
+      <input type="number" name="system.attributes.iq.value"  value="{{system.attributes.iq.value}}"/>
+      <label class="ee-tooltip" data-tooltip="Mental Endurance — willpower, mental stamina, and resistance to psionic, magical, and emotional attacks.">ME:</label>
+      <input type="number" name="system.attributes.me.value"  value="{{system.attributes.me.value}}"/>
+      <label class="ee-tooltip" data-tooltip="Mental Affinity — personal magnetism and presence. High MA grants a Trust/Intimidate bonus at 16+.">MA:</label>
+      <input type="number" name="system.attributes.ma.value"  value="{{system.attributes.ma.value}}"/>
+      <label class="ee-tooltip" data-tooltip="Physical Strength — muscle. Determines lift/carry, melee damage bonus, and is augmented or supernatural for some races.">PS:</label>
+      <input type="number" name="system.attributes.ps.value"  value="{{system.attributes.ps.value}}"/>
+      <label class="ee-tooltip" data-tooltip="Physical Prowess — agility, dexterity, hand-eye coordination. Adds bonuses to strike, parry, and dodge at 16+.">PP:</label>
+      <input type="number" name="system.attributes.pp.value"  value="{{system.attributes.pp.value}}"/>
+      <label class="ee-tooltip" data-tooltip="Physical Endurance — stamina and constitution. Resistance to fatigue, disease, drugs, and poison; bonus to save vs coma/death at 16+.">PE:</label>
+      <input type="number" name="system.attributes.pe.value"  value="{{system.attributes.pe.value}}"/>
+      <label class="ee-tooltip" data-tooltip="Physical Beauty — appearance and charm. Grants a Charm/Impress bonus at 16+.">PB:</label>
+      <input type="number" name="system.attributes.pb.value"  value="{{system.attributes.pb.value}}"/>
+      <label class="ee-tooltip" data-tooltip="Speed — running speed. Multiply by 20 for yards per minute, or roughly SPD ÷ 3 mph on open ground.">SPD:</label>
+      <input type="number" name="system.attributes.spd.value" value="{{system.attributes.spd.value}}"/>
     </div>
 
     <div class="ee-row ee-pools">
@@ -103,12 +111,12 @@
       <h2 class="ee-bar">SKILLS</h2>
 
       <div class="ee-row ee-skill-bonuses">
-        <label>IQ Bonus to Skill:</label>
-        <input type="number" value="{{derived.iqBonus}}" disabled title="Auto-computed from IQ"/>
-        <label>Trust/Intimidate:</label>
-        <input type="number" value="{{derived.trustIntimidate}}" disabled title="Auto-computed from MA"/>
-        <label>Charm/Impress:</label>
-        <input type="number" value="{{derived.charmImpress}}" disabled title="Auto-computed from PB"/>
+        <label class="ee-tooltip" data-tooltip="Auto-computed from IQ. Adds a flat percentage to every skill total. +3% per point of IQ above 15.">IQ Bonus to Skill:</label>
+        <input type="number" value="{{derived.iqBonus}}" disabled/>
+        <label class="ee-tooltip" data-tooltip="Auto-computed from MA. The percentage chance to inspire trust or intimidate others. Kicks in at MA 16+.">Trust/Intimidate:</label>
+        <input type="number" value="{{derived.trustIntimidate}}" disabled/>
+        <label class="ee-tooltip" data-tooltip="Auto-computed from PB. The percentage chance to charm or impress others. Kicks in at PB 16+.">Charm/Impress:</label>
+        <input type="number" value="{{derived.charmImpress}}" disabled/>
       </div>
 
       <div class="ee-skill-grid">

@@ -134,71 +134,10 @@
 
       "powers": [],
       "psionics": {
-        "healing": [
-          { "name": "Bio-Regeneration (Self)", "isp": "6",  "notes": "" },
-          { "name": "Deaden Pain",             "isp": "4",  "notes": "" },
-          { "name": "Detect Psionics",         "isp": "6",  "notes": "" },
-          { "name": "Healing Touch",           "isp": "6",  "notes": "" },
-          { "name": "Increase Healing",        "isp": "10", "notes": "" },
-          { "name": "Induce Sleep",            "isp": "4",  "notes": "" },
-          { "name": "Psychic Diagnosis",       "isp": "4",  "notes": "" },
-          { "name": "Psychic Purification",    "isp": "8",  "notes": "" },
-          { "name": "Psychic Surgery",         "isp": "14", "notes": "" },
-          { "name": "Resist Fatigue",          "isp": "4",  "notes": "" },
-          { "name": "Resist Hunger",           "isp": "2",  "notes": "" },
-          { "name": "Resist Thirst",           "isp": "6",  "notes": "" },
-          { "name": "See Aura",                "isp": "6",  "notes": "" },
-          { "name": "Stop Bleeding",           "isp": "1",  "notes": "" }
-        ],
-        "sensitive": [
-          { "name": "Astral Projection",   "isp": "8", "notes": "" },
-          { "name": "Clairvoyance",        "isp": "4", "notes": "" },
-          { "name": "Empathy",             "isp": "4", "notes": "" },
-          { "name": "Mind Block",          "isp": "4", "notes": "" },
-          { "name": "Object Read",         "isp": "6", "notes": "" },
-          { "name": "Presence Sense",      "isp": "4", "notes": "" },
-          { "name": "See Aura",            "isp": "6", "notes": "" },
-          { "name": "See the Invisible",   "isp": "4", "notes": "" },
-          { "name": "Sense Evil",          "isp": "2", "notes": "" },
-          { "name": "Sense Magic",         "isp": "3", "notes": "" },
-          { "name": "Sixth Sense",         "isp": "2", "notes": "" },
-          { "name": "Speed Reading",       "isp": "2", "notes": "" },
-          { "name": "Telepathy",           "isp": "4", "notes": "" },
-          { "name": "Total Recall",        "isp": "2", "notes": "" }
-        ],
-        "physical": [
-          { "name": "Alter Aura",            "isp": "2",      "notes": "" },
-          { "name": "Death Trance",          "isp": "1",      "notes": "" },
-          { "name": "Deaden Senses",         "isp": "4",      "notes": "" },
-          { "name": "Impervious to Cold",    "isp": "2",      "notes": "" },
-          { "name": "Impervious to Fire",    "isp": "4",      "notes": "" },
-          { "name": "Impervious to Poison",  "isp": "4",      "notes": "" },
-          { "name": "Levitation",            "isp": "varies", "notes": "" },
-          { "name": "Mind Block",            "isp": "4",      "notes": "" },
-          { "name": "Nightvision",           "isp": "4",      "notes": "" },
-          { "name": "Resist Fatigue",        "isp": "4",      "notes": "" },
-          { "name": "Summon Inner Strength", "isp": "4",      "notes": "" },
-          { "name": "Telekinesis",           "isp": "varies", "notes": "" }
-        ],
-        "super": [
-          { "name": "Bio-Manipulation",         "isp": "10",     "notes": "" },
-          { "name": "Empathic Transmission",    "isp": "6",      "notes": "" },
-          { "name": "Electrokinesis",           "isp": "varies", "notes": "" },
-          { "name": "Group Mind Block",         "isp": "22",     "notes": "" },
-          { "name": "Hydrokinesis",             "isp": "varies", "notes": "" },
-          { "name": "Hypnotic Suggestion",      "isp": "6",      "notes": "" },
-          { "name": "Mentally Possess Others",  "isp": "30",     "notes": "" },
-          { "name": "Mind Bolt",                "isp": "varies", "notes": "" },
-          { "name": "Mind Bond",                "isp": "10",     "notes": "" },
-          { "name": "Mind Wipe",                "isp": "30",     "notes": "(REM)" },
-          { "name": "Pyrokinesis",              "isp": "varies", "notes": "" },
-          { "name": "P-Shield",                 "isp": "30",     "notes": "" },
-          { "name": "Psi-Sword",                "isp": "30",     "notes": "" },
-          { "name": "Psionic Invisibility",     "isp": "10+",    "notes": "" },
-          { "name": "Telekinesis (Super)",      "isp": "10+",    "notes": "" },
-          { "name": "Telekinetic Force Field",  "isp": "30",     "notes": "" },
-          { "name": "Telemechanics",            "isp": "10",     "notes": "" }
-        ]
+        "healing":   [],
+        "sensitive": [],
+        "physical":  [],
+        "super":     []
       },
 
       "vehicle": {

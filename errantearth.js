@@ -14,7 +14,8 @@ Hooks.once("init", async () => {
   });
 
   await loadTemplates([
-    "systems/errantearth/templates/actor/character-sheet.html"
+    "systems/errantearth/templates/actor/character-sheet.html",
+    "systems/errantearth/templates/chat/roll-card.html"
   ]);
 
   Handlebars.registerHelper("ee_default", (val, fallback) =>
@@ -63,6 +64,21 @@ Hooks.once("ready", async () => {
     if (ht && hthMap[ht]) update["system.handToHand.type"] = hthMap[ht];
     const pht = actor.system.powerArmor?.handToHand?.type;
     if (pht && hthMap[pht]) update["system.powerArmor.handToHand.type"] = hthMap[pht];
+
+    // Clear auto-populated psionic lists (detected by first-entry sentinel).
+    const psiSentinels = {
+      healing:   "Bio-Regeneration (Self)",
+      sensitive: "Astral Projection",
+      physical:  "Alter Aura",
+      super:     "Bio-Manipulation"
+    };
+    for (const [bucket, sentinel] of Object.entries(psiSentinels)) {
+      const arr = actor.system.psionics?.[bucket];
+      if (Array.isArray(arr) && arr[0]?.name === sentinel) {
+        update[`system.psionics.${bucket}`] = [];
+      }
+    }
+
     if (Object.keys(update).length) await actor.update(update);
   }
 });

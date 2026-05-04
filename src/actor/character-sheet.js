@@ -124,46 +124,76 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const el = ev.currentTarget;
     const type  = el.dataset.rollType;
     const label = el.dataset.label || "Roll";
-    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     const PIS = ErrantEarthCharacterSheet._parseIntSafe;
 
+    const card = { kind: type, label, subtitle: "", outcome: "", outcomeClass: "" };
+
     try {
+      let roll;
       switch (type) {
         case "skill": {
           const target = Number(el.dataset.target ?? 0);
-          const roll = await new Roll("1d100").evaluate();
+          roll = await new Roll("1d100").evaluate();
           const success = roll.total <= target;
-          return roll.toMessage({ speaker, flavor: `${label} — ${target}% — ${success ? "Success" : "Failure"}` });
+          card.subtitle = `Target ${target}% (roll under)`;
+          card.outcome = success ? "Success" : "Failure";
+          card.outcomeClass = success ? "success" : "failure";
+          break;
         }
         case "d20": {
           const bonus = PIS(el.dataset.bonus);
           const sign = bonus >= 0 ? "+" : "";
-          const roll = await new Roll(`1d20${sign}${bonus}`).evaluate();
-          return roll.toMessage({ speaker, flavor: label });
+          roll = await new Roll(`1d20${sign}${bonus}`).evaluate();
+          card.subtitle = bonus ? `1d20 ${sign} ${Math.abs(bonus)}` : "1d20";
+          break;
         }
         case "save": {
           const baseRaw = el.dataset.base ?? "";
           const bonus = PIS(el.dataset.bonus);
           const sign = bonus >= 0 ? "+" : "";
-          const roll = await new Roll(`1d20${sign}${bonus}`).evaluate();
+          roll = await new Roll(`1d20${sign}${bonus}`).evaluate();
           const baseNum = Number(baseRaw);
-          let flavor = label;
           if (baseRaw !== "" && Number.isFinite(baseNum)) {
-            flavor += ` — Need ${baseNum}+ — ${roll.total >= baseNum ? "Success" : "Failure"}`;
+            const success = roll.total >= baseNum;
+            card.subtitle = `Need ${baseNum}+`;
+            card.outcome = success ? "Success" : "Failure";
+            card.outcomeClass = success ? "success" : "failure";
           } else if (baseRaw) {
-            flavor += ` — Target: ${baseRaw}`;
+            card.subtitle = `Target: ${baseRaw}`;
           }
-          return roll.toMessage({ speaker, flavor });
+          break;
         }
         case "damage": {
           const formula = (el.dataset.formula || "").trim();
           if (!formula) return ui.notifications?.warn(`${label}: no damage formula set.`);
-          const roll = await new Roll(formula).evaluate();
-          return roll.toMessage({ speaker, flavor: `${label} — Damage` });
+          roll = await new Roll(formula).evaluate();
+          card.subtitle = "Damage";
+          break;
         }
         default:
           return ui.notifications?.warn(`Unknown roll type: ${type}`);
       }
+
+      card.formula = roll.formula;
+      card.total = roll.total;
+      card.actorName = this.actor.name;
+      card.actorImg  = this.actor.img;
+      card.dice = roll.dice.flatMap(d => d.results.map(r => ({
+        value: r.result,
+        cls: [
+          d.faces === r.result ? "ee-die-max" : "",
+          r.result === 1 ? "ee-die-min" : ""
+        ].filter(Boolean).join(" ")
+      })));
+
+      const content = await renderTemplate("systems/errantearth/templates/chat/roll-card.html", card);
+      return ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        content,
+        rolls: [roll],
+        sound: CONFIG.sounds.dice,
+        rollMode: game.settings.get("core", "rollMode")
+      });
     } catch (err) {
       console.error("Errant Earth roll failed", err);
       ui.notifications?.error(`Roll failed: ${err.message}`);
