@@ -67,3 +67,20 @@ EE.WEAPON_CATEGORIES = {
   modern:  "Modern",
   ancient: "Ancient"
 };
+
+EE.SKILL_CATEGORIES = {
+  occ:        "OCC",
+  occRelated: "OCC Related",
+  secondary:  "Secondary"
+};
+
+EE.ATTRIBUTES = {
+  iq:  "IQ",
+  me:  "ME",
+  ma:  "MA",
+  ps:  "PS",
+  pp:  "PP",
+  pe:  "PE",
+  pb:  "PB",
+  spd: "SPD"
+};

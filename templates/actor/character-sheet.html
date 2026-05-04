@@ -16,6 +16,7 @@
       <label>True Name:</label> <input type="text" name="system.trueName" value="{{system.trueName}}"/>
       <label>Race:</label>      <input type="text" list="ee-race-list" name="system.race" value="{{system.race}}"/>
       <datalist id="ee-race-list">{{eeDatalistOptions config.RACE_SUGGESTIONS}}</datalist>
+      {{#if equippedRaceItem}}<span class="ee-equipped-badge" title="Equipped from Race item">{{#if equippedRaceItem.system.isMDC}}MDC{{else}}SDC{{/if}}</span>{{/if}}
       <label>Gender:</label>    <input type="text" name="system.gender" value="{{system.gender}}"/>
     </div>
 
@@ -468,15 +469,20 @@
       {{#if itemsByType.armor.length}}
       <h3 class="ee-subbar">Armor Items</h3>
       <table class="ee-table">
-        <thead><tr><th>Name</th><th>AR</th><th>MDC</th><th>Prowl</th><th>Weight</th><th></th></tr></thead>
+        <thead><tr><th>Name</th><th>Type</th><th>AR</th><th>Main</th><th>Head</th><th>L Arm</th><th>R Arm</th><th>L Leg</th><th>R Leg</th><th>Prowl</th><th></th></tr></thead>
         <tbody>
           {{#each itemsByType.armor}}
           <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+            <td>{{#if system.isMDC}}MDC{{else}}SDC{{/if}}</td>
             <td>{{system.ar}}</td>
-            <td>{{system.mdc.current}}/{{system.mdc.max}}</td>
+            <td>{{system.locations.mainBody.current}}/{{system.locations.mainBody.max}}</td>
+            <td>{{system.locations.head.current}}/{{system.locations.head.max}}</td>
+            <td>{{system.locations.leftArm.current}}/{{system.locations.leftArm.max}}</td>
+            <td>{{system.locations.rightArm.current}}/{{system.locations.rightArm.max}}</td>
+            <td>{{system.locations.leftLeg.current}}/{{system.locations.leftLeg.max}}</td>
+            <td>{{system.locations.rightLeg.current}}/{{system.locations.rightLeg.max}}</td>
             <td>{{system.prowlPenalty}}</td>
-            <td>{{system.weight}}</td>
             <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
           </tr>
           {{/each}}
@@ -570,15 +576,20 @@
       {{#if itemsByType.powerArmor.length}}
       <h3 class="ee-subbar">Power Armor Items</h3>
       <table class="ee-table">
-        <thead><tr><th>Name</th><th>AR</th><th>MDC</th><th>Speed</th><th>Weight</th><th></th></tr></thead>
+        <thead><tr><th>Name</th><th>Type</th><th>AR</th><th>Main</th><th>Head</th><th>L Arm</th><th>R Arm</th><th>L Leg</th><th>R Leg</th><th>Speed</th><th></th></tr></thead>
         <tbody>
           {{#each itemsByType.powerArmor}}
           <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+            <td>{{#if system.isMDC}}MDC{{else}}SDC{{/if}}</td>
             <td>{{system.ar}}</td>
-            <td>{{system.mdc.current}}/{{system.mdc.max}}</td>
+            <td>{{system.locations.mainBody.current}}/{{system.locations.mainBody.max}}</td>
+            <td>{{system.locations.head.current}}/{{system.locations.head.max}}</td>
+            <td>{{system.locations.leftArm.current}}/{{system.locations.leftArm.max}}</td>
+            <td>{{system.locations.rightArm.current}}/{{system.locations.rightArm.max}}</td>
+            <td>{{system.locations.leftLeg.current}}/{{system.locations.leftLeg.max}}</td>
+            <td>{{system.locations.rightLeg.current}}/{{system.locations.rightLeg.max}}</td>
             <td>{{system.speed}}</td>
-            <td>{{system.weight}}</td>
             <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
           </tr>
           {{/each}}
@@ -848,12 +859,13 @@
       {{#if itemsByType.vehicle.length}}
       <h3 class="ee-subbar">Vehicle Items</h3>
       <table class="ee-table">
-        <thead><tr><th>Name</th><th>Type</th><th>AR</th><th>MDC</th><th>Speed</th><th>Cargo</th><th></th></tr></thead>
+        <thead><tr><th>Name</th><th>Type</th><th>Struct</th><th>AR</th><th>HP/MDC</th><th>Speed</th><th>Cargo</th><th></th></tr></thead>
         <tbody>
           {{#each itemsByType.vehicle}}
           <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
             <td>{{lookup ../config.VEHICLE_TYPES system.vehicleType}}</td>
+            <td>{{#if system.isMDC}}MDC{{else}}SDC{{/if}}</td>
             <td>{{system.ar}}</td>
             <td>{{system.mdc.current}}/{{system.mdc.max}}</td>
             <td>{{system.speed}}</td>
@@ -951,7 +963,15 @@
           {{#each itemsByType.race}}
           <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+            {{#if (eq id ../equippedRaceId)}}<span class="ee-equipped-badge">Equipped</span>{{/if}}
+            <span class="ee-actions">
+              {{#if (eq id ../equippedRaceId)}}
+              <a class="ee-unequip-btn" data-action="unequip-item" data-slot="race" title="Unequip Race"><i class="fas fa-times-circle"></i></a>
+              {{else}}
+              <a class="ee-equip-btn" data-action="equip-item" data-item-id="{{id}}" title="Equip Race"><i class="fas fa-check-circle"></i></a>
+              {{/if}}
+              <a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a>
+            </span>
           </li>
           {{/each}}
         </ul>
@@ -963,7 +983,15 @@
           {{#each itemsByType.occ}}
           <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+            {{#if (eq id ../equippedOccId)}}<span class="ee-equipped-badge">Equipped</span>{{/if}}
+            <span class="ee-actions">
+              {{#if (eq id ../equippedOccId)}}
+              <a class="ee-unequip-btn" data-action="unequip-item" data-slot="occ" title="Unequip OCC"><i class="fas fa-times-circle"></i></a>
+              {{else}}
+              <a class="ee-equip-btn" data-action="equip-item" data-item-id="{{id}}" title="Equip OCC"><i class="fas fa-check-circle"></i></a>
+              {{/if}}
+              <a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a>
+            </span>
           </li>
           {{/each}}
         </ul>

@@ -114,6 +114,11 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.weaponItemsModern  = itemBuckets.weapon.filter(i => (i.system?.category ?? "modern") === "modern");
     ctx.weaponItemsAncient = itemBuckets.weapon.filter(i => i.system?.category === "ancient");
 
+    ctx.equippedRaceId = sys.equippedRace ?? "";
+    ctx.equippedOccId  = sys.equippedOcc  ?? "";
+    ctx.equippedRaceItem = ctx.equippedRaceId ? this.actor.items.get(ctx.equippedRaceId) : null;
+    ctx.equippedOccItem  = ctx.equippedOccId  ? this.actor.items.get(ctx.equippedOccId)  : null;
+
     return ctx;
   }
 
@@ -127,6 +132,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     html.on("click", "[data-action='edit-item']",  this._onEditItem.bind(this));
     html.on("click", "[data-action='delete-item']", this._onDeleteItem.bind(this));
     html.on("click", "[data-action='create-item']", this._onCreateItem.bind(this));
+    html.on("click", "[data-action='equip-item']",   this._onEquipItem.bind(this));
+    html.on("click", "[data-action='unequip-item']", this._onUnequipItem.bind(this));
 
     const dropZone = html.find(".ee-items-tab")[0];
     if (dropZone) {
@@ -155,6 +162,26 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const name = `New ${labels[type] ?? "Item"}`;
     const [created] = await this.actor.createEmbeddedDocuments("Item", [{ name, type }]);
     return created?.sheet?.render(true);
+  }
+
+  async _onEquipItem(ev) {
+    ev.preventDefault();
+    const id = ev.currentTarget.dataset.itemId;
+    const item = this.actor.items.get(id);
+    if (!item) return;
+    if (item.type === "race") {
+      return this.actor.update({ "system.equippedRace": id, "system.race": item.name });
+    }
+    if (item.type === "occ") {
+      return this.actor.update({ "system.equippedOcc": id, "system.occ": item.name });
+    }
+  }
+
+  async _onUnequipItem(ev) {
+    ev.preventDefault();
+    const slot = ev.currentTarget.dataset.slot;
+    if (slot === "race") return this.actor.update({ "system.equippedRace": "" });
+    if (slot === "occ")  return this.actor.update({ "system.equippedOcc": "" });
   }
 
   static _parseIntSafe(v) {
