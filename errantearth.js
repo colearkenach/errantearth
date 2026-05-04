@@ -1,4 +1,5 @@
 import { ErrantEarthCharacterSheet } from "./src/actor/character-sheet.js";
+import { ErrantEarthItemSheet } from "./src/item/item-sheet.js";
 import { EE } from "./src/config.js";
 
 Hooks.once("init", async () => {
@@ -7,15 +8,24 @@ Hooks.once("init", async () => {
   game.ee = EE;
 
   Actors.unregisterSheet("core", ActorSheet);
+  Items.unregisterSheet("core", ItemSheet);
   Actors.registerSheet("errantearth", ErrantEarthCharacterSheet, {
     types: ["character"],
     makeDefault: true,
     label: "Errant Earth Character Sheet"
   });
 
+
+  Items.registerSheet("errantearth", ErrantEarthItemSheet, {
+    types: ["psionicPower", "weapon", "armor", "gear"],
+    makeDefault: true,
+    label: "Errant Earth Item Sheet"
+  });
+
   await loadTemplates([
     "systems/errantearth/templates/actor/character-sheet.html",
-    "systems/errantearth/templates/chat/roll-card.html"
+    "systems/errantearth/templates/chat/roll-card.html",
+    "systems/errantearth/templates/item/item-sheet.html"
   ]);
 
   Handlebars.registerHelper("ee_default", (val, fallback) =>
