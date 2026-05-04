@@ -101,6 +101,13 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.system.contacts = toArr(sys.contacts);
     if (ctx.system.money) ctx.system.money.outfits = toArr(sys.money?.outfits);
 
+    const itemBuckets = { psionicPower: [], weapon: [], armor: [], gear: [] };
+    for (const item of this.actor.items) {
+      const type = item.type in itemBuckets ? item.type : "gear";
+      itemBuckets[type].push(item);
+    }
+    ctx.itemsByType = itemBuckets;
+
     return ctx;
   }
 
@@ -111,6 +118,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     html.on("click", "[data-action='add-row']",    this._onAddRow.bind(this));
     html.on("click", "[data-action='delete-row']", this._onDeleteRow.bind(this));
     html.on("click", "[data-action='roll']",       this._onRoll.bind(this));
+    html.on("click", "[data-action='edit-item']",  this._onEditItem.bind(this));
+    html.on("click", "[data-action='delete-item']", this._onDeleteItem.bind(this));
   }
 
   static _parseIntSafe(v) {
@@ -198,6 +207,20 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       console.error("Errant Earth roll failed", err);
       ui.notifications?.error(`Roll failed: ${err.message}`);
     }
+  }
+
+
+  async _onEditItem(ev) {
+    ev.preventDefault();
+    const id = ev.currentTarget.dataset.itemId;
+    const item = this.actor.items.get(id);
+    return item?.sheet?.render(true);
+  }
+
+  async _onDeleteItem(ev) {
+    ev.preventDefault();
+    const id = ev.currentTarget.dataset.itemId;
+    return this.actor.deleteEmbeddedDocuments("Item", [id]);
   }
 
   _getArrayPath(path) {
