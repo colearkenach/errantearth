@@ -716,15 +716,15 @@
 
 
     {{!-- ===== ITEMS TAB ===== --}}
-    <div class="tab" data-group="primary" data-tab="items">
+    <div class="tab ee-items-tab" data-group="primary" data-tab="items">
       <h2 class="ee-bar">ITEMS</h2>
-      <p>Drag items from the Items directory onto this sheet. Use item types for grouping.</p>
+      <p>Drag items from the Items directory onto this sheet, or click + to create a new one.</p>
 
       <div class="ee-panel">
-        <h3>Psionic Powers</h3>
+        <h3>Psionic Powers <a class="ee-create-item" data-action="create-item" data-type="psionicPower" title="Create Psionic Power"><i class="fas fa-plus"></i></a></h3>
         <ul class="ee-item-list">
           {{#each itemsByType.psionicPower}}
-          <li>
+          <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
             <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
           </li>
@@ -733,10 +733,10 @@
       </div>
 
       <div class="ee-panel">
-        <h3>Weapons</h3>
+        <h3>Weapons <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon"><i class="fas fa-plus"></i></a></h3>
         <ul class="ee-item-list">
           {{#each itemsByType.weapon}}
-          <li>
+          <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
             <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
           </li>
@@ -745,10 +745,10 @@
       </div>
 
       <div class="ee-panel">
-        <h3>Armor</h3>
+        <h3>Armor <a class="ee-create-item" data-action="create-item" data-type="armor" title="Create Armor"><i class="fas fa-plus"></i></a></h3>
         <ul class="ee-item-list">
           {{#each itemsByType.armor}}
-          <li>
+          <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
             <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
           </li>
@@ -757,10 +757,10 @@
       </div>
 
       <div class="ee-panel">
-        <h3>Other Gear</h3>
+        <h3>Other Gear <a class="ee-create-item" data-action="create-item" data-type="gear" title="Create Gear"><i class="fas fa-plus"></i></a></h3>
         <ul class="ee-item-list">
           {{#each itemsByType.gear}}
-          <li>
+          <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
             <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
             <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
           </li>
