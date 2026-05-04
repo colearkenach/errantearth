@@ -1,0 +1,56 @@
+export const EE = {};
+
+EE.ALIGNMENTS = {
+  principled:   "Principled",
+  scrupulous:   "Scrupulous",
+  unprincipled: "Unprincipled",
+  anarchist:    "Anarchist",
+  miscreant:    "Miscreant",
+  aberrant:     "Aberrant",
+  diabolic:     "Diabolic"
+};
+
+EE.PSIONIC_LEVELS = {
+  none:   "None",
+  minor:  "Minor",
+  major:  "Major",
+  master: "Master"
+};
+
+EE.DAMAGE_TYPES = {
+  kinetic:   "Kinetic",
+  energy:    "Energy",
+  laser:     "Laser",
+  plasma:    "Plasma",
+  ion:       "Ion",
+  explosive: "Explosive",
+  magic:     "Magic",
+  psionic:   "Psionic"
+};
+
+EE.POWER_SOURCES = {
+  magic:        "Magic",
+  psionic:      "Psionic",
+  mutation:     "Mutation",
+  technology:   "Technology",
+  supernatural: "Supernatural"
+};
+
+EE.VEHICLE_TYPES = {
+  ground:     "Ground",
+  air:        "Air",
+  space:      "Space",
+  naval:      "Naval",
+  powerArmor: "Power Armor"
+};
+
+// Free-text suggestions (datalist), not hard-locked.
+EE.OCC_SUGGESTIONS = [
+  "Crazy", "Juicer", "Operator", "City Rat", "Cyber-Knight",
+  "Cyber-Doc", "Headhunter", "Mercenary", "Vagabond", "Rogue Scholar"
+];
+
+EE.RACE_SUGGESTIONS = [
+  "Human", "D-Bee", "Dragon Hatchling", "Psi-Stalker", "True Atlantean",
+  "Wolfen", "Dog Boy", "Crazy", "Mutant"
+];

@@ -45,6 +45,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   async getData(options) {
     const ctx = await super.getData(options);
     const sys = ctx.actor.system;
+    ctx.config = CONFIG.EE ?? {};
 
     const iq = Number(sys.attributes?.iq?.value ?? 0);
     const ma = Number(sys.attributes?.ma?.value ?? 0);
@@ -139,14 +140,14 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   _blankRow(kind) {
     switch (kind) {
       case "skill":         return { name: "", base: 0, perLvl: 0 };
-      case "modernWeapon":  return { name: "", damage: "", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
-      case "ancientWeapon": return { name: "", damage: "", ammo: "", strike: "", parry: "", special: "" };
+      case "modernWeapon":  return { name: "", damageType: "", damage: "", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
+      case "ancientWeapon": return { name: "", damageType: "", damage: "", ammo: "", strike: "", parry: "", special: "" };
       case "saveExtra":     return { name: "", base: 0, bonus: 0 };
       case "h2hExtra":      return { name: "", value: 0 };
       case "armorExtra":    return { name: "", current: 0, max: 0 };
-      case "power":         return { name: "", cost: "", range: "", saving: "", damage: "", duration: "", description: "" };
-      case "paWeapon":      return { name: "", damage: "", ammo: "", strike: "", range: "", special: "" };
-      case "vehicleWeapon": return { type: "", damage: "", ammo: "" };
+      case "power":         return { name: "", source: "", cost: "", range: "", saving: "", damage: "", duration: "", description: "" };
+      case "paWeapon":      return { name: "", damageType: "", damage: "", ammo: "", strike: "", range: "", special: "" };
+      case "vehicleWeapon": return { type: "", damageType: "", damage: "", ammo: "" };
       case "contact":       return { name: "", occupation: "", notes: "" };
       case "outfit":        return { name: "", checked: false };
       case "wp":            return { name: "", aimed: "", burst: "", parry: "", range: "", damageRate: "" };
@@ -179,8 +180,37 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return out;
   }
 
+  static _validateEnum(value, choices) {
+    if (value === "" || value === undefined || value === null) return "";
+    return Object.prototype.hasOwnProperty.call(choices, value) ? value : "";
+  }
+
+  static _validateEnums(expanded) {
+    const cfg = CONFIG.EE;
+    if (!cfg || !expanded?.system) return expanded;
+    const sys = expanded.system;
+    if ("alignment" in sys)    sys.alignment    = ErrantEarthCharacterSheet._validateEnum(sys.alignment,    cfg.ALIGNMENTS);
+    if ("psionicLevel" in sys) sys.psionicLevel = ErrantEarthCharacterSheet._validateEnum(sys.psionicLevel, cfg.PSIONIC_LEVELS);
+    if (sys.vehicle && "type" in sys.vehicle)
+      sys.vehicle.type = ErrantEarthCharacterSheet._validateEnum(sys.vehicle.type, cfg.VEHICLE_TYPES);
+    const scrubArr = (arr, field, choices) => {
+      if (!Array.isArray(arr)) return;
+      for (const row of arr) {
+        if (row && typeof row === "object" && field in row)
+          row[field] = ErrantEarthCharacterSheet._validateEnum(row[field], choices);
+      }
+    };
+    scrubArr(sys.weapons?.modern,    "damageType", cfg.DAMAGE_TYPES);
+    scrubArr(sys.weapons?.ancient,   "damageType", cfg.DAMAGE_TYPES);
+    scrubArr(sys.powerArmor?.weapons,"damageType", cfg.DAMAGE_TYPES);
+    scrubArr(sys.vehicle?.weapons,   "damageType", cfg.DAMAGE_TYPES);
+    scrubArr(sys.powers,             "source",     cfg.POWER_SOURCES);
+    return expanded;
+  }
+
   async _updateObject(event, formData) {
     const expanded = ErrantEarthCharacterSheet._coerceArrays(foundry.utils.expandObject(formData));
+    ErrantEarthCharacterSheet._validateEnums(expanded);
     return this.document.update(expanded);
   }
 }

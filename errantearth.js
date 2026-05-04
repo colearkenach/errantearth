@@ -1,7 +1,10 @@
 import { ErrantEarthCharacterSheet } from "./src/actor/character-sheet.js";
+import { EE } from "./src/config.js";
 
 Hooks.once("init", async () => {
   CONFIG.Actor.types = ["character"];
+  CONFIG.EE = EE;
+  game.ee = EE;
 
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("errantearth", ErrantEarthCharacterSheet, {
@@ -18,4 +21,40 @@ Hooks.once("init", async () => {
     (val === undefined || val === null || val === "") ? fallback : val
   );
   Handlebars.registerHelper("eq", (a, b) => a === b);
+
+  Handlebars.registerHelper("eeSelectOptions", function (options, selected) {
+    const sel = selected ?? "";
+    let html = `<option value=""${sel === "" ? " selected" : ""}></option>`;
+    for (const [value, label] of Object.entries(options ?? {})) {
+      const isSel = value === sel ? " selected" : "";
+      html += `<option value="${value}"${isSel}>${label}</option>`;
+    }
+    return new Handlebars.SafeString(html);
+  });
+
+  Handlebars.registerHelper("eeDatalistOptions", function (values) {
+    let html = "";
+    for (const v of values ?? []) html += `<option value="${v}">`;
+    return new Handlebars.SafeString(html);
+  });
+});
+
+Hooks.once("ready", async () => {
+  if (!game.user.isGM) return;
+  const alignMap = {
+    "Principled": "principled", "Scrupulous": "scrupulous",
+    "Unprincipled": "unprincipled", "Anarchist": "anarchist",
+    "Miscreant": "miscreant", "Aberrant": "aberrant", "Diabolic": "diabolic"
+  };
+  const psiMap = { "None": "none", "Minor": "minor", "Major": "major", "Master": "master" };
+
+  for (const actor of game.actors.contents) {
+    if (actor.type !== "character") continue;
+    const update = {};
+    const a = actor.system.alignment;
+    if (a && alignMap[a]) update["system.alignment"] = alignMap[a];
+    const p = actor.system.psionicLevel;
+    if (p && psiMap[p]) update["system.psionicLevel"] = psiMap[p];
+    if (Object.keys(update).length) await actor.update(update);
+  }
 });
