@@ -101,6 +101,7 @@
     <a class="item" data-tab="combat">Combat</a>
     <a class="item" data-tab="powers">Powers</a>
     <a class="item" data-tab="vehicle">Vehicle</a>
+    <a class="item" data-tab="items">Items</a>
     <a class="item" data-tab="misc">Misc</a>
   </nav>
 
@@ -710,6 +711,61 @@
           </table>
           <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.weapons" data-kind="vehicleWeapon">+ Add</button>
         </div>
+      </div>
+    </div>
+
+
+    {{!-- ===== ITEMS TAB ===== --}}
+    <div class="tab" data-group="primary" data-tab="items">
+      <h2 class="ee-bar">ITEMS</h2>
+      <p>Drag items from the Items directory onto this sheet. Use item types for grouping.</p>
+
+      <div class="ee-panel">
+        <h3>Psionic Powers</h3>
+        <ul class="ee-item-list">
+          {{#each itemsByType.psionicPower}}
+          <li>
+            <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="ee-panel">
+        <h3>Weapons</h3>
+        <ul class="ee-item-list">
+          {{#each itemsByType.weapon}}
+          <li>
+            <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="ee-panel">
+        <h3>Armor</h3>
+        <ul class="ee-item-list">
+          {{#each itemsByType.armor}}
+          <li>
+            <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="ee-panel">
+        <h3>Other Gear</h3>
+        <ul class="ee-item-list">
+          {{#each itemsByType.gear}}
+          <li>
+            <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+          </li>
+          {{/each}}
+        </ul>
       </div>
     </div>
 

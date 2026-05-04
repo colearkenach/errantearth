@@ -1,0 +1,34 @@
+<form class="ee-item-sheet {{cssClass}}" autocomplete="off">
+  <header class="sheet-header ee-row">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div style="flex:1; margin-left:8px;">
+      <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div><strong>Type:</strong> {{item.type}}</div>
+    </div>
+  </header>
+  <section class="sheet-body">
+    {{#if (eq item.type "psionicPower")}}
+      <div class="ee-kv"><label>ISP Cost</label><input type="number" name="system.ispCost" value="{{system.ispCost}}"/></div>
+      <div class="ee-kv"><label>Range</label><input type="text" name="system.range" value="{{system.range}}"/></div>
+      <div class="ee-kv"><label>Duration</label><input type="text" name="system.duration" value="{{system.duration}}"/></div>
+      <label>Description</label><textarea name="system.description">{{system.description}}</textarea>
+    {{/if}}
+    {{#if (eq item.type "weapon")}}
+      <div class="ee-kv"><label>Damage</label><input type="text" name="system.damage" value="{{system.damage}}"/></div>
+      <div class="ee-kv"><label>Damage Type</label><select name="system.damageType">{{eeSelectOptions config.DAMAGE_TYPES system.damageType}}</select></div>
+      <div class="ee-kv"><label>Range</label><input type="text" name="system.range" value="{{system.range}}"/></div>
+      <div class="ee-kv"><label>Ammo</label><input type="text" name="system.ammo" value="{{system.ammo}}"/></div>
+      <div class="ee-kv"><label>Rate</label><input type="text" name="system.rate" value="{{system.rate}}"/></div>
+    {{/if}}
+    {{#if (eq item.type "armor")}}
+      <div class="ee-kv"><label>AR</label><input type="number" name="system.ar" value="{{system.ar}}"/></div>
+      <div class="ee-kv"><label>MDC</label><input type="number" name="system.mdc.current" value="{{system.mdc.current}}"/> / <input type="number" name="system.mdc.max" value="{{system.mdc.max}}"/></div>
+      <label>Notes</label><textarea name="system.notes">{{system.notes}}</textarea>
+    {{/if}}
+    {{#if (eq item.type "gear")}}
+      <div class="ee-kv"><label>Quantity</label><input type="number" name="system.quantity" value="{{system.quantity}}"/></div>
+      <div class="ee-kv"><label>Weight</label><input type="text" name="system.weight" value="{{system.weight}}"/></div>
+      <label>Description</label><textarea name="system.description">{{system.description}}</textarea>
+    {{/if}}
+  </section>
+</form>
