@@ -10,7 +10,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       width: 980,
       height: 820,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }],
-      scrollY: [".tab"]
+      scrollY: [".tab"],
+      dragDrop: [{ dragSelector: ".ee-item-row", dropSelector: null }]
     });
   }
 
@@ -120,6 +121,30 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     html.on("click", "[data-action='roll']",       this._onRoll.bind(this));
     html.on("click", "[data-action='edit-item']",  this._onEditItem.bind(this));
     html.on("click", "[data-action='delete-item']", this._onDeleteItem.bind(this));
+    html.on("click", "[data-action='create-item']", this._onCreateItem.bind(this));
+
+    const dropZone = html.find(".ee-items-tab")[0];
+    if (dropZone) {
+      dropZone.addEventListener("dragenter", () => dropZone.classList.add("ee-drop-hover"));
+      dropZone.addEventListener("dragleave", (ev) => {
+        if (!dropZone.contains(ev.relatedTarget)) dropZone.classList.remove("ee-drop-hover");
+      });
+      dropZone.addEventListener("drop", () => dropZone.classList.remove("ee-drop-hover"));
+    }
+  }
+
+  async _onCreateItem(ev) {
+    ev.preventDefault();
+    const type = ev.currentTarget.dataset.type;
+    const labels = {
+      psionicPower: "Psionic Power",
+      weapon: "Weapon",
+      armor: "Armor",
+      gear: "Gear"
+    };
+    const name = `New ${labels[type] ?? "Item"}`;
+    const [created] = await this.actor.createEmbeddedDocuments("Item", [{ name, type }]);
+    return created?.sheet?.render(true);
   }
 
   static _parseIntSafe(v) {
