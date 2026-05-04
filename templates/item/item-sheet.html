@@ -1,34 +1,127 @@
+{{!-- Errant Earth item sheet --}}
 <form class="ee-item-sheet {{cssClass}}" autocomplete="off">
-  <header class="sheet-header ee-row">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
-    <div style="flex:1; margin-left:8px;">
-      <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
-      <div><strong>Type:</strong> {{item.type}}</div>
+
+  <header class="ee-item-header">
+    <img class="ee-item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <div class="ee-item-title">
+      <input class="ee-item-name" name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+      <div class="ee-item-type">{{item.type}}</div>
     </div>
   </header>
-  <section class="sheet-body">
+
+  <section class="ee-item-body">
+
     {{#if (eq item.type "psionicPower")}}
-      <div class="ee-kv"><label>ISP Cost</label><input type="number" name="system.ispCost" value="{{system.ispCost}}"/></div>
-      <div class="ee-kv"><label>Range</label><input type="text" name="system.range" value="{{system.range}}"/></div>
-      <div class="ee-kv"><label>Duration</label><input type="text" name="system.duration" value="{{system.duration}}"/></div>
-      <label>Description</label><textarea name="system.description">{{system.description}}</textarea>
+      <div class="ee-grid-2">
+        <label>ISP Cost <input type="number" name="system.ispCost" value="{{system.ispCost}}"/></label>
+        <label>Range <input type="text" name="system.range" value="{{system.range}}"/></label>
+        <label>Duration <input type="text" name="system.duration" value="{{system.duration}}"/></label>
+        <label>Saving Throw <input type="text" name="system.savingThrow" value="{{system.savingThrow}}"/></label>
+        <label>Damage <input type="text" name="system.damage" value="{{system.damage}}"/></label>
+      </div>
+      <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
     {{/if}}
+
+    {{#if (eq item.type "spell")}}
+      <div class="ee-grid-2">
+        <label>Level <input type="number" name="system.level" value="{{system.level}}"/></label>
+        <label>PPE Cost <input type="number" name="system.ppeCost" value="{{system.ppeCost}}"/></label>
+        <label>Range <input type="text" name="system.range" value="{{system.range}}"/></label>
+        <label>Duration <input type="text" name="system.duration" value="{{system.duration}}"/></label>
+        <label>Saving Throw <input type="text" name="system.savingThrow" value="{{system.savingThrow}}"/></label>
+        <label>Damage <input type="text" name="system.damage" value="{{system.damage}}"/></label>
+      </div>
+      <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
+    {{/if}}
+
     {{#if (eq item.type "weapon")}}
-      <div class="ee-kv"><label>Damage</label><input type="text" name="system.damage" value="{{system.damage}}"/></div>
-      <div class="ee-kv"><label>Damage Type</label><select name="system.damageType">{{eeSelectOptions config.DAMAGE_TYPES system.damageType}}</select></div>
-      <div class="ee-kv"><label>Range</label><input type="text" name="system.range" value="{{system.range}}"/></div>
-      <div class="ee-kv"><label>Ammo</label><input type="text" name="system.ammo" value="{{system.ammo}}"/></div>
-      <div class="ee-kv"><label>Rate</label><input type="text" name="system.rate" value="{{system.rate}}"/></div>
+      <div class="ee-grid-2">
+        <label>Category <select name="system.category">{{eeSelectOptions config.WEAPON_CATEGORIES system.category}}</select></label>
+        <label>Damage Type <select name="system.damageType">{{eeSelectOptions config.DAMAGE_TYPES system.damageType}}</select></label>
+        <label>Damage <input type="text" name="system.damage" value="{{system.damage}}"/></label>
+        <label>Range <input type="text" name="system.range" value="{{system.range}}"/></label>
+        <label>Ammo <input type="text" name="system.ammo" value="{{system.ammo}}"/></label>
+        <label>Payload <input type="text" name="system.payload" value="{{system.payload}}"/></label>
+        <label>Rate <input type="text" name="system.rate" value="{{system.rate}}"/></label>
+        <label>Strike <input type="text" name="system.strike" value="{{system.strike}}"/></label>
+        <label>Parry <input type="text" name="system.parry" value="{{system.parry}}"/></label>
+      </div>
+      <label class="ee-block">Special<input type="text" name="system.special" value="{{system.special}}"/></label>
+      <label class="ee-block">Notes<textarea name="system.notes">{{system.notes}}</textarea></label>
     {{/if}}
+
     {{#if (eq item.type "armor")}}
-      <div class="ee-kv"><label>AR</label><input type="number" name="system.ar" value="{{system.ar}}"/></div>
-      <div class="ee-kv"><label>MDC</label><input type="number" name="system.mdc.current" value="{{system.mdc.current}}"/> / <input type="number" name="system.mdc.max" value="{{system.mdc.max}}"/></div>
-      <label>Notes</label><textarea name="system.notes">{{system.notes}}</textarea>
+      <div class="ee-grid-2">
+        <label>AR <input type="number" name="system.ar" value="{{system.ar}}"/></label>
+        <label>Prowl Penalty <input type="number" name="system.prowlPenalty" value="{{system.prowlPenalty}}"/></label>
+        <label>MDC Current <input type="number" name="system.mdc.current" value="{{system.mdc.current}}"/></label>
+        <label>MDC Max <input type="number" name="system.mdc.max" value="{{system.mdc.max}}"/></label>
+        <label>Weight <input type="text" name="system.weight" value="{{system.weight}}"/></label>
+        <label>Cost <input type="text" name="system.cost" value="{{system.cost}}"/></label>
+      </div>
+      <label class="ee-block">Notes<textarea name="system.notes">{{system.notes}}</textarea></label>
     {{/if}}
+
+    {{#if (eq item.type "powerArmor")}}
+      <div class="ee-grid-2">
+        <label>AR <input type="number" name="system.ar" value="{{system.ar}}"/></label>
+        <label>Speed <input type="text" name="system.speed" value="{{system.speed}}"/></label>
+        <label>MDC Current <input type="number" name="system.mdc.current" value="{{system.mdc.current}}"/></label>
+        <label>MDC Max <input type="number" name="system.mdc.max" value="{{system.mdc.max}}"/></label>
+        <label>Weight <input type="text" name="system.weight" value="{{system.weight}}"/></label>
+        <label>Cost <input type="text" name="system.cost" value="{{system.cost}}"/></label>
+      </div>
+      <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
+      <label class="ee-block">Notes<textarea name="system.notes">{{system.notes}}</textarea></label>
+    {{/if}}
+
+    {{#if (eq item.type "vehicle")}}
+      <div class="ee-grid-2">
+        <label>Type <select name="system.vehicleType">{{eeSelectOptions config.VEHICLE_TYPES system.vehicleType}}</select></label>
+        <label>AR <input type="number" name="system.ar" value="{{system.ar}}"/></label>
+        <label>MDC Current <input type="number" name="system.mdc.current" value="{{system.mdc.current}}"/></label>
+        <label>MDC Max <input type="number" name="system.mdc.max" value="{{system.mdc.max}}"/></label>
+        <label>Speed <input type="text" name="system.speed" value="{{system.speed}}"/></label>
+        <label>Weight <input type="text" name="system.weight" value="{{system.weight}}"/></label>
+        <label>Cargo <input type="text" name="system.cargo" value="{{system.cargo}}"/></label>
+        <label>Cost <input type="text" name="system.cost" value="{{system.cost}}"/></label>
+      </div>
+      <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
+      <label class="ee-block">Notes<textarea name="system.notes">{{system.notes}}</textarea></label>
+    {{/if}}
+
+    {{#if (eq item.type "race")}}
+      <div class="ee-grid-2">
+        <label>Lifespan <input type="text" name="system.lifespan" value="{{system.lifespan}}"/></label>
+        <label>Size <input type="text" name="system.size" value="{{system.size}}"/></label>
+        <label>Languages <input type="text" name="system.languages" value="{{system.languages}}"/></label>
+      </div>
+      <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
+      <label class="ee-block">Abilities<textarea name="system.abilities">{{system.abilities}}</textarea></label>
+      <label class="ee-block">Bonuses<textarea name="system.bonuses">{{system.bonuses}}</textarea></label>
+    {{/if}}
+
+    {{#if (eq item.type "occ")}}
+      <div class="ee-grid-2">
+        <label>Category <input type="text" name="system.category" value="{{system.category}}"/></label>
+        <label>Money <input type="text" name="system.money" value="{{system.money}}"/></label>
+      </div>
+      <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
+      <label class="ee-block">OCC Skills<textarea name="system.skillsOcc">{{system.skillsOcc}}</textarea></label>
+      <label class="ee-block">OCC Related Skills<textarea name="system.skillsRelated">{{system.skillsRelated}}</textarea></label>
+      <label class="ee-block">Secondary Skills<textarea name="system.skillsSecondary">{{system.skillsSecondary}}</textarea></label>
+      <label class="ee-block">Bonuses<textarea name="system.bonuses">{{system.bonuses}}</textarea></label>
+      <label class="ee-block">Equipment<textarea name="system.equipment">{{system.equipment}}</textarea></label>
+    {{/if}}
+
     {{#if (eq item.type "gear")}}
-      <div class="ee-kv"><label>Quantity</label><input type="number" name="system.quantity" value="{{system.quantity}}"/></div>
-      <div class="ee-kv"><label>Weight</label><input type="text" name="system.weight" value="{{system.weight}}"/></div>
-      <label>Description</label><textarea name="system.description">{{system.description}}</textarea>
+      <div class="ee-grid-2">
+        <label>Quantity <input type="number" name="system.quantity" value="{{system.quantity}}"/></label>
+        <label>Weight <input type="text" name="system.weight" value="{{system.weight}}"/></label>
+        <label>Cost <input type="text" name="system.cost" value="{{system.cost}}"/></label>
+      </div>
+      <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
     {{/if}}
+
   </section>
 </form>
