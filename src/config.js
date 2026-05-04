@@ -36,6 +36,14 @@ EE.POWER_SOURCES = {
   supernatural: "Supernatural"
 };
 
+EE.HTH_TYPES = {
+  basic:       "Basic",
+  expert:      "Expert",
+  martialArts: "Martial Arts",
+  commando:    "Commando",
+  assassin:    "Assassin"
+};
+
 EE.VEHICLE_TYPES = {
   ground:     "Ground",
   air:        "Air",

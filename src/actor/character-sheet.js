@@ -110,6 +110,64 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
     html.on("click", "[data-action='add-row']",    this._onAddRow.bind(this));
     html.on("click", "[data-action='delete-row']", this._onDeleteRow.bind(this));
+    html.on("click", "[data-action='roll']",       this._onRoll.bind(this));
+  }
+
+  static _parseIntSafe(v) {
+    if (v === null || v === undefined) return 0;
+    const m = String(v).trim().match(/^([+-]?\d+)/);
+    return m ? parseInt(m[1], 10) : 0;
+  }
+
+  async _onRoll(ev) {
+    ev.preventDefault();
+    const el = ev.currentTarget;
+    const type  = el.dataset.rollType;
+    const label = el.dataset.label || "Roll";
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    const PIS = ErrantEarthCharacterSheet._parseIntSafe;
+
+    try {
+      switch (type) {
+        case "skill": {
+          const target = Number(el.dataset.target ?? 0);
+          const roll = await new Roll("1d100").evaluate();
+          const success = roll.total <= target;
+          return roll.toMessage({ speaker, flavor: `${label} — ${target}% — ${success ? "Success" : "Failure"}` });
+        }
+        case "d20": {
+          const bonus = PIS(el.dataset.bonus);
+          const sign = bonus >= 0 ? "+" : "";
+          const roll = await new Roll(`1d20${sign}${bonus}`).evaluate();
+          return roll.toMessage({ speaker, flavor: label });
+        }
+        case "save": {
+          const baseRaw = el.dataset.base ?? "";
+          const bonus = PIS(el.dataset.bonus);
+          const sign = bonus >= 0 ? "+" : "";
+          const roll = await new Roll(`1d20${sign}${bonus}`).evaluate();
+          const baseNum = Number(baseRaw);
+          let flavor = label;
+          if (baseRaw !== "" && Number.isFinite(baseNum)) {
+            flavor += ` — Need ${baseNum}+ — ${roll.total >= baseNum ? "Success" : "Failure"}`;
+          } else if (baseRaw) {
+            flavor += ` — Target: ${baseRaw}`;
+          }
+          return roll.toMessage({ speaker, flavor });
+        }
+        case "damage": {
+          const formula = (el.dataset.formula || "").trim();
+          if (!formula) return ui.notifications?.warn(`${label}: no damage formula set.`);
+          const roll = await new Roll(formula).evaluate();
+          return roll.toMessage({ speaker, flavor: `${label} — Damage` });
+        }
+        default:
+          return ui.notifications?.warn(`Unknown roll type: ${type}`);
+      }
+    } catch (err) {
+      console.error("Errant Earth roll failed", err);
+      ui.notifications?.error(`Roll failed: ${err.message}`);
+    }
   }
 
   _getArrayPath(path) {
@@ -193,6 +251,10 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     if ("psionicLevel" in sys) sys.psionicLevel = ErrantEarthCharacterSheet._validateEnum(sys.psionicLevel, cfg.PSIONIC_LEVELS);
     if (sys.vehicle && "type" in sys.vehicle)
       sys.vehicle.type = ErrantEarthCharacterSheet._validateEnum(sys.vehicle.type, cfg.VEHICLE_TYPES);
+    if (sys.handToHand && "type" in sys.handToHand)
+      sys.handToHand.type = ErrantEarthCharacterSheet._validateEnum(sys.handToHand.type, cfg.HTH_TYPES);
+    if (sys.powerArmor?.handToHand && "type" in sys.powerArmor.handToHand)
+      sys.powerArmor.handToHand.type = ErrantEarthCharacterSheet._validateEnum(sys.powerArmor.handToHand.type, cfg.HTH_TYPES);
     const scrubArr = (arr, field, choices) => {
       if (!Array.isArray(arr)) return;
       for (const row of arr) {

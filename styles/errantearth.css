@@ -180,6 +180,11 @@ display: flex;
 }
 .ee-add:hover { text-decoration: underline; }
 
+.ee-actions { white-space: nowrap; }
+.ee-actions a { margin-right: 4px; cursor: pointer; }
+[data-action="roll"] { cursor: pointer; color: var(--ee-red, #8a1f1f); }
+[data-action="roll"]:hover { color: #000; }
+
 /* ---------------- Skills tab ---------------- */
 .ee-skill-bonuses {
   background: #ddd;
