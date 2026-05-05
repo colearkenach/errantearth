@@ -127,9 +127,7 @@
         "charmImpress": 0
       },
       "skills": {
-        "occ": [],
-        "occRelated": [],
-        "secondary": []
+        "list": []
       },
       "handToHand": {
         "type": "basic",
@@ -190,7 +188,10 @@
         "modern": [],
         "ancient": []
       },
-      "weaponProficiencies": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": []
+      },
       "armor": {
         "primary": {
           "name": "",

@@ -110,19 +110,30 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
     const toArr = ErrantEarthCharacterSheet._toArray;
 
-    // Auto-compute skill totals: Base + PerLvl * (Level - 1) [+ IQ bonus, RIFTS only].
+    // Auto-compute skill totals: Base + PerLvl * (Level - 1) + Misc [+ IQ bonus, RIFTS only].
     const iqBonusForSkills = ctx.isEE ? 0 : ctx.derived.iqBonus;
-    const computeRows = (rows) => toArr(rows).map((r, i) => {
+    const skillRows = toArr(sys.skills?.list).map((r, i) => {
       const base   = Number(r.base   ?? 0);
       const perLvl = Number(r.perLvl ?? 0);
-      const total  = base + perLvl * Math.max(0, level - 1) + iqBonusForSkills;
+      const misc   = Number(r.misc   ?? 0);
+      const total  = base + perLvl * Math.max(0, level - 1) + misc + iqBonusForSkills;
       return { ...r, _index: i, total };
     });
     ctx.skills = {
-      occ:        computeRows(sys.skills?.occ),
-      occRelated: computeRows(sys.skills?.occRelated),
-      secondary:  computeRows(sys.skills?.secondary)
+      occ:        skillRows.filter(r => r.category === "occ"),
+      occRelated: skillRows.filter(r => r.category === "occRelated"),
+      secondary:  skillRows.filter(r => r.category === "secondary"),
+      unassigned: skillRows.filter(r => !r.category)
     };
+
+    // Master-list picker: only show skills not already on the actor.
+    const usedKeys = new Set(skillRows.map(r => r.key).filter(Boolean));
+    const masterList = (CONFIG.EE?.SKILL_LIST ?? []).filter(s => !usedKeys.has(s.key));
+    const grouped = {};
+    for (const s of masterList) (grouped[s.group] ??= []).push(s);
+    ctx.skillPicker = Object.entries(grouped)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([group, items]) => ({ group, items }));
 
     // Normalize every other array-shaped collection used by the template so
     // {{#each}} keeps working even after Foundry's merge corrupts them.
@@ -131,7 +142,19 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.system.savingThrows.extras = toArr(sys.savingThrows?.extras);
     ctx.system.weapons.modern = toArr(sys.weapons?.modern);
     ctx.system.weapons.ancient = toArr(sys.weapons?.ancient);
-    ctx.system.weaponProficiencies = toArr(sys.weaponProficiencies);
+    // weaponProficiencies: { selected: {key: bool}, custom: [{name}] }
+    const wpSelected = (sys.weaponProficiencies && typeof sys.weaponProficiencies === "object" && !Array.isArray(sys.weaponProficiencies))
+      ? (sys.weaponProficiencies.selected ?? {})
+      : {};
+    const wpCustom = (sys.weaponProficiencies && typeof sys.weaponProficiencies === "object")
+      ? toArr(sys.weaponProficiencies.custom)
+      : [];
+    ctx.system.weaponProficiencies = { selected: wpSelected, custom: wpCustom };
+    const wpDecorate = (entries) => entries.map(e => ({
+      ...e, checked: !!wpSelected[e.key]
+    }));
+    ctx.wpAncient = wpDecorate(CONFIG.EE?.WP_LIST?.ancient ?? []);
+    ctx.wpModern  = wpDecorate(CONFIG.EE?.WP_LIST?.modern  ?? []);
     ctx.system.armor.primary.extras = toArr(sys.armor?.primary?.extras);
     ctx.system.armor.secondary.extras = toArr(sys.armor?.secondary?.extras);
     ctx.system.powerArmor.handToHand.extras = toArr(sys.powerArmor?.handToHand?.extras);
@@ -180,6 +203,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     if (!this.isEditable) return;
 
     html.on("click", "[data-action='add-row']",    this._onAddRow.bind(this));
+    html.on("change", "[data-action='add-skill']", this._onAddSkill.bind(this));
     html.on("click", "[data-action='delete-row']", this._onDeleteRow.bind(this));
     html.on("click", "[data-action='roll']",       this._onRoll.bind(this));
     html.on("click", "[data-action='edit-item']",  this._onEditItem.bind(this));
@@ -426,6 +450,28 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     await this.actor.update({ [`system.${path}`]: arr });
   }
 
+  async _onAddSkill(ev) {
+    ev.preventDefault();
+    const sel = ev.currentTarget;
+    const key = sel.value;
+    const category = sel.dataset.category;
+    if (!key) return;
+    const master = (CONFIG.EE?.SKILL_LIST ?? []).find(s => s.key === key);
+    if (!master) { sel.value = ""; return; }
+    const arr = foundry.utils.deepClone(this._getArrayPath("skills.list"));
+    arr.push({
+      key: master.key,
+      name: master.name,
+      base: master.base,
+      perLvl: master.perLvl,
+      misc: 0,
+      category,
+      custom: false
+    });
+    sel.value = "";
+    await this.actor.update({ "system.skills.list": arr });
+  }
+
   async _onDeleteRow(ev) {
     ev.preventDefault();
     const btn  = ev.currentTarget;
@@ -438,7 +484,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   _blankRow(kind) {
     switch (kind) {
-      case "skill":         return { name: "", base: 0, perLvl: 0, category: "trained", tags: [] };
+      case "skill":         return { key: "", name: "", base: 0, perLvl: 0, misc: 0, category: "", custom: true };
+      case "wpCustom":      return { name: "" };
       case "modernWeapon":  return { name: "", damageType: "", damage: "", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
       case "ancientWeapon": return { name: "", damageType: "", damage: "", ammo: "", strike: "", parry: "", special: "" };
       case "saveExtra":     return { name: "", base: 0, bonus: 0 };
@@ -449,7 +496,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       case "vehicleWeapon": return { type: "", damageType: "", damage: "", ammo: "" };
       case "contact":       return { name: "", occupation: "", notes: "" };
       case "outfit":        return { name: "", checked: false };
-      case "wp":            return { name: "", aimed: "", burst: "", parry: "", range: "", damageRate: "" };
       case "psionic":       return { name: "", isp: "", notes: "" };
       case "bgocc":         return { name: "", notes: "" };
       default:              return { name: "" };

@@ -230,7 +230,10 @@
     <div class="tab" data-group="primary" data-tab="skills">
       <h2 class="ee-bar">SKILLS</h2>
 
-      {{#unless isEE}}
+      {{#if isEE}}
+      <p class="ee-muted">Skills are configured in the Errant Earth section.</p>
+      {{else}}
+
       <div class="ee-row ee-skill-bonuses">
         <label class="ee-tooltip" data-tooltip="Auto-computed from IQ. Adds a flat percentage to every skill total. +3% per point of IQ above 15.">IQ Bonus to Skill:</label>
         <input type="number" value="{{derived.iqBonus}}" disabled/>
@@ -239,78 +242,96 @@
         <label class="ee-tooltip" data-tooltip="Auto-computed from PB. The percentage chance to charm or impress others. Kicks in at PB 16+.">Charm/Impress:</label>
         <input type="number" value="{{derived.charmImpress}}" disabled/>
       </div>
-      {{/unless}}
 
-      <div class="ee-skill-grid">
-        <div class="ee-skill-col">
-          <h3>OCC Skills</h3>
-          <table class="ee-table">
-            <thead><tr><th>Name</th><th>Base</th><th>PerLvl</th><th>Total</th>{{#if isEE}}<th>Cat.</th>{{/if}}<th></th></tr></thead>
-            <tbody>
-              {{#each skills.occ}}
-              <tr>
-                <td><input type="text"   name="system.skills.occ.{{_index}}.name"   value="{{name}}"/></td>
-                <td><input type="number" name="system.skills.occ.{{_index}}.base"   value="{{base}}"/></td>
-                <td><input type="number" name="system.skills.occ.{{_index}}.perLvl" value="{{perLvl}}"/></td>
-                <td class="ee-total">{{total}}</td>
-                {{#if ../isEE}}<td><select name="system.skills.occ.{{_index}}.category">{{eeSelectOptions ../config.EE_SKILL_CATEGORIES category}}</select></td>{{/if}}
-                <td class="ee-actions">
-                  <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
-                  <a data-action="delete-row" data-path="skills.occ" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
-                </td>
-              </tr>
-              {{/each}}
-            </tbody>
-          </table>
-          <button type="button" class="ee-add" data-action="add-row" data-path="skills.occ" data-kind="skill">+ Add</button>
-        </div>
-
-        <div class="ee-skill-col">
-          <h3>OCC Related Skills</h3>
-          <table class="ee-table">
-            <thead><tr><th>Name</th><th>Base</th><th>PerLvl</th><th>Total</th>{{#if isEE}}<th>Cat.</th>{{/if}}<th></th></tr></thead>
-            <tbody>
-              {{#each skills.occRelated}}
-              <tr>
-                <td><input type="text"   name="system.skills.occRelated.{{_index}}.name"   value="{{name}}"/></td>
-                <td><input type="number" name="system.skills.occRelated.{{_index}}.base"   value="{{base}}"/></td>
-                <td><input type="number" name="system.skills.occRelated.{{_index}}.perLvl" value="{{perLvl}}"/></td>
-                <td class="ee-total">{{total}}</td>
-                {{#if ../isEE}}<td><select name="system.skills.occRelated.{{_index}}.category">{{eeSelectOptions ../config.EE_SKILL_CATEGORIES category}}</select></td>{{/if}}
-                <td class="ee-actions">
-                  <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
-                  <a data-action="delete-row" data-path="skills.occRelated" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
-                </td>
-              </tr>
-              {{/each}}
-            </tbody>
-          </table>
-          <button type="button" class="ee-add" data-action="add-row" data-path="skills.occRelated" data-kind="skill">+ Add</button>
-        </div>
-
-        <div class="ee-skill-col">
-          <h3>Secondary Skills</h3>
-          <table class="ee-table">
-            <thead><tr><th>Name</th><th>Base</th><th>PerLvl</th><th>Total</th>{{#if isEE}}<th>Cat.</th>{{/if}}<th></th></tr></thead>
-            <tbody>
-              {{#each skills.secondary}}
-              <tr>
-                <td><input type="text"   name="system.skills.secondary.{{_index}}.name"   value="{{name}}"/></td>
-                <td><input type="number" name="system.skills.secondary.{{_index}}.base"   value="{{base}}"/></td>
-                <td><input type="number" name="system.skills.secondary.{{_index}}.perLvl" value="{{perLvl}}"/></td>
-                <td class="ee-total">{{total}}</td>
-                {{#if ../isEE}}<td><select name="system.skills.secondary.{{_index}}.category">{{eeSelectOptions ../config.EE_SKILL_CATEGORIES category}}</select></td>{{/if}}
-                <td class="ee-actions">
-                  <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
-                  <a data-action="delete-row" data-path="skills.secondary" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
-                </td>
-              </tr>
-              {{/each}}
-            </tbody>
-          </table>
-          <button type="button" class="ee-add" data-action="add-row" data-path="skills.secondary" data-kind="skill">+ Add</button>
+      {{#*inline "skillSection"}}
+      <div class="ee-skill-col">
+        <h3>{{title}}</h3>
+        <table class="ee-table">
+          <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
+          <tbody>
+            {{#each rows}}
+            <tr>
+              <td>
+                {{#if custom}}
+                  <input type="hidden" name="system.skills.list.{{_index}}.key"    value=""/>
+                  <input type="hidden" name="system.skills.list.{{_index}}.custom" value="true"/>
+                  <input type="text"   name="system.skills.list.{{_index}}.name"   value="{{name}}" placeholder="Custom skill"/>
+                {{else}}
+                  <input type="hidden" name="system.skills.list.{{_index}}.key"    value="{{key}}"/>
+                  <input type="hidden" name="system.skills.list.{{_index}}.name"   value="{{name}}"/>
+                  <input type="hidden" name="system.skills.list.{{_index}}.custom" value="false"/>
+                  <span>{{name}}</span>
+                {{/if}}
+              </td>
+              <td><input type="number" name="system.skills.list.{{_index}}.base"   value="{{base}}"/></td>
+              <td><input type="number" name="system.skills.list.{{_index}}.perLvl" value="{{perLvl}}"/></td>
+              <td><input type="number" name="system.skills.list.{{_index}}.misc"   value="{{misc}}"/></td>
+              <td class="ee-total">{{total}}</td>
+              <td><select name="system.skills.list.{{_index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category}}</select></td>
+              <td class="ee-actions">
+                <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
+                <a data-action="delete-row" data-path="skills.list" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        <div class="ee-skill-add-row">
+          <select data-action="add-skill" data-category="{{category}}">
+            <option value="">+ Add from list…</option>
+            {{#each ../skillPicker}}
+            <optgroup label="{{group}}">
+              {{#each items}}<option value="{{key}}">{{name}}</option>{{/each}}
+            </optgroup>
+            {{/each}}
+          </select>
+          <button type="button" class="ee-add" data-action="add-row" data-path="skills.list" data-kind="skill">+ Custom</button>
         </div>
       </div>
+      {{/inline}}
+
+      <div class="ee-skill-grid">
+        {{> skillSection title="OCC Skills"         category="occ"        rows=skills.occ}}
+        {{> skillSection title="OCC Related Skills" category="occRelated" rows=skills.occRelated}}
+        {{> skillSection title="Secondary Skills"   category="secondary"  rows=skills.secondary}}
+      </div>
+
+      {{#if skills.unassigned.length}}
+      <details class="ee-skill-unassigned" open>
+        <summary>Unassigned ({{skills.unassigned.length}})</summary>
+        <table class="ee-table">
+          <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
+          <tbody>
+            {{#each skills.unassigned}}
+            <tr>
+              <td>
+                {{#if custom}}
+                  <input type="hidden" name="system.skills.list.{{_index}}.key"    value=""/>
+                  <input type="hidden" name="system.skills.list.{{_index}}.custom" value="true"/>
+                  <input type="text"   name="system.skills.list.{{_index}}.name"   value="{{name}}" placeholder="Custom skill"/>
+                {{else}}
+                  <input type="hidden" name="system.skills.list.{{_index}}.key"    value="{{key}}"/>
+                  <input type="hidden" name="system.skills.list.{{_index}}.name"   value="{{name}}"/>
+                  <input type="hidden" name="system.skills.list.{{_index}}.custom" value="false"/>
+                  <span>{{name}}</span>
+                {{/if}}
+              </td>
+              <td><input type="number" name="system.skills.list.{{_index}}.base"   value="{{base}}"/></td>
+              <td><input type="number" name="system.skills.list.{{_index}}.perLvl" value="{{perLvl}}"/></td>
+              <td><input type="number" name="system.skills.list.{{_index}}.misc"   value="{{misc}}"/></td>
+              <td class="ee-total">{{total}}</td>
+              <td><select name="system.skills.list.{{_index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category}}</select></td>
+              <td class="ee-actions">
+                <a data-action="delete-row" data-path="skills.list" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </details>
+      {{/if}}
+
+      {{/if}}
     </div>
 
     {{!-- ===== COMBAT TAB ===== --}}
@@ -510,23 +531,38 @@
           {{/if}}
 
           <h3>Weapon Proficiencies</h3>
+          <div class="ee-wp-grid">
+            <div class="ee-wp-col">
+              <h4>Ancient</h4>
+              {{#each wpAncient}}
+              <label class="ee-wp-check">
+                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}}/>
+                {{name}}
+              </label>
+              {{/each}}
+            </div>
+            <div class="ee-wp-col">
+              <h4>Modern</h4>
+              {{#each wpModern}}
+              <label class="ee-wp-check">
+                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}}/>
+                {{name}}
+              </label>
+              {{/each}}
+            </div>
+          </div>
+          <h4>Custom W.P.</h4>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Aimed</th><th>Burst</th><th>Parry</th><th>Range</th><th>Damage Rate</th><th></th></tr></thead>
             <tbody>
-              {{#each system.weaponProficiencies}}
+              {{#each system.weaponProficiencies.custom}}
               <tr>
-                <td><input type="text" name="system.weaponProficiencies.{{@index}}.name"       value="{{name}}"/></td>
-                <td><input type="text" name="system.weaponProficiencies.{{@index}}.aimed"      value="{{aimed}}"/></td>
-                <td><input type="text" name="system.weaponProficiencies.{{@index}}.burst"      value="{{burst}}"/></td>
-                <td><input type="text" name="system.weaponProficiencies.{{@index}}.parry"      value="{{parry}}"/></td>
-                <td><input type="text" name="system.weaponProficiencies.{{@index}}.range"      value="{{range}}"/></td>
-                <td><input type="text" name="system.weaponProficiencies.{{@index}}.damageRate" value="{{damageRate}}"/></td>
-                <td><a data-action="delete-row" data-path="weaponProficiencies" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                <td><input type="text" name="system.weaponProficiencies.custom.{{@index}}.name" value="{{name}}" placeholder="Custom W.P."/></td>
+                <td class="ee-actions"><a data-action="delete-row" data-path="weaponProficiencies.custom" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
               {{/each}}
             </tbody>
           </table>
-          <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies" data-kind="wp">+ Add</button>
+          <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies.custom" data-kind="wpCustom">+ Add Custom W.P.</button>
         </div>
       </div>
 
