@@ -45,14 +45,19 @@ export class ErrantEarthItemSheet extends ItemSheet {
     if (this.item.type === "occ") {
       ctx.system.skills = ErrantEarthItemSheet._toArray(this.item.system.skills);
     }
+    if (this.item.type === "occ" || this.item.type === "race") {
+      ctx.system.abilities = ErrantEarthItemSheet._toArray(this.item.system.abilities);
+    }
     return ctx;
   }
 
   activateListeners(html) {
     super.activateListeners(html);
     if (!this.isEditable) return;
-    html.on("click", "[data-action='add-occ-skill']", this._onAddOccSkill.bind(this));
+    html.on("click", "[data-action='add-occ-skill']",    this._onAddOccSkill.bind(this));
     html.on("click", "[data-action='delete-occ-skill']", this._onDeleteOccSkill.bind(this));
+    html.on("click", "[data-action='add-cc-ability']",    this._onAddCcAbility.bind(this));
+    html.on("click", "[data-action='delete-cc-ability']", this._onDeleteCcAbility.bind(this));
   }
 
   async _onAddOccSkill(ev) {
@@ -68,6 +73,21 @@ export class ErrantEarthItemSheet extends ItemSheet {
     const skills = ErrantEarthItemSheet._toArray(this.item.system.skills);
     skills.splice(idx, 1);
     return this.item.update({ "system.skills": skills });
+  }
+
+  async _onAddCcAbility(ev) {
+    ev.preventDefault();
+    const abilities = ErrantEarthItemSheet._toArray(this.item.system.abilities);
+    abilities.push({ name: "", description: "" });
+    return this.item.update({ "system.abilities": abilities });
+  }
+
+  async _onDeleteCcAbility(ev) {
+    ev.preventDefault();
+    const idx = Number(ev.currentTarget.dataset.index);
+    const abilities = ErrantEarthItemSheet._toArray(this.item.system.abilities);
+    abilities.splice(idx, 1);
+    return this.item.update({ "system.abilities": abilities });
   }
 
   async _updateObject(event, formData) {

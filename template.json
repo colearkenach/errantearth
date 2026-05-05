@@ -499,7 +499,6 @@
       "description": "",
       "lifespan": "",
       "size": "",
-      "abilities": "",
       "bonuses": "",
       "languages": "",
       "isMDC": false,
@@ -512,7 +511,19 @@
         "pe":  "",
         "pb":  "",
         "spd": ""
-      }
+      },
+      "poolBonuses": {
+        "hp":  "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "combatBonuses": "",
+      "saveBonuses": "",
+      "grantsMagic":    false,
+      "grantsPsionics": false,
+      "abilities": []
     },
     "occ": {
       "description": "",
@@ -521,7 +532,29 @@
       "skills": [],
       "bonuses": "",
       "equipment": "",
-      "money": ""
+      "money": "",
+      "attributeBonuses": {
+        "iq":  "",
+        "me":  "",
+        "ma":  "",
+        "ps":  "",
+        "pp":  "",
+        "pe":  "",
+        "pb":  "",
+        "spd": ""
+      },
+      "poolBonuses": {
+        "hp":  "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "combatBonuses": "",
+      "saveBonuses": "",
+      "grantsMagic":    false,
+      "grantsPsionics": false,
+      "abilities": []
     },
     "gear": {
       "description": "",

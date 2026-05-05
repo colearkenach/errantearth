@@ -22,16 +22,18 @@ Hooks.once("init", async () => {
     label: "Errant Earth Item Sheet"
   });
 
-  await loadTemplates([
-    "systems/errantearth/templates/actor/character-sheet.html",
-    "systems/errantearth/templates/chat/roll-card.html",
-    "systems/errantearth/templates/item/item-sheet.html"
-  ]);
+  await loadTemplates({
+    "ee-actor-sheet": "systems/errantearth/templates/actor/character-sheet.html",
+    "ee-roll-card":   "systems/errantearth/templates/chat/roll-card.html",
+    "ee-item-sheet":  "systems/errantearth/templates/item/item-sheet.html",
+    "ccBonusBlocks":  "systems/errantearth/templates/item/partials/cc-bonus-blocks.html"
+  });
 
   Handlebars.registerHelper("ee_default", (val, fallback) =>
     (val === undefined || val === null || val === "") ? fallback : val
   );
   Handlebars.registerHelper("eq", (a, b) => a === b);
+  Handlebars.registerHelper("or", (...args) => { args.pop(); return args.some(Boolean); });
   Handlebars.registerHelper("eeChecked", (v) => v ? "checked" : "");
 
   Handlebars.registerHelper("eeSelectOptions", function (options, selected) {

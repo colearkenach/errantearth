@@ -19,8 +19,14 @@
       <label>Name:</label>      <input type="text" name="name" value="{{actor.name}}" data-dtype="String"/>
       <label>True Name:</label> <input type="text" name="system.trueName" value="{{system.trueName}}"/>
       {{#unless isEE}}
-      <label>Race:</label>      <input type="text" list="ee-race-list" name="system.race" value="{{system.race}}"/>
-      <datalist id="ee-race-list">{{eeDatalistOptions config.RACE_SUGGESTIONS}}</datalist>
+      <label>Race:</label>
+      <select class="ee-cc-pick" data-action="cc-pick" data-slot="race" {{#if isRCC}}disabled title="Locked: an RCC is equipped"{{/if}}>
+        <option value="">— Pick a Race —</option>
+        {{#each itemsByType.race}}
+        <option value="{{id}}" {{#if (eq id ../equippedRaceId)}}selected{{/if}}>{{name}}</option>
+        {{/each}}
+        <option value="__new__">+ Create Custom…</option>
+      </select>
       {{#if equippedRaceItem}}<span class="ee-equipped-badge" title="Equipped from Race item">{{#if equippedRaceItem.system.isMDC}}MDC{{else}}SDC{{/if}}</span>{{/if}}
       {{else}}
       <label>Species:</label>   <input type="text" name="system.species.name" value="{{system.species.name}}"/>
@@ -30,8 +36,14 @@
 
     <div class="ee-row">
       {{#unless isEE}}
-      <label>OCC:</label>       <input type="text" list="ee-occ-list" name="system.occ" value="{{system.occ}}"/>
-      <datalist id="ee-occ-list">{{eeDatalistOptions config.OCC_SUGGESTIONS}}</datalist>
+      <label>OCC:</label>
+      <select class="ee-cc-pick" data-action="cc-pick" data-slot="occ">
+        <option value="">— Pick an OCC —</option>
+        {{#each itemsByType.occ}}
+        <option value="{{id}}" {{#if (eq id ../equippedOccId)}}selected{{/if}}>{{name}}{{#if system.isRCC}} (RCC){{/if}}</option>
+        {{/each}}
+        <option value="__new__">+ Create Custom…</option>
+      </select>
       {{/unless}}
       <label>Alignment:</label>
       <select name="system.alignment">{{eeSelectOptions config.ALIGNMENTS system.alignment}}</select>
@@ -763,6 +775,26 @@
     {{!-- ===== POWERS TAB ===== --}}
     <div class="tab" data-group="primary" data-tab="powers">
       <h2 class="ee-bar">POWERS</h2>
+
+      {{#if grantedAbilities.length}}
+      <h3 class="ee-subbar">Granted Abilities <span class="ee-hint">(from equipped OCC / Race)</span></h3>
+      <table class="ee-table ee-granted-abilities">
+        <thead><tr><th>Source</th><th>Ability</th><th>Description</th></tr></thead>
+        <tbody>
+          {{#each grantedAbilities}}
+          <tr><td>{{source}}</td><td>{{name}}</td><td>{{description}}</td></tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{/if}}
+
+      {{#if (or grantsMagic grantsPsionics)}}
+      <p class="ee-hint">
+        {{#if grantsMagic}}<span class="ee-grants-tag">Grants Magic</span>{{/if}}
+        {{#if grantsPsionics}}<span class="ee-grants-tag">Grants Psionics</span>{{/if}}
+      </p>
+      {{/if}}
+
       <h3 class="ee-subbar">Spells / Psionics / Abilities</h3>
       <table class="ee-table ee-powers-table">
         <thead>
