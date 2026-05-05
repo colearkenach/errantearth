@@ -789,3 +789,40 @@ color: var(--ee-red, #8a1f1f);
   border-left: 2px solid var(--ee-red, #8a1f1f);
   padding: 4px 6px;
 }
+
+.ee-ee-attrs-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  margin: 4px 0;
+}
+.ee-ee-attr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  background: rgba(138,31,31,0.05);
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+.ee-ee-attr label {
+  font-weight: bold;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+.ee-ee-attr input {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+.ee-ee-attr .ee-roll-attr { margin: 0; font-size: 12px; }
+
+.ee-ee-bgocc {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 6px 0;
+}
+.ee-ee-bgocc .ee-panel { padding: 6px; }
+.ee-ee-bgocc h3 { margin: 0 0 4px; font-size: 13px; }

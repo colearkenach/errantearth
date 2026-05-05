@@ -18,9 +18,13 @@
     <div class="ee-row">
       <label>Name:</label>      <input type="text" name="name" value="{{actor.name}}" data-dtype="String"/>
       <label>True Name:</label> <input type="text" name="system.trueName" value="{{system.trueName}}"/>
+      {{#unless isEE}}
       <label>Race:</label>      <input type="text" list="ee-race-list" name="system.race" value="{{system.race}}"/>
       <datalist id="ee-race-list">{{eeDatalistOptions config.RACE_SUGGESTIONS}}</datalist>
       {{#if equippedRaceItem}}<span class="ee-equipped-badge" title="Equipped from Race item">{{#if equippedRaceItem.system.isMDC}}MDC{{else}}SDC{{/if}}</span>{{/if}}
+      {{else}}
+      <label>Species:</label>   <input type="text" name="system.species.name" value="{{system.species.name}}"/>
+      {{/unless}}
       <label>Gender:</label>    <input type="text" name="system.gender" value="{{system.gender}}"/>
     </div>
 
@@ -28,8 +32,6 @@
       {{#unless isEE}}
       <label>OCC:</label>       <input type="text" list="ee-occ-list" name="system.occ" value="{{system.occ}}"/>
       <datalist id="ee-occ-list">{{eeDatalistOptions config.OCC_SUGGESTIONS}}</datalist>
-      {{else}}
-      <label>Species:</label>   <input type="text" name="system.species.name" value="{{system.species.name}}"/>
       {{/unless}}
       <label>Alignment:</label>
       <select name="system.alignment">{{eeSelectOptions config.ALIGNMENTS system.alignment}}</select>
@@ -91,31 +93,47 @@
     {{/unless}}
 
     {{#if isEE}}
-    <div class="ee-row ee-attrs ee-ee-attrs">
-      <label class="ee-tooltip" data-tooltip="Animus — life force / spiritual presence.">ANM:</label>
-      <input type="number" name="system.eeAttributes.anm.value" value="{{system.eeAttributes.anm.value}}"/>
-      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.anm.value}}" data-label="ANM" title="Roll ANM check (d20 roll-under)"><i class="fas fa-dice-d20"></i></a>
-      <label class="ee-tooltip" data-tooltip="Bravado — daring, presence under pressure.">BRV:</label>
-      <input type="number" name="system.eeAttributes.brv.value" value="{{system.eeAttributes.brv.value}}"/>
-      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.brv.value}}" data-label="BRV"><i class="fas fa-dice-d20"></i></a>
-      <label class="ee-tooltip" data-tooltip="Composure — mental discipline.">COM:</label>
-      <input type="number" name="system.eeAttributes.com.value" value="{{system.eeAttributes.com.value}}"/>
-      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.com.value}}" data-label="COM"><i class="fas fa-dice-d20"></i></a>
-      <label class="ee-tooltip" data-tooltip="Finesse — manual dexterity, agility.">FIN:</label>
-      <input type="number" name="system.eeAttributes.fin.value" value="{{system.eeAttributes.fin.value}}"/>
-      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.fin.value}}" data-label="FIN"><i class="fas fa-dice-d20"></i></a>
-      <label class="ee-tooltip" data-tooltip="Hardiness — physical resilience.">HRD:</label>
-      <input type="number" name="system.eeAttributes.hrd.value" value="{{system.eeAttributes.hrd.value}}"/>
-      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.hrd.value}}" data-label="HRD"><i class="fas fa-dice-d20"></i></a>
-      <label class="ee-tooltip" data-tooltip="Power — raw strength, force.">POW:</label>
-      <input type="number" name="system.eeAttributes.pow.value" value="{{system.eeAttributes.pow.value}}"/>
-      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.pow.value}}" data-label="POW"><i class="fas fa-dice-d20"></i></a>
-      <label class="ee-tooltip" data-tooltip="Speed — quickness.">SPD:</label>
-      <input type="number" name="system.eeAttributes.spd.value" value="{{system.eeAttributes.spd.value}}"/>
-      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.spd.value}}" data-label="SPD"><i class="fas fa-dice-d20"></i></a>
-      <label class="ee-tooltip" data-tooltip="Will — resolve, mental defense.">WIL:</label>
-      <input type="number" name="system.eeAttributes.wil.value" value="{{system.eeAttributes.wil.value}}"/>
-      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.wil.value}}" data-label="WIL"><i class="fas fa-dice-d20"></i></a>
+    <div class="ee-ee-attrs-grid">
+      <div class="ee-ee-attr">
+        <label class="ee-tooltip" data-tooltip="Animus — life force / spiritual presence.">ANM</label>
+        <input type="number" name="system.eeAttributes.anm.value" value="{{system.eeAttributes.anm.value}}"/>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.anm.value}}" data-label="ANM" title="Roll ANM (d20 roll-under)"><i class="fas fa-dice-d20"></i></a>
+      </div>
+      <div class="ee-ee-attr">
+        <label class="ee-tooltip" data-tooltip="Bravado — daring, presence under pressure.">BRV</label>
+        <input type="number" name="system.eeAttributes.brv.value" value="{{system.eeAttributes.brv.value}}"/>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.brv.value}}" data-label="BRV" title="Roll BRV"><i class="fas fa-dice-d20"></i></a>
+      </div>
+      <div class="ee-ee-attr">
+        <label class="ee-tooltip" data-tooltip="Composure — mental discipline.">COM</label>
+        <input type="number" name="system.eeAttributes.com.value" value="{{system.eeAttributes.com.value}}"/>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.com.value}}" data-label="COM" title="Roll COM"><i class="fas fa-dice-d20"></i></a>
+      </div>
+      <div class="ee-ee-attr">
+        <label class="ee-tooltip" data-tooltip="Finesse — manual dexterity, agility.">FIN</label>
+        <input type="number" name="system.eeAttributes.fin.value" value="{{system.eeAttributes.fin.value}}"/>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.fin.value}}" data-label="FIN" title="Roll FIN"><i class="fas fa-dice-d20"></i></a>
+      </div>
+      <div class="ee-ee-attr">
+        <label class="ee-tooltip" data-tooltip="Hardiness — physical resilience.">HRD</label>
+        <input type="number" name="system.eeAttributes.hrd.value" value="{{system.eeAttributes.hrd.value}}"/>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.hrd.value}}" data-label="HRD" title="Roll HRD"><i class="fas fa-dice-d20"></i></a>
+      </div>
+      <div class="ee-ee-attr">
+        <label class="ee-tooltip" data-tooltip="Power — raw strength, force.">POW</label>
+        <input type="number" name="system.eeAttributes.pow.value" value="{{system.eeAttributes.pow.value}}"/>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.pow.value}}" data-label="POW" title="Roll POW"><i class="fas fa-dice-d20"></i></a>
+      </div>
+      <div class="ee-ee-attr">
+        <label class="ee-tooltip" data-tooltip="Speed — quickness.">SPD</label>
+        <input type="number" name="system.eeAttributes.spd.value" value="{{system.eeAttributes.spd.value}}"/>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.spd.value}}" data-label="SPD" title="Roll SPD"><i class="fas fa-dice-d20"></i></a>
+      </div>
+      <div class="ee-ee-attr">
+        <label class="ee-tooltip" data-tooltip="Will — resolve, mental defense.">WIL</label>
+        <input type="number" name="system.eeAttributes.wil.value" value="{{system.eeAttributes.wil.value}}"/>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.wil.value}}" data-label="WIL" title="Roll WIL"><i class="fas fa-dice-d20"></i></a>
+      </div>
     </div>
     <div class="ee-row ee-ee-tier">
       <label>Attribute Tier:</label>
@@ -130,6 +148,40 @@
       <label>Burnout:</label><input type="number" name="system.magic.burnout" value="{{system.magic.burnout}}"/>
       <label class="ee-tooltip" data-tooltip="Psychic Heat — accumulates as psionic powers are used.">Psychic Heat:</label>
       <input type="number" name="system.psychic.heat" value="{{system.psychic.heat}}"/>
+    </div>
+
+    <div class="ee-ee-bgocc">
+      <div class="ee-panel">
+        <h3>Backgrounds <a class="ee-create-item" data-action="add-row" data-path="backgrounds" data-kind="bgocc" title="Add Background"><i class="fas fa-plus"></i></a></h3>
+        <table class="ee-table">
+          <thead><tr><th>Name</th><th>Notes</th><th></th></tr></thead>
+          <tbody>
+            {{#each system.backgrounds}}
+            <tr>
+              <td><input type="text" name="system.backgrounds.{{@index}}.name" value="{{name}}"/></td>
+              <td><input type="text" name="system.backgrounds.{{@index}}.notes" value="{{notes}}"/></td>
+              <td><a data-action="delete-row" data-path="backgrounds" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ee-panel">
+        <h3>Occupations <a class="ee-create-item" data-action="add-row" data-path="occupations" data-kind="bgocc" title="Add Occupation"><i class="fas fa-plus"></i></a></h3>
+        <table class="ee-table">
+          <thead><tr><th>Name</th><th>Notes</th><th></th></tr></thead>
+          <tbody>
+            {{#each system.occupations}}
+            <tr>
+              <td><input type="text" name="system.occupations.{{@index}}.name" value="{{name}}"/></td>
+              <td><input type="text" name="system.occupations.{{@index}}.notes" value="{{notes}}"/></td>
+              <td><a data-action="delete-row" data-path="occupations" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
     </div>
     {{/if}}
 

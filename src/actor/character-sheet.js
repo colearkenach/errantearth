@@ -150,6 +150,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       ctx.system.vehicle.weapons = toArr(sys.vehicle?.weapons);
     }
     ctx.system.contacts = toArr(sys.contacts);
+    ctx.system.backgrounds = toArr(sys.backgrounds);
+    ctx.system.occupations = toArr(sys.occupations);
     if (ctx.system.money) ctx.system.money.outfits = toArr(sys.money?.outfits);
 
     const itemBuckets = {
@@ -405,6 +407,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       case "outfit":        return { name: "", checked: false };
       case "wp":            return { name: "", aimed: "", burst: "", parry: "", range: "", damageRate: "" };
       case "psionic":       return { name: "", isp: "", notes: "" };
+      case "bgocc":         return { name: "", notes: "" };
       default:              return { name: "" };
     }
   }
