@@ -123,21 +123,11 @@
         <label>Languages <input type="text" name="system.languages" value="{{system.languages}}"/></label>
         <label class="ee-check"><input type="checkbox" name="system.isMDC" {{eeChecked system.isMDC}}/> MDC being</label>
       </div>
-      <h4 class="ee-section-h">Attribute Bonuses / Rolls</h4>
-      <p class="ee-hint">Values are typically dice formulas (e.g. <code>3d6</code>, <code>4d6+2</code>) or flat modifiers.</p>
-      <div class="ee-grid-4">
-        <label>IQ <input type="text" name="system.attributeBonuses.iq" value="{{system.attributeBonuses.iq}}"/></label>
-        <label>ME <input type="text" name="system.attributeBonuses.me" value="{{system.attributeBonuses.me}}"/></label>
-        <label>MA <input type="text" name="system.attributeBonuses.ma" value="{{system.attributeBonuses.ma}}"/></label>
-        <label>PS <input type="text" name="system.attributeBonuses.ps" value="{{system.attributeBonuses.ps}}"/></label>
-        <label>PP <input type="text" name="system.attributeBonuses.pp" value="{{system.attributeBonuses.pp}}"/></label>
-        <label>PE <input type="text" name="system.attributeBonuses.pe" value="{{system.attributeBonuses.pe}}"/></label>
-        <label>PB <input type="text" name="system.attributeBonuses.pb" value="{{system.attributeBonuses.pb}}"/></label>
-        <label>SPD <input type="text" name="system.attributeBonuses.spd" value="{{system.attributeBonuses.spd}}"/></label>
-      </div>
+
+      {{> ccBonusBlocks system=system}}
+
       <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
-      <label class="ee-block">Abilities<textarea name="system.abilities">{{system.abilities}}</textarea></label>
-      <label class="ee-block">Bonuses<textarea name="system.bonuses">{{system.bonuses}}</textarea></label>
+      <label class="ee-block">Bonuses (free text)<textarea name="system.bonuses">{{system.bonuses}}</textarea></label>
     {{/if}}
 
     {{#if (eq item.type "occ")}}
@@ -148,7 +138,7 @@
       </div>
       <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
 
-      <h4 class="ee-section-h">Skills</h4>
+      <h4 class="ee-section-h">Starting Skills</h4>
       <table class="ee-table ee-occ-skills">
         <thead><tr><th>Name</th><th>Base %</th><th>Per Level</th><th>Category</th><th></th></tr></thead>
         <tbody>
@@ -165,7 +155,9 @@
       </table>
       <button type="button" class="ee-add" data-action="add-occ-skill">+ Add Skill</button>
 
-      <label class="ee-block">Bonuses<textarea name="system.bonuses">{{system.bonuses}}</textarea></label>
+      {{> ccBonusBlocks system=system}}
+
+      <label class="ee-block">Bonuses (free text)<textarea name="system.bonuses">{{system.bonuses}}</textarea></label>
       <label class="ee-block">Equipment<textarea name="system.equipment">{{system.equipment}}</textarea></label>
     {{/if}}
 

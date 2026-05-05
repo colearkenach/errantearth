@@ -195,6 +195,20 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.equippedOccItem  = ctx.equippedOccId  ? this.actor.items.get(ctx.equippedOccId)  : null;
     ctx.isRCC = !!ctx.equippedOccItem?.system?.isRCC;
 
+    // Granted abilities from equipped OCC + Race, flattened with a source label
+    // for display on the Powers tab.
+    ctx.grantedAbilities = [];
+    for (const src of [ctx.equippedOccItem, ctx.equippedRaceItem]) {
+      if (!src) continue;
+      for (const a of toArr(src.system?.abilities)) {
+        if (a?.name || a?.description) {
+          ctx.grantedAbilities.push({ source: src.name, name: a.name ?? "", description: a.description ?? "" });
+        }
+      }
+    }
+    ctx.grantsMagic    = !!(ctx.equippedOccItem?.system?.grantsMagic    || ctx.equippedRaceItem?.system?.grantsMagic);
+    ctx.grantsPsionics = !!(ctx.equippedOccItem?.system?.grantsPsionics || ctx.equippedRaceItem?.system?.grantsPsionics);
+
     return ctx;
   }
 
@@ -212,6 +226,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     html.on("click", "[data-action='equip-item']",   this._onEquipItem.bind(this));
     html.on("click", "[data-action='unequip-item']", this._onUnequipItem.bind(this));
     html.on("change", "[data-action='toggle-mode']", this._onToggleMode.bind(this));
+    html.on("change", "[data-action='cc-pick']",     this._onCcPick.bind(this));
 
     const dropZone = html.find(".ee-items-tab")[0];
     if (dropZone) {
@@ -270,6 +285,55 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const slot = ev.currentTarget.dataset.slot;
     if (slot === "race") return this.actor.update({ "system.equippedRace": "" });
     if (slot === "occ")  return this.actor.update({ "system.equippedOcc": "" });
+  }
+
+  /** Header dropdown for OCC/Race: equip an existing item, create a new one,
+   *  or unequip when the blank option is chosen. */
+  async _onCcPick(ev) {
+    const sel = ev.currentTarget;
+    const slot = sel.dataset.slot;          // "occ" | "race"
+    const value = sel.value;
+    const type = slot === "occ" ? "occ" : "race";
+
+    if (value === "__new__") {
+      const name = `New ${type === "occ" ? "OCC" : "Race"}`;
+      const [created] = await this.actor.createEmbeddedDocuments("Item", [{ name, type }]);
+      if (!created) return this.render(false);
+      await this._equipCcItem(created);
+      return created.sheet?.render(true);
+    }
+
+    if (!value) {
+      // Unequip
+      const update = slot === "occ"
+        ? { "system.equippedOcc": "", "system.occ": "" }
+        : { "system.equippedRace": "", "system.race": "" };
+      return this.actor.update(update);
+    }
+
+    const item = this.actor.items.get(value);
+    if (!item) return this.render(false);
+    return this._equipCcItem(item);
+  }
+
+  async _equipCcItem(item) {
+    if (item.type === "race") {
+      const equippedOccId = this.actor.system.equippedOcc;
+      const equippedOcc = equippedOccId ? this.actor.items.get(equippedOccId) : null;
+      if (equippedOcc?.system?.isRCC) {
+        ui.notifications?.warn(`Cannot equip a Race while an RCC ("${equippedOcc.name}") is equipped.`);
+        return this.render(false);
+      }
+      return this.actor.update({ "system.equippedRace": item.id, "system.race": item.name });
+    }
+    if (item.type === "occ") {
+      const update = { "system.equippedOcc": item.id, "system.occ": item.name };
+      if (item.system?.isRCC) {
+        update["system.equippedRace"] = "";
+        update["system.race"] = item.name;
+      }
+      return this.actor.update(update);
+    }
   }
 
   async _onToggleMode(ev) {

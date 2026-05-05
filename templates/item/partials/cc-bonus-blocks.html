@@ -1,0 +1,46 @@
+{{!-- Shared OCC/Race bonus & ability blocks. `system` is passed in by parent. --}}
+<h4 class="ee-section-h">Attribute Bonuses</h4>
+<p class="ee-hint">Dice formulas (e.g. <code>1d4</code>, <code>2d6</code>) or flat modifiers.</p>
+<div class="ee-grid-4">
+  <label>IQ <input type="text" name="system.attributeBonuses.iq" value="{{system.attributeBonuses.iq}}"/></label>
+  <label>ME <input type="text" name="system.attributeBonuses.me" value="{{system.attributeBonuses.me}}"/></label>
+  <label>MA <input type="text" name="system.attributeBonuses.ma" value="{{system.attributeBonuses.ma}}"/></label>
+  <label>PS <input type="text" name="system.attributeBonuses.ps" value="{{system.attributeBonuses.ps}}"/></label>
+  <label>PP <input type="text" name="system.attributeBonuses.pp" value="{{system.attributeBonuses.pp}}"/></label>
+  <label>PE <input type="text" name="system.attributeBonuses.pe" value="{{system.attributeBonuses.pe}}"/></label>
+  <label>PB <input type="text" name="system.attributeBonuses.pb" value="{{system.attributeBonuses.pb}}"/></label>
+  <label>SPD <input type="text" name="system.attributeBonuses.spd" value="{{system.attributeBonuses.spd}}"/></label>
+</div>
+
+<h4 class="ee-section-h">Pool Bonuses</h4>
+<div class="ee-grid-4">
+  <label>HP <input type="text" name="system.poolBonuses.hp" value="{{system.poolBonuses.hp}}"/></label>
+  <label>SDC <input type="text" name="system.poolBonuses.sdc" value="{{system.poolBonuses.sdc}}"/></label>
+  <label>MDC <input type="text" name="system.poolBonuses.mdc" value="{{system.poolBonuses.mdc}}"/></label>
+  <label>ISP <input type="text" name="system.poolBonuses.isp" value="{{system.poolBonuses.isp}}"/></label>
+  <label>PPE <input type="text" name="system.poolBonuses.ppe" value="{{system.poolBonuses.ppe}}"/></label>
+</div>
+
+<label class="ee-block">Combat Bonuses<textarea name="system.combatBonuses" rows="3" placeholder="e.g. +1 attack/melee, +3 initiative, +2 pull punch, +2 disarm">{{system.combatBonuses}}</textarea></label>
+<label class="ee-block">Save Bonuses<textarea name="system.saveBonuses" rows="2" placeholder="e.g. +4 save vs psionics, +6 vs mind control, +8 vs poisons">{{system.saveBonuses}}</textarea></label>
+
+<div class="ee-grid-2">
+  <label class="ee-check"><input type="checkbox" name="system.grantsMagic"    {{eeChecked system.grantsMagic}}/> Grants Magic (spells)</label>
+  <label class="ee-check"><input type="checkbox" name="system.grantsPsionics" {{eeChecked system.grantsPsionics}}/> Grants Psionics</label>
+</div>
+
+<h4 class="ee-section-h">Granted Abilities</h4>
+<p class="ee-hint">These appear under the Powers tab whenever this item is equipped.</p>
+<table class="ee-table ee-cc-abilities">
+  <thead><tr><th>Name</th><th>Description</th><th></th></tr></thead>
+  <tbody>
+    {{#each system.abilities}}
+    <tr>
+      <td><input type="text" name="system.abilities.{{@index}}.name" value="{{name}}"/></td>
+      <td><input type="text" name="system.abilities.{{@index}}.description" value="{{description}}"/></td>
+      <td><a data-action="delete-cc-ability" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button type="button" class="ee-add" data-action="add-cc-ability">+ Add Ability</button>
