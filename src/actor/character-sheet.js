@@ -253,6 +253,37 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return this.actor.update({ "system.mode": mode });
   }
 
+  /** Pop a single-select dialog asking the player which difficulty band the
+   *  GM has set for this skill check. Returns { modifier, label } or null on
+   *  cancel. */
+  static async _promptDifficulty(rollLabel) {
+    const bands = [
+      { key: "easy",     label: "Easy",     modifier: 20 },
+      { key: "routine",  label: "Routine",  modifier: 10 },
+      { key: "standard", label: "Standard", modifier: 0  },
+      { key: "difficult",label: "Difficult",modifier: -10 },
+      { key: "hard",     label: "Hard",     modifier: -20 },
+      { key: "hellish",  label: "Hellish",  modifier: -30 }
+    ];
+    return new Promise((resolve) => {
+      const buttons = {};
+      for (const b of bands) {
+        const sign = b.modifier >= 0 ? "+" : "";
+        buttons[b.key] = {
+          label: `${b.label} (${sign}${b.modifier}%)`,
+          callback: () => resolve({ modifier: b.modifier, label: b.label })
+        };
+      }
+      new Dialog({
+        title: `Difficulty: ${rollLabel}`,
+        content: `<p>Pick the difficulty band for this skill check.</p>`,
+        buttons,
+        default: "standard",
+        close: () => resolve(null)
+      }, { classes: ["errantearth", "dialog", "ee-difficulty"], width: 460 }).render(true);
+    });
+  }
+
   static _parseIntSafe(v) {
     if (v === null || v === undefined) return 0;
     const m = String(v).trim().match(/^([+-]?\d+)/);
@@ -272,13 +303,26 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       let roll;
       switch (type) {
         case "skill": {
-          const target = Number(el.dataset.target ?? 0);
+          const baseTarget = Number(el.dataset.target ?? 0);
           const isEE = this.actor.system.mode === "errantEarth";
+          let modifier = 0;
+          let modLabel = "";
+          if (isEE) {
+            const choice = await ErrantEarthCharacterSheet._promptDifficulty(label);
+            if (choice === null) return; // cancelled
+            modifier = choice.modifier;
+            modLabel = choice.label;
+          }
+          const target = baseTarget + modifier;
           roll = await new Roll("1d100").evaluate();
-          // EE rule: 99/00 always fails, even if skill >= 100.
           const autoFail = isEE && roll.total >= 99;
           const success = !autoFail && roll.total <= target;
-          card.subtitle = `Target ${target}% (roll under)${isEE ? " — EE" : ""}`;
+          const subParts = [`Target ${target}% (roll under)`];
+          if (isEE) {
+            subParts.push(modLabel ? `${modLabel} (${modifier >= 0 ? "+" : ""}${modifier}%)` : "Standard");
+            subParts.push("EE");
+          }
+          card.subtitle = subParts.join(" — ");
           card.outcome = autoFail ? "Auto-Fail (99/00)" : (success ? "Success" : "Failure");
           card.outcomeClass = success ? "success" : "failure";
           break;
@@ -394,7 +438,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   _blankRow(kind) {
     switch (kind) {
-      case "skill":         return { name: "", base: 0, perLvl: 0 };
+      case "skill":         return { name: "", base: 0, perLvl: 0, category: "trained", tags: [] };
       case "modernWeapon":  return { name: "", damageType: "", damage: "", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
       case "ancientWeapon": return { name: "", damageType: "", damage: "", ammo: "", strike: "", parry: "", special: "" };
       case "saveExtra":     return { name: "", base: 0, bonus: 0 };

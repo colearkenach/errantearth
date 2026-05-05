@@ -245,7 +245,7 @@
         <div class="ee-skill-col">
           <h3>OCC Skills</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Base</th><th>PerLvl</th><th>Total</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Base</th><th>PerLvl</th><th>Total</th>{{#if isEE}}<th>Cat.</th>{{/if}}<th></th></tr></thead>
             <tbody>
               {{#each skills.occ}}
               <tr>
@@ -253,6 +253,7 @@
                 <td><input type="number" name="system.skills.occ.{{_index}}.base"   value="{{base}}"/></td>
                 <td><input type="number" name="system.skills.occ.{{_index}}.perLvl" value="{{perLvl}}"/></td>
                 <td class="ee-total">{{total}}</td>
+                {{#if ../isEE}}<td><select name="system.skills.occ.{{_index}}.category">{{eeSelectOptions ../config.EE_SKILL_CATEGORIES category}}</select></td>{{/if}}
                 <td class="ee-actions">
                   <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
                   <a data-action="delete-row" data-path="skills.occ" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
@@ -267,7 +268,7 @@
         <div class="ee-skill-col">
           <h3>OCC Related Skills</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Base</th><th>PerLvl</th><th>Total</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Base</th><th>PerLvl</th><th>Total</th>{{#if isEE}}<th>Cat.</th>{{/if}}<th></th></tr></thead>
             <tbody>
               {{#each skills.occRelated}}
               <tr>
@@ -275,6 +276,7 @@
                 <td><input type="number" name="system.skills.occRelated.{{_index}}.base"   value="{{base}}"/></td>
                 <td><input type="number" name="system.skills.occRelated.{{_index}}.perLvl" value="{{perLvl}}"/></td>
                 <td class="ee-total">{{total}}</td>
+                {{#if ../isEE}}<td><select name="system.skills.occRelated.{{_index}}.category">{{eeSelectOptions ../config.EE_SKILL_CATEGORIES category}}</select></td>{{/if}}
                 <td class="ee-actions">
                   <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
                   <a data-action="delete-row" data-path="skills.occRelated" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
@@ -289,7 +291,7 @@
         <div class="ee-skill-col">
           <h3>Secondary Skills</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Base</th><th>PerLvl</th><th>Total</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Base</th><th>PerLvl</th><th>Total</th>{{#if isEE}}<th>Cat.</th>{{/if}}<th></th></tr></thead>
             <tbody>
               {{#each skills.secondary}}
               <tr>
@@ -297,6 +299,7 @@
                 <td><input type="number" name="system.skills.secondary.{{_index}}.base"   value="{{base}}"/></td>
                 <td><input type="number" name="system.skills.secondary.{{_index}}.perLvl" value="{{perLvl}}"/></td>
                 <td class="ee-total">{{total}}</td>
+                {{#if ../isEE}}<td><select name="system.skills.secondary.{{_index}}.category">{{eeSelectOptions ../config.EE_SKILL_CATEGORIES category}}</select></td>{{/if}}
                 <td class="ee-actions">
                   <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
                   <a data-action="delete-row" data-path="skills.secondary" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
