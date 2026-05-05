@@ -71,6 +71,9 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const sys = ctx.actor.system;
     ctx.config = CONFIG.EE ?? {};
 
+    ctx.mode = sys.mode === "errantEarth" ? "errantEarth" : "rifts";
+    ctx.isEE = ctx.mode === "errantEarth";
+
     const A = sys.attributes ?? {};
     const iq = Number(A.iq?.value ?? 0);
     const me = Number(A.me?.value ?? 0);
@@ -107,11 +110,12 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
     const toArr = ErrantEarthCharacterSheet._toArray;
 
-    // Auto-compute skill totals: Base + PerLvl * (Level - 1) + IQ bonus.
+    // Auto-compute skill totals: Base + PerLvl * (Level - 1) [+ IQ bonus, RIFTS only].
+    const iqBonusForSkills = ctx.isEE ? 0 : ctx.derived.iqBonus;
     const computeRows = (rows) => toArr(rows).map((r, i) => {
       const base   = Number(r.base   ?? 0);
       const perLvl = Number(r.perLvl ?? 0);
-      const total  = base + perLvl * Math.max(0, level - 1) + ctx.derived.iqBonus;
+      const total  = base + perLvl * Math.max(0, level - 1) + iqBonusForSkills;
       return { ...r, _index: i, total };
     });
     ctx.skills = {
@@ -181,6 +185,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     html.on("click", "[data-action='create-item']", this._onCreateItem.bind(this));
     html.on("click", "[data-action='equip-item']",   this._onEquipItem.bind(this));
     html.on("click", "[data-action='unequip-item']", this._onUnequipItem.bind(this));
+    html.on("change", "[data-action='toggle-mode']", this._onToggleMode.bind(this));
 
     const dropZone = html.find(".ee-items-tab")[0];
     if (dropZone) {
@@ -241,6 +246,11 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     if (slot === "occ")  return this.actor.update({ "system.equippedOcc": "" });
   }
 
+  async _onToggleMode(ev) {
+    const mode = ev.currentTarget.checked ? "errantEarth" : "rifts";
+    return this.actor.update({ "system.mode": mode });
+  }
+
   static _parseIntSafe(v) {
     if (v === null || v === undefined) return 0;
     const m = String(v).trim().match(/^([+-]?\d+)/);
@@ -261,9 +271,22 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       switch (type) {
         case "skill": {
           const target = Number(el.dataset.target ?? 0);
+          const isEE = this.actor.system.mode === "errantEarth";
           roll = await new Roll("1d100").evaluate();
+          // EE rule: 99/00 always fails, even if skill >= 100.
+          const autoFail = isEE && roll.total >= 99;
+          const success = !autoFail && roll.total <= target;
+          card.subtitle = `Target ${target}% (roll under)${isEE ? " — EE" : ""}`;
+          card.outcome = autoFail ? "Auto-Fail (99/00)" : (success ? "Success" : "Failure");
+          card.outcomeClass = success ? "success" : "failure";
+          break;
+        }
+        case "attrCheck": {
+          // EE attribute check: d20 roll-under against the attribute value.
+          const target = Number(el.dataset.target ?? 0);
+          roll = await new Roll("1d20").evaluate();
           const success = roll.total <= target;
-          card.subtitle = `Target ${target}% (roll under)`;
+          card.subtitle = `${label} ${target} (d20 roll-under)`;
           card.outcome = success ? "Success" : "Failure";
           card.outcomeClass = success ? "success" : "failure";
           break;

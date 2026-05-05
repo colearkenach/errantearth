@@ -5,6 +5,10 @@
   <header class="ee-banner">
     <img class="ee-banner-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
     <div class="ee-banner-title">ERRANT EARTH</div>
+    <label class="ee-mode-toggle" title="Switch this character to Errant Earth rules. RIFTS data is preserved.">
+      <input type="checkbox" data-action="toggle-mode" {{#if isEE}}checked{{/if}}/>
+      Use Errant Earth Rules
+    </label>
   </header>
 
   {{!-- ============ CHARACTER OVERVIEW ============ --}}
@@ -21,8 +25,12 @@
     </div>
 
     <div class="ee-row">
+      {{#unless isEE}}
       <label>OCC:</label>       <input type="text" list="ee-occ-list" name="system.occ" value="{{system.occ}}"/>
       <datalist id="ee-occ-list">{{eeDatalistOptions config.OCC_SUGGESTIONS}}</datalist>
+      {{else}}
+      <label>Species:</label>   <input type="text" name="system.species.name" value="{{system.species.name}}"/>
+      {{/unless}}
       <label>Alignment:</label>
       <select name="system.alignment">{{eeSelectOptions config.ALIGNMENTS system.alignment}}</select>
       <label>Level:</label>     <input type="number" name="system.level" value="{{system.level}}" min="1"/>
@@ -50,6 +58,7 @@
       <label>Insanity:</label>         <input type="text" name="system.bio.insanity" value="{{system.bio.insanity}}"/>
     </div>
 
+    {{#unless isEE}}
     <div class="ee-row ee-attrs">
       <label class="ee-tooltip" data-tooltip="Intelligence Quotient — mental acuity, reasoning, and learning ability. Adds a skill bonus at 16+.">IQ:</label>
       <input type="number" name="system.attributes.iq.value"  value="{{system.attributes.iq.value}}"/>
@@ -79,14 +88,60 @@
       <span class="ee-attr-bonus" title="PB bonus">{{derived.attrBonuses.pb}}</span>
       <span class="ee-attr-bonus"></span>
     </div>
+    {{/unless}}
+
+    {{#if isEE}}
+    <div class="ee-row ee-attrs ee-ee-attrs">
+      <label class="ee-tooltip" data-tooltip="Animus — life force / spiritual presence.">ANM:</label>
+      <input type="number" name="system.eeAttributes.anm.value" value="{{system.eeAttributes.anm.value}}"/>
+      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.anm.value}}" data-label="ANM" title="Roll ANM check (d20 roll-under)"><i class="fas fa-dice-d20"></i></a>
+      <label class="ee-tooltip" data-tooltip="Bravado — daring, presence under pressure.">BRV:</label>
+      <input type="number" name="system.eeAttributes.brv.value" value="{{system.eeAttributes.brv.value}}"/>
+      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.brv.value}}" data-label="BRV"><i class="fas fa-dice-d20"></i></a>
+      <label class="ee-tooltip" data-tooltip="Composure — mental discipline.">COM:</label>
+      <input type="number" name="system.eeAttributes.com.value" value="{{system.eeAttributes.com.value}}"/>
+      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.com.value}}" data-label="COM"><i class="fas fa-dice-d20"></i></a>
+      <label class="ee-tooltip" data-tooltip="Finesse — manual dexterity, agility.">FIN:</label>
+      <input type="number" name="system.eeAttributes.fin.value" value="{{system.eeAttributes.fin.value}}"/>
+      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.fin.value}}" data-label="FIN"><i class="fas fa-dice-d20"></i></a>
+      <label class="ee-tooltip" data-tooltip="Hardiness — physical resilience.">HRD:</label>
+      <input type="number" name="system.eeAttributes.hrd.value" value="{{system.eeAttributes.hrd.value}}"/>
+      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.hrd.value}}" data-label="HRD"><i class="fas fa-dice-d20"></i></a>
+      <label class="ee-tooltip" data-tooltip="Power — raw strength, force.">POW:</label>
+      <input type="number" name="system.eeAttributes.pow.value" value="{{system.eeAttributes.pow.value}}"/>
+      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.pow.value}}" data-label="POW"><i class="fas fa-dice-d20"></i></a>
+      <label class="ee-tooltip" data-tooltip="Speed — quickness.">SPD:</label>
+      <input type="number" name="system.eeAttributes.spd.value" value="{{system.eeAttributes.spd.value}}"/>
+      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.spd.value}}" data-label="SPD"><i class="fas fa-dice-d20"></i></a>
+      <label class="ee-tooltip" data-tooltip="Will — resolve, mental defense.">WIL:</label>
+      <input type="number" name="system.eeAttributes.wil.value" value="{{system.eeAttributes.wil.value}}"/>
+      <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.wil.value}}" data-label="WIL"><i class="fas fa-dice-d20"></i></a>
+    </div>
+    <div class="ee-row ee-ee-tier">
+      <label>Attribute Tier:</label>
+      <select name="system.eeAttributeTier">{{eeSelectOptions config.EE_ATTRIBUTE_TIERS system.eeAttributeTier}}</select>
+      <label>Actions:</label><input type="number" name="system.eeCombat.actions" value="{{system.eeCombat.actions}}"/>
+      <label>Momentum:</label><input type="number" name="system.eeCombat.momentum" value="{{system.eeCombat.momentum}}"/>
+      <label>Reactions:</label><input type="number" name="system.eeCombat.reactions" value="{{system.eeCombat.reactions}}"/>
+    </div>
+    <div class="ee-row ee-ee-resources">
+      <label class="ee-tooltip" data-tooltip="Magic Heat — accumulates as spells are cast.">Magic Heat:</label>
+      <input type="number" name="system.magic.heat" value="{{system.magic.heat}}"/>
+      <label>Burnout:</label><input type="number" name="system.magic.burnout" value="{{system.magic.burnout}}"/>
+      <label class="ee-tooltip" data-tooltip="Psychic Heat — accumulates as psionic powers are used.">Psychic Heat:</label>
+      <input type="number" name="system.psychic.heat" value="{{system.psychic.heat}}"/>
+    </div>
+    {{/if}}
 
     <div class="ee-row ee-pools">
       <label>HP:</label>
         <input type="number" name="system.hp.value" value="{{system.hp.value}}"/> /
         <input type="number" name="system.hp.max"   value="{{system.hp.max}}"/>
+      {{#unless isEE}}
       <label>SDC:</label>
         <input type="number" name="system.sdc.value" value="{{system.sdc.value}}"/> /
         <input type="number" name="system.sdc.max"   value="{{system.sdc.max}}"/>
+      {{/unless}}
       <label>MDC:</label>
         <input type="number" name="system.mdc.value" value="{{system.mdc.value}}"/> /
         <input type="number" name="system.mdc.max"   value="{{system.mdc.max}}"/>
@@ -123,6 +178,7 @@
     <div class="tab" data-group="primary" data-tab="skills">
       <h2 class="ee-bar">SKILLS</h2>
 
+      {{#unless isEE}}
       <div class="ee-row ee-skill-bonuses">
         <label class="ee-tooltip" data-tooltip="Auto-computed from IQ. Adds a flat percentage to every skill total. +3% per point of IQ above 15.">IQ Bonus to Skill:</label>
         <input type="number" value="{{derived.iqBonus}}" disabled/>
@@ -131,6 +187,7 @@
         <label class="ee-tooltip" data-tooltip="Auto-computed from PB. The percentage chance to charm or impress others. Kicks in at PB 16+.">Charm/Impress:</label>
         <input type="number" value="{{derived.charmImpress}}" disabled/>
       </div>
+      {{/unless}}
 
       <div class="ee-skill-grid">
         <div class="ee-skill-col">
@@ -237,7 +294,9 @@
           <div class="ee-kv"><label>Type:</label>
             <select name="system.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.handToHand.type}}</select>
           </div>
+          {{#unless isEE}}
           <div class="ee-kv"><label>Attacks per Melee:</label><input type="number" name="system.handToHand.attacks" value="{{system.handToHand.attacks}}"/></div>
+          {{/unless}}
           <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.handToHand.initiative" value="{{system.handToHand.initiative}}"/>
             <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.initiative}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
           <div class="ee-kv"><label>Damage:</label><input type="number" name="system.handToHand.damage" value="{{system.handToHand.damage}}"/></div>

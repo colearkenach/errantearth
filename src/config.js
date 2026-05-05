@@ -84,3 +84,51 @@ EE.ATTRIBUTES = {
   pb:  "PB",
   spd: "SPD"
 };
+
+// ===== Errant Earth-mode enums =====
+
+EE.SYSTEM_MODES = {
+  rifts:        "RIFTS",
+  errantEarth:  "Errant Earth"
+};
+
+EE.EE_ATTRIBUTES = {
+  anm: "ANM (Animus)",
+  brv: "BRV (Bravado)",
+  com: "COM (Composure)",
+  fin: "FIN (Finesse)",
+  hrd: "HRD (Hardiness)",
+  pow: "POW (Power)",
+  spd: "SPD (Speed)",
+  wil: "WIL (Will)"
+};
+
+EE.EE_ATTRIBUTE_TIERS = {
+  Mortal:       "Mortal",
+  Augmented:    "Augmented",
+  Mechanical:   "Mechanical",
+  Supernatural: "Supernatural",
+  Exalted:      "Exalted",
+  Divine:       "Divine"
+};
+
+EE.EE_SKILL_CATEGORIES = {
+  core:    "Core",
+  trained: "Trained",
+  hobby:   "Hobby"
+};
+
+EE.EE_SKILL_TAGS = {
+  Aced:      "Aced",
+  Assurance: "Assurance",
+  Fated:     "Fated",
+  Reliable:  "Reliable",
+  Take20:    "Take 20"
+};
+
+EE.EE_DAMAGE_SCALES = {
+  S: "Standard",
+  M: "Mega",
+  G: "Giga",
+  U: "Ultra"
+};

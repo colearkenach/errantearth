@@ -769,3 +769,23 @@ color: var(--ee-red, #8a1f1f);
     opacity: 0.5;
     pointer-events: none
 }
+
+.ee-banner { position: relative; }
+.ee-mode-toggle {
+  position: absolute; top: 8px; right: 12px;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: bold; color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+  cursor: pointer; z-index: 2;
+}
+.ee-mode-toggle input { cursor: pointer; }
+.ee-ee-attrs label { font-weight: bold; }
+.ee-ee-attrs input { width: 3em; }
+.ee-roll-attr { cursor: pointer; color: var(--ee-red, #8a1f1f); margin-right: 4px; }
+.ee-roll-attr:hover { color: #000; }
+.ee-ee-tier,
+.ee-ee-resources {
+  background: rgba(138,31,31,0.05);
+  border-left: 2px solid var(--ee-red, #8a1f1f);
+  padding: 4px 6px;
+}
