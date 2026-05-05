@@ -4,8 +4,33 @@
       "character"
     ],
     "character": {
+      "mode": "rifts",
       "name": "",
       "trueName": "",
+      "eeAttributes": {
+        "anm": { "value": 0 },
+        "brv": { "value": 0 },
+        "com": { "value": 0 },
+        "fin": { "value": 0 },
+        "hrd": { "value": 0 },
+        "pow": { "value": 0 },
+        "spd": { "value": 0 },
+        "wil": { "value": 0 }
+      },
+      "eeAttributeTier": "Mortal",
+      "eeCombat": {
+        "actions": 0,
+        "momentum": 0,
+        "reactions": 0
+      },
+      "magic":   { "heat": 0, "burnout": 0 },
+      "psychic": { "heat": 0 },
+      "backgrounds": [],
+      "occupations": [],
+      "species": {
+        "name": "",
+        "notes": ""
+      },
       "race": "",
       "gender": "",
       "occ": "",
