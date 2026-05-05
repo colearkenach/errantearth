@@ -263,6 +263,54 @@ color: var(--ee-red, #8a1f1f);
   border-bottom: 1px solid #888;
 }
 
+.ee-skill-add-row {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.ee-skill-add-row select {
+  flex: 1;
+  font-size: 11px;
+}
+
+.ee-skill-unassigned {
+  margin-top: 8px;
+  padding: 4px;
+  border: 1px dashed #888;
+}
+
+.ee-skill-unassigned > summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.ee-wp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.ee-wp-col h4 {
+  margin: 0 0 2px 0;
+  font-size: 12px;
+  border-bottom: 1px solid #aaa;
+}
+
+.ee-wp-check {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ee-muted {
+  color: #777;
+  font-style: italic;
+}
+
 /* ---------------- Combat tab ---------------- */
 .ee-combat-top {
   display: grid;
