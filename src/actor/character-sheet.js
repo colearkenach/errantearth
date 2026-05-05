@@ -262,22 +262,43 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const id = ev.currentTarget.dataset.itemId;
     const item = this.actor.items.get(id);
     if (!item) return;
-    if (item.type === "race") {
-      const equippedOccId = this.actor.system.equippedOcc;
-      const equippedOcc = equippedOccId ? this.actor.items.get(equippedOccId) : null;
-      if (equippedOcc?.system?.isRCC) {
-        return ui.notifications?.warn(`Cannot equip a Race while an RCC ("${equippedOcc.name}") is equipped.`);
+    return this._equipCcItem(item);
+  }
+
+  /** Merge OCC starting skills into the actor's skill list. Skips any that
+   *  are already on the actor (matched by key for canonical skills, by
+   *  name+custom for free-text rows). Existing skill values are never
+   *  overwritten. */
+  _mergeOccSkillsIntoActor(occItem) {
+    const occSkills = ErrantEarthCharacterSheet._toArray(occItem.system?.skills);
+    if (!occSkills.length) return null;
+    const current = ErrantEarthCharacterSheet._toArray(this.actor.system.skills?.list);
+    const usedKeys  = new Set(current.map(r => r.key).filter(Boolean));
+    const usedNames = new Set(current.filter(r => r.custom && r.name).map(r => r.name.trim().toLowerCase()));
+    const merged = foundry.utils.deepClone(current);
+    let added = 0;
+    for (const s of occSkills) {
+      const isCustom = !!s.custom || !s.key;
+      if (isCustom) {
+        const nm = (s.name ?? "").trim();
+        if (!nm || usedNames.has(nm.toLowerCase())) continue;
+        usedNames.add(nm.toLowerCase());
+      } else {
+        if (usedKeys.has(s.key)) continue;
+        usedKeys.add(s.key);
       }
-      return this.actor.update({ "system.equippedRace": id, "system.race": item.name });
+      merged.push({
+        key: s.key ?? "",
+        name: s.name ?? "",
+        base: Number(s.base ?? 0),
+        perLvl: Number(s.perLvl ?? 0),
+        misc: 0,
+        category: s.category || "occ",
+        custom: !!isCustom
+      });
+      added++;
     }
-    if (item.type === "occ") {
-      const update = { "system.equippedOcc": id, "system.occ": item.name };
-      if (item.system?.isRCC) {
-        update["system.equippedRace"] = "";
-        update["system.race"] = item.name;
-      }
-      return this.actor.update(update);
-    }
+    return added ? merged : null;
   }
 
   async _onUnequipItem(ev) {
@@ -332,6 +353,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         update["system.equippedRace"] = "";
         update["system.race"] = item.name;
       }
+      const mergedSkills = this._mergeOccSkillsIntoActor(item);
+      if (mergedSkills) update["system.skills.list"] = mergedSkills;
       return this.actor.update(update);
     }
   }
