@@ -144,8 +144,18 @@
         <tbody>
           {{#each system.skills}}
           <tr>
-            <td><input type="text" name="system.skills.{{@index}}.name" value="{{name}}"/></td>
-            <td><input type="number" name="system.skills.{{@index}}.base" value="{{base}}"/></td>
+            <td>
+              {{#if custom}}
+              <input type="text" name="system.skills.{{@index}}.name" value="{{name}}"/>
+              <input type="hidden" name="system.skills.{{@index}}.key" value=""/>
+              <input type="hidden" name="system.skills.{{@index}}.custom" value="true"/>
+              {{else}}
+              {{name}}
+              <input type="hidden" name="system.skills.{{@index}}.name" value="{{name}}"/>
+              <input type="hidden" name="system.skills.{{@index}}.key"  value="{{key}}"/>
+              {{/if}}
+            </td>
+            <td><input type="number" name="system.skills.{{@index}}.base"   value="{{base}}"/></td>
             <td><input type="number" name="system.skills.{{@index}}.perLvl" value="{{perLvl}}"/></td>
             <td><select name="system.skills.{{@index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category}}</select></td>
             <td><a data-action="delete-occ-skill" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
@@ -153,7 +163,19 @@
           {{/each}}
         </tbody>
       </table>
-      <button type="button" class="ee-add" data-action="add-occ-skill">+ Add Skill</button>
+      <div class="ee-skill-add-row">
+        <select data-action="add-occ-skill-from-list" data-category="occ">
+          <option value="">+ Add from list…</option>
+          {{#each skillPicker}}
+          <optgroup label="{{group}}">
+            {{#each items}}
+            <option value="{{key}}">{{name}}</option>
+            {{/each}}
+          </optgroup>
+          {{/each}}
+        </select>
+        <button type="button" class="ee-add" data-action="add-occ-skill">+ Custom</button>
+      </div>
 
       {{> ccBonusBlocks system=system}}
 

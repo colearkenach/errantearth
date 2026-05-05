@@ -43,7 +43,16 @@ export class ErrantEarthItemSheet extends ItemSheet {
     ctx.config = CONFIG.EE ?? {};
     ctx.system = foundry.utils.deepClone(this.item.system);
     if (this.item.type === "occ") {
-      ctx.system.skills = ErrantEarthItemSheet._toArray(this.item.system.skills);
+      const skills = ErrantEarthItemSheet._toArray(this.item.system.skills);
+      ctx.system.skills = skills;
+
+      const usedKeys = new Set(skills.map(r => r.key).filter(Boolean));
+      const masterList = (CONFIG.EE?.SKILL_LIST ?? []).filter(s => !usedKeys.has(s.key));
+      const grouped = {};
+      for (const s of masterList) (grouped[s.group] ??= []).push(s);
+      ctx.skillPicker = Object.entries(grouped)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([group, items]) => ({ group, items }));
     }
     if (this.item.type === "occ" || this.item.type === "race") {
       ctx.system.abilities = ErrantEarthItemSheet._toArray(this.item.system.abilities);
@@ -54,8 +63,9 @@ export class ErrantEarthItemSheet extends ItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
     if (!this.isEditable) return;
-    html.on("click", "[data-action='add-occ-skill']",    this._onAddOccSkill.bind(this));
-    html.on("click", "[data-action='delete-occ-skill']", this._onDeleteOccSkill.bind(this));
+    html.on("click",  "[data-action='add-occ-skill']",         this._onAddOccSkill.bind(this));
+    html.on("change", "[data-action='add-occ-skill-from-list']", this._onAddOccSkillFromList.bind(this));
+    html.on("click",  "[data-action='delete-occ-skill']",      this._onDeleteOccSkill.bind(this));
     html.on("click", "[data-action='add-cc-ability']",    this._onAddCcAbility.bind(this));
     html.on("click", "[data-action='delete-cc-ability']", this._onDeleteCcAbility.bind(this));
   }
@@ -63,7 +73,26 @@ export class ErrantEarthItemSheet extends ItemSheet {
   async _onAddOccSkill(ev) {
     ev.preventDefault();
     const skills = ErrantEarthItemSheet._toArray(this.item.system.skills);
-    skills.push({ name: "", base: 0, perLvl: 0, category: "occ" });
+    skills.push({ key: "", name: "", base: 0, perLvl: 0, category: "occ", custom: true });
+    return this.item.update({ "system.skills": skills });
+  }
+
+  async _onAddOccSkillFromList(ev) {
+    const sel = ev.currentTarget;
+    const key = sel.value;
+    if (!key) return;
+    const master = (CONFIG.EE?.SKILL_LIST ?? []).find(s => s.key === key);
+    if (!master) { sel.value = ""; return; }
+    const skills = ErrantEarthItemSheet._toArray(this.item.system.skills);
+    skills.push({
+      key: master.key,
+      name: master.name,
+      base: master.base,
+      perLvl: master.perLvl,
+      category: sel.dataset.category || "occ",
+      custom: false
+    });
+    sel.value = "";
     return this.item.update({ "system.skills": skills });
   }
 
