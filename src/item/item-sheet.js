@@ -57,6 +57,11 @@ export class ErrantEarthItemSheet extends ItemSheet {
     if (this.item.type === "occ" || this.item.type === "race") {
       ctx.system.abilities = ErrantEarthItemSheet._toArray(this.item.system.abilities);
     }
+    if (this.item.type === "vehicle") {
+      ctx.system.armor = ctx.system.armor ?? {};
+      ctx.system.armor.extras = ErrantEarthItemSheet._toArray(this.item.system.armor?.extras);
+      ctx.system.weapons = ErrantEarthItemSheet._toArray(this.item.system.weapons);
+    }
     return ctx;
   }
 
@@ -68,6 +73,40 @@ export class ErrantEarthItemSheet extends ItemSheet {
     html.on("click",  "[data-action='delete-occ-skill']",      this._onDeleteOccSkill.bind(this));
     html.on("click", "[data-action='add-cc-ability']",    this._onAddCcAbility.bind(this));
     html.on("click", "[data-action='delete-cc-ability']", this._onDeleteCcAbility.bind(this));
+    html.on("click", "[data-action='add-vehicle-armor-extra']",    this._onAddVehicleArmorExtra.bind(this));
+    html.on("click", "[data-action='delete-vehicle-armor-extra']", this._onDeleteVehicleArmorExtra.bind(this));
+    html.on("click", "[data-action='add-vehicle-weapon']",         this._onAddVehicleWeapon.bind(this));
+    html.on("click", "[data-action='delete-vehicle-weapon']",      this._onDeleteVehicleWeapon.bind(this));
+  }
+
+  async _onAddVehicleArmorExtra(ev) {
+    ev.preventDefault();
+    const extras = ErrantEarthItemSheet._toArray(this.item.system.armor?.extras);
+    extras.push({ name: "", current: 0, max: 0 });
+    return this.item.update({ "system.armor.extras": extras });
+  }
+
+  async _onDeleteVehicleArmorExtra(ev) {
+    ev.preventDefault();
+    const idx = Number(ev.currentTarget.dataset.index);
+    const extras = ErrantEarthItemSheet._toArray(this.item.system.armor?.extras);
+    extras.splice(idx, 1);
+    return this.item.update({ "system.armor.extras": extras });
+  }
+
+  async _onAddVehicleWeapon(ev) {
+    ev.preventDefault();
+    const weapons = ErrantEarthItemSheet._toArray(this.item.system.weapons);
+    weapons.push({ type: "", damageType: "", damage: "", range: "", rate: "", payload: "" });
+    return this.item.update({ "system.weapons": weapons });
+  }
+
+  async _onDeleteVehicleWeapon(ev) {
+    ev.preventDefault();
+    const idx = Number(ev.currentTarget.dataset.index);
+    const weapons = ErrantEarthItemSheet._toArray(this.item.system.weapons);
+    weapons.splice(idx, 1);
+    return this.item.update({ "system.weapons": weapons });
   }
 
   async _onAddOccSkill(ev) {

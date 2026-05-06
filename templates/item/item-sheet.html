@@ -103,15 +103,83 @@
     {{#if (eq item.type "vehicle")}}
       <div class="ee-grid-2">
         <label>Type <select name="system.vehicleType">{{eeSelectOptions config.VEHICLE_TYPES system.vehicleType}}</select></label>
-        <label>AR <input type="number" name="system.ar" value="{{system.ar}}"/></label>
-        <label>MDC Current <input type="number" name="system.mdc.current" value="{{system.mdc.current}}"/></label>
-        <label>MDC Max <input type="number" name="system.mdc.max" value="{{system.mdc.max}}"/></label>
-        <label>Speed <input type="text" name="system.speed" value="{{system.speed}}"/></label>
-        <label>Weight <input type="text" name="system.weight" value="{{system.weight}}"/></label>
-        <label>Cargo <input type="text" name="system.cargo" value="{{system.cargo}}"/></label>
-        <label>Cost <input type="text" name="system.cost" value="{{system.cost}}"/></label>
         <label class="ee-check"><input type="checkbox" name="system.isMDC" {{eeChecked system.isMDC}}/> MDC structure (else SDC)</label>
+        <label>Crew <input type="text" name="system.crew" value="{{system.crew}}"/></label>
+        <label>Capacity <input type="text" name="system.capacity" value="{{system.capacity}}"/></label>
       </div>
+
+      <h4 class="ee-section-h">Stats</h4>
+      <div class="ee-grid-2">
+        <label>Height <input type="text" name="system.stats.height" value="{{system.stats.height}}"/></label>
+        <label>Width <input type="text" name="system.stats.width" value="{{system.stats.width}}"/></label>
+        <label>Length <input type="text" name="system.stats.length" value="{{system.stats.length}}"/></label>
+        <label>Weight <input type="text" name="system.stats.weight" value="{{system.stats.weight}}"/></label>
+        <label>Cargo <input type="text" name="system.stats.cargo" value="{{system.stats.cargo}}"/></label>
+        <label>Power Source <input type="text" name="system.stats.powerSource" value="{{system.stats.powerSource}}"/></label>
+        <label>Flight Ceiling <input type="text" name="system.stats.flightCeiling" value="{{system.stats.flightCeiling}}"/></label>
+        <label>Leaps <input type="text" name="system.stats.leaps" value="{{system.stats.leaps}}"/></label>
+        <label>Value (New) <input type="text" name="system.stats.valueNew" value="{{system.stats.valueNew}}"/></label>
+        <label>Value (Used) <input type="text" name="system.stats.valueUsed" value="{{system.stats.valueUsed}}"/></label>
+        <label>Availability <input type="text" name="system.stats.availability" value="{{system.stats.availability}}"/></label>
+      </div>
+
+      <h4 class="ee-section-h">Speed</h4>
+      <div class="ee-grid-2">
+        <label>Max <input type="text" name="system.speed.max" value="{{system.speed.max}}"/></label>
+        <label>Cruise <input type="text" name="system.speed.cruise" value="{{system.speed.cruise}}"/></label>
+        <label>Range <input type="text" name="system.speed.range" value="{{system.speed.range}}"/></label>
+        <label>Running <input type="text" name="system.speed.running" value="{{system.speed.running}}"/></label>
+        <label>Flying (Atm) <input type="text" name="system.speed.flyingAtm" value="{{system.speed.flyingAtm}}"/></label>
+        <label>Flying (Space) <input type="text" name="system.speed.flyingSpace" value="{{system.speed.flyingSpace}}"/></label>
+        <label>FTL <input type="text" name="system.speed.ftl" value="{{system.speed.ftl}}"/></label>
+      </div>
+
+      <h4 class="ee-section-h">Armor / D.C.</h4>
+      <div class="ee-grid-2">
+        <label>A.R. <input type="number" name="system.armor.ar" value="{{system.armor.ar}}"/></label>
+        <label>Sensor Bonus <input type="text" name="system.armor.sensorBonus" value="{{system.armor.sensorBonus}}"/></label>
+        <label>Pilot's Comp. <input type="text" name="system.armor.pilotComp" value="{{system.armor.pilotComp}}"/></label>
+      </div>
+      <table class="ee-table">
+        <thead><tr><th>Location</th><th>Current</th><th>Max</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Main Body</td><td><input type="number" name="system.armor.mainBody.current" value="{{system.armor.mainBody.current}}"/></td><td><input type="number" name="system.armor.mainBody.max" value="{{system.armor.mainBody.max}}"/></td><td></td></tr>
+          <tr><td>Head</td><td><input type="number" name="system.armor.head.current" value="{{system.armor.head.current}}"/></td><td><input type="number" name="system.armor.head.max" value="{{system.armor.head.max}}"/></td><td></td></tr>
+          <tr><td>Left Arm</td><td><input type="number" name="system.armor.leftArm.current" value="{{system.armor.leftArm.current}}"/></td><td><input type="number" name="system.armor.leftArm.max" value="{{system.armor.leftArm.max}}"/></td><td></td></tr>
+          <tr><td>Right Arm</td><td><input type="number" name="system.armor.rightArm.current" value="{{system.armor.rightArm.current}}"/></td><td><input type="number" name="system.armor.rightArm.max" value="{{system.armor.rightArm.max}}"/></td><td></td></tr>
+          <tr><td>Left Leg</td><td><input type="number" name="system.armor.leftLeg.current" value="{{system.armor.leftLeg.current}}"/></td><td><input type="number" name="system.armor.leftLeg.max" value="{{system.armor.leftLeg.max}}"/></td><td></td></tr>
+          <tr><td>Right Leg</td><td><input type="number" name="system.armor.rightLeg.current" value="{{system.armor.rightLeg.current}}"/></td><td><input type="number" name="system.armor.rightLeg.max" value="{{system.armor.rightLeg.max}}"/></td><td></td></tr>
+          {{#each system.armor.extras}}
+          <tr>
+            <td><input type="text" name="system.armor.extras.{{@index}}.name" value="{{name}}" placeholder="Location"/></td>
+            <td><input type="number" name="system.armor.extras.{{@index}}.current" value="{{current}}"/></td>
+            <td><input type="number" name="system.armor.extras.{{@index}}.max" value="{{max}}"/></td>
+            <td><a data-action="delete-vehicle-armor-extra" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button type="button" class="ee-add" data-action="add-vehicle-armor-extra">+ Add Location</button>
+
+      <h4 class="ee-section-h">Weapon Systems</h4>
+      <table class="ee-table">
+        <thead><tr><th>Type</th><th>Dmg Type</th><th>Damage</th><th>Range</th><th>Rate</th><th>Payload</th><th></th></tr></thead>
+        <tbody>
+          {{#each system.weapons}}
+          <tr>
+            <td><input type="text" name="system.weapons.{{@index}}.type" value="{{type}}"/></td>
+            <td><select name="system.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
+            <td><input type="text" name="system.weapons.{{@index}}.damage" value="{{damage}}"/></td>
+            <td><input type="text" name="system.weapons.{{@index}}.range" value="{{range}}"/></td>
+            <td><input type="text" name="system.weapons.{{@index}}.rate" value="{{rate}}"/></td>
+            <td><input type="text" name="system.weapons.{{@index}}.payload" value="{{payload}}"/></td>
+            <td><a data-action="delete-vehicle-weapon" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button type="button" class="ee-add" data-action="add-vehicle-weapon">+ Add Weapon</button>
+
       <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
       <label class="ee-block">Notes<textarea name="system.notes">{{system.notes}}</textarea></label>
     {{/if}}
