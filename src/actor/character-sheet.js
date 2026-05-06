@@ -139,31 +139,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     // {{#each}} keeps working even after Foundry's merge corrupts them.
     ctx.system = foundry.utils.deepClone(sys);
     ctx.system.handToHand.extras = toArr(sys.handToHand?.extras);
-
-    // Auto-bonuses by HtH type & level (RIFTS mode only). Each stat is exposed
-    // as { stored, auto, total, title } so the template can render the
-    // computed total while keeping the input bound to the stored misc value.
-    const cfg = CONFIG.EE ?? {};
-    const buildHthDerived = (block, applyAuto) => {
-      const type = block?.type ?? "";
-      const auto = applyAuto && cfg.getHthBonuses
-        ? cfg.getHthBonuses(type, level)
-        : { attacks: 0, strike: 0, parry: 0, dodge: 0, damage: 0, pullRoll: 0, initiative: 0 };
-      const typeLabel = (cfg.HTH_TYPES ?? {})[type] ?? "";
-      const out = {};
-      for (const key of (cfg.HTH_STAT_KEYS ?? [])) {
-        const stored = Number(block?.[key] ?? 0);
-        const a = Number(auto[key] ?? 0);
-        const total = stored + a;
-        const title = a
-          ? `${stored} misc ${a >= 0 ? "+" : "−"} ${Math.abs(a)} from HtH: ${typeLabel} = ${total}`
-          : `${stored} misc`;
-        out[key] = { stored, auto: a, total, title };
-      }
-      return out;
-    };
-    ctx.hth   = buildHthDerived(sys.handToHand, !ctx.isEE);
-    ctx.paHth = buildHthDerived(sys.powerArmor?.handToHand, !ctx.isEE);
     ctx.system.savingThrows.extras = toArr(sys.savingThrows?.extras);
     ctx.system.weapons.modern = toArr(sys.weapons?.modern);
     ctx.system.weapons.ancient = toArr(sys.weapons?.ancient);
@@ -252,22 +227,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     html.on("click", "[data-action='unequip-item']", this._onUnequipItem.bind(this));
     html.on("change", "[data-action='toggle-mode']", this._onToggleMode.bind(this));
     html.on("change", "[data-action='cc-pick']",     this._onCcPick.bind(this));
-
-    // HtH auto-bonus inputs: show stored misc value while focused so the user
-    // edits only their own bonus; restore the displayed total on blur.
-    html.on("focus", "input[data-ee-auto]", (ev) => {
-      const el = ev.currentTarget;
-      el.value = el.dataset.eeStored ?? "0";
-    });
-    html.on("blur", "input[data-ee-auto]", (ev) => {
-      const el = ev.currentTarget;
-      const auto = Number(el.dataset.eeAuto ?? 0);
-      // Whatever the user typed during the edit becomes the new stored value;
-      // the change event has already fired by the time blur runs.
-      const stored = Number(el.value) || 0;
-      el.dataset.eeStored = String(stored);
-      el.value = String(stored + auto);
-    });
 
     const dropZone = html.find(".ee-items-tab")[0];
     if (dropZone) {
