@@ -483,16 +483,44 @@
     "vehicle": {
       "description": "",
       "vehicleType": "",
-      "ar": 0,
       "isMDC": true,
-      "mdc": {
-        "current": 0,
-        "max": 0
+      "crew": "",
+      "capacity": "",
+      "stats": {
+        "height": "",
+        "width": "",
+        "length": "",
+        "weight": "",
+        "cargo": "",
+        "powerSource": "",
+        "flightCeiling": "",
+        "leaps": "",
+        "valueNew": "",
+        "valueUsed": "",
+        "availability": ""
       },
-      "speed": "",
-      "weight": "",
-      "cargo": "",
-      "cost": "",
+      "speed": {
+        "max": "",
+        "cruise": "",
+        "range": "",
+        "flyingSpace": "",
+        "flyingAtm": "",
+        "ftl": "",
+        "running": ""
+      },
+      "armor": {
+        "ar": 0,
+        "sensorBonus": "",
+        "pilotComp": "",
+        "mainBody": { "current": 0, "max": 0 },
+        "head":     { "current": 0, "max": 0 },
+        "leftArm":  { "current": 0, "max": 0 },
+        "rightArm": { "current": 0, "max": 0 },
+        "leftLeg":  { "current": 0, "max": 0 },
+        "rightLeg": { "current": 0, "max": 0 },
+        "extras": []
+      },
+      "weapons": [],
       "notes": ""
     },
     "race": {
