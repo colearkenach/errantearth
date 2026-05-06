@@ -383,19 +383,19 @@
             <select name="system.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.handToHand.type}}</select>
           </div>
           {{#unless isEE}}
-          <div class="ee-kv"><label>Attacks per Melee:</label><input type="number" name="system.handToHand.attacks" value="{{system.handToHand.attacks}}"/></div>
+          <div class="ee-kv"><label>Attacks per Melee:</label><input type="number" name="system.handToHand.attacks" value="{{hth.attacks.total}}" data-ee-auto="{{hth.attacks.auto}}" data-ee-stored="{{hth.attacks.stored}}" title="{{hth.attacks.title}}"/></div>
           {{/unless}}
-          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.handToHand.initiative" value="{{system.handToHand.initiative}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.initiative}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Damage:</label><input type="number" name="system.handToHand.damage" value="{{system.handToHand.damage}}"/></div>
-          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.handToHand.strike" value="{{system.handToHand.strike}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.strike}}" data-label="HtH Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.handToHand.parry" value="{{system.handToHand.parry}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.parry}}" data-label="HtH Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.handToHand.dodge" value="{{system.handToHand.dodge}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.dodge}}" data-label="HtH Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Pull/Roll:</label><input type="number" name="system.handToHand.pullRoll" value="{{system.handToHand.pullRoll}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.pullRoll}}" data-label="Pull/Roll" title="Roll Pull/Roll"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.handToHand.initiative" value="{{hth.initiative.total}}" data-ee-auto="{{hth.initiative.auto}}" data-ee-stored="{{hth.initiative.stored}}" title="{{hth.initiative.title}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{hth.initiative.total}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Damage:</label><input type="number" name="system.handToHand.damage" value="{{hth.damage.total}}" data-ee-auto="{{hth.damage.auto}}" data-ee-stored="{{hth.damage.stored}}" title="{{hth.damage.title}}"/></div>
+          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.handToHand.strike" value="{{hth.strike.total}}" data-ee-auto="{{hth.strike.auto}}" data-ee-stored="{{hth.strike.stored}}" title="{{hth.strike.title}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{hth.strike.total}}" data-label="HtH Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.handToHand.parry" value="{{hth.parry.total}}" data-ee-auto="{{hth.parry.auto}}" data-ee-stored="{{hth.parry.stored}}" title="{{hth.parry.title}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{hth.parry.total}}" data-label="HtH Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.handToHand.dodge" value="{{hth.dodge.total}}" data-ee-auto="{{hth.dodge.auto}}" data-ee-stored="{{hth.dodge.stored}}" title="{{hth.dodge.title}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{hth.dodge.total}}" data-label="HtH Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Pull/Roll:</label><input type="number" name="system.handToHand.pullRoll" value="{{hth.pullRoll.total}}" data-ee-auto="{{hth.pullRoll.auto}}" data-ee-stored="{{hth.pullRoll.stored}}" title="{{hth.pullRoll.title}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{hth.pullRoll.total}}" data-label="Pull/Roll" title="Roll Pull/Roll"><i class="fas fa-dice-d20"></i></a></div>
           <div class="ee-kv"><label>Perception:</label><input type="number" name="system.handToHand.perception" value="{{system.handToHand.perception}}"/>
             <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.perception}}" data-label="Perception" title="Roll Perception"><i class="fas fa-dice-d20"></i></a></div>
           {{#each system.handToHand.extras}}
@@ -673,18 +673,18 @@
           <div class="ee-kv"><label>Type:</label>
             <select name="system.powerArmor.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.powerArmor.handToHand.type}}</select>
           </div>
-          <div class="ee-kv"><label>Attacks per Melee:</label><input type="number" name="system.powerArmor.handToHand.attacks" value="{{system.powerArmor.handToHand.attacks}}"/></div>
-          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.powerArmor.handToHand.initiative" value="{{system.powerArmor.handToHand.initiative}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.initiative}}" data-label="PA Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Damage:</label><input type="number" name="system.powerArmor.handToHand.damage" value="{{system.powerArmor.handToHand.damage}}"/></div>
-          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.powerArmor.handToHand.strike" value="{{system.powerArmor.handToHand.strike}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.strike}}" data-label="PA Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.powerArmor.handToHand.parry" value="{{system.powerArmor.handToHand.parry}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.parry}}" data-label="PA Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.powerArmor.handToHand.dodge" value="{{system.powerArmor.handToHand.dodge}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.dodge}}" data-label="PA Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Pull/Roll:</label><input type="number" name="system.powerArmor.handToHand.pullRoll" value="{{system.powerArmor.handToHand.pullRoll}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.pullRoll}}" data-label="PA Pull/Roll" title="Roll Pull/Roll"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Attacks per Melee:</label><input type="number" name="system.powerArmor.handToHand.attacks" value="{{paHth.attacks.total}}" data-ee-auto="{{paHth.attacks.auto}}" data-ee-stored="{{paHth.attacks.stored}}" title="{{paHth.attacks.title}}"/></div>
+          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.powerArmor.handToHand.initiative" value="{{paHth.initiative.total}}" data-ee-auto="{{paHth.initiative.auto}}" data-ee-stored="{{paHth.initiative.stored}}" title="{{paHth.initiative.title}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{paHth.initiative.total}}" data-label="PA Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Damage:</label><input type="number" name="system.powerArmor.handToHand.damage" value="{{paHth.damage.total}}" data-ee-auto="{{paHth.damage.auto}}" data-ee-stored="{{paHth.damage.stored}}" title="{{paHth.damage.title}}"/></div>
+          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.powerArmor.handToHand.strike" value="{{paHth.strike.total}}" data-ee-auto="{{paHth.strike.auto}}" data-ee-stored="{{paHth.strike.stored}}" title="{{paHth.strike.title}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{paHth.strike.total}}" data-label="PA Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.powerArmor.handToHand.parry" value="{{paHth.parry.total}}" data-ee-auto="{{paHth.parry.auto}}" data-ee-stored="{{paHth.parry.stored}}" title="{{paHth.parry.title}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{paHth.parry.total}}" data-label="PA Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.powerArmor.handToHand.dodge" value="{{paHth.dodge.total}}" data-ee-auto="{{paHth.dodge.auto}}" data-ee-stored="{{paHth.dodge.stored}}" title="{{paHth.dodge.title}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{paHth.dodge.total}}" data-label="PA Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></div>
+          <div class="ee-kv"><label>Pull/Roll:</label><input type="number" name="system.powerArmor.handToHand.pullRoll" value="{{paHth.pullRoll.total}}" data-ee-auto="{{paHth.pullRoll.auto}}" data-ee-stored="{{paHth.pullRoll.stored}}" title="{{paHth.pullRoll.title}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{paHth.pullRoll.total}}" data-label="PA Pull/Roll" title="Roll Pull/Roll"><i class="fas fa-dice-d20"></i></a></div>
           {{#each system.powerArmor.handToHand.extras}}
           <div class="ee-kv">
             <input type="text"   name="system.powerArmor.handToHand.extras.{{@index}}.name"  value="{{name}}" placeholder="Bonus"/>
