@@ -44,6 +44,113 @@ EE.HTH_TYPES = {
   assassin:    "Assassin"
 };
 
+// Cumulative numeric bonuses by HtH type and level (1..15) per RIFTS Ultimate
+// Edition p.343-346. Non-numeric perks (kick damage dice, paired weapons, crit
+// ranges, body flip dice, death blow, etc.) are NOT encoded here — only the
+// per-stat numeric bonuses that map to the sheet fields. Verify against the
+// book before relying on these in play; values are easy to correct in place.
+EE.HTH_PROGRESSIONS = {
+  // Hand to Hand: Basic
+  basic: {
+    1:  { attacks: 2, strike: 0, parry: 0, dodge: 0, damage: 0, pullRoll: 2, initiative: 0 },
+    2:  { attacks: 2, strike: 0, parry: 0, dodge: 0, damage: 2, pullRoll: 5, initiative: 0 },
+    3:  { attacks: 2, strike: 0, parry: 2, dodge: 2, damage: 2, pullRoll: 5, initiative: 0 },
+    4:  { attacks: 3, strike: 0, parry: 2, dodge: 2, damage: 2, pullRoll: 5, initiative: 0 },
+    5:  { attacks: 3, strike: 0, parry: 2, dodge: 2, damage: 2, pullRoll: 5, initiative: 0 },
+    6:  { attacks: 3, strike: 1, parry: 2, dodge: 2, damage: 2, pullRoll: 5, initiative: 0 },
+    7:  { attacks: 3, strike: 1, parry: 3, dodge: 3, damage: 2, pullRoll: 5, initiative: 0 },
+    8:  { attacks: 4, strike: 1, parry: 3, dodge: 3, damage: 2, pullRoll: 5, initiative: 0 },
+    9:  { attacks: 4, strike: 1, parry: 3, dodge: 3, damage: 4, pullRoll: 5, initiative: 0 },
+    10: { attacks: 4, strike: 2, parry: 3, dodge: 3, damage: 4, pullRoll: 5, initiative: 0 },
+    11: { attacks: 4, strike: 2, parry: 4, dodge: 4, damage: 4, pullRoll: 5, initiative: 0 },
+    12: { attacks: 5, strike: 2, parry: 4, dodge: 4, damage: 4, pullRoll: 5, initiative: 0 },
+    13: { attacks: 5, strike: 2, parry: 4, dodge: 4, damage: 4, pullRoll: 6, initiative: 0 },
+    14: { attacks: 5, strike: 2, parry: 4, dodge: 4, damage: 4, pullRoll: 6, initiative: 0 },
+    15: { attacks: 5, strike: 2, parry: 4, dodge: 4, damage: 4, pullRoll: 6, initiative: 0 }
+  },
+  // Hand to Hand: Expert
+  expert: {
+    1:  { attacks: 3, strike: 0, parry: 2, dodge: 2, damage: 0, pullRoll: 5, initiative: 0 },
+    2:  { attacks: 3, strike: 1, parry: 2, dodge: 2, damage: 0, pullRoll: 5, initiative: 0 },
+    3:  { attacks: 3, strike: 1, parry: 2, dodge: 2, damage: 2, pullRoll: 5, initiative: 0 },
+    4:  { attacks: 3, strike: 1, parry: 3, dodge: 3, damage: 2, pullRoll: 5, initiative: 0 },
+    5:  { attacks: 4, strike: 1, parry: 3, dodge: 3, damage: 2, pullRoll: 5, initiative: 0 },
+    6:  { attacks: 4, strike: 1, parry: 3, dodge: 3, damage: 2, pullRoll: 7, initiative: 0 },
+    7:  { attacks: 4, strike: 2, parry: 3, dodge: 3, damage: 2, pullRoll: 7, initiative: 0 },
+    8:  { attacks: 4, strike: 2, parry: 4, dodge: 4, damage: 2, pullRoll: 7, initiative: 0 },
+    9:  { attacks: 4, strike: 2, parry: 4, dodge: 4, damage: 4, pullRoll: 7, initiative: 0 },
+    10: { attacks: 5, strike: 2, parry: 4, dodge: 4, damage: 4, pullRoll: 7, initiative: 0 },
+    11: { attacks: 5, strike: 2, parry: 4, dodge: 4, damage: 4, pullRoll: 7, initiative: 0 },
+    12: { attacks: 5, strike: 2, parry: 5, dodge: 5, damage: 4, pullRoll: 7, initiative: 0 },
+    13: { attacks: 5, strike: 3, parry: 5, dodge: 5, damage: 4, pullRoll: 7, initiative: 0 },
+    14: { attacks: 6, strike: 3, parry: 5, dodge: 5, damage: 4, pullRoll: 7, initiative: 0 },
+    15: { attacks: 6, strike: 3, parry: 5, dodge: 5, damage: 4, pullRoll: 7, initiative: 0 }
+  },
+  // Hand to Hand: Martial Arts
+  martialArts: {
+    1:  { attacks: 4, strike: 2, parry: 3, dodge: 3, damage: 0, pullRoll: 2, initiative: 0 },
+    2:  { attacks: 4, strike: 2, parry: 3, dodge: 3, damage: 2, pullRoll: 2, initiative: 0 },
+    3:  { attacks: 4, strike: 3, parry: 3, dodge: 3, damage: 2, pullRoll: 2, initiative: 0 },
+    4:  { attacks: 5, strike: 3, parry: 4, dodge: 4, damage: 2, pullRoll: 2, initiative: 0 },
+    5:  { attacks: 5, strike: 3, parry: 4, dodge: 4, damage: 2, pullRoll: 4, initiative: 0 },
+    6:  { attacks: 5, strike: 4, parry: 5, dodge: 5, damage: 2, pullRoll: 4, initiative: 0 },
+    7:  { attacks: 5, strike: 4, parry: 5, dodge: 5, damage: 2, pullRoll: 4, initiative: 0 },
+    8:  { attacks: 6, strike: 5, parry: 5, dodge: 5, damage: 2, pullRoll: 4, initiative: 0 },
+    9:  { attacks: 6, strike: 5, parry: 5, dodge: 5, damage: 2, pullRoll: 4, initiative: 0 },
+    10: { attacks: 6, strike: 6, parry: 6, dodge: 6, damage: 2, pullRoll: 4, initiative: 0 },
+    11: { attacks: 7, strike: 6, parry: 6, dodge: 6, damage: 2, pullRoll: 4, initiative: 0 },
+    12: { attacks: 7, strike: 6, parry: 6, dodge: 6, damage: 4, pullRoll: 4, initiative: 0 },
+    13: { attacks: 7, strike: 6, parry: 6, dodge: 6, damage: 4, pullRoll: 4, initiative: 0 },
+    14: { attacks: 8, strike: 7, parry: 6, dodge: 6, damage: 4, pullRoll: 4, initiative: 0 },
+    15: { attacks: 8, strike: 7, parry: 7, dodge: 7, damage: 4, pullRoll: 4, initiative: 0 }
+  },
+  // Hand to Hand: Commando
+  commando: {
+    1:  { attacks: 4, strike: 2, parry: 3, dodge: 3, damage: 0, pullRoll: 5, initiative: 2 },
+    2:  { attacks: 4, strike: 3, parry: 4, dodge: 4, damage: 0, pullRoll: 5, initiative: 2 },
+    3:  { attacks: 5, strike: 3, parry: 4, dodge: 4, damage: 0, pullRoll: 5, initiative: 2 },
+    4:  { attacks: 5, strike: 3, parry: 4, dodge: 4, damage: 2, pullRoll: 5, initiative: 2 },
+    5:  { attacks: 5, strike: 3, parry: 4, dodge: 4, damage: 2, pullRoll: 5, initiative: 2 },
+    6:  { attacks: 6, strike: 4, parry: 4, dodge: 4, damage: 2, pullRoll: 5, initiative: 2 },
+    7:  { attacks: 6, strike: 4, parry: 5, dodge: 5, damage: 2, pullRoll: 5, initiative: 2 },
+    8:  { attacks: 7, strike: 4, parry: 5, dodge: 5, damage: 2, pullRoll: 5, initiative: 2 },
+    9:  { attacks: 7, strike: 4, parry: 5, dodge: 5, damage: 4, pullRoll: 5, initiative: 2 },
+    10: { attacks: 7, strike: 5, parry: 5, dodge: 5, damage: 4, pullRoll: 5, initiative: 2 },
+    11: { attacks: 7, strike: 5, parry: 6, dodge: 6, damage: 4, pullRoll: 5, initiative: 2 },
+    12: { attacks: 8, strike: 5, parry: 6, dodge: 6, damage: 4, pullRoll: 5, initiative: 2 },
+    13: { attacks: 8, strike: 5, parry: 6, dodge: 6, damage: 4, pullRoll: 5, initiative: 2 },
+    14: { attacks: 8, strike: 6, parry: 6, dodge: 6, damage: 4, pullRoll: 5, initiative: 2 },
+    15: { attacks: 9, strike: 6, parry: 6, dodge: 6, damage: 4, pullRoll: 5, initiative: 2 }
+  },
+  // Hand to Hand: Assassin
+  assassin: {
+    1:  { attacks: 4, strike: 1, parry: 2, dodge: 2, damage: 0, pullRoll: 2, initiative: 1 },
+    2:  { attacks: 4, strike: 2, parry: 2, dodge: 2, damage: 0, pullRoll: 2, initiative: 1 },
+    3:  { attacks: 4, strike: 2, parry: 3, dodge: 3, damage: 0, pullRoll: 2, initiative: 1 },
+    4:  { attacks: 5, strike: 2, parry: 3, dodge: 3, damage: 0, pullRoll: 2, initiative: 1 },
+    5:  { attacks: 5, strike: 2, parry: 3, dodge: 3, damage: 0, pullRoll: 2, initiative: 1 },
+    6:  { attacks: 5, strike: 3, parry: 3, dodge: 3, damage: 0, pullRoll: 2, initiative: 1 },
+    7:  { attacks: 5, strike: 3, parry: 3, dodge: 3, damage: 0, pullRoll: 2, initiative: 1 },
+    8:  { attacks: 5, strike: 3, parry: 4, dodge: 4, damage: 2, pullRoll: 2, initiative: 1 },
+    9:  { attacks: 6, strike: 3, parry: 4, dodge: 4, damage: 2, pullRoll: 2, initiative: 1 },
+    10: { attacks: 6, strike: 4, parry: 4, dodge: 4, damage: 2, pullRoll: 2, initiative: 1 },
+    11: { attacks: 6, strike: 4, parry: 5, dodge: 5, damage: 2, pullRoll: 2, initiative: 1 },
+    12: { attacks: 7, strike: 4, parry: 5, dodge: 5, damage: 2, pullRoll: 2, initiative: 1 },
+    13: { attacks: 7, strike: 5, parry: 5, dodge: 5, damage: 2, pullRoll: 2, initiative: 1 },
+    14: { attacks: 7, strike: 5, parry: 5, dodge: 5, damage: 4, pullRoll: 2, initiative: 1 },
+    15: { attacks: 7, strike: 5, parry: 6, dodge: 6, damage: 4, pullRoll: 2, initiative: 1 }
+  }
+};
+
+EE.HTH_STAT_KEYS = ["attacks", "strike", "parry", "dodge", "damage", "pullRoll", "initiative"];
+
+EE.getHthBonuses = function (type, level) {
+  const empty = { attacks: 0, strike: 0, parry: 0, dodge: 0, damage: 0, pullRoll: 0, initiative: 0 };
+  if (!type || !EE.HTH_PROGRESSIONS[type]) return empty;
+  const lvl = Math.max(1, Math.min(15, Number(level) || 1));
+  return { ...empty, ...(EE.HTH_PROGRESSIONS[type][lvl] ?? {}) };
+};
+
 EE.VEHICLE_TYPES = {
   ground:     "Ground",
   air:        "Air",
