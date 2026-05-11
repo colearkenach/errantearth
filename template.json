@@ -221,6 +221,10 @@
         "parry": 0,
         "dodge": 0,
         "pullRoll": 0,
+        "pullPunch": 0,
+        "roll": 0,
+        "critical": 0,
+        "knockout": 0,
         "perception": 0,
         "extras": []
       },

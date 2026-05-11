@@ -684,47 +684,106 @@
             <select name="system.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.handToHand.type}}</select>
           </div>
           {{#unless isEE}}
-          <div class="ee-kv"><label>Attacks per Melee:</label><input type="number" name="system.handToHand.attacks" value="{{system.handToHand.attacks}}"/></div>
-          {{/unless}}
-          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.handToHand.initiative" value="{{system.handToHand.initiative}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.initiative}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
           <table class="ee-table">
-            <thead><tr><th>Combat Bonus</th><th>Manual</th><th>Attribute</th><th>Total</th><th>Roll</th></tr></thead>
+            <thead><tr><th>Combat Bonus</th><th>Base</th><th>Attribute</th><th>Manual / Misc</th><th>Total</th><th>Roll</th></tr></thead>
             <tbody>
               <tr>
+                <td>Attacks per Melee:</td>
+                <td>{{riftsDerived.handToHand.attacks.base}}</td>
+                <td>{{riftsDerived.handToHand.attacks.attribute}}</td>
+                <td><input type="number" name="system.handToHand.attacks" value="{{system.handToHand.attacks}}"/></td>
+                <td>{{riftsDerived.handToHand.attacks.total}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Initiative:</td>
+                <td>{{riftsDerived.handToHand.initiative.base}}</td>
+                <td>{{riftsDerived.handToHand.initiative.attribute}}</td>
+                <td><input type="number" name="system.handToHand.initiative" value="{{system.handToHand.initiative}}"/></td>
+                <td>{{riftsDerived.handToHand.initiative.total}}</td>
+                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.initiative.total}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></td>
+              </tr>
+              <tr>
                 <td>Damage:</td>
+                <td>{{riftsDerived.handToHand.damage.base}}</td>
+                <td>{{riftsDerived.handToHand.damage.attribute}}</td>
                 <td><input type="number" name="system.handToHand.damage" value="{{system.handToHand.damage}}"/></td>
-                <td>{{riftsDerived.combat.damage.attribute}}</td>
-                <td>{{riftsDerived.combat.damage.total}}</td>
-                <td><a data-action="roll" data-roll-type="damage" data-formula="0 + {{riftsDerived.combat.damage.total}}" data-label="HtH Damage Bonus" title="Roll Damage Bonus"><i class="fas fa-dice-d20"></i></a></td>
+                <td>{{riftsDerived.handToHand.damage.total}}</td>
+                <td><a data-action="roll" data-roll-type="damage" data-formula="0 + {{riftsDerived.handToHand.damage.total}}" data-label="HtH Damage Bonus" title="Roll Damage Bonus"><i class="fas fa-dice-d20"></i></a></td>
               </tr>
               <tr>
                 <td>Strike:</td>
+                <td>{{riftsDerived.handToHand.strike.base}}</td>
+                <td>{{riftsDerived.handToHand.strike.attribute}}</td>
                 <td><input type="number" name="system.handToHand.strike" value="{{system.handToHand.strike}}"/></td>
-                <td>{{riftsDerived.combat.strike.attribute}}</td>
-                <td>{{riftsDerived.combat.strike.total}}</td>
-                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.combat.strike.total}}" data-label="HtH Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></td>
+                <td>{{riftsDerived.handToHand.strike.total}}</td>
+                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.strike.total}}" data-label="HtH Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></td>
               </tr>
               <tr>
                 <td>Parry:</td>
+                <td>{{riftsDerived.handToHand.parry.base}}</td>
+                <td>{{riftsDerived.handToHand.parry.attribute}}</td>
                 <td><input type="number" name="system.handToHand.parry" value="{{system.handToHand.parry}}"/></td>
-                <td>{{riftsDerived.combat.parry.attribute}}</td>
-                <td>{{riftsDerived.combat.parry.total}}</td>
-                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.combat.parry.total}}" data-label="HtH Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></td>
+                <td>{{riftsDerived.handToHand.parry.total}}</td>
+                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.parry.total}}" data-label="HtH Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></td>
               </tr>
               <tr>
                 <td>Dodge:</td>
+                <td>{{riftsDerived.handToHand.dodge.base}}</td>
+                <td>{{riftsDerived.handToHand.dodge.attribute}}</td>
                 <td><input type="number" name="system.handToHand.dodge" value="{{system.handToHand.dodge}}"/></td>
-                <td>{{riftsDerived.combat.dodge.attribute}}</td>
-                <td>{{riftsDerived.combat.dodge.total}}</td>
-                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.combat.dodge.total}}" data-label="HtH Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></td>
+                <td>{{riftsDerived.handToHand.dodge.total}}</td>
+                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.dodge.total}}" data-label="HtH Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></td>
+              </tr>
+              <tr>
+                <td>Pull Punch:</td>
+                <td>{{riftsDerived.handToHand.pullPunch.base}}</td>
+                <td>{{riftsDerived.handToHand.pullPunch.attribute}}</td>
+                <td><input type="number" name="system.handToHand.pullPunch" value="{{riftsDerived.handToHand.pullPunch.manual}}"/></td>
+                <td>{{riftsDerived.handToHand.pullPunch.total}}</td>
+                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.pullPunch.total}}" data-label="Pull Punch" title="Roll Pull Punch"><i class="fas fa-dice-d20"></i></a></td>
+              </tr>
+              <tr>
+                <td>Roll w/ Punch/Fall:</td>
+                <td>{{riftsDerived.handToHand.roll.base}}</td>
+                <td>{{riftsDerived.handToHand.roll.attribute}}</td>
+                <td><input type="number" name="system.handToHand.roll" value="{{riftsDerived.handToHand.roll.manual}}"/></td>
+                <td>{{riftsDerived.handToHand.roll.total}}</td>
+                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.roll.total}}" data-label="Roll w/ Punch/Fall" title="Roll w/ Punch/Fall"><i class="fas fa-dice-d20"></i></a></td>
+              </tr>
+              <tr>
+                <td>Critical:</td>
+                <td>{{riftsDerived.handToHand.critical.base}}</td>
+                <td>{{riftsDerived.handToHand.critical.attribute}}</td>
+                <td><input type="text" name="system.handToHand.critical" value="{{riftsDerived.handToHand.critical.manual}}"/></td>
+                <td>{{riftsDerived.handToHand.critical.total}}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Knockout/Stun:</td>
+                <td>{{riftsDerived.handToHand.knockout.base}}</td>
+                <td>{{riftsDerived.handToHand.knockout.attribute}}</td>
+                <td><input type="text" name="system.handToHand.knockout" value="{{riftsDerived.handToHand.knockout.manual}}"/></td>
+                <td>{{riftsDerived.handToHand.knockout.total}}</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
-          <div class="ee-kv"><label>Pull/Roll:</label><input type="number" name="system.handToHand.pullRoll" value="{{system.handToHand.pullRoll}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.pullRoll}}" data-label="Pull/Roll" title="Roll Pull/Roll"><i class="fas fa-dice-d20"></i></a></div>
+          {{else}}
+          <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.handToHand.initiative" value="{{system.handToHand.initiative}}"/>
+            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.initiative}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
+          {{/unless}}
           <div class="ee-kv"><label>Perception:</label><input type="number" name="system.handToHand.perception" value="{{system.handToHand.perception}}"/>
             <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.perception}}" data-label="Perception" title="Roll Perception"><i class="fas fa-dice-d20"></i></a></div>
+          {{#if riftsDerived.handToHand.notes.length}}
+          {{#unless isEE}}
+          <div class="ee-kv"><label>HtH Notes:</label>
+            <ul>
+              {{#each riftsDerived.handToHand.notes}}<li>Level {{level}}: {{text}}</li>{{/each}}
+            </ul>
+          </div>
+          {{/unless}}
+          {{/if}}
           {{#each system.handToHand.extras}}
           <div class="ee-kv">
             <input type="text"   name="system.handToHand.extras.{{@index}}.name"  value="{{name}}" placeholder="Bonus name"/>
