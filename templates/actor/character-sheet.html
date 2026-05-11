@@ -363,6 +363,74 @@
       <label>Psionic Level:</label>
       <select name="system.psionicLevel">{{eeSelectOptions config.PSIONIC_LEVELS system.psionicLevel}}</select>
     </div>
+
+    {{#if riftsDerived.sources.length}}
+    <div class="ee-panel ee-rifts-sources">
+      <h3>Active RIFTS Sources</h3>
+      {{#if riftsDerived.sourceWarnings.length}}
+      <ul class="ee-warnings">
+        {{#each riftsDerived.sourceWarnings}}<li>{{this}}</li>{{/each}}
+      </ul>
+      {{/if}}
+      <div class="ee-rifts-source-grid">
+        {{#each riftsDerived.sources}}
+        <section class="ee-rifts-source-card">
+          <h4>{{type}}: {{name}}</h4>
+          {{#if isRCC}}<p class="ee-hint">RCC replaces Race.</p>{{/if}}
+
+          {{#if poolBonuses.length}}
+          <div class="ee-rifts-source-line"><strong>Pools:</strong>
+            {{#each poolBonuses}}
+              <span class="ee-chip" title="{{#unless applied}}Not auto-applied{{/unless}}">{{label}} {{#if applied}}{{display}}{{else}}{{raw}}{{/if}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+
+          {{#if attributeBonuses.length}}
+          <div class="ee-rifts-source-line"><strong>Attributes:</strong>
+            {{#each attributeBonuses}}
+              <span class="ee-chip" title="{{#unless applied}}Not auto-applied{{/unless}}">{{label}} {{#if applied}}{{display}}{{else}}{{raw}}{{/if}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+
+          {{#if combatBonuses.length}}
+          <div class="ee-rifts-source-line"><strong>Combat:</strong>
+            {{#each combatBonuses}}
+              <span class="ee-chip" title="{{#unless applied}}Left as note{{/unless}}">{{#if applied}}{{display}} {{label}}{{else}}{{raw}}{{/if}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+
+          {{#if saveBonuses.length}}
+          <div class="ee-rifts-source-line"><strong>Saves:</strong>
+            {{#each saveBonuses}}
+              <span class="ee-chip" title="{{#unless applied}}Left as note{{/unless}}">{{#if applied}}{{display}} {{label}}{{else}}{{raw}}{{/if}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+
+          {{#if abilities.length}}
+          <div class="ee-rifts-source-line"><strong>Abilities:</strong>
+            <ul class="ee-compact-list">
+              {{#each abilities}}<li>{{#if name}}<strong>{{name}}</strong>{{/if}}{{#if description}} — {{description}}{{/if}}</li>{{/each}}
+            </ul>
+          </div>
+          {{/if}}
+
+          {{#if warnings.length}}
+          <ul class="ee-warnings">
+            {{#each warnings}}<li>{{this}}</li>{{/each}}
+          </ul>
+          {{/if}}
+        </section>
+        {{/each}}
+      </div>
+      {{#if riftsDerived.sourceTotals.poolBonuses}}
+      <p class="ee-hint">Effective pool maxima: HP {{riftsDerived.pools.hp.total}}, SDC {{riftsDerived.pools.sdc.total}}, MDC {{riftsDerived.pools.mdc.total}}, ISP {{riftsDerived.pools.isp.total}}, PPE {{riftsDerived.pools.ppe.total}}. Non-flat bonuses remain notes.</p>
+      {{/if}}
+    </div>
+    {{/if}}
     {{/unless}}
   </section>
 

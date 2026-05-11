@@ -333,6 +333,151 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     };
   }
 
+  static _parseFlatBonus(value) {
+    if (typeof value === "number" && Number.isFinite(value)) return value;
+    const text = String(value ?? "").trim();
+    if (!text) return 0;
+    if (!/^[+-]?\d+$/.test(text)) return null;
+    return Number(text);
+  }
+
+  static _formatSigned(value) {
+    const n = Number(value ?? 0) || 0;
+    return n >= 0 ? `+${n}` : String(n);
+  }
+
+  static _blankRiftsSourceTotals() {
+    return {
+      attributeBonuses: { iq: 0, me: 0, ma: 0, ps: 0, pp: 0, pe: 0, pb: 0, spd: 0 },
+      poolBonuses: { hp: 0, sdc: 0, mdc: 0, isp: 0, ppe: 0 },
+      combatBonuses: { attacks: 0, initiative: 0, damage: 0, strike: 0, parry: 0, dodge: 0, pullPunch: 0, roll: 0 },
+      saveBonuses: { psionics: 0, drugPoison: 0, insanity: 0, death: 0 }
+    };
+  }
+
+  static _addRiftsSourceTotal(target, section, key, value) {
+    if (!target?.[section] || !(key in target[section])) return;
+    target[section][key] += Number(value ?? 0) || 0;
+  }
+
+  static _parseRiftsTextBonuses(text, patterns) {
+    const raw = String(text ?? "").trim();
+    const applied = [];
+    const ambiguous = [];
+    if (!raw) return { applied, ambiguous };
+
+    const chunks = raw.split(/[\n;,]+/).map(part => part.trim()).filter(Boolean);
+    for (const chunk of chunks) {
+      const match = chunk.match(/([+-]\s*\d+)/);
+      if (!match) {
+        ambiguous.push(chunk);
+        continue;
+      }
+
+      const value = Number(match[1].replace(/\s+/g, ""));
+      const lower = chunk.toLowerCase();
+      const matches = patterns.filter(pattern => pattern.tests.every(test => test.test(lower)));
+      if (matches.length === 1) {
+        applied.push({ key: matches[0].key, label: matches[0].label, value, text: chunk });
+      } else {
+        ambiguous.push(chunk);
+      }
+    }
+    return { applied, ambiguous };
+  }
+
+  static _buildRiftsSources(items) {
+    const toArr = ErrantEarthCharacterSheet._toArray;
+    const totals = ErrantEarthCharacterSheet._blankRiftsSourceTotals();
+    const sources = [];
+    const attrLabels = { iq: "IQ", me: "ME", ma: "MA", ps: "PS", pp: "PP", pe: "PE", pb: "PB", spd: "SPD" };
+    const poolLabels = { hp: "HP", sdc: "SDC", mdc: "MDC", isp: "ISP", ppe: "PPE" };
+    const combatPatterns = [
+      { key: "attacks", label: "Attacks", tests: [/\b(attacks?|actions?)\b/, /\b(melee|round|action)\b/] },
+      { key: "initiative", label: "Initiative", tests: [/\binit(iative)?\b/] },
+      { key: "damage", label: "Damage", tests: [/\bdamage\b/] },
+      { key: "strike", label: "Strike", tests: [/\bstrike\b/] },
+      { key: "parry", label: "Parry", tests: [/\bparry\b/] },
+      { key: "dodge", label: "Dodge", tests: [/\bdodge\b/, /^(?!.*\b(auto|automatic)\b)/] },
+      { key: "pullPunch", label: "Pull Punch", tests: [/\bpull\b/, /\bpunch\b/] },
+      { key: "roll", label: "Roll with Punch/Fall", tests: [/\broll\b/, /\b(punch|fall|impact)\b/] }
+    ];
+    const savePatterns = [
+      { key: "psionics", label: "Save vs Psionics", tests: [/\b(psi|psionic|psionics)\b/] },
+      { key: "drugPoison", label: "Save vs Toxins/Poisons", tests: [/\b(poison|poisons|toxin|toxins|drug|drugs)\b/] },
+      { key: "insanity", label: "Save vs Insanity", tests: [/\binsanity\b/] },
+      { key: "death", label: "Save vs Coma/Death", tests: [/\b(coma|death)\b/] }
+    ];
+
+    for (const item of items.filter(Boolean)) {
+      const source = {
+        name: item.name,
+        type: item.system?.isRCC ? "RCC" : (item.type === "race" ? "Race" : "OCC"),
+        isRCC: !!item.system?.isRCC,
+        attributeBonuses: [],
+        poolBonuses: [],
+        combatBonuses: [],
+        saveBonuses: [],
+        abilities: [],
+        warnings: [],
+        hasDetails: false
+      };
+
+      for (const [key, label] of Object.entries(attrLabels)) {
+        const raw = item.system?.attributeBonuses?.[key];
+        const parsed = ErrantEarthCharacterSheet._parseFlatBonus(raw);
+        if (parsed === null) {
+          source.attributeBonuses.push({ key, label, raw, applied: false });
+          source.warnings.push(`${label} bonus “${raw}” was not auto-applied.`);
+        } else if (parsed) {
+          ErrantEarthCharacterSheet._addRiftsSourceTotal(totals, "attributeBonuses", key, parsed);
+          source.attributeBonuses.push({ key, label, value: parsed, display: ErrantEarthCharacterSheet._formatSigned(parsed), applied: true });
+        }
+      }
+
+      for (const [key, label] of Object.entries(poolLabels)) {
+        const raw = item.system?.poolBonuses?.[key];
+        const parsed = ErrantEarthCharacterSheet._parseFlatBonus(raw);
+        if (parsed === null) {
+          source.poolBonuses.push({ key, label, raw, applied: false });
+          source.warnings.push(`${label} pool bonus “${raw}” was not auto-applied.`);
+        } else if (parsed) {
+          ErrantEarthCharacterSheet._addRiftsSourceTotal(totals, "poolBonuses", key, parsed);
+          source.poolBonuses.push({ key, label, value: parsed, display: ErrantEarthCharacterSheet._formatSigned(parsed), applied: true });
+        }
+      }
+
+      const combat = ErrantEarthCharacterSheet._parseRiftsTextBonuses(item.system?.combatBonuses, combatPatterns);
+      for (const bonus of combat.applied) {
+        ErrantEarthCharacterSheet._addRiftsSourceTotal(totals, "combatBonuses", bonus.key, bonus.value);
+        source.combatBonuses.push({ ...bonus, display: ErrantEarthCharacterSheet._formatSigned(bonus.value), applied: true });
+      }
+      for (const raw of combat.ambiguous) {
+        source.combatBonuses.push({ raw, applied: false });
+        source.warnings.push(`Combat bonus “${raw}” was left as a note.`);
+      }
+
+      const saves = ErrantEarthCharacterSheet._parseRiftsTextBonuses(item.system?.saveBonuses, savePatterns);
+      for (const bonus of saves.applied) {
+        ErrantEarthCharacterSheet._addRiftsSourceTotal(totals, "saveBonuses", bonus.key, bonus.value);
+        source.saveBonuses.push({ ...bonus, display: ErrantEarthCharacterSheet._formatSigned(bonus.value), applied: true });
+      }
+      for (const raw of saves.ambiguous) {
+        source.saveBonuses.push({ raw, applied: false });
+        source.warnings.push(`Save bonus “${raw}” was left as a note.`);
+      }
+
+      source.abilities = toArr(item.system?.abilities)
+        .filter(a => a?.name || a?.description)
+        .map(a => ({ name: a.name ?? "", description: a.description ?? "" }));
+
+      source.hasDetails = !!(source.attributeBonuses.length || source.poolBonuses.length || source.combatBonuses.length || source.saveBonuses.length || source.abilities.length || source.warnings.length);
+      sources.push(source);
+    }
+
+    return { sources, totals, warnings: [] };
+  }
+
   /** Coerce a value that may be an object with numeric keys back into an array. */
   static _toArray(v) {
     if (Array.isArray(v)) return v;
@@ -363,9 +508,38 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const level = Number(sys.level ?? 1);
     const C = ErrantEarthCharacterSheet;
 
+    const itemBuckets = {
+      psionicPower: [], spell: [], weapon: [], armor: [], powerArmor: [],
+      vehicle: [], race: [], occ: [], gear: []
+    };
+    for (const item of this.actor.items) {
+      const type = item.type in itemBuckets ? item.type : "gear";
+      itemBuckets[type].push(item);
+    }
+    ctx.itemsByType = itemBuckets;
+    ctx.equippedRaceId = sys.equippedRace ?? "";
+    ctx.equippedOccId  = sys.equippedOcc  ?? "";
+    ctx.equippedRaceItem = ctx.equippedRaceId ? this.actor.items.get(ctx.equippedRaceId) : null;
+    ctx.equippedOccItem  = ctx.equippedOccId  ? this.actor.items.get(ctx.equippedOccId)  : null;
+    ctx.isRCC = !!ctx.equippedOccItem?.system?.isRCC;
+
+    const riftsSources = C._buildRiftsSources([ctx.equippedOccItem, ctx.equippedRaceItem]);
+    if (ctx.isRCC && ctx.equippedRaceItem) riftsSources.warnings.push("RCC replaces Race.");
+    const riftsSourceTotals = riftsSources.totals;
+    const effectiveAttrs = {
+      iq: iq + riftsSourceTotals.attributeBonuses.iq,
+      me: me + riftsSourceTotals.attributeBonuses.me,
+      ma: ma + riftsSourceTotals.attributeBonuses.ma,
+      ps: ps + riftsSourceTotals.attributeBonuses.ps,
+      pp: pp + riftsSourceTotals.attributeBonuses.pp,
+      pe: pe + riftsSourceTotals.attributeBonuses.pe,
+      pb: pb + riftsSourceTotals.attributeBonuses.pb,
+      spd: Number(A.spd?.value ?? 0) + riftsSourceTotals.attributeBonuses.spd
+    };
+
     const riftsNumber = value => Number(value ?? 0) || 0;
     const riftsText = value => value == null ? "" : String(value);
-    const riftsCombatTotal = (manual, attribute, base = 0) => ({ base, manual, attribute, total: base + manual + attribute });
+    const riftsCombatTotal = (manual, attribute, base = 0, source = 0) => ({ base, manual, attribute, source, total: base + manual + attribute + source });
     const riftsThresholdTotal = (manual, base = "") => {
       const numericBase = Number(base);
       const numericManual = Number(manual);
@@ -374,22 +548,22 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       }
       return { base, manual: riftsText(manual), attribute: "", total: riftsText(manual) || riftsText(base) };
     };
-    const riftsSaveTotal = (entry, attribute, percent = false) => {
+    const riftsSaveTotal = (entry, attribute, percent = false, source = 0) => {
       const manual = riftsNumber(entry?.bonus);
-      const total = manual + attribute;
-      return { base: entry?.base ?? "", manual, attribute, total, percent, display: percent ? `${total}%` : total };
+      const total = manual + attribute + source;
+      return { base: entry?.base ?? "", manual, attribute, source, total, percent, display: percent ? `${total}%` : total };
     };
 
-    const iqSkillBonus = C.iqSkillBonus(iq);
-    const psionicSave = C.psionicSave(me);
-    const insanitySave = C.insanitySave(me);
-    const trustIntimidate = C.trustIntimidate(ma);
-    const psDamage = C.psDamage(ps);
-    const ppStrike = C.ppStrike(pp);
-    const ppParryDodge = C.ppParryDodge(pp);
-    const peComaSave = C.peComaSave(pe);
-    const peMagicPoison = C.peMagicPoison(pe);
-    const charmImpress = C.charmImpress(pb);
+    const iqSkillBonus = C.iqSkillBonus(effectiveAttrs.iq);
+    const psionicSave = C.psionicSave(effectiveAttrs.me);
+    const insanitySave = C.insanitySave(effectiveAttrs.me);
+    const trustIntimidate = C.trustIntimidate(effectiveAttrs.ma);
+    const psDamage = C.psDamage(effectiveAttrs.ps);
+    const ppStrike = C.ppStrike(effectiveAttrs.pp);
+    const ppParryDodge = C.ppParryDodge(effectiveAttrs.pp);
+    const peComaSave = C.peComaSave(effectiveAttrs.pe);
+    const peMagicPoison = C.peMagicPoison(effectiveAttrs.pe);
+    const charmImpress = C.charmImpress(effectiveAttrs.pb);
 
     const hthTables = CONFIG.EE?.RIFTS_HTH_TABLES ?? {};
     const hthType = hthTables[sys.handToHand?.type] ? sys.handToHand.type : "basic";
@@ -424,14 +598,14 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       level,
       base: hthBase,
       notes: hthNotes,
-      attacks: riftsCombatTotal(hthManual.attacks, 0, riftsNumber(hthBase.attacks)),
-      initiative: riftsCombatTotal(hthManual.initiative, 0, riftsNumber(hthBase.initiative)),
-      damage: riftsCombatTotal(hthManual.damage, psDamage, riftsNumber(hthBase.damage)),
-      strike: riftsCombatTotal(hthManual.strike, ppStrike, riftsNumber(hthBase.strike)),
-      parry: riftsCombatTotal(hthManual.parry, ppParryDodge, riftsNumber(hthBase.parry)),
-      dodge: riftsCombatTotal(hthManual.dodge, ppParryDodge, riftsNumber(hthBase.dodge)),
-      pullPunch: riftsCombatTotal(hthManual.pullPunch, 0, riftsNumber(hthBase.pullPunch)),
-      roll: riftsCombatTotal(hthManual.roll, 0, riftsNumber(hthBase.roll)),
+      attacks: riftsCombatTotal(hthManual.attacks, 0, riftsNumber(hthBase.attacks), riftsSourceTotals.combatBonuses.attacks),
+      initiative: riftsCombatTotal(hthManual.initiative, 0, riftsNumber(hthBase.initiative), riftsSourceTotals.combatBonuses.initiative),
+      damage: riftsCombatTotal(hthManual.damage, psDamage, riftsNumber(hthBase.damage), riftsSourceTotals.combatBonuses.damage),
+      strike: riftsCombatTotal(hthManual.strike, ppStrike, riftsNumber(hthBase.strike), riftsSourceTotals.combatBonuses.strike),
+      parry: riftsCombatTotal(hthManual.parry, ppParryDodge, riftsNumber(hthBase.parry), riftsSourceTotals.combatBonuses.parry),
+      dodge: riftsCombatTotal(hthManual.dodge, ppParryDodge, riftsNumber(hthBase.dodge), riftsSourceTotals.combatBonuses.dodge),
+      pullPunch: riftsCombatTotal(hthManual.pullPunch, 0, riftsNumber(hthBase.pullPunch), riftsSourceTotals.combatBonuses.pullPunch),
+      roll: riftsCombatTotal(hthManual.roll, 0, riftsNumber(hthBase.roll), riftsSourceTotals.combatBonuses.roll),
       critical: riftsThresholdTotal(hthManual.critical, hthBase.critical),
       knockout: riftsThresholdTotal(hthManual.knockout, hthBase.knockout)
     };
@@ -465,10 +639,21 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         dodge: handToHand.dodge
       },
       saves: {
-        psionics: riftsSaveTotal(sys.savingThrows?.psionics, psionicSave),
-        insanity: riftsSaveTotal(sys.savingThrows?.insanity, insanitySave),
-        drugPoison: riftsSaveTotal(sys.savingThrows?.drugPoison, peMagicPoison),
-        death: riftsSaveTotal(sys.savingThrows?.death, peComaSave, true)
+        psionics: riftsSaveTotal(sys.savingThrows?.psionics, psionicSave, false, riftsSourceTotals.saveBonuses.psionics),
+        insanity: riftsSaveTotal(sys.savingThrows?.insanity, insanitySave, false, riftsSourceTotals.saveBonuses.insanity),
+        drugPoison: riftsSaveTotal(sys.savingThrows?.drugPoison, peMagicPoison, false, riftsSourceTotals.saveBonuses.drugPoison),
+        death: riftsSaveTotal(sys.savingThrows?.death, peComaSave, true, riftsSourceTotals.saveBonuses.death)
+      },
+      sources: riftsSources.sources,
+      sourceWarnings: riftsSources.warnings,
+      sourceTotals: riftsSourceTotals,
+      effectiveAttrs,
+      pools: {
+        hp: { base: riftsNumber(sys.hp?.max), bonus: riftsSourceTotals.poolBonuses.hp, total: riftsNumber(sys.hp?.max) + riftsSourceTotals.poolBonuses.hp },
+        sdc: { base: riftsNumber(sys.sdc?.max), bonus: riftsSourceTotals.poolBonuses.sdc, total: riftsNumber(sys.sdc?.max) + riftsSourceTotals.poolBonuses.sdc },
+        mdc: { base: riftsNumber(sys.mdc?.max), bonus: riftsSourceTotals.poolBonuses.mdc, total: riftsNumber(sys.mdc?.max) + riftsSourceTotals.poolBonuses.mdc },
+        isp: { base: riftsNumber(sys.isp?.max), bonus: riftsSourceTotals.poolBonuses.isp, total: riftsNumber(sys.isp?.max) + riftsSourceTotals.poolBonuses.isp },
+        ppe: { base: riftsNumber(sys.ppe?.max), bonus: riftsSourceTotals.poolBonuses.ppe, total: riftsNumber(sys.ppe?.max) + riftsSourceTotals.poolBonuses.ppe }
       }
     };
 
@@ -562,25 +747,10 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.system.eeSkills = { ...(ctx.system.eeSkills ?? {}), list: toArr(sys.eeSkills?.list) };
     if (ctx.system.money) ctx.system.money.outfits = toArr(sys.money?.outfits);
 
-    const itemBuckets = {
-      psionicPower: [], spell: [], weapon: [], armor: [], powerArmor: [],
-      vehicle: [], race: [], occ: [], gear: []
-    };
-    for (const item of this.actor.items) {
-      const type = item.type in itemBuckets ? item.type : "gear";
-      itemBuckets[type].push(item);
-    }
-    ctx.itemsByType = itemBuckets;
     const equipmentSources = this.actor.items.map(item => ({ ...item.system, name: item.name, type: item.type, system: item.system }));
     ctx.eeDerived = C.eeDerivedData(sys, equipmentSources);
     ctx.weaponItemsModern  = itemBuckets.weapon.filter(i => (i.system?.category ?? "modern") === "modern");
     ctx.weaponItemsAncient = itemBuckets.weapon.filter(i => i.system?.category === "ancient");
-
-    ctx.equippedRaceId = sys.equippedRace ?? "";
-    ctx.equippedOccId  = sys.equippedOcc  ?? "";
-    ctx.equippedRaceItem = ctx.equippedRaceId ? this.actor.items.get(ctx.equippedRaceId) : null;
-    ctx.equippedOccItem  = ctx.equippedOccId  ? this.actor.items.get(ctx.equippedOccId)  : null;
-    ctx.isRCC = !!ctx.equippedOccItem?.system?.isRCC;
 
     // Granted abilities from equipped OCC + Race, flattened with a source label
     // for display on the Powers tab.
