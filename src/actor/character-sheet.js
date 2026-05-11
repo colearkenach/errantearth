@@ -341,7 +341,19 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       unassigned: skillRows.filter(r => !r.category)
     };
 
-    // Master-list picker: only show skills not already on the actor.
+    const eeAttrs = sys.eeAttributes ?? {};
+    const eeSkillRows = toArr(sys.eeSkills?.list).map((r, i) => {
+      const attrKey     = r.attribute ?? "";
+      const attrValue   = Number(eeAttrs[attrKey]?.value ?? 0);
+      const rank        = Number(r.rank ?? 0);
+      const proficiency = Number(r.proficiency ?? 0);
+      const bonus       = Number(r.bonus ?? 0);
+      const total       = attrValue + rank + proficiency + bonus;
+      return { ...r, _index: i, attrValue, total };
+    });
+    ctx.eeSkills = { list: eeSkillRows };
+
+    // Master-list pickers: only show skills not already on the actor.
     const usedKeys = new Set(skillRows.map(r => r.key).filter(Boolean));
     const masterList = (CONFIG.EE?.SKILL_LIST ?? []).filter(s => !usedKeys.has(s.key));
     const grouped = {};
@@ -349,6 +361,14 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.skillPicker = Object.entries(grouped)
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([group, items]) => ({ group, items }));
+
+    const usedEeKeys = new Set(eeSkillRows.map(r => r.key).filter(Boolean));
+    const eeMasterList = (CONFIG.EE?.EE_SKILL_LIST ?? []).filter(s => !usedEeKeys.has(s.key));
+    const eeGrouped = {};
+    for (const s of eeMasterList) (eeGrouped[s.category] ??= []).push(s);
+    ctx.eeSkillPicker = Object.entries(eeGrouped)
+      .sort(([a], [b]) => (CONFIG.EE?.EE_SKILL_CATEGORIES?.[a] ?? a).localeCompare(CONFIG.EE?.EE_SKILL_CATEGORIES?.[b] ?? b))
+      .map(([category, items]) => ({ category, label: CONFIG.EE?.EE_SKILL_CATEGORIES?.[category] ?? category, items }));
 
     // Normalize every other array-shaped collection used by the template so
     // {{#each}} keeps working even after Foundry's merge corrupts them.
@@ -390,6 +410,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.system.contacts = toArr(sys.contacts);
     ctx.system.backgrounds = toArr(sys.backgrounds);
     ctx.system.occupations = toArr(sys.occupations);
+    ctx.system.eeSkills = { ...(ctx.system.eeSkills ?? {}), list: toArr(sys.eeSkills?.list) };
     if (ctx.system.money) ctx.system.money.outfits = toArr(sys.money?.outfits);
 
     const itemBuckets = {
@@ -745,10 +766,11 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   async _onAddRow(ev) {
     ev.preventDefault();
     const btn = ev.currentTarget;
-    const path = btn.dataset.path;
+    let path = btn.dataset.path;
     const kind = btn.dataset.kind;
+    if (kind === "skill" && this.actor.system.mode === "errantEarth") path = "eeSkills.list";
     const arr  = foundry.utils.deepClone(this._getArrayPath(path));
-    arr.push(this._blankRow(kind));
+    arr.push(this._blankRow(kind, path));
     await this.actor.update({ [`system.${path}`]: arr });
   }
 
@@ -757,7 +779,29 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const sel = ev.currentTarget;
     const key = sel.value;
     const category = sel.dataset.category;
+    const isEE = this.actor.system.mode === "errantEarth" || sel.dataset.ee === "true";
     if (!key) return;
+
+    if (isEE) {
+      const master = (CONFIG.EE?.EE_SKILL_LIST ?? []).find(s => s.key === key);
+      if (!master) { sel.value = ""; return; }
+      const arr = foundry.utils.deepClone(this._getArrayPath("eeSkills.list"));
+      arr.push({
+        key: master.key,
+        name: master.name,
+        attribute: master.attribute ?? "",
+        category: master.category ?? category ?? "",
+        tags: master.tags ?? "",
+        rank: 0,
+        proficiency: 0,
+        bonus: 0,
+        notes: "",
+        custom: false
+      });
+      sel.value = "";
+      return this.actor.update({ "system.eeSkills.list": arr });
+    }
+
     const master = (CONFIG.EE?.SKILL_LIST ?? []).find(s => s.key === key);
     if (!master) { sel.value = ""; return; }
     const arr = foundry.utils.deepClone(this._getArrayPath("skills.list"));
@@ -784,9 +828,13 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     await this.actor.update({ [`system.${path}`]: arr });
   }
 
-  _blankRow(kind) {
+  _blankRow(kind, path = "") {
     switch (kind) {
-      case "skill":         return { key: "", name: "", base: 0, perLvl: 0, misc: 0, category: "", custom: true };
+      case "skill":
+        if (path === "eeSkills.list" || this.actor.system.mode === "errantEarth") {
+          return { key: "", name: "", attribute: "", category: "", tags: "", rank: 0, proficiency: 0, bonus: 0, notes: "", custom: true };
+        }
+        return { key: "", name: "", base: 0, perLvl: 0, misc: 0, category: "", custom: true };
       case "wpCustom":      return { name: "" };
       case "modernWeapon":  return { name: "", damageType: "", damage: "", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
       case "ancientWeapon": return { name: "", damageType: "", damage: "", ammo: "", strike: "", parry: "", special: "" };
@@ -857,6 +905,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     scrubArr(sys.powerArmor?.weapons,"damageType", cfg.DAMAGE_TYPES);
     scrubArr(sys.vehicle?.weapons,   "damageType", cfg.DAMAGE_TYPES);
     scrubArr(sys.powers,             "source",     cfg.POWER_SOURCES);
+    scrubArr(sys.eeSkills?.list,     "attribute",  cfg.EE_ATTRIBUTES);
+    scrubArr(sys.eeSkills?.list,     "category",   cfg.EE_SKILL_CATEGORIES);
     return expanded;
   }
 
