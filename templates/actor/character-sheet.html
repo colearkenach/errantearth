@@ -147,6 +147,126 @@
         <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.wil.value}}" data-label="WIL" title="Roll WIL"><i class="fas fa-dice-d20"></i></a>
       </div>
     </div>
+    <section class="ee-ee-derived-panel">
+      <h3>Errant Earth Derived Values</h3>
+      <p class="ee-muted">Calculated from Errant Earth attributes, level, species, backgrounds, and occupations. Totals are read-only; use manual bonuses or overrides for table-specific adjustments.</p>
+
+      <div class="ee-ee-derived-category ee-ee-derived-tier">
+        <h4>Attribute Tier</h4>
+        <div class="ee-ee-derived-cards">
+          <div class="ee-ee-derived-card">
+            <span class="ee-ee-derived-label">Tier</span>
+            <output>{{eeDerived.tier}}</output>
+          </div>
+        </div>
+      </div>
+
+      <div class="ee-ee-derived-category">
+        <h4>Health</h4>
+        <div class="ee-ee-adjust-grid">
+          <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Applied Bonus</div><div class="ee-ee-adjust-head">Manual Bonus</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
+          <label>Endurance</label><output>{{eeDerived.health.endurance.base}}</output><output>{{eeDerived.health.endurance.bonus}}</output><input type="number" name="system.eeDerived.health.endurance.bonus" value="{{system.eeDerived.health.endurance.bonus}}"/><input type="number" name="system.eeDerived.health.endurance.override" value="{{system.eeDerived.health.endurance.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.health.endurance.total}}</output>
+          <label>Health</label><output>{{eeDerived.health.health.base}}</output><output>{{eeDerived.health.health.bonus}}</output><input type="number" name="system.eeDerived.health.health.bonus" value="{{system.eeDerived.health.health.bonus}}"/><input type="number" name="system.eeDerived.health.health.override" value="{{system.eeDerived.health.health.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.health.health.total}}</output>
+          <label>Scars</label><output>—</output><output>—</output><input type="number" name="system.eeDerived.health.scars.value" value="{{eeDerived.health.scars.value}}" title="Current scars"/><input type="number" name="system.eeDerived.health.scars.max" value="{{eeDerived.health.scars.max}}" title="Maximum scars"/><output class="ee-ee-derived-total">{{eeDerived.health.scars.value}} / {{eeDerived.health.scars.max}}</output>
+        </div>
+      </div>
+
+      <div class="ee-ee-derived-category">
+        <h4>Defense</h4>
+        <div class="ee-ee-derived-cards">
+          <label class="ee-ee-derived-card ee-ee-derived-editable"><span class="ee-ee-derived-label">Size</span><input type="text" name="system.eeDerived.defense.size" value="{{eeDerived.defense.size}}"/></label>
+        </div>
+        <div class="ee-ee-adjust-grid">
+          <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Applied Bonus</div><div class="ee-ee-adjust-head">Manual Bonus</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
+          <label>Natural Survival Rating (NSR)</label><output>{{eeDerived.defense.nsr.base}}</output><output>{{eeDerived.defense.nsr.bonus}}</output><input type="number" name="system.eeDerived.defense.nsr.bonus" value="{{system.eeDerived.defense.nsr.bonus}}"/><input type="number" name="system.eeDerived.defense.nsr.override" value="{{system.eeDerived.defense.nsr.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.defense.nsr.total}}</output>
+          <label>Mystic Survival Rating (MSR)</label><output>{{eeDerived.defense.msr.base}}</output><output>{{eeDerived.defense.msr.bonus}}</output><input type="number" name="system.eeDerived.defense.msr.bonus" value="{{system.eeDerived.defense.msr.bonus}}"/><input type="number" name="system.eeDerived.defense.msr.override" value="{{system.eeDerived.defense.msr.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.defense.msr.total}}</output>
+          <label>Armor Rating</label><output>{{eeDerived.defense.armorRating.base}}</output><output>{{eeDerived.defense.armorRating.bonus}}</output><input type="number" name="system.eeDerived.defense.armorRating.bonus" value="{{system.eeDerived.defense.armorRating.bonus}}"/><input type="number" name="system.eeDerived.defense.armorRating.override" value="{{system.eeDerived.defense.armorRating.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.defense.armorRating.total}}</output>
+        </div>
+      </div>
+
+      <div class="ee-ee-derived-category">
+        <h4>Resources</h4>
+        <div class="ee-ee-adjust-grid">
+          <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Applied Bonus</div><div class="ee-ee-adjust-head">Manual Bonus</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
+          <label>Extra-Sensory Power (ESP)</label><output>{{eeDerived.resources.esp.base}}</output><output>{{eeDerived.resources.esp.bonus}}</output><input type="number" name="system.eeDerived.resources.esp.bonus" value="{{system.eeDerived.resources.esp.bonus}}"/><input type="number" name="system.eeDerived.resources.esp.override" value="{{system.eeDerived.resources.esp.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.resources.esp.total}}</output>
+          <label>Magic Power (MP)</label><output>{{eeDerived.resources.mp.base}}</output><output>{{eeDerived.resources.mp.bonus}}</output><input type="number" name="system.eeDerived.resources.mp.bonus" value="{{system.eeDerived.resources.mp.bonus}}"/><input type="number" name="system.eeDerived.resources.mp.override" value="{{system.eeDerived.resources.mp.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.resources.mp.total}}</output>
+          <label>Glimmer</label><output>{{eeDerived.resources.glimmer.base}}</output><output>{{eeDerived.resources.glimmer.bonus}}</output><input type="number" name="system.eeDerived.resources.glimmer.bonus" value="{{system.eeDerived.resources.glimmer.bonus}}"/><input type="number" name="system.eeDerived.resources.glimmer.override" value="{{system.eeDerived.resources.glimmer.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.resources.glimmer.total}}</output>
+        </div>
+        <div class="ee-ee-derived-cards">
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Glimmer Description</span><output>{{eeDerived.resources.glimmer.description}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Detection Bonus</span><output>{{eeDerived.resources.glimmer.detectionBonus}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Detection Percent</span><output>{{eeDerived.resources.glimmer.detectionPercent}}</output></div>
+        </div>
+      </div>
+
+      <div class="ee-ee-derived-category">
+        <h4>Combat</h4>
+        <div class="ee-ee-derived-cards">
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Strength Rating</span><output>{{eeDerived.combat.strength.rating}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">S.D. Bonus</span><output>{{eeDerived.combat.strength.sdBonus}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">M.D. Capable</span><output>{{#if eeDerived.combat.strength.mdCapable}}Yes{{else}}No{{/if}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Melee To-Hit</span><output>{{eeDerived.combat.strength.meleeToHit}}</output></div>
+        </div>
+        <div class="ee-ee-adjust-grid">
+          <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Applied Bonus</div><div class="ee-ee-adjust-head">Manual Bonus</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
+          <label>Actions</label><output>{{eeDerived.combat.actions.base}}</output><output>{{eeDerived.combat.actions.bonus}}</output><input type="number" name="system.eeDerived.combat.actions.bonus" value="{{system.eeDerived.combat.actions.bonus}}"/><input type="number" name="system.eeDerived.combat.actions.override" value="{{system.eeDerived.combat.actions.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.combat.actions.total}}</output>
+          <label>Momentum</label><output>{{eeDerived.combat.momentum.base}}</output><output>{{eeDerived.combat.momentum.bonus}}</output><input type="number" name="system.eeDerived.combat.momentum.bonus" value="{{system.eeDerived.combat.momentum.bonus}}"/><input type="number" name="system.eeDerived.combat.momentum.override" value="{{system.eeDerived.combat.momentum.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.combat.momentum.total}}</output>
+          <label>Reactions</label><output>{{eeDerived.combat.reactions.base}}</output><output>{{eeDerived.combat.reactions.bonus}}</output><input type="number" name="system.eeDerived.combat.reactions.bonus" value="{{system.eeDerived.combat.reactions.bonus}}"/><input type="number" name="system.eeDerived.combat.reactions.override" value="{{system.eeDerived.combat.reactions.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.combat.reactions.total}}</output>
+          <label>Initiative</label><output>{{eeDerived.combat.initiative.base}}</output><output>{{eeDerived.combat.initiative.bonus}}</output><input type="number" name="system.eeDerived.combat.initiative.bonus" value="{{system.eeDerived.combat.initiative.bonus}}"/><input type="number" name="system.eeDerived.combat.initiative.override" value="{{system.eeDerived.combat.initiative.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.combat.initiative.total}}</output>
+        </div>
+      </div>
+
+      <div class="ee-ee-derived-category">
+        <h4>Movement</h4>
+        <div class="ee-ee-derived-cards">
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Reaction Rating</span><output>{{eeDerived.movement.reaction.rating}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Reaction Initiative Bonus</span><output>{{eeDerived.movement.reaction.initiativeBonus}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Reaction Pace</span><output>{{eeDerived.movement.reaction.pace}}</output></div>
+        </div>
+        <div class="ee-ee-adjust-grid">
+          <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Applied Bonus</div><div class="ee-ee-adjust-head">Manual Bonus</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
+          <label>Pace</label><output>{{eeDerived.movement.pace.base}}</output><output>{{eeDerived.movement.pace.bonus}}</output><input type="number" name="system.eeDerived.movement.pace.bonus" value="{{system.eeDerived.movement.pace.bonus}}"/><input type="number" name="system.eeDerived.movement.pace.override" value="{{system.eeDerived.movement.pace.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.movement.pace.total}}</output>
+        </div>
+        <div class="ee-ee-derived-cards">
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Light Carry</span><output>{{eeDerived.movement.liftCarryJump.light}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Medium Carry</span><output>{{eeDerived.movement.liftCarryJump.medium}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Heavy Carry</span><output>{{eeDerived.movement.liftCarryJump.heavy}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Overhead Lift</span><output>{{eeDerived.movement.liftCarryJump.overhead}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Off-Ground Lift</span><output>{{eeDerived.movement.liftCarryJump.offGround}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Push / Drag</span><output>{{eeDerived.movement.liftCarryJump.push}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Vertical Jump (Stand)</span><output>{{eeDerived.movement.liftCarryJump.verticalStand}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Vertical Jump (Run)</span><output>{{eeDerived.movement.liftCarryJump.verticalRun}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Horizontal Jump (Stand)</span><output>{{eeDerived.movement.liftCarryJump.horizontalStand}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Horizontal Jump (Run)</span><output>{{eeDerived.movement.liftCarryJump.horizontalRun}}</output></div>
+        </div>
+      </div>
+
+      <div class="ee-ee-derived-category">
+        <h4>Social</h4>
+        <div class="ee-ee-derived-cards">
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Demeanor Rating</span><output>{{eeDerived.social.demeanor.rating}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Demeanor Bonus</span><output>{{eeDerived.social.demeanor.bonus}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Contacts</span><output>{{eeDerived.social.demeanor.contacts}}</output></div>
+          <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Attitude</span><output>{{eeDerived.social.demeanor.attitude}}</output></div>
+        </div>
+        <div class="ee-ee-adjust-grid">
+          <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Applied Bonus</div><div class="ee-ee-adjust-head">Manual Bonus</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
+          <label>Appearance / Trust Bonus (ATB)</label><output>{{eeDerived.social.atbBonus.base}}</output><output>{{eeDerived.social.atbBonus.bonus}}</output><input type="number" name="system.eeDerived.social.atbBonus.bonus" value="{{system.eeDerived.social.atbBonus.bonus}}"/><input type="number" name="system.eeDerived.social.atbBonus.override" value="{{system.eeDerived.social.atbBonus.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.social.atbBonus.total}}</output>
+        </div>
+      </div>
+
+      <div class="ee-ee-derived-category">
+        <h4>Saves</h4>
+        <div class="ee-ee-adjust-grid">
+          <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Applied Bonus</div><div class="ee-ee-adjust-head">Manual Bonus</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
+          <label>Psychic Resistance</label><output>{{eeDerived.saves.psychicResistance.base}}</output><output>{{eeDerived.saves.psychicResistance.bonus}}</output><input type="number" name="system.eeDerived.saves.psychicResistance.bonus" value="{{system.eeDerived.saves.psychicResistance.bonus}}"/><input type="number" name="system.eeDerived.saves.psychicResistance.override" value="{{system.eeDerived.saves.psychicResistance.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.psychicResistance.total}}</output>
+          <label>Magic Resistance</label><output>{{eeDerived.saves.magicResistance.base}}</output><output>{{eeDerived.saves.magicResistance.bonus}}</output><input type="number" name="system.eeDerived.saves.magicResistance.bonus" value="{{system.eeDerived.saves.magicResistance.bonus}}"/><input type="number" name="system.eeDerived.saves.magicResistance.override" value="{{system.eeDerived.saves.magicResistance.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.magicResistance.total}}</output>
+          <label>Horror — Anima</label><output>{{eeDerived.saves.horrorAnima.base}}</output><output>{{eeDerived.saves.horrorAnima.bonus}}</output><input type="number" name="system.eeDerived.saves.horrorAnima.bonus" value="{{system.eeDerived.saves.horrorAnima.bonus}}"/><input type="number" name="system.eeDerived.saves.horrorAnima.override" value="{{system.eeDerived.saves.horrorAnima.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.horrorAnima.total}}</output>
+          <label>Horror — Willpower</label><output>{{eeDerived.saves.horrorWillpower.base}}</output><output>{{eeDerived.saves.horrorWillpower.bonus}}</output><input type="number" name="system.eeDerived.saves.horrorWillpower.bonus" value="{{system.eeDerived.saves.horrorWillpower.bonus}}"/><input type="number" name="system.eeDerived.saves.horrorWillpower.override" value="{{system.eeDerived.saves.horrorWillpower.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.horrorWillpower.total}}</output>
+        </div>
+      </div>
+    </section>
+
     <div class="ee-row ee-ee-tier">
       <label>Attribute Tier:</label>
       <select name="system.eeAttributeTier">{{eeSelectOptions config.EE_ATTRIBUTE_TIERS system.eeAttributeTier}}</select>
@@ -197,15 +317,34 @@
     </div>
     {{/if}}
 
+    {{#if isEE}}
+    <div class="ee-row ee-pools ee-ee-header-pools">
+      <label>Endurance:</label><input type="number" value="{{eeDerived.health.endurance.total}}" disabled/>
+      <label>Health:</label><input type="number" value="{{eeDerived.health.health.total}}" disabled/>
+      <label>Scars:</label><input type="number" value="{{eeDerived.health.scars.value}}" disabled/> /
+        <input type="number" value="{{eeDerived.health.scars.max}}" disabled/>
+      <label>Hunger:</label>
+        <input type="number" name="system.hunger.value" value="{{system.hunger.value}}"/> /
+        <input type="number" name="system.hunger.max" value="{{system.hunger.max}}"/>
+    </div>
+
+    <div class="ee-row ee-pools ee-ee-header-pools">
+      <label>ESP:</label><input type="number" value="{{eeDerived.resources.esp.total}}" disabled/>
+      <label>MP:</label><input type="number" value="{{eeDerived.resources.mp.total}}" disabled/>
+      <label>Glimmer:</label><input type="number" value="{{eeDerived.resources.glimmer.total}}" disabled/>
+      <label>Magic Heat:</label><input type="number" value="{{system.magic.heat}}" disabled/>
+      <label>Psychic Heat:</label><input type="number" value="{{system.psychic.heat}}" disabled/>
+    </div>
+    {{/if}}
+
+    {{#unless isEE}}
     <div class="ee-row ee-pools">
       <label>HP:</label>
         <input type="number" name="system.hp.value" value="{{system.hp.value}}"/> /
         <input type="number" name="system.hp.max"   value="{{system.hp.max}}"/>
-      {{#unless isEE}}
       <label>SDC:</label>
         <input type="number" name="system.sdc.value" value="{{system.sdc.value}}"/> /
         <input type="number" name="system.sdc.max"   value="{{system.sdc.max}}"/>
-      {{/unless}}
       <label>MDC:</label>
         <input type="number" name="system.mdc.value" value="{{system.mdc.value}}"/> /
         <input type="number" name="system.mdc.max"   value="{{system.mdc.max}}"/>
@@ -224,6 +363,7 @@
       <label>Psionic Level:</label>
       <select name="system.psionicLevel">{{eeSelectOptions config.PSIONIC_LEVELS system.psionicLevel}}</select>
     </div>
+    {{/unless}}
   </section>
 
   {{!-- ============ TABS ============ --}}

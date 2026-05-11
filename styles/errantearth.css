@@ -866,6 +866,132 @@ color: var(--ee-red, #8a1f1f);
 }
 .ee-ee-attr .ee-roll-attr { margin: 0; font-size: 12px; }
 
+
+.ee-ee-derived-panel {
+  margin: 6px 0;
+  padding: 8px;
+  background: rgba(138,31,31,0.04);
+  border: 1px solid rgba(138,31,31,0.35);
+  border-radius: 4px;
+}
+
+.ee-ee-derived-panel h3 {
+  margin: 0 0 4px;
+  color: var(--ee-red, #8a1f1f);
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.ee-ee-derived-category {
+  margin-top: 8px;
+  padding: 6px;
+  background: rgba(255,255,255,0.65);
+  border: 1px solid #c8c8c8;
+}
+
+.ee-ee-derived-category h4 {
+  margin: 0 0 6px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(138,31,31,0.25);
+  color: #333;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.ee-ee-derived-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.ee-ee-derived-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 44px;
+  padding: 5px;
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.ee-ee-derived-label,
+.ee-ee-adjust-grid > label,
+.ee-ee-adjust-head {
+  font-weight: 700;
+  font-size: 11px;
+  color: #333;
+}
+
+.ee-ee-derived-card output,
+.ee-ee-adjust-grid output {
+  display: block;
+  min-height: 20px;
+  padding: 2px 4px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  line-height: 16px;
+}
+
+.ee-ee-derived-card input,
+.ee-ee-adjust-grid input {
+  height: 22px;
+  padding: 0 4px;
+  background: #fff;
+  border: 1px solid #888;
+  border-radius: 2px;
+}
+
+.ee-ee-adjust-grid {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.7fr) repeat(5, minmax(68px, 1fr));
+  gap: 4px;
+  align-items: center;
+}
+
+.ee-ee-adjust-head {
+  padding: 3px 4px;
+  background: #d9d9d9;
+  border: 1px solid #bbb;
+  text-align: center;
+}
+
+.ee-ee-adjust-grid > label {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  padding: 3px 4px;
+  background: rgba(138,31,31,0.08);
+  border: 1px solid rgba(138,31,31,0.18);
+}
+
+.ee-ee-adjust-grid input,
+.ee-ee-adjust-grid output {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.ee-ee-derived-total {
+  font-weight: 800;
+  color: var(--ee-red, #8a1f1f);
+}
+
+.ee-ee-header-pools {
+  background: rgba(138,31,31,0.05);
+  border-left: 2px solid var(--ee-red, #8a1f1f);
+}
+
+.ee-ee-header-pools input:disabled {
+  color: #111;
+  background: #eee;
+  opacity: 1;
+  font-weight: 700;
+}
+
 .ee-ee-bgocc {
   display: grid;
   grid-template-columns: 1fr 1fr;
