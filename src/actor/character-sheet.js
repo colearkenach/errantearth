@@ -363,33 +363,64 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const level = Number(sys.level ?? 1);
     const C = ErrantEarthCharacterSheet;
 
-    ctx.derived = {
-      iqBonus:         C.iqSkillBonus(iq),
-      psionicSave:     C.psionicSave(me),
-      insanitySave:    C.insanitySave(me),
-      trustIntimidate: C.trustIntimidate(ma),
-      psDamage:        C.psDamage(ps),
-      ppStrike:        C.ppStrike(pp),
-      ppParryDodge:    C.ppParryDodge(pp),
-      peComaSave:      C.peComaSave(pe),
-      peMagicPoison:   C.peMagicPoison(pe),
-      charmImpress:    C.charmImpress(pb),
+    const riftsNumber = value => Number(value ?? 0) || 0;
+    const riftsCombatTotal = (manual, attribute) => ({ manual, attribute, total: manual + attribute });
+    const riftsSaveTotal = (entry, attribute, percent = false) => {
+      const manual = riftsNumber(entry?.bonus);
+      const total = manual + attribute;
+      return { base: entry?.base ?? "", manual, attribute, total, percent, display: percent ? `${total}%` : total };
+    };
+
+    const iqSkillBonus = C.iqSkillBonus(iq);
+    const psionicSave = C.psionicSave(me);
+    const insanitySave = C.insanitySave(me);
+    const trustIntimidate = C.trustIntimidate(ma);
+    const psDamage = C.psDamage(ps);
+    const ppStrike = C.ppStrike(pp);
+    const ppParryDodge = C.ppParryDodge(pp);
+    const peComaSave = C.peComaSave(pe);
+    const peMagicPoison = C.peMagicPoison(pe);
+    const charmImpress = C.charmImpress(pb);
+
+    ctx.riftsDerived = {
+      iqSkillBonus,
+      psionicSave,
+      insanitySave,
+      trustIntimidate,
+      psDamage,
+      ppStrike,
+      ppParryDodge,
+      peComaSave,
+      peMagicPoison,
+      charmImpress,
       attrBonuses: {
-        iq:  C.iqSkillBonus(iq) ? `+${C.iqSkillBonus(iq)}% skills` : "",
-        me:  [C.psionicSave(me) ? `+${C.psionicSave(me)} psi` : "", C.insanitySave(me) ? `+${C.insanitySave(me)} insanity` : ""].filter(Boolean).join(", "),
-        ma:  C.trustIntimidate(ma) ? `${C.trustIntimidate(ma)}% trust/intim.` : "",
-        ps:  C.psDamage(ps) ? `+${C.psDamage(ps)} damage` : "",
-        pp:  [C.ppStrike(pp) ? `+${C.ppStrike(pp)} strike` : "", C.ppParryDodge(pp) ? `+${C.ppParryDodge(pp)} parry/dodge` : ""].filter(Boolean).join(", "),
-        pe:  [C.peComaSave(pe) ? `+${C.peComaSave(pe)}% coma/death` : "", C.peMagicPoison(pe) ? `+${C.peMagicPoison(pe)} magic/poison` : ""].filter(Boolean).join(", "),
-        pb:  C.charmImpress(pb) ? `${C.charmImpress(pb)}% charm/impress` : "",
+        iq:  iqSkillBonus ? `+${iqSkillBonus}% skills` : "",
+        me:  [psionicSave ? `+${psionicSave} psi` : "", insanitySave ? `+${insanitySave} insanity` : ""].filter(Boolean).join(", "),
+        ma:  trustIntimidate ? `${trustIntimidate}% trust/intim.` : "",
+        ps:  psDamage ? `+${psDamage} damage` : "",
+        pp:  [ppStrike ? `+${ppStrike} strike` : "", ppParryDodge ? `+${ppParryDodge} parry/dodge` : ""].filter(Boolean).join(", "),
+        pe:  [peComaSave ? `+${peComaSave}% coma/death` : "", peMagicPoison ? `+${peMagicPoison} magic/poison` : ""].filter(Boolean).join(", "),
+        pb:  charmImpress ? `${charmImpress}% charm/impress` : "",
         spd: ""
+      },
+      combat: {
+        damage: riftsCombatTotal(riftsNumber(sys.handToHand?.damage), psDamage),
+        strike: riftsCombatTotal(riftsNumber(sys.handToHand?.strike), ppStrike),
+        parry: riftsCombatTotal(riftsNumber(sys.handToHand?.parry), ppParryDodge),
+        dodge: riftsCombatTotal(riftsNumber(sys.handToHand?.dodge), ppParryDodge)
+      },
+      saves: {
+        psionics: riftsSaveTotal(sys.savingThrows?.psionics, psionicSave),
+        insanity: riftsSaveTotal(sys.savingThrows?.insanity, insanitySave),
+        drugPoison: riftsSaveTotal(sys.savingThrows?.drugPoison, peMagicPoison),
+        death: riftsSaveTotal(sys.savingThrows?.death, peComaSave, true)
       }
     };
 
     const toArr = ErrantEarthCharacterSheet._toArray;
 
     // Auto-compute skill totals: Base + PerLvl * (Level - 1) + Misc [+ IQ bonus, RIFTS only].
-    const iqBonusForSkills = ctx.isEE ? 0 : ctx.derived.iqBonus;
+    const iqBonusForSkills = ctx.isEE ? 0 : ctx.riftsDerived.iqSkillBonus;
     const skillRows = toArr(sys.skills?.list).map((r, i) => {
       const base   = Number(r.base   ?? 0);
       const perLvl = Number(r.perLvl ?? 0);
