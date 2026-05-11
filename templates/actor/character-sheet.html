@@ -752,6 +752,7 @@
             <select name="system.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.handToHand.type}}</select>
           </div>
           {{#unless isEE}}
+          <p class="ee-hth-summary">Using {{riftsDerived.handToHand.label}} base bonuses through level {{riftsDerived.handToHand.level}}. Manual values below are misc adjustments added to the table and attribute bonuses.</p>
           <table class="ee-table">
             <thead><tr><th>Combat Bonus</th><th>Base</th><th>Attribute</th><th>Manual / Misc</th><th>Total</th><th>Roll</th></tr></thead>
             <tbody>
@@ -759,7 +760,7 @@
                 <td>Attacks per Melee:</td>
                 <td>{{riftsDerived.handToHand.attacks.base}}</td>
                 <td>{{riftsDerived.handToHand.attacks.attribute}}</td>
-                <td><input type="number" name="system.handToHand.attacks" value="{{system.handToHand.attacks}}"/></td>
+                <td><input type="number" name="system.handToHand.attacks" value="{{riftsDerived.handToHand.attacks.manual}}"/></td>
                 <td>{{riftsDerived.handToHand.attacks.total}}</td>
                 <td></td>
               </tr>
@@ -767,7 +768,7 @@
                 <td>Initiative:</td>
                 <td>{{riftsDerived.handToHand.initiative.base}}</td>
                 <td>{{riftsDerived.handToHand.initiative.attribute}}</td>
-                <td><input type="number" name="system.handToHand.initiative" value="{{system.handToHand.initiative}}"/></td>
+                <td><input type="number" name="system.handToHand.initiative" value="{{riftsDerived.handToHand.initiative.manual}}"/></td>
                 <td>{{riftsDerived.handToHand.initiative.total}}</td>
                 <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.initiative.total}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></td>
               </tr>
@@ -775,7 +776,7 @@
                 <td>Damage:</td>
                 <td>{{riftsDerived.handToHand.damage.base}}</td>
                 <td>{{riftsDerived.handToHand.damage.attribute}}</td>
-                <td><input type="number" name="system.handToHand.damage" value="{{system.handToHand.damage}}"/></td>
+                <td><input type="number" name="system.handToHand.damage" value="{{riftsDerived.handToHand.damage.manual}}"/></td>
                 <td>{{riftsDerived.handToHand.damage.total}}</td>
                 <td><a data-action="roll" data-roll-type="damage" data-formula="0 + {{riftsDerived.handToHand.damage.total}}" data-label="HtH Damage Bonus" title="Roll Damage Bonus"><i class="fas fa-dice-d20"></i></a></td>
               </tr>
@@ -783,7 +784,7 @@
                 <td>Strike:</td>
                 <td>{{riftsDerived.handToHand.strike.base}}</td>
                 <td>{{riftsDerived.handToHand.strike.attribute}}</td>
-                <td><input type="number" name="system.handToHand.strike" value="{{system.handToHand.strike}}"/></td>
+                <td><input type="number" name="system.handToHand.strike" value="{{riftsDerived.handToHand.strike.manual}}"/></td>
                 <td>{{riftsDerived.handToHand.strike.total}}</td>
                 <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.strike.total}}" data-label="HtH Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></td>
               </tr>
@@ -791,7 +792,7 @@
                 <td>Parry:</td>
                 <td>{{riftsDerived.handToHand.parry.base}}</td>
                 <td>{{riftsDerived.handToHand.parry.attribute}}</td>
-                <td><input type="number" name="system.handToHand.parry" value="{{system.handToHand.parry}}"/></td>
+                <td><input type="number" name="system.handToHand.parry" value="{{riftsDerived.handToHand.parry.manual}}"/></td>
                 <td>{{riftsDerived.handToHand.parry.total}}</td>
                 <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.parry.total}}" data-label="HtH Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></td>
               </tr>
@@ -799,7 +800,7 @@
                 <td>Dodge:</td>
                 <td>{{riftsDerived.handToHand.dodge.base}}</td>
                 <td>{{riftsDerived.handToHand.dodge.attribute}}</td>
-                <td><input type="number" name="system.handToHand.dodge" value="{{system.handToHand.dodge}}"/></td>
+                <td><input type="number" name="system.handToHand.dodge" value="{{riftsDerived.handToHand.dodge.manual}}"/></td>
                 <td>{{riftsDerived.handToHand.dodge.total}}</td>
                 <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.dodge.total}}" data-label="HtH Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></td>
               </tr>
@@ -845,7 +846,7 @@
             <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.perception}}" data-label="Perception" title="Roll Perception"><i class="fas fa-dice-d20"></i></a></div>
           {{#if riftsDerived.handToHand.notes.length}}
           {{#unless isEE}}
-          <div class="ee-kv"><label>HtH Notes:</label>
+          <div class="ee-kv"><label>HtH Special Abilities:</label>
             <ul>
               {{#each riftsDerived.handToHand.notes}}<li>Level {{level}}: {{text}}</li>{{/each}}
             </ul>

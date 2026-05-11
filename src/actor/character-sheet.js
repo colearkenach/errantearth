@@ -539,7 +539,10 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
     const riftsNumber = value => Number(value ?? 0) || 0;
     const riftsText = value => value == null ? "" : String(value);
-    const riftsCombatTotal = (manual, attribute, base = 0, source = 0) => ({ base, manual, attribute, source, total: base + manual + attribute + source });
+    const riftsCombatTotal = (manual, attribute, base = 0, source = 0) => {
+      const sourcedBase = base + source;
+      return { base: sourcedBase, styleBase: base, manual, attribute, source, total: sourcedBase + manual + attribute };
+    };
     const riftsThresholdTotal = (manual, base = "") => {
       const numericBase = Number(base);
       const numericManual = Number(manual);

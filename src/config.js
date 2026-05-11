@@ -46,106 +46,133 @@ EE.HTH_TYPES = {
 
 // RIFTS hand-to-hand advancement tables. Values are cumulative base bonuses
 // unlocked at the listed level; actor sheet manual fields are added on top.
+const RIFTS_HTH_BASE = {
+  attacks: 0,
+  initiative: 0,
+  strike: 0,
+  parry: 0,
+  dodge: 0,
+  damage: 0,
+  pullPunch: 0,
+  roll: 0,
+  critical: "",
+  knockout: ""
+};
+const RIFTS_HTH_STATS = Object.keys(RIFTS_HTH_BASE);
+const riftsHthLevels = entries => {
+  const running = { ...RIFTS_HTH_BASE };
+  return entries.map(entry => {
+    for (const key of RIFTS_HTH_STATS) {
+      if (entry[key] !== undefined) running[key] = entry[key];
+    }
+    return {
+      level: entry.level,
+      ...running,
+      notes: entry.notes ?? []
+    };
+  });
+};
+
 EE.RIFTS_HTH_TABLES = {
   basic: {
     label: EE.HTH_TYPES.basic,
-    levels: [
+    levels: riftsHthLevels([
       { level: 1, attacks: 4, strike: 0, parry: 0, dodge: 0, damage: 0, pullPunch: 0, roll: 0, critical: 20, knockout: 20, notes: ["Basic combat training"] },
-      { level: 2, parry: 2, dodge: 2 },
-      { level: 3, roll: 2, pullPunch: 2 },
+      { level: 2, parry: 2, dodge: 2, notes: ["Improved defensive footwork"] },
+      { level: 3, roll: 2, pullPunch: 2, notes: ["Pull punch and roll with punch/fall"] },
       { level: 4, strike: 1 },
-      { level: 5, attacks: 5 },
+      { level: 5, attacks: 5, notes: ["Additional attack per melee"] },
       { level: 6, damage: 2 },
       { level: 7, initiative: 1 },
       { level: 8, strike: 2, parry: 3, dodge: 3 },
-      { level: 9, attacks: 6 },
+      { level: 9, attacks: 6, notes: ["Additional attack per melee"] },
       { level: 10, roll: 3, pullPunch: 3 },
       { level: 11, critical: 19, notes: ["Improved critical strike range"] },
       { level: 12, damage: 4 },
-      { level: 13, attacks: 7 },
+      { level: 13, attacks: 7, notes: ["Additional attack per melee"] },
       { level: 14, parry: 4, dodge: 4 },
       { level: 15, strike: 3, initiative: 2 }
-    ]
+    ])
   },
   expert: {
     label: EE.HTH_TYPES.expert,
-    levels: [
+    levels: riftsHthLevels([
       { level: 1, attacks: 4, strike: 1, parry: 2, dodge: 2, damage: 0, pullPunch: 0, roll: 0, critical: 20, knockout: 20, notes: ["Expert combat training"] },
       { level: 2, initiative: 1 },
-      { level: 3, roll: 2, pullPunch: 2 },
+      { level: 3, roll: 2, pullPunch: 2, notes: ["Pull punch and roll with punch/fall"] },
       { level: 4, strike: 2 },
-      { level: 5, attacks: 5 },
+      { level: 5, attacks: 5, notes: ["Additional attack per melee"] },
       { level: 6, parry: 3, dodge: 3 },
       { level: 7, damage: 2 },
       { level: 8, initiative: 2 },
-      { level: 9, attacks: 6 },
+      { level: 9, attacks: 6, notes: ["Additional attack per melee"] },
       { level: 10, critical: 19, notes: ["Improved critical strike range"] },
       { level: 11, roll: 3, pullPunch: 3 },
       { level: 12, strike: 3 },
-      { level: 13, attacks: 7 },
+      { level: 13, attacks: 7, notes: ["Additional attack per melee"] },
       { level: 14, parry: 4, dodge: 4, damage: 4 },
       { level: 15, knockout: 19, notes: ["Improved knockout/stun range"] }
-    ]
+    ])
   },
   martialArts: {
     label: EE.HTH_TYPES.martialArts,
-    levels: [
+    levels: riftsHthLevels([
       { level: 1, attacks: 4, strike: 1, parry: 3, dodge: 3, damage: 0, pullPunch: 0, roll: 0, critical: 20, knockout: 20, notes: ["Martial arts training", "Kick attacks available"] },
-      { level: 2, initiative: 1, roll: 2, pullPunch: 2 },
+      { level: 2, initiative: 1, roll: 2, pullPunch: 2, notes: ["Pull punch and roll with punch/fall"] },
       { level: 3, strike: 2 },
       { level: 4, parry: 4, dodge: 4, notes: ["Body flip/throw options"] },
-      { level: 5, attacks: 5 },
+      { level: 5, attacks: 5, notes: ["Additional attack per melee"] },
       { level: 6, damage: 2 },
       { level: 7, critical: 19, notes: ["Improved critical strike range"] },
       { level: 8, initiative: 2 },
-      { level: 9, attacks: 6, roll: 3, pullPunch: 3 },
+      { level: 9, attacks: 6, roll: 3, pullPunch: 3, notes: ["Additional attack per melee"] },
       { level: 10, strike: 3 },
       { level: 11, knockout: 19, notes: ["Improved knockout/stun range"] },
       { level: 12, parry: 5, dodge: 5, damage: 4 },
-      { level: 13, attacks: 7 },
+      { level: 13, attacks: 7, notes: ["Additional attack per melee"] },
       { level: 14, critical: 18, notes: ["Advanced critical strike range"] },
       { level: 15, initiative: 3, strike: 4 }
-    ]
+    ])
   },
   commando: {
     label: EE.HTH_TYPES.commando,
-    levels: [
+    levels: riftsHthLevels([
       { level: 1, attacks: 5, initiative: 1, strike: 1, parry: 3, dodge: 3, damage: 2, pullPunch: 1, roll: 1, critical: 20, knockout: 20, notes: ["Military close-combat training", "Multiple armed/unarmed combat options"] },
-      { level: 2, roll: 2, pullPunch: 2 },
+      { level: 2, roll: 2, pullPunch: 2, notes: ["Improved pull punch and roll with punch/fall"] },
       { level: 3, strike: 2 },
       { level: 4, parry: 4, dodge: 4 },
-      { level: 5, attacks: 6 },
+      { level: 5, attacks: 6, notes: ["Additional attack per melee"] },
       { level: 6, initiative: 2 },
       { level: 7, critical: 19, notes: ["Improved critical strike range"] },
       { level: 8, damage: 4 },
-      { level: 9, attacks: 7 },
+      { level: 9, attacks: 7, notes: ["Additional attack per melee"] },
       { level: 10, strike: 3, roll: 3, pullPunch: 3 },
       { level: 11, knockout: 19, notes: ["Improved knockout/stun range"] },
       { level: 12, parry: 5, dodge: 5 },
-      { level: 13, attacks: 8 },
+      { level: 13, attacks: 8, notes: ["Additional attack per melee"] },
       { level: 14, critical: 18, notes: ["Advanced critical strike range"] },
       { level: 15, initiative: 3, strike: 4, damage: 6 }
-    ]
+    ])
   },
   assassin: {
     label: EE.HTH_TYPES.assassin,
-    levels: [
+    levels: riftsHthLevels([
       { level: 1, attacks: 4, strike: 2, parry: 2, dodge: 2, damage: 2, pullPunch: 0, roll: 0, critical: 20, knockout: 20, notes: ["Assassin combat training", "Lethal strikes emphasized"] },
       { level: 2, initiative: 1 },
-      { level: 3, roll: 2, pullPunch: 2 },
+      { level: 3, roll: 2, pullPunch: 2, notes: ["Pull punch and roll with punch/fall"] },
       { level: 4, strike: 3 },
-      { level: 5, attacks: 5 },
+      { level: 5, attacks: 5, notes: ["Additional attack per melee"] },
       { level: 6, critical: 19, notes: ["Improved critical strike range"] },
       { level: 7, damage: 4 },
       { level: 8, parry: 3, dodge: 3 },
-      { level: 9, attacks: 6, initiative: 2 },
+      { level: 9, attacks: 6, initiative: 2, notes: ["Additional attack per melee"] },
       { level: 10, knockout: 19, notes: ["Improved knockout/stun range"] },
       { level: 11, strike: 4 },
       { level: 12, roll: 3, pullPunch: 3 },
-      { level: 13, attacks: 7 },
+      { level: 13, attacks: 7, notes: ["Additional attack per melee"] },
       { level: 14, critical: 18, notes: ["Advanced critical strike range"] },
       { level: 15, damage: 6, initiative: 3 }
-    ]
+    ])
   }
 };
 
