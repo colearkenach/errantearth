@@ -350,6 +350,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
     ctx.mode = sys.mode === "errantEarth" ? "errantEarth" : "rifts";
     ctx.isEE = ctx.mode === "errantEarth";
+    ctx.sheetTitle = ctx.isEE ? "ERRANT EARTH" : "RIFTS / PALLADIUM";
 
     const A = sys.attributes ?? {};
     const iq = Number(A.iq?.value ?? 0);
