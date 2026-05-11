@@ -93,13 +93,13 @@
     </div>
 
     <div class="ee-row ee-attr-bonuses">
-      <span class="ee-attr-bonus" title="IQ bonus">{{derived.attrBonuses.iq}}</span>
-      <span class="ee-attr-bonus" title="ME bonus">{{derived.attrBonuses.me}}</span>
-      <span class="ee-attr-bonus" title="MA bonus">{{derived.attrBonuses.ma}}</span>
-      <span class="ee-attr-bonus" title="PS bonus">{{derived.attrBonuses.ps}}</span>
-      <span class="ee-attr-bonus" title="PP bonus">{{derived.attrBonuses.pp}}</span>
-      <span class="ee-attr-bonus" title="PE bonus">{{derived.attrBonuses.pe}}</span>
-      <span class="ee-attr-bonus" title="PB bonus">{{derived.attrBonuses.pb}}</span>
+      <span class="ee-attr-bonus" title="IQ bonus">{{riftsDerived.attrBonuses.iq}}</span>
+      <span class="ee-attr-bonus" title="ME bonus">{{riftsDerived.attrBonuses.me}}</span>
+      <span class="ee-attr-bonus" title="MA bonus">{{riftsDerived.attrBonuses.ma}}</span>
+      <span class="ee-attr-bonus" title="PS bonus">{{riftsDerived.attrBonuses.ps}}</span>
+      <span class="ee-attr-bonus" title="PP bonus">{{riftsDerived.attrBonuses.pp}}</span>
+      <span class="ee-attr-bonus" title="PE bonus">{{riftsDerived.attrBonuses.pe}}</span>
+      <span class="ee-attr-bonus" title="PB bonus">{{riftsDerived.attrBonuses.pb}}</span>
       <span class="ee-attr-bonus"></span>
     </div>
     {{/unless}}
@@ -442,11 +442,11 @@
 
       <div class="ee-row ee-skill-bonuses">
         <label class="ee-tooltip" data-tooltip="Auto-computed from IQ. Adds a flat percentage to every skill total. +3% per point of IQ above 15.">IQ Bonus to Skill:</label>
-        <input type="number" value="{{derived.iqBonus}}" disabled/>
+        <input type="number" value="{{riftsDerived.iqSkillBonus}}" disabled/>
         <label class="ee-tooltip" data-tooltip="Auto-computed from MA. The percentage chance to inspire trust or intimidate others. Kicks in at MA 16+.">Trust/Intimidate:</label>
-        <input type="number" value="{{derived.trustIntimidate}}" disabled/>
+        <input type="number" value="{{riftsDerived.trustIntimidate}}" disabled/>
         <label class="ee-tooltip" data-tooltip="Auto-computed from PB. The percentage chance to charm or impress others. Kicks in at PB 16+.">Charm/Impress:</label>
-        <input type="number" value="{{derived.charmImpress}}" disabled/>
+        <input type="number" value="{{riftsDerived.charmImpress}}" disabled/>
       </div>
 
       {{#*inline "skillSection"}}
@@ -688,13 +688,39 @@
           {{/unless}}
           <div class="ee-kv"><label>Initiative:</label><input type="number" name="system.handToHand.initiative" value="{{system.handToHand.initiative}}"/>
             <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.initiative}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Damage:</label><input type="number" name="system.handToHand.damage" value="{{system.handToHand.damage}}"/></div>
-          <div class="ee-kv"><label>Strike:</label><input type="number" name="system.handToHand.strike" value="{{system.handToHand.strike}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.strike}}" data-label="HtH Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Parry:</label><input type="number" name="system.handToHand.parry" value="{{system.handToHand.parry}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.parry}}" data-label="HtH Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></div>
-          <div class="ee-kv"><label>Dodge:</label><input type="number" name="system.handToHand.dodge" value="{{system.handToHand.dodge}}"/>
-            <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.dodge}}" data-label="HtH Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></div>
+          <table class="ee-table">
+            <thead><tr><th>Combat Bonus</th><th>Manual</th><th>Attribute</th><th>Total</th><th>Roll</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Damage:</td>
+                <td><input type="number" name="system.handToHand.damage" value="{{system.handToHand.damage}}"/></td>
+                <td>{{riftsDerived.combat.damage.attribute}}</td>
+                <td>{{riftsDerived.combat.damage.total}}</td>
+                <td><a data-action="roll" data-roll-type="damage" data-formula="0 + {{riftsDerived.combat.damage.total}}" data-label="HtH Damage Bonus" title="Roll Damage Bonus"><i class="fas fa-dice-d20"></i></a></td>
+              </tr>
+              <tr>
+                <td>Strike:</td>
+                <td><input type="number" name="system.handToHand.strike" value="{{system.handToHand.strike}}"/></td>
+                <td>{{riftsDerived.combat.strike.attribute}}</td>
+                <td>{{riftsDerived.combat.strike.total}}</td>
+                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.combat.strike.total}}" data-label="HtH Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></td>
+              </tr>
+              <tr>
+                <td>Parry:</td>
+                <td><input type="number" name="system.handToHand.parry" value="{{system.handToHand.parry}}"/></td>
+                <td>{{riftsDerived.combat.parry.attribute}}</td>
+                <td>{{riftsDerived.combat.parry.total}}</td>
+                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.combat.parry.total}}" data-label="HtH Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></td>
+              </tr>
+              <tr>
+                <td>Dodge:</td>
+                <td><input type="number" name="system.handToHand.dodge" value="{{system.handToHand.dodge}}"/></td>
+                <td>{{riftsDerived.combat.dodge.attribute}}</td>
+                <td>{{riftsDerived.combat.dodge.total}}</td>
+                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.combat.dodge.total}}" data-label="HtH Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
           <div class="ee-kv"><label>Pull/Roll:</label><input type="number" name="system.handToHand.pullRoll" value="{{system.handToHand.pullRoll}}"/>
             <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.pullRoll}}" data-label="Pull/Roll" title="Roll Pull/Roll"><i class="fas fa-dice-d20"></i></a></div>
           <div class="ee-kv"><label>Perception:</label><input type="number" name="system.handToHand.perception" value="{{system.handToHand.perception}}"/>
@@ -713,23 +739,25 @@
         <div class="ee-panel">
           <h3>Saving Throws</h3>
           <table class="ee-table">
-            <thead><tr><th></th><th>Base</th><th>Bonus</th><th>Roll</th></tr></thead>
+            <thead><tr><th></th><th>Base</th><th>Manual Bonus</th><th>Attribute Bonus</th><th>Total</th><th>Roll</th></tr></thead>
             <tbody>
-              <tr><td>Spell:</td>        <td><input type="text" name="system.savingThrows.spell.base"        value="{{system.savingThrows.spell.base}}"/></td>        <td><input type="number" name="system.savingThrows.spell.bonus"        value="{{system.savingThrows.spell.bonus}}"/></td>        <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.spell.base}}"        data-bonus="{{system.savingThrows.spell.bonus}}"        data-label="Save vs Spell"><i class="fas fa-dice-d20"></i></a></td></tr>
-              <tr><td>Ritual:</td>       <td><input type="text" name="system.savingThrows.ritual.base"       value="{{system.savingThrows.ritual.base}}"/></td>       <td><input type="number" name="system.savingThrows.ritual.bonus"       value="{{system.savingThrows.ritual.bonus}}"/></td>       <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.ritual.base}}"       data-bonus="{{system.savingThrows.ritual.bonus}}"       data-label="Save vs Ritual"><i class="fas fa-dice-d20"></i></a></td></tr>
-              <tr><td>Psionics:</td>     <td><input type="text" name="system.savingThrows.psionics.base"     value="{{system.savingThrows.psionics.base}}"/></td>     <td><input type="number" name="system.savingThrows.psionics.bonus"     value="{{system.savingThrows.psionics.bonus}}"/></td>     <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.psionics.base}}"     data-bonus="{{system.savingThrows.psionics.bonus}}"     data-label="Save vs Psionics"><i class="fas fa-dice-d20"></i></a></td></tr>
-              <tr><td>Toxins/Poisons:</td><td><input type="text" name="system.savingThrows.drugPoison.base"   value="{{system.savingThrows.drugPoison.base}}"/></td>   <td><input type="number" name="system.savingThrows.drugPoison.bonus"   value="{{system.savingThrows.drugPoison.bonus}}"/></td>   <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.drugPoison.base}}"   data-bonus="{{system.savingThrows.drugPoison.bonus}}"   data-label="Save vs Toxins/Poisons"><i class="fas fa-dice-d20"></i></a></td></tr>
-              <tr><td>Harmful Drugs:</td> <td><input type="text" name="system.savingThrows.harmfulDrugs.base" value="{{system.savingThrows.harmfulDrugs.base}}"/></td> <td><input type="number" name="system.savingThrows.harmfulDrugs.bonus" value="{{system.savingThrows.harmfulDrugs.bonus}}"/></td> <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.harmfulDrugs.base}}" data-bonus="{{system.savingThrows.harmfulDrugs.bonus}}" data-label="Save vs Harmful Drugs"><i class="fas fa-dice-d20"></i></a></td></tr>
-              <tr><td>Insanity:</td>      <td><input type="text" name="system.savingThrows.insanity.base"     value="{{system.savingThrows.insanity.base}}"/></td>     <td><input type="number" name="system.savingThrows.insanity.bonus"     value="{{system.savingThrows.insanity.bonus}}"/></td>     <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.insanity.base}}"     data-bonus="{{system.savingThrows.insanity.bonus}}"     data-label="Save vs Insanity"><i class="fas fa-dice-d20"></i></a></td></tr>
-              <tr><td>Possession:</td>    <td><input type="text" name="system.savingThrows.possession.base"   value="{{system.savingThrows.possession.base}}"/></td>   <td><input type="number" name="system.savingThrows.possession.bonus"   value="{{system.savingThrows.possession.bonus}}"/></td>   <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.possession.base}}"   data-bonus="{{system.savingThrows.possession.bonus}}"   data-label="Save vs Possession"><i class="fas fa-dice-d20"></i></a></td></tr>
-              <tr><td>Horror Factor:</td> <td><input type="text" name="system.savingThrows.horrorFactor.base" value="{{system.savingThrows.horrorFactor.base}}"/></td> <td><input type="number" name="system.savingThrows.horrorFactor.bonus" value="{{system.savingThrows.horrorFactor.bonus}}"/></td> <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.horrorFactor.base}}" data-bonus="{{system.savingThrows.horrorFactor.bonus}}" data-label="Save vs Horror Factor"><i class="fas fa-dice-d20"></i></a></td></tr>
-              <tr><td>Coma/Death:</td>    <td><input type="text" name="system.savingThrows.death.base"        value="{{system.savingThrows.death.base}}"/></td>        <td><input type="number" name="system.savingThrows.death.bonus"        value="{{system.savingThrows.death.bonus}}"/></td>        <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.death.base}}"        data-bonus="{{system.savingThrows.death.bonus}}"        data-label="Save vs Coma/Death"><i class="fas fa-dice-d20"></i></a></td></tr>
-              <tr><td>Pain:</td>          <td><input type="text" name="system.savingThrows.pain.base"         value="{{system.savingThrows.pain.base}}"/></td>         <td><input type="number" name="system.savingThrows.pain.bonus"         value="{{system.savingThrows.pain.bonus}}"/></td>         <td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.pain.base}}"         data-bonus="{{system.savingThrows.pain.bonus}}"         data-label="Save vs Pain"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Spell:</td>        <td><input type="text" name="system.savingThrows.spell.base"        value="{{system.savingThrows.spell.base}}"/></td>        <td><input type="number" name="system.savingThrows.spell.bonus"        value="{{system.savingThrows.spell.bonus}}"/></td>        <td>0</td><td>{{system.savingThrows.spell.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.spell.base}}"        data-bonus="{{system.savingThrows.spell.bonus}}"        data-label="Save vs Spell"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Ritual:</td>       <td><input type="text" name="system.savingThrows.ritual.base"       value="{{system.savingThrows.ritual.base}}"/></td>       <td><input type="number" name="system.savingThrows.ritual.bonus"       value="{{system.savingThrows.ritual.bonus}}"/></td>       <td>0</td><td>{{system.savingThrows.ritual.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.ritual.base}}"       data-bonus="{{system.savingThrows.ritual.bonus}}"       data-label="Save vs Ritual"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Psionics:</td>     <td><input type="text" name="system.savingThrows.psionics.base"     value="{{system.savingThrows.psionics.base}}"/></td>     <td><input type="number" name="system.savingThrows.psionics.bonus"     value="{{system.savingThrows.psionics.bonus}}"/></td>     <td>{{riftsDerived.saves.psionics.attribute}}</td><td>{{riftsDerived.saves.psionics.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.psionics.base}}"     data-bonus="{{riftsDerived.saves.psionics.total}}"     data-label="Save vs Psionics"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Toxins/Poisons:</td><td><input type="text" name="system.savingThrows.drugPoison.base"   value="{{system.savingThrows.drugPoison.base}}"/></td>   <td><input type="number" name="system.savingThrows.drugPoison.bonus"   value="{{system.savingThrows.drugPoison.bonus}}"/></td>   <td>{{riftsDerived.saves.drugPoison.attribute}}</td><td>{{riftsDerived.saves.drugPoison.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.drugPoison.base}}"   data-bonus="{{riftsDerived.saves.drugPoison.total}}"   data-label="Save vs Toxins/Poisons"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Harmful Drugs:</td> <td><input type="text" name="system.savingThrows.harmfulDrugs.base" value="{{system.savingThrows.harmfulDrugs.base}}"/></td> <td><input type="number" name="system.savingThrows.harmfulDrugs.bonus" value="{{system.savingThrows.harmfulDrugs.bonus}}"/></td> <td>0</td><td>{{system.savingThrows.harmfulDrugs.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.harmfulDrugs.base}}" data-bonus="{{system.savingThrows.harmfulDrugs.bonus}}" data-label="Save vs Harmful Drugs"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Insanity:</td>      <td><input type="text" name="system.savingThrows.insanity.base"     value="{{system.savingThrows.insanity.base}}"/></td>     <td><input type="number" name="system.savingThrows.insanity.bonus"     value="{{system.savingThrows.insanity.bonus}}"/></td>     <td>{{riftsDerived.saves.insanity.attribute}}</td><td>{{riftsDerived.saves.insanity.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.insanity.base}}"     data-bonus="{{riftsDerived.saves.insanity.total}}"     data-label="Save vs Insanity"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Possession:</td>    <td><input type="text" name="system.savingThrows.possession.base"   value="{{system.savingThrows.possession.base}}"/></td>   <td><input type="number" name="system.savingThrows.possession.bonus"   value="{{system.savingThrows.possession.bonus}}"/></td>   <td>0</td><td>{{system.savingThrows.possession.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.possession.base}}"   data-bonus="{{system.savingThrows.possession.bonus}}"   data-label="Save vs Possession"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Horror Factor:</td> <td><input type="text" name="system.savingThrows.horrorFactor.base" value="{{system.savingThrows.horrorFactor.base}}"/></td> <td><input type="number" name="system.savingThrows.horrorFactor.bonus" value="{{system.savingThrows.horrorFactor.bonus}}"/></td> <td>0</td><td>{{system.savingThrows.horrorFactor.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.horrorFactor.base}}" data-bonus="{{system.savingThrows.horrorFactor.bonus}}" data-label="Save vs Horror Factor"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Coma/Death:</td>    <td><input type="text" name="system.savingThrows.death.base"        value="{{system.savingThrows.death.base}}"/></td>        <td><input type="number" name="system.savingThrows.death.bonus"        value="{{system.savingThrows.death.bonus}}"/></td>        <td>{{riftsDerived.saves.death.attribute}}%</td><td>{{riftsDerived.saves.death.display}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.death.base}}"        data-bonus="{{riftsDerived.saves.death.total}}"        data-label="Save vs Coma/Death"><i class="fas fa-dice-d20"></i></a></td></tr>
+              <tr><td>Pain:</td>          <td><input type="text" name="system.savingThrows.pain.base"         value="{{system.savingThrows.pain.base}}"/></td>         <td><input type="number" name="system.savingThrows.pain.bonus"         value="{{system.savingThrows.pain.bonus}}"/></td>         <td>0</td><td>{{system.savingThrows.pain.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.pain.base}}"         data-bonus="{{system.savingThrows.pain.bonus}}"         data-label="Save vs Pain"><i class="fas fa-dice-d20"></i></a></td></tr>
               {{#each system.savingThrows.extras}}
               <tr>
                 <td><input type="text"   name="system.savingThrows.extras.{{@index}}.name"  value="{{name}}" placeholder="Save"/></td>
                 <td><input type="text"   name="system.savingThrows.extras.{{@index}}.base"  value="{{base}}"/></td>
                 <td><input type="number" name="system.savingThrows.extras.{{@index}}.bonus" value="{{bonus}}"/></td>
+                <td>0</td>
+                <td>{{bonus}}</td>
                 <td>
                   <a data-action="roll" data-roll-type="save" data-base="{{base}}" data-bonus="{{bonus}}" data-label="Save vs {{name}}"><i class="fas fa-dice-d20"></i></a>
                   <a data-action="delete-row" data-path="savingThrows.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
