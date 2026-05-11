@@ -269,6 +269,123 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     };
   }
 
+  static _eeAdjustableDefaults(base = 0, total = base) {
+    return { base, bonus: 0, override: null, total };
+  }
+
+  /** Defaults for Errant Earth-only actor data. These are merged into older
+   *  actors only when a field is absent, so RIFTS data and existing Errant
+   *  Earth entries survive mode switches and migrations. */
+  static _eeSchemaDefaults() {
+    const adj = ErrantEarthCharacterSheet._eeAdjustableDefaults;
+    return {
+      eeAttributes: {
+        anm: { value: 0 }, brv: { value: 0 }, com: { value: 0 }, fin: { value: 0 },
+        hrd: { value: 0 }, pow: { value: 0 }, spd: { value: 0 }, wil: { value: 0 }
+      },
+      eeAttributeTier: "Mortal",
+      eeCombat: { actions: 0, momentum: 0, reactions: 0 },
+      backgrounds: [],
+      occupations: [],
+      magic: { heat: 0, burnout: 0 },
+      psychic: { heat: 0 },
+      eeDerived: {
+        health: {
+          endurance: adj(),
+          health: adj(),
+          scars: { value: 0, max: 5 }
+        },
+        defense: {
+          size: "Average",
+          nsr: adj(4, 4),
+          msr: adj(),
+          armorRating: adj()
+        },
+        resources: {
+          esp: adj(),
+          mp: adj(),
+          glimmer: { ...adj(), description: "None / Flickering" }
+        },
+        combat: {
+          strength: { rating: 0, sdBonus: 0, mdCapable: false, meleeToHit: 0 },
+          actions: adj(1, 1),
+          momentum: adj(),
+          reactions: adj(),
+          initiative: adj()
+        },
+        movement: {
+          reaction: { rating: 0, initiativeBonus: 0, pace: 1 },
+          pace: adj(1, 1),
+          liftCarryJump: {
+            light: 0, medium: 0, heavy: 0, overhead: 0, offGround: 0, push: 0,
+            verticalStand: 0, verticalRun: 0, horizontalStand: 0, horizontalRun: 0
+          }
+        },
+        social: {
+          demeanor: { rating: 0, bonus: 0, contacts: 1, attitude: "Repulsed, Horrified, Hated" },
+          atbBonus: adj()
+        },
+        saves: {
+          psychicResistance: adj(),
+          magicResistance: adj(),
+          horrorAnima: adj(),
+          horrorWillpower: adj()
+        }
+      }
+    };
+  }
+
+  static _isNumericKeyObject(v) {
+    if (!v || typeof v !== "object" || Array.isArray(v)) return false;
+    const keys = Object.keys(v);
+    return keys.length > 0 && keys.every(k => /^\d+$/.test(k));
+  }
+
+  static _flattenMissing(target, defaults, prefix = "system") {
+    const update = {};
+    for (const [key, value] of Object.entries(defaults)) {
+      const path = `${prefix}.${key}`;
+      const current = target?.[key];
+      if (current === undefined) {
+        update[path] = foundry.utils.deepClone(value);
+        continue;
+      }
+      if (Array.isArray(value)) {
+        if (!Array.isArray(current)) update[path] = ErrantEarthCharacterSheet._toArray(current);
+        continue;
+      }
+      if (value && typeof value === "object") {
+        if (current === null || typeof current !== "object" || Array.isArray(current)) {
+          update[path] = foundry.utils.deepClone(value);
+          continue;
+        }
+        Object.assign(update, ErrantEarthCharacterSheet._flattenMissing(current, value, path));
+      }
+    }
+    return update;
+  }
+
+  /** Build a minimal update payload that backfills missing Errant Earth schema
+   *  fields on an actor without removing or overwriting any existing data. */
+  static buildErrantEarthBackfillUpdate(system = {}) {
+    const update = ErrantEarthCharacterSheet._flattenMissing(system, ErrantEarthCharacterSheet._eeSchemaDefaults());
+    if (ErrantEarthCharacterSheet._isNumericKeyObject(system.backgrounds)) {
+      update["system.backgrounds"] = ErrantEarthCharacterSheet._toArray(system.backgrounds);
+    }
+    if (ErrantEarthCharacterSheet._isNumericKeyObject(system.occupations)) {
+      update["system.occupations"] = ErrantEarthCharacterSheet._toArray(system.occupations);
+    }
+    return update;
+  }
+
+  static async backfillErrantEarthActor(actor) {
+    if (!actor || actor.type !== "character") return false;
+    const update = ErrantEarthCharacterSheet.buildErrantEarthBackfillUpdate(actor.system ?? {});
+    if (!Object.keys(update).length) return false;
+    await actor.update(update);
+    return true;
+  }
+
   /** Coerce a value that may be an object with numeric keys back into an array. */
   static _toArray(v) {
     if (Array.isArray(v)) return v;
@@ -576,7 +693,11 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   async _onToggleMode(ev) {
     const mode = ev.currentTarget.checked ? "errantEarth" : "rifts";
-    return this.actor.update({ "system.mode": mode });
+    const update = { "system.mode": mode };
+    if (mode === "errantEarth") {
+      Object.assign(update, ErrantEarthCharacterSheet.buildErrantEarthBackfillUpdate(this.actor.system ?? {}));
+    }
+    return this.actor.update(update);
   }
 
   /** Pop a single-select dialog asking the player which difficulty band the
@@ -833,12 +954,58 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return Object.prototype.hasOwnProperty.call(choices, value) ? value : "";
   }
 
+  static _validateEnumList(value, choices) {
+    const scrub = v => ErrantEarthCharacterSheet._validateEnum(v, choices);
+    if (Array.isArray(value)) return value.map(scrub).filter(Boolean);
+    if (value && typeof value === "object") {
+      const out = {};
+      for (const [key, entry] of Object.entries(value)) {
+        const candidate = typeof entry === "boolean" ? key : entry;
+        const valid = scrub(candidate);
+        if (valid) out[key] = typeof entry === "boolean" ? entry : valid;
+      }
+      return out;
+    }
+    const valid = scrub(value);
+    return valid ? [valid] : [];
+  }
+
+  static _validateErrantEarthFields(root, cfg) {
+    if (!root || typeof root !== "object") return;
+    const visit = value => {
+      if (!value || typeof value !== "object") return;
+      if (Array.isArray(value)) {
+        for (const entry of value) visit(entry);
+        return;
+      }
+      if ("eeSkillCategory" in value)
+        value.eeSkillCategory = ErrantEarthCharacterSheet._validateEnum(value.eeSkillCategory, cfg.EE_SKILL_CATEGORIES);
+      if ("skillCategory" in value)
+        value.skillCategory = ErrantEarthCharacterSheet._validateEnum(value.skillCategory, cfg.EE_SKILL_CATEGORIES);
+      if ("category" in value)
+        value.category = ErrantEarthCharacterSheet._validateEnum(value.category, cfg.EE_SKILL_CATEGORIES);
+      if ("eeSkillTags" in value)
+        value.eeSkillTags = ErrantEarthCharacterSheet._validateEnumList(value.eeSkillTags, cfg.EE_SKILL_TAGS);
+      if ("skillTags" in value)
+        value.skillTags = ErrantEarthCharacterSheet._validateEnumList(value.skillTags, cfg.EE_SKILL_TAGS);
+      if ("tags" in value)
+        value.tags = ErrantEarthCharacterSheet._validateEnumList(value.tags, cfg.EE_SKILL_TAGS);
+      if ("damageScale" in value)
+        value.damageScale = ErrantEarthCharacterSheet._validateEnum(value.damageScale, cfg.EE_DAMAGE_SCALES);
+      if ("eeDamageScale" in value)
+        value.eeDamageScale = ErrantEarthCharacterSheet._validateEnum(value.eeDamageScale, cfg.EE_DAMAGE_SCALES);
+      for (const entry of Object.values(value)) visit(entry);
+    };
+    visit(root);
+  }
+
   static _validateEnums(expanded) {
     const cfg = CONFIG.EE;
     if (!cfg || !expanded?.system) return expanded;
     const sys = expanded.system;
     if ("alignment" in sys)    sys.alignment    = ErrantEarthCharacterSheet._validateEnum(sys.alignment,    cfg.ALIGNMENTS);
     if ("psionicLevel" in sys) sys.psionicLevel = ErrantEarthCharacterSheet._validateEnum(sys.psionicLevel, cfg.PSIONIC_LEVELS);
+    if ("eeAttributeTier" in sys) sys.eeAttributeTier = ErrantEarthCharacterSheet._validateEnum(sys.eeAttributeTier, cfg.EE_ATTRIBUTE_TIERS);
     if (sys.vehicle && "type" in sys.vehicle)
       sys.vehicle.type = ErrantEarthCharacterSheet._validateEnum(sys.vehicle.type, cfg.VEHICLE_TYPES);
     if (sys.handToHand && "type" in sys.handToHand)
@@ -857,6 +1024,14 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     scrubArr(sys.powerArmor?.weapons,"damageType", cfg.DAMAGE_TYPES);
     scrubArr(sys.vehicle?.weapons,   "damageType", cfg.DAMAGE_TYPES);
     scrubArr(sys.powers,             "source",     cfg.POWER_SOURCES);
+
+    // Future Errant Earth-only row paths can opt into validation with these
+    // field names without affecting the legacy RIFTS skill/category fields.
+    ErrantEarthCharacterSheet._validateErrantEarthFields(sys.eeSkills, cfg);
+    ErrantEarthCharacterSheet._validateErrantEarthFields(sys.eeDamage, cfg);
+    ErrantEarthCharacterSheet._validateErrantEarthFields(sys.eeCombat, cfg);
+    ErrantEarthCharacterSheet._validateErrantEarthFields(sys.magic, cfg);
+    ErrantEarthCharacterSheet._validateErrantEarthFields(sys.psychic, cfg);
     return expanded;
   }
 
