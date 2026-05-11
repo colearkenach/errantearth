@@ -56,6 +56,219 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   static peMagicPoison(pe)  { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.peMagicPoison, pe); }
   static charmImpress(pb)   { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.pbCharmPct, pb); }
 
+
+
+  /** Errant Earth derived-value bands from the core rules source of truth. */
+  static _EE_STRENGTH_TABLE = [
+    { min: 0,  max: 3,        sdBonus: -3, mdCapable: false, meleeToHit: -4 },
+    { min: 4,  max: 6,        sdBonus: -2, mdCapable: false, meleeToHit: -2 },
+    { min: 7,  max: 9,        sdBonus: -1, mdCapable: false, meleeToHit: 0 },
+    { min: 10, max: 12,       sdBonus: 0,  mdCapable: false, meleeToHit: 1 },
+    { min: 13, max: 15,       sdBonus: 2,  mdCapable: false, meleeToHit: 2 },
+    { min: 16, max: 18,       sdBonus: 4,  mdCapable: false, meleeToHit: 3 },
+    { min: 19, max: 21,       sdBonus: 6,  mdCapable: true,  meleeToHit: 4 },
+    { min: 22, max: 24,       sdBonus: 8,  mdCapable: true,  meleeToHit: 5 },
+    { min: 25, max: Infinity, sdBonus: 10, mdCapable: true,  meleeToHit: 6 }
+  ];
+
+  static _EE_DEMEANOR_TABLE = [
+    { min: 0,  max: 3,        bonus: -6, contacts: 1, attitude: "Repulsed, Horrified, Hated" },
+    { min: 4,  max: 6,        bonus: -3, contacts: 1, attitude: "Disgusted, Distanced, Pained" },
+    { min: 7,  max: 9,        bonus: 0,  contacts: 2, attitude: "Plain, Neutral, Uninterested" },
+    { min: 10, max: 12,       bonus: 1,  contacts: 3, attitude: "Interested, Understood" },
+    { min: 13, max: 15,       bonus: 2,  contacts: 4, attitude: "Friendly, Kind, Welcoming" },
+    { min: 16, max: 18,       bonus: 3,  contacts: 5, attitude: "Charismatic, Magnetic" },
+    { min: 19, max: 21,       bonus: 4,  contacts: 6, attitude: "Contagious, Empathetic" },
+    { min: 22, max: 24,       bonus: 5,  contacts: 7, attitude: "Lovely, Enrapturing" },
+    { min: 25, max: Infinity, bonus: 6,  contacts: 8, attitude: "Divine, Uncomfortable" }
+  ];
+
+  static _EE_REACTION_TABLE = [
+    { min: 0,  max: 3,        initiativeBonus: -6, pace: 0.25 },
+    { min: 4,  max: 6,        initiativeBonus: -3, pace: 0.5 },
+    { min: 7,  max: 9,        initiativeBonus: 0,  pace: 1 },
+    { min: 10, max: 12,       initiativeBonus: 1,  pace: 2 },
+    { min: 13, max: 15,       initiativeBonus: 2,  pace: 2 },
+    { min: 16, max: 18,       initiativeBonus: 4,  pace: 3 },
+    { min: 19, max: 21,       initiativeBonus: 6,  pace: 3 },
+    { min: 22, max: 24,       initiativeBonus: 8,  pace: 4 },
+    { min: 25, max: Infinity, initiativeBonus: 10, pace: 5 }
+  ];
+
+  static _EE_GLIMMER_TABLE = [
+    { min: 0,  max: 0,        bonus: -10, percent: -100, description: "None / Flickering" },
+    { min: 1,  max: 2,        bonus: 0,   percent: 0,    description: "Throbbing" },
+    { min: 3,  max: 4,        bonus: 1,   percent: 10,   description: "Faint / Subdued" },
+    { min: 5,  max: 5,        bonus: 2,   percent: 20,   description: "Dim / Vibrant" },
+    { min: 6,  max: 6,        bonus: 3,   percent: 30,   description: "Glowing / Present" },
+    { min: 7,  max: 7,        bonus: 4,   percent: 40,   description: "Fiery / Imposing" },
+    { min: 8,  max: 8,        bonus: 5,   percent: 50,   description: "Luminous / Resonant" },
+    { min: 9,  max: 9,        bonus: 6,   percent: 60,   description: "Bonfire / Majestic" },
+    { min: 10, max: Infinity, bonus: 7,   percent: 70,   description: "Inferno / Raging" }
+  ];
+
+  static _EE_ATB_TABLE = [
+    { min: 0,  max: 6,        bonus: 0 },
+    { min: 7,  max: 12,       bonus: 1 },
+    { min: 13, max: 18,       bonus: 2 },
+    { min: 19, max: 24,       bonus: 3 },
+    { min: 25, max: Infinity, bonus: 5 }
+  ];
+
+  static _EE_NSR_BY_SIZE = { tiny: 6, small: 5, average: 4, big: 3, huge: 2, massive: 1 };
+
+  static _eeBand(table, value) {
+    const numeric = Number(value ?? 0);
+    return table.find(row => numeric >= row.min && numeric <= row.max) ?? table[0];
+  }
+
+  static _eeAvg(...values) {
+    const nums = values.map(v => Number(v ?? 0));
+    return Math.ceil(nums.reduce((sum, v) => sum + v, 0) / Math.max(1, nums.length));
+  }
+
+  static _eeAdjustable(base, path, bonus = 0) {
+    const stored = path && typeof path === "object" ? path : {};
+    const storedBonus = Number(stored.bonus ?? 0);
+    const override = stored.override === "" || stored.override === null || stored.override === undefined ? null : Number(stored.override);
+    const total = Number.isFinite(override) ? override : Number(base ?? 0) + Number(bonus ?? 0) + storedBonus;
+    return { base: Number(base ?? 0), bonus: Number(bonus ?? 0) + storedBonus, override: Number.isFinite(override) ? override : null, total };
+  }
+
+  static _eeTextBonus(source, keys) {
+    const text = [source?.notes, source?.bonuses, source?.description, source?.effects]
+      .filter(Boolean)
+      .join(" ");
+    if (!text) return 0;
+    const pattern = new RegExp(`([+-]\\d+)\\s*(?:to\\s*)?(?:${keys.join("|")})`, "ig");
+    let total = 0;
+    for (const match of text.matchAll(pattern)) total += Number(match[1] ?? 0);
+    return total;
+  }
+
+  static _eeSourceBonus(source, path) {
+    if (!source || typeof source !== "object") return 0;
+    const value = path.split(".").reduce((obj, key) => obj?.[key], source);
+    if (value && typeof value === "object") return Number(value.bonus ?? value.value ?? value.total ?? 0);
+    return Number(value ?? 0);
+  }
+
+  static _eeCollectBonuses(sys, path, textKeys = []) {
+    const sources = [
+      ...ErrantEarthCharacterSheet._toArray(sys.backgrounds),
+      ...ErrantEarthCharacterSheet._toArray(sys.occupations),
+      sys.species
+    ].filter(Boolean);
+    return sources.reduce((total, source) => {
+      return total + ErrantEarthCharacterSheet._eeSourceBonus(source.eeDerived, path)
+        + ErrantEarthCharacterSheet._eeSourceBonus(source.derived, path)
+        + (textKeys.length ? ErrantEarthCharacterSheet._eeTextBonus(source, textKeys) : 0);
+    }, 0);
+  }
+
+  static _eeGlimmer(esp, mp) {
+    const fromEsp = Math.floor(Number(esp ?? 0) / 25) * 2;
+    const fromMp = Math.floor(Number(mp ?? 0) / 25) * 2;
+    return fromEsp + fromMp;
+  }
+
+  static eeDerivedData(sys = {}) {
+    const attrs = sys.eeAttributes ?? {};
+    const attr = key => Number(attrs[key]?.value ?? 0);
+    const anm = attr("anm");
+    const brv = attr("brv");
+    const com = attr("com");
+    const hrd = attr("hrd");
+    const pow = attr("pow");
+    const spd = attr("spd");
+    const wil = attr("wil");
+    const level = Math.max(1, Number(sys.level ?? 1));
+    const stored = sys.eeDerived ?? {};
+
+    const strengthRating = ErrantEarthCharacterSheet._eeAvg(hrd, pow);
+    const strength = { rating: strengthRating, ...ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_STRENGTH_TABLE, strengthRating) };
+    delete strength.min;
+    delete strength.max;
+
+    const demeanorRating = ErrantEarthCharacterSheet._eeAvg(brv, wil);
+    const demeanor = { rating: demeanorRating, ...ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_DEMEANOR_TABLE, demeanorRating) };
+    delete demeanor.min;
+    delete demeanor.max;
+
+    const reactionRating = ErrantEarthCharacterSheet._eeAvg(com, spd);
+    const reaction = { rating: reactionRating, ...ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_REACTION_TABLE, reactionRating) };
+    delete reaction.min;
+    delete reaction.max;
+
+    const size = String(stored.defense?.size ?? sys.species?.size ?? "Average");
+    const nsrBase = ErrantEarthCharacterSheet._EE_NSR_BY_SIZE[size.toLowerCase()] ?? ErrantEarthCharacterSheet._EE_NSR_BY_SIZE.average;
+    const enduranceBase = 7 + hrd + Math.ceil(2.5 * level);
+    const healthBase = hrd;
+    const espBase = anm * 2;
+    const mpBase = wil * 2;
+    const glimmerBase = ErrantEarthCharacterSheet._eeGlimmer(espBase, mpBase);
+    const glimmerBand = ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_GLIMMER_TABLE, glimmerBase);
+    const carryBase = (pow + hrd) / 2;
+
+    const actionsBase = Number(sys.eeCombat?.actions ?? 0) || 1;
+    const actions = ErrantEarthCharacterSheet._eeAdjustable(actionsBase, stored.combat?.actions, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "combat.actions", ["actions?", "combat actions?"]));
+    const momentum = ErrantEarthCharacterSheet._eeAdjustable(Number(sys.eeCombat?.momentum ?? 0), stored.combat?.momentum, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "combat.momentum", ["momentum"]));
+    const reactions = ErrantEarthCharacterSheet._eeAdjustable(Number(sys.eeCombat?.reactions ?? 0), stored.combat?.reactions, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "combat.reactions", ["reactions?"]));
+
+    return {
+      tier: sys.eeAttributeTier ?? "Mortal",
+      health: {
+        endurance: ErrantEarthCharacterSheet._eeAdjustable(enduranceBase, stored.health?.endurance, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "health.endurance", ["endurance"])),
+        health: ErrantEarthCharacterSheet._eeAdjustable(healthBase, stored.health?.health, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "health.health", ["health"])),
+        scars: { value: Number(stored.health?.scars?.value ?? 0), max: Number(stored.health?.scars?.max ?? 5) }
+      },
+      defense: {
+        size,
+        nsr: ErrantEarthCharacterSheet._eeAdjustable(nsrBase, stored.defense?.nsr, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "defense.nsr", ["nsr", "survival rating"])),
+        msr: ErrantEarthCharacterSheet._eeAdjustable(0, stored.defense?.msr, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "defense.msr", ["msr"])),
+        armorRating: ErrantEarthCharacterSheet._eeAdjustable(0, stored.defense?.armorRating, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "defense.armorRating", ["armor rating", "ar"]))
+      },
+      resources: {
+        esp: ErrantEarthCharacterSheet._eeAdjustable(espBase, stored.resources?.esp, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "resources.esp", ["esp", "extra sensory power"])),
+        mp: ErrantEarthCharacterSheet._eeAdjustable(mpBase, stored.resources?.mp, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "resources.mp", ["mp", "magic power"])),
+        glimmer: { ...ErrantEarthCharacterSheet._eeAdjustable(glimmerBase, stored.resources?.glimmer, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "resources.glimmer", ["glimmer"])), description: glimmerBand.description, detectionBonus: glimmerBand.bonus, detectionPercent: glimmerBand.percent }
+      },
+      combat: {
+        strength,
+        actions,
+        momentum,
+        reactions,
+        initiative: ErrantEarthCharacterSheet._eeAdjustable(reaction.initiativeBonus, stored.combat?.initiative, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "combat.initiative", ["initiative"]))
+      },
+      movement: {
+        reaction,
+        pace: ErrantEarthCharacterSheet._eeAdjustable(reaction.pace, stored.movement?.pace, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "movement.pace", ["pace", "movement"])),
+        liftCarryJump: {
+          light: Math.ceil(carryBase * 5),
+          medium: Math.ceil(carryBase * 10),
+          heavy: Math.ceil(carryBase * 12.5),
+          overhead: Math.ceil(carryBase * 12.5 * 1.5),
+          offGround: Math.ceil(carryBase * 12.5 * 2),
+          push: Math.ceil(carryBase * 12.5 * 4),
+          verticalStand: Math.ceil(pow / 5),
+          verticalRun: Math.ceil(pow / 3),
+          horizontalStand: Math.max(0, pow - 6),
+          horizontalRun: Math.max(0, pow - 2)
+        }
+      },
+      social: {
+        demeanor,
+        atbBonus: ErrantEarthCharacterSheet._eeAdjustable(ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_ATB_TABLE, anm).bonus, stored.social?.atbBonus, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "social.atbBonus", ["atb"]))
+      },
+      saves: {
+        psychicResistance: ErrantEarthCharacterSheet._eeAdjustable(wil, stored.saves?.psychicResistance, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "saves.psychicResistance", ["psychic resistance"])),
+        magicResistance: ErrantEarthCharacterSheet._eeAdjustable(anm, stored.saves?.magicResistance, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "saves.magicResistance", ["magic resistance"])),
+        horrorAnima: ErrantEarthCharacterSheet._eeAdjustable(anm, stored.saves?.horrorAnima, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "saves.horrorAnima", ["horror anima", "horror factor"])),
+        horrorWillpower: ErrantEarthCharacterSheet._eeAdjustable(wil, stored.saves?.horrorWillpower, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "saves.horrorWillpower", ["horror willpower", "horror factor"]))
+      }
+    };
+  }
+
   /** Coerce a value that may be an object with numeric keys back into an array. */
   static _toArray(v) {
     if (Array.isArray(v)) return v;
@@ -107,6 +320,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         spd: ""
       }
     };
+
+    ctx.eeDerived = C.eeDerivedData(sys);
 
     const toArr = ErrantEarthCharacterSheet._toArray;
 

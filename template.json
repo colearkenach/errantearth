@@ -8,14 +8,30 @@
       "name": "",
       "trueName": "",
       "eeAttributes": {
-        "anm": { "value": 0 },
-        "brv": { "value": 0 },
-        "com": { "value": 0 },
-        "fin": { "value": 0 },
-        "hrd": { "value": 0 },
-        "pow": { "value": 0 },
-        "spd": { "value": 0 },
-        "wil": { "value": 0 }
+        "anm": {
+          "value": 0
+        },
+        "brv": {
+          "value": 0
+        },
+        "com": {
+          "value": 0
+        },
+        "fin": {
+          "value": 0
+        },
+        "hrd": {
+          "value": 0
+        },
+        "pow": {
+          "value": 0
+        },
+        "spd": {
+          "value": 0
+        },
+        "wil": {
+          "value": 0
+        }
       },
       "eeAttributeTier": "Mortal",
       "eeCombat": {
@@ -23,8 +39,13 @@
         "momentum": 0,
         "reactions": 0
       },
-      "magic":   { "heat": 0, "burnout": 0 },
-      "psychic": { "heat": 0 },
+      "magic": {
+        "heat": 0,
+        "burnout": 0
+      },
+      "psychic": {
+        "heat": 0
+      },
       "backgrounds": [],
       "occupations": [],
       "species": {
@@ -398,7 +419,166 @@
       },
       "equipment": "",
       "augments": "",
-      "notes": ""
+      "notes": "",
+      "eeDerived": {
+        "health": {
+          "endurance": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "health": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "scars": {
+            "value": 0,
+            "max": 5
+          }
+        },
+        "defense": {
+          "size": "Average",
+          "nsr": {
+            "base": 4,
+            "bonus": 0,
+            "override": null,
+            "total": 4
+          },
+          "msr": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "armorRating": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          }
+        },
+        "resources": {
+          "esp": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "mp": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "glimmer": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0,
+            "description": "None / Flickering"
+          }
+        },
+        "combat": {
+          "strength": {
+            "rating": 0,
+            "sdBonus": 0,
+            "mdCapable": false,
+            "meleeToHit": 0
+          },
+          "actions": {
+            "base": 1,
+            "bonus": 0,
+            "override": null,
+            "total": 1
+          },
+          "momentum": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "reactions": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "initiative": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          }
+        },
+        "movement": {
+          "reaction": {
+            "rating": 0,
+            "initiativeBonus": 0,
+            "pace": 1
+          },
+          "pace": {
+            "base": 1,
+            "bonus": 0,
+            "override": null,
+            "total": 1
+          },
+          "liftCarryJump": {
+            "light": 0,
+            "medium": 0,
+            "heavy": 0,
+            "overhead": 0,
+            "offGround": 0,
+            "push": 0,
+            "verticalStand": 0,
+            "verticalRun": 0,
+            "horizontalStand": 0,
+            "horizontalRun": 0
+          }
+        },
+        "social": {
+          "demeanor": {
+            "rating": 0,
+            "bonus": 0,
+            "contacts": 1,
+            "attitude": "Repulsed, Horrified, Hated"
+          },
+          "atbBonus": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          }
+        },
+        "saves": {
+          "psychicResistance": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "magicResistance": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "horrorAnima": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "horrorWillpower": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          }
+        }
+      }
     }
   },
   "Item": {
@@ -451,12 +631,30 @@
       "ar": 0,
       "isMDC": false,
       "locations": {
-        "mainBody": { "current": 0, "max": 0 },
-        "head":     { "current": 0, "max": 0 },
-        "leftArm":  { "current": 0, "max": 0 },
-        "rightArm": { "current": 0, "max": 0 },
-        "leftLeg":  { "current": 0, "max": 0 },
-        "rightLeg": { "current": 0, "max": 0 }
+        "mainBody": {
+          "current": 0,
+          "max": 0
+        },
+        "head": {
+          "current": 0,
+          "max": 0
+        },
+        "leftArm": {
+          "current": 0,
+          "max": 0
+        },
+        "rightArm": {
+          "current": 0,
+          "max": 0
+        },
+        "leftLeg": {
+          "current": 0,
+          "max": 0
+        },
+        "rightLeg": {
+          "current": 0,
+          "max": 0
+        }
       },
       "weight": "",
       "cost": "",
@@ -468,12 +666,30 @@
       "ar": 0,
       "isMDC": true,
       "locations": {
-        "mainBody": { "current": 0, "max": 0 },
-        "head":     { "current": 0, "max": 0 },
-        "leftArm":  { "current": 0, "max": 0 },
-        "rightArm": { "current": 0, "max": 0 },
-        "leftLeg":  { "current": 0, "max": 0 },
-        "rightLeg": { "current": 0, "max": 0 }
+        "mainBody": {
+          "current": 0,
+          "max": 0
+        },
+        "head": {
+          "current": 0,
+          "max": 0
+        },
+        "leftArm": {
+          "current": 0,
+          "max": 0
+        },
+        "rightArm": {
+          "current": 0,
+          "max": 0
+        },
+        "leftLeg": {
+          "current": 0,
+          "max": 0
+        },
+        "rightLeg": {
+          "current": 0,
+          "max": 0
+        }
       },
       "speed": "",
       "weight": "",
@@ -512,12 +728,30 @@
         "ar": 0,
         "sensorBonus": "",
         "pilotComp": "",
-        "mainBody": { "current": 0, "max": 0 },
-        "head":     { "current": 0, "max": 0 },
-        "leftArm":  { "current": 0, "max": 0 },
-        "rightArm": { "current": 0, "max": 0 },
-        "leftLeg":  { "current": 0, "max": 0 },
-        "rightLeg": { "current": 0, "max": 0 },
+        "mainBody": {
+          "current": 0,
+          "max": 0
+        },
+        "head": {
+          "current": 0,
+          "max": 0
+        },
+        "leftArm": {
+          "current": 0,
+          "max": 0
+        },
+        "rightArm": {
+          "current": 0,
+          "max": 0
+        },
+        "leftLeg": {
+          "current": 0,
+          "max": 0
+        },
+        "rightLeg": {
+          "current": 0,
+          "max": 0
+        },
         "extras": []
       },
       "weapons": [],
@@ -531,17 +765,17 @@
       "languages": "",
       "isMDC": false,
       "attributeBonuses": {
-        "iq":  "",
-        "me":  "",
-        "ma":  "",
-        "ps":  "",
-        "pp":  "",
-        "pe":  "",
-        "pb":  "",
+        "iq": "",
+        "me": "",
+        "ma": "",
+        "ps": "",
+        "pp": "",
+        "pe": "",
+        "pb": "",
         "spd": ""
       },
       "poolBonuses": {
-        "hp":  "",
+        "hp": "",
         "sdc": "",
         "mdc": "",
         "isp": "",
@@ -549,7 +783,7 @@
       },
       "combatBonuses": "",
       "saveBonuses": "",
-      "grantsMagic":    false,
+      "grantsMagic": false,
       "grantsPsionics": false,
       "abilities": []
     },
@@ -562,17 +796,17 @@
       "equipment": "",
       "money": "",
       "attributeBonuses": {
-        "iq":  "",
-        "me":  "",
-        "ma":  "",
-        "ps":  "",
-        "pp":  "",
-        "pe":  "",
-        "pb":  "",
+        "iq": "",
+        "me": "",
+        "ma": "",
+        "ps": "",
+        "pp": "",
+        "pe": "",
+        "pb": "",
         "spd": ""
       },
       "poolBonuses": {
-        "hp":  "",
+        "hp": "",
         "sdc": "",
         "mdc": "",
         "isp": "",
@@ -580,7 +814,7 @@
       },
       "combatBonuses": "",
       "saveBonuses": "",
-      "grantsMagic":    false,
+      "grantsMagic": false,
       "grantsPsionics": false,
       "abilities": []
     },
