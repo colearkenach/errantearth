@@ -1006,3 +1006,51 @@ color: var(--ee-red, #8a1f1f);
 }
 .ee-ee-bgocc .ee-panel { padding: 6px; }
 .ee-ee-bgocc h3 { margin: 0 0 4px; font-size: 13px; }
+/* Active Race/OCC/RCC source summary. */
+.ee-rifts-sources {
+  margin-top: 6px;
+}
+
+.ee-rifts-source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 6px;
+}
+
+.ee-rifts-source-card {
+  border: 1px solid #d4c4c4;
+  background: #fff;
+  padding: 5px;
+}
+
+.ee-rifts-source-card h4 {
+  margin: 0 0 4px;
+  color: var(--ee-red, #8a1f1f);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.ee-rifts-source-line {
+  margin: 3px 0;
+  font-size: 12px;
+}
+
+.ee-chip {
+  display: inline-block;
+  margin: 1px 2px 1px 0;
+  padding: 1px 5px;
+  border: 1px solid #c9b8b8;
+  border-radius: 999px;
+  background: #f7eeee;
+  white-space: nowrap;
+}
+
+.ee-compact-list,
+.ee-warnings {
+  margin: 3px 0 0 16px;
+  padding: 0;
+}
+
+.ee-warnings {
+  color: #8a5a00;
+}
