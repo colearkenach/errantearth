@@ -364,7 +364,16 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const C = ErrantEarthCharacterSheet;
 
     const riftsNumber = value => Number(value ?? 0) || 0;
-    const riftsCombatTotal = (manual, attribute) => ({ manual, attribute, total: manual + attribute });
+    const riftsText = value => value == null ? "" : String(value);
+    const riftsCombatTotal = (manual, attribute, base = 0) => ({ base, manual, attribute, total: base + manual + attribute });
+    const riftsThresholdTotal = (manual, base = "") => {
+      const numericBase = Number(base);
+      const numericManual = Number(manual);
+      if (Number.isFinite(numericBase) && Number.isFinite(numericManual)) {
+        return { base, manual, attribute: "", total: numericBase + numericManual };
+      }
+      return { base, manual: riftsText(manual), attribute: "", total: riftsText(manual) || riftsText(base) };
+    };
     const riftsSaveTotal = (entry, attribute, percent = false) => {
       const manual = riftsNumber(entry?.bonus);
       const total = manual + attribute;
@@ -381,6 +390,51 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const peComaSave = C.peComaSave(pe);
     const peMagicPoison = C.peMagicPoison(pe);
     const charmImpress = C.charmImpress(pb);
+
+    const hthTables = CONFIG.EE?.RIFTS_HTH_TABLES ?? {};
+    const hthType = hthTables[sys.handToHand?.type] ? sys.handToHand.type : "basic";
+    const hthTable = hthTables[hthType] ?? { levels: [] };
+    const hthBase = {
+      attacks: 0, initiative: 0, strike: 0, parry: 0, dodge: 0, damage: 0,
+      pullPunch: 0, roll: 0, critical: "", knockout: ""
+    };
+    const hthNotes = [];
+    for (const entry of hthTable.levels ?? []) {
+      if (Number(entry.level ?? 0) > level) continue;
+      for (const key of Object.keys(hthBase)) {
+        if (entry[key] !== undefined) hthBase[key] = entry[key];
+      }
+      hthNotes.push(...(entry.notes ?? []).map(note => ({ level: entry.level, text: note })));
+    }
+    const hthManual = {
+      attacks: riftsNumber(sys.handToHand?.attacks),
+      initiative: riftsNumber(sys.handToHand?.initiative),
+      damage: riftsNumber(sys.handToHand?.damage),
+      strike: riftsNumber(sys.handToHand?.strike),
+      parry: riftsNumber(sys.handToHand?.parry),
+      dodge: riftsNumber(sys.handToHand?.dodge),
+      pullPunch: riftsNumber(sys.handToHand?.pullPunch ?? sys.handToHand?.pullRoll),
+      roll: riftsNumber(sys.handToHand?.roll ?? sys.handToHand?.pullRoll),
+      critical: sys.handToHand?.critical ?? 0,
+      knockout: sys.handToHand?.knockout ?? 0
+    };
+    const handToHand = {
+      type: hthType,
+      label: hthTable.label ?? CONFIG.EE?.HTH_TYPES?.[hthType] ?? hthType,
+      level,
+      base: hthBase,
+      notes: hthNotes,
+      attacks: riftsCombatTotal(hthManual.attacks, 0, riftsNumber(hthBase.attacks)),
+      initiative: riftsCombatTotal(hthManual.initiative, 0, riftsNumber(hthBase.initiative)),
+      damage: riftsCombatTotal(hthManual.damage, psDamage, riftsNumber(hthBase.damage)),
+      strike: riftsCombatTotal(hthManual.strike, ppStrike, riftsNumber(hthBase.strike)),
+      parry: riftsCombatTotal(hthManual.parry, ppParryDodge, riftsNumber(hthBase.parry)),
+      dodge: riftsCombatTotal(hthManual.dodge, ppParryDodge, riftsNumber(hthBase.dodge)),
+      pullPunch: riftsCombatTotal(hthManual.pullPunch, 0, riftsNumber(hthBase.pullPunch)),
+      roll: riftsCombatTotal(hthManual.roll, 0, riftsNumber(hthBase.roll)),
+      critical: riftsThresholdTotal(hthManual.critical, hthBase.critical),
+      knockout: riftsThresholdTotal(hthManual.knockout, hthBase.knockout)
+    };
 
     ctx.riftsDerived = {
       iqSkillBonus,
@@ -403,11 +457,12 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         pb:  charmImpress ? `${charmImpress}% charm/impress` : "",
         spd: ""
       },
+      handToHand,
       combat: {
-        damage: riftsCombatTotal(riftsNumber(sys.handToHand?.damage), psDamage),
-        strike: riftsCombatTotal(riftsNumber(sys.handToHand?.strike), ppStrike),
-        parry: riftsCombatTotal(riftsNumber(sys.handToHand?.parry), ppParryDodge),
-        dodge: riftsCombatTotal(riftsNumber(sys.handToHand?.dodge), ppParryDodge)
+        damage: handToHand.damage,
+        strike: handToHand.strike,
+        parry: handToHand.parry,
+        dodge: handToHand.dodge
       },
       saves: {
         psionics: riftsSaveTotal(sys.savingThrows?.psionics, psionicSave),
