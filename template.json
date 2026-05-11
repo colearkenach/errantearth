@@ -150,6 +150,9 @@
       "skills": {
         "list": []
       },
+      "eeSkills": {
+        "list": []
+      },
       "handToHand": {
         "type": "basic",
         "attacks": 0,
