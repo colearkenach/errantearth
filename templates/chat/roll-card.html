@@ -11,6 +11,17 @@
   <div class="ee-roll-card__body">
     {{#if subtitle}}<div class="ee-roll-card__subtitle">{{subtitle}}</div>{{/if}}
 
+    {{#if tier}}
+    <dl class="ee-roll-card__details">
+      <div><dt>Tier</dt><dd>{{tier}}</dd></div>
+      {{#if difficulty}}<div><dt>Difficulty</dt><dd>{{difficulty}}</dd></div>{{/if}}
+      {{#if tags}}<div><dt>Tags</dt><dd>{{tags}}</dd></div>{{/if}}
+      {{#if damageScale}}<div><dt>Damage Scale</dt><dd>{{damageScale}}</dd></div>{{/if}}
+      {{#if spendableResources}}<div><dt>Spend</dt><dd>{{spendableResources}}</dd></div>{{/if}}
+      {{#if successDegree}}<div><dt>Degree</dt><dd>{{successDegree}}</dd></div>{{/if}}
+    </dl>
+    {{/if}}
+
     <div class="ee-roll-card__formula">
       <span class="ee-roll-card__formula-text">{{formula}}</span>
       <span class="ee-roll-card__total {{outcomeClass}}">{{total}}</span>
