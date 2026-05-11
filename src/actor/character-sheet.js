@@ -117,6 +117,15 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   static _EE_NSR_BY_SIZE = { tiny: 6, small: 5, average: 4, big: 3, huge: 2, massive: 1 };
 
+  static _EE_TIER_MODS = {
+    Mortal:       { actions: 1, momentum: 0, reactions: 0, health: 0, endurance: 0, damageScale: "S" },
+    Augmented:    { actions: 1, momentum: 1, reactions: 1, health: 2, endurance: 5, damageScale: "S" },
+    Mechanical:   { actions: 2, momentum: 1, reactions: 1, health: 4, endurance: 10, damageScale: "M" },
+    Supernatural: { actions: 2, momentum: 2, reactions: 2, health: 6, endurance: 15, damageScale: "M" },
+    Exalted:      { actions: 3, momentum: 3, reactions: 3, health: 8, endurance: 20, damageScale: "G" },
+    Divine:       { actions: 4, momentum: 4, reactions: 4, health: 10, endurance: 25, damageScale: "U" }
+  };
+
   static _eeBand(table, value) {
     const numeric = Number(value ?? 0);
     return table.find(row => numeric >= row.min && numeric <= row.max) ?? table[0];
@@ -153,11 +162,13 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return Number(value ?? 0);
   }
 
-  static _eeCollectBonuses(sys, path, textKeys = []) {
+  static _eeCollectBonuses(sys, path, textKeys = [], extraSources = []) {
     const sources = [
       ...ErrantEarthCharacterSheet._toArray(sys.backgrounds),
       ...ErrantEarthCharacterSheet._toArray(sys.occupations),
-      sys.species
+      sys.species,
+      { notes: sys.equipment },
+      ...extraSources
     ].filter(Boolean);
     return sources.reduce((total, source) => {
       return total + ErrantEarthCharacterSheet._eeSourceBonus(source.eeDerived, path)
@@ -172,7 +183,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return fromEsp + fromMp;
   }
 
-  static eeDerivedData(sys = {}) {
+  static eeDerivedData(sys = {}, equipmentSources = []) {
     const attrs = sys.eeAttributes ?? {};
     const attr = key => Number(attrs[key]?.value ?? 0);
     const anm = attr("anm");
@@ -184,6 +195,10 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const wil = attr("wil");
     const level = Math.max(1, Number(sys.level ?? 1));
     const stored = sys.eeDerived ?? {};
+    const combatStored = sys.eeCombat ?? {};
+    const tier = sys.eeAttributeTier ?? "Mortal";
+    const tierMods = ErrantEarthCharacterSheet._EE_TIER_MODS[tier] ?? ErrantEarthCharacterSheet._EE_TIER_MODS.Mortal;
+    const bonus = (path, textKeys = []) => ErrantEarthCharacterSheet._eeCollectBonuses(sys, path, textKeys, equipmentSources);
 
     const strengthRating = ErrantEarthCharacterSheet._eeAvg(hrd, pow);
     const strength = { rating: strengthRating, ...ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_STRENGTH_TABLE, strengthRating) };
@@ -200,49 +215,75 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     delete reaction.min;
     delete reaction.max;
 
-    const size = String(stored.defense?.size ?? sys.species?.size ?? "Average");
+    const size = String(stored.defense?.size ?? combatStored.defenses?.size ?? sys.species?.size ?? "Average");
     const nsrBase = ErrantEarthCharacterSheet._EE_NSR_BY_SIZE[size.toLowerCase()] ?? ErrantEarthCharacterSheet._EE_NSR_BY_SIZE.average;
-    const enduranceBase = 7 + hrd + Math.ceil(2.5 * level);
-    const healthBase = hrd;
+    const enduranceBase = 7 + hrd + Math.ceil(2.5 * level) + tierMods.endurance;
+    const healthBase = hrd + tierMods.health;
     const espBase = anm * 2;
     const mpBase = wil * 2;
     const glimmerBase = ErrantEarthCharacterSheet._eeGlimmer(espBase, mpBase);
     const glimmerBand = ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_GLIMMER_TABLE, glimmerBase);
     const carryBase = (pow + hrd) / 2;
 
-    const actionsBase = Number(sys.eeCombat?.actions ?? 0) || 1;
-    const actions = ErrantEarthCharacterSheet._eeAdjustable(actionsBase, stored.combat?.actions, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "combat.actions", ["actions?", "combat actions?"]));
-    const momentum = ErrantEarthCharacterSheet._eeAdjustable(Number(sys.eeCombat?.momentum ?? 0), stored.combat?.momentum, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "combat.momentum", ["momentum"]));
-    const reactions = ErrantEarthCharacterSheet._eeAdjustable(Number(sys.eeCombat?.reactions ?? 0), stored.combat?.reactions, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "combat.reactions", ["reactions?"]));
+    const actionsBase = Number(combatStored.actions ?? tierMods.actions) || tierMods.actions || 1;
+    const momentumBase = Number(combatStored.momentum ?? tierMods.momentum);
+    const reactionsBase = Number(combatStored.reactions ?? tierMods.reactions);
+    const initiativeBase = reaction.initiativeBonus + Number(combatStored.initiative ?? 0);
+    const meleeToHitBase = strength.meleeToHit + Number(combatStored.meleeToHit ?? 0);
+    const rangedToHitBase = ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_ATB_TABLE, fin).bonus + Number(combatStored.rangedToHit ?? 0);
+    const damageBonusBase = strength.sdBonus + Number(combatStored.damageBonus ?? 0);
+    const actions = ErrantEarthCharacterSheet._eeAdjustable(actionsBase, stored.combat?.actions, bonus("combat.actions", ["actions?", "combat actions?"]));
+    const momentum = ErrantEarthCharacterSheet._eeAdjustable(momentumBase, stored.combat?.momentum, bonus("combat.momentum", ["momentum"]));
+    const reactions = ErrantEarthCharacterSheet._eeAdjustable(reactionsBase, stored.combat?.reactions, bonus("combat.reactions", ["reactions?"]));
+    const thresholds = combatStored.health?.thresholds ?? {};
+    const armorBlock = combatStored.armor ?? {};
+    const equipmentArmorRating = equipmentSources.reduce((max, source) => Math.max(max, Number(source?.ar ?? source?.system?.ar ?? 0)), 0);
+    const armorRatingBase = Math.max(Number(combatStored.defenses?.armorRating ?? combatStored.armor?.rating ?? 0), equipmentArmorRating);
+    const soakSource = key => Number(combatStored.soak?.[key] ?? 0) + Number(armorBlock.soak ?? 0);
+    const resistanceSource = key => Number(combatStored.resistance?.[key] ?? 0) + Number(armorBlock.resistance ?? 0);
 
     return {
-      tier: sys.eeAttributeTier ?? "Mortal",
+      tier,
       health: {
-        endurance: ErrantEarthCharacterSheet._eeAdjustable(enduranceBase, stored.health?.endurance, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "health.endurance", ["endurance"])),
-        health: ErrantEarthCharacterSheet._eeAdjustable(healthBase, stored.health?.health, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "health.health", ["health"])),
-        scars: { value: Number(stored.health?.scars?.value ?? 0), max: Number(stored.health?.scars?.max ?? 5) }
+        endurance: ErrantEarthCharacterSheet._eeAdjustable(enduranceBase, stored.health?.endurance, bonus("health.endurance", ["endurance"])),
+        health: ErrantEarthCharacterSheet._eeAdjustable(healthBase, stored.health?.health, bonus("health.health", ["health"])),
+        scars: { value: Number(stored.health?.scars?.value ?? combatStored.health?.scars?.value ?? 0), max: Number(stored.health?.scars?.max ?? combatStored.health?.scars?.max ?? 5) },
+        thresholds: {
+          wounded: Number(thresholds.wounded ?? Math.ceil(healthBase * 0.75)),
+          bloodied: Number(thresholds.bloodied ?? Math.ceil(healthBase * 0.5)),
+          critical: Number(thresholds.critical ?? Math.ceil(healthBase * 0.25)),
+          death: Number(thresholds.death ?? -healthBase)
+        }
       },
       defense: {
         size,
-        nsr: ErrantEarthCharacterSheet._eeAdjustable(nsrBase, stored.defense?.nsr, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "defense.nsr", ["nsr", "survival rating"])),
-        msr: ErrantEarthCharacterSheet._eeAdjustable(0, stored.defense?.msr, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "defense.msr", ["msr"])),
-        armorRating: ErrantEarthCharacterSheet._eeAdjustable(0, stored.defense?.armorRating, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "defense.armorRating", ["armor rating", "ar"]))
+        nsr: ErrantEarthCharacterSheet._eeAdjustable(Number(combatStored.defenses?.nsr ?? nsrBase), stored.defense?.nsr, bonus("defense.nsr", ["nsr", "survival rating"])),
+        msr: ErrantEarthCharacterSheet._eeAdjustable(Number(combatStored.defenses?.msr ?? 0), stored.defense?.msr, bonus("defense.msr", ["msr"])),
+        armorRating: ErrantEarthCharacterSheet._eeAdjustable(armorRatingBase, stored.defense?.armorRating, bonus("defense.armorRating", ["armor rating", "ar"]))
       },
       resources: {
-        esp: ErrantEarthCharacterSheet._eeAdjustable(espBase, stored.resources?.esp, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "resources.esp", ["esp", "extra sensory power"])),
-        mp: ErrantEarthCharacterSheet._eeAdjustable(mpBase, stored.resources?.mp, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "resources.mp", ["mp", "magic power"])),
-        glimmer: { ...ErrantEarthCharacterSheet._eeAdjustable(glimmerBase, stored.resources?.glimmer, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "resources.glimmer", ["glimmer"])), description: glimmerBand.description, detectionBonus: glimmerBand.bonus, detectionPercent: glimmerBand.percent }
+        esp: ErrantEarthCharacterSheet._eeAdjustable(espBase, stored.resources?.esp, bonus("resources.esp", ["esp", "extra sensory power"])),
+        mp: ErrantEarthCharacterSheet._eeAdjustable(mpBase, stored.resources?.mp, bonus("resources.mp", ["mp", "magic power"])),
+        glimmer: { ...ErrantEarthCharacterSheet._eeAdjustable(glimmerBase, stored.resources?.glimmer, bonus("resources.glimmer", ["glimmer"])), description: glimmerBand.description, detectionBonus: glimmerBand.bonus, detectionPercent: glimmerBand.percent }
       },
       combat: {
         strength,
         actions,
         momentum,
         reactions,
-        initiative: ErrantEarthCharacterSheet._eeAdjustable(reaction.initiativeBonus, stored.combat?.initiative, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "combat.initiative", ["initiative"]))
+        initiative: ErrantEarthCharacterSheet._eeAdjustable(initiativeBase, stored.combat?.initiative, bonus("combat.initiative", ["initiative"])),
+        meleeToHit: ErrantEarthCharacterSheet._eeAdjustable(meleeToHitBase, stored.combat?.meleeToHit, bonus("combat.meleeToHit", ["melee to-hit", "melee to hit", "melee attack"])),
+        rangedToHit: ErrantEarthCharacterSheet._eeAdjustable(rangedToHitBase, stored.combat?.rangedToHit, bonus("combat.rangedToHit", ["ranged to-hit", "ranged to hit", "ranged attack"])),
+        damageBonus: ErrantEarthCharacterSheet._eeAdjustable(damageBonusBase, stored.combat?.damageBonus, bonus("combat.damageBonus", ["damage bonus", "damage"])),
+        damageScale: combatStored.damageScale || tierMods.damageScale
       },
       movement: {
         reaction,
-        pace: ErrantEarthCharacterSheet._eeAdjustable(reaction.pace, stored.movement?.pace, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "movement.pace", ["pace", "movement"])),
+        pace: ErrantEarthCharacterSheet._eeAdjustable(Number(combatStored.movement?.pace ?? reaction.pace), stored.movement?.pace, bonus("movement.pace", ["pace", "movement"])),
+        run: ErrantEarthCharacterSheet._eeAdjustable(Number(combatStored.movement?.run ?? reaction.pace * 2), stored.movement?.run, bonus("movement.run", ["run"])),
+        sprint: ErrantEarthCharacterSheet._eeAdjustable(Number(combatStored.movement?.sprint ?? reaction.pace * 4), stored.movement?.sprint, bonus("movement.sprint", ["sprint"])),
+        climb: ErrantEarthCharacterSheet._eeAdjustable(Number(combatStored.movement?.climb ?? reaction.pace), stored.movement?.climb, bonus("movement.climb", ["climb"])),
+        swim: ErrantEarthCharacterSheet._eeAdjustable(Number(combatStored.movement?.swim ?? reaction.pace), stored.movement?.swim, bonus("movement.swim", ["swim"])),
         liftCarryJump: {
           light: Math.ceil(carryBase * 5),
           medium: Math.ceil(carryBase * 10),
@@ -256,15 +297,37 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
           horizontalRun: Math.max(0, pow - 2)
         }
       },
+      armor: {
+        name: armorBlock.name || "",
+        rating: ErrantEarthCharacterSheet._eeAdjustable(armorRatingBase, stored.armor?.rating, bonus("armor.rating", ["armor rating", "ar"])),
+        soak: ErrantEarthCharacterSheet._eeAdjustable(Number(armorBlock.soak ?? 0), stored.armor?.soak, bonus("armor.soak", ["soak"])),
+        resistance: ErrantEarthCharacterSheet._eeAdjustable(Number(armorBlock.resistance ?? 0), stored.armor?.resistance, bonus("armor.resistance", ["resistance"])),
+        damageScale: armorBlock.damageScale || combatStored.damageScale || tierMods.damageScale,
+        notes: armorBlock.notes || ""
+      },
+      soak: {
+        physical: ErrantEarthCharacterSheet._eeAdjustable(soakSource("physical"), stored.soak?.physical, bonus("soak.physical", ["physical soak"])),
+        energy: ErrantEarthCharacterSheet._eeAdjustable(soakSource("energy"), stored.soak?.energy, bonus("soak.energy", ["energy soak"])),
+        magic: ErrantEarthCharacterSheet._eeAdjustable(soakSource("magic"), stored.soak?.magic, bonus("soak.magic", ["magic soak"])),
+        psychic: ErrantEarthCharacterSheet._eeAdjustable(soakSource("psychic"), stored.soak?.psychic, bonus("soak.psychic", ["psychic soak"]))
+      },
+      resistance: {
+        physical: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("physical"), stored.resistance?.physical, bonus("resistance.physical", ["physical resistance"])),
+        energy: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("energy"), stored.resistance?.energy, bonus("resistance.energy", ["energy resistance"])),
+        magic: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("magic"), stored.resistance?.magic, bonus("resistance.magic", ["magic resistance"])),
+        psychic: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("psychic"), stored.resistance?.psychic, bonus("resistance.psychic", ["psychic resistance"])),
+        toxins: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("toxins"), stored.resistance?.toxins, bonus("resistance.toxins", ["toxin resistance", "poison resistance"])),
+        horror: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("horror"), stored.resistance?.horror, bonus("resistance.horror", ["horror resistance"]))
+      },
       social: {
         demeanor,
-        atbBonus: ErrantEarthCharacterSheet._eeAdjustable(ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_ATB_TABLE, anm).bonus, stored.social?.atbBonus, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "social.atbBonus", ["atb"]))
+        atbBonus: ErrantEarthCharacterSheet._eeAdjustable(ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_ATB_TABLE, anm).bonus, stored.social?.atbBonus, bonus("social.atbBonus", ["atb"]))
       },
       saves: {
-        psychicResistance: ErrantEarthCharacterSheet._eeAdjustable(wil, stored.saves?.psychicResistance, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "saves.psychicResistance", ["psychic resistance"])),
-        magicResistance: ErrantEarthCharacterSheet._eeAdjustable(anm, stored.saves?.magicResistance, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "saves.magicResistance", ["magic resistance"])),
-        horrorAnima: ErrantEarthCharacterSheet._eeAdjustable(anm, stored.saves?.horrorAnima, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "saves.horrorAnima", ["horror anima", "horror factor"])),
-        horrorWillpower: ErrantEarthCharacterSheet._eeAdjustable(wil, stored.saves?.horrorWillpower, ErrantEarthCharacterSheet._eeCollectBonuses(sys, "saves.horrorWillpower", ["horror willpower", "horror factor"]))
+        psychicResistance: ErrantEarthCharacterSheet._eeAdjustable(wil, stored.saves?.psychicResistance, bonus("saves.psychicResistance", ["psychic resistance"])),
+        magicResistance: ErrantEarthCharacterSheet._eeAdjustable(anm, stored.saves?.magicResistance, bonus("saves.magicResistance", ["magic resistance"])),
+        horrorAnima: ErrantEarthCharacterSheet._eeAdjustable(anm, stored.saves?.horrorAnima, bonus("saves.horrorAnima", ["horror anima", "horror factor"])),
+        horrorWillpower: ErrantEarthCharacterSheet._eeAdjustable(wil, stored.saves?.horrorWillpower, bonus("saves.horrorWillpower", ["horror willpower", "horror factor"]))
       }
     };
   }
@@ -320,8 +383,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         spd: ""
       }
     };
-
-    ctx.eeDerived = C.eeDerivedData(sys);
 
     const toArr = ErrantEarthCharacterSheet._toArray;
 
@@ -401,6 +462,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       itemBuckets[type].push(item);
     }
     ctx.itemsByType = itemBuckets;
+    const equipmentSources = this.actor.items.map(item => ({ ...item.system, name: item.name, type: item.type, system: item.system }));
+    ctx.eeDerived = C.eeDerivedData(sys, equipmentSources);
     ctx.weaponItemsModern  = itemBuckets.weapon.filter(i => (i.system?.category ?? "modern") === "modern");
     ctx.weaponItemsAncient = itemBuckets.weapon.filter(i => i.system?.category === "ancient");
 
@@ -661,6 +724,38 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
           card.subtitle = `${label} ${target} (d20 roll-under)`;
           card.outcome = success ? "Success" : "Failure";
           card.outcomeClass = success ? "success" : "failure";
+          break;
+        }
+        case "eeInitiative": {
+          const bonus = PIS(el.dataset.bonus);
+          const sign = bonus >= 0 ? "+" : "";
+          roll = await new Roll(`1d20${sign}${bonus}`).evaluate();
+          card.subtitle = bonus ? `Errant Earth initiative: 1d20 ${sign} ${Math.abs(bonus)}` : "Errant Earth initiative: 1d20";
+          break;
+        }
+        case "eeAttack": {
+          const bonus = PIS(el.dataset.bonus);
+          const sign = bonus >= 0 ? "+" : "";
+          roll = await new Roll(`1d20${sign}${bonus}`).evaluate();
+          card.subtitle = bonus ? `Errant Earth attack: 1d20 ${sign} ${Math.abs(bonus)}` : "Errant Earth attack: 1d20";
+          break;
+        }
+        case "eeDefense": {
+          const target = Number(el.dataset.target ?? 0);
+          roll = await new Roll("1d20").evaluate();
+          card.subtitle = target ? `Errant Earth defense rating ${target}` : "Errant Earth defense rating";
+          if (target) {
+            const success = roll.total >= target;
+            card.outcome = success ? "Holds" : "Breached";
+            card.outcomeClass = success ? "success" : "failure";
+          }
+          break;
+        }
+        case "eeResistance": {
+          const bonus = PIS(el.dataset.bonus);
+          const sign = bonus >= 0 ? "+" : "";
+          roll = await new Roll(`1d20${sign}${bonus}`).evaluate();
+          card.subtitle = bonus ? `Errant Earth resistance: 1d20 ${sign} ${Math.abs(bonus)}` : "Errant Earth resistance: 1d20";
           break;
         }
         case "d20": {

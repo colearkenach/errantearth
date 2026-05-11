@@ -35,9 +35,68 @@
       },
       "eeAttributeTier": "Mortal",
       "eeCombat": {
-        "actions": 0,
+        "initiative": 0,
+        "actions": 1,
         "momentum": 0,
-        "reactions": 0
+        "reactions": 0,
+        "meleeToHit": 0,
+        "rangedToHit": 0,
+        "damageBonus": 0,
+        "damageScale": "S",
+        "defenses": {
+          "size": "Average",
+          "nsr": 4,
+          "msr": 0,
+          "armorRating": 0
+        },
+        "health": {
+          "endurance": 0,
+          "health": 0,
+          "scars": {
+            "value": 0,
+            "max": 5
+          },
+          "thresholds": {
+            "wounded": 0,
+            "bloodied": 0,
+            "critical": 0,
+            "death": 0
+          }
+        },
+        "movement": {
+          "pace": 1,
+          "run": 0,
+          "sprint": 0,
+          "climb": 0,
+          "swim": 0,
+          "jumpVerticalStand": 0,
+          "jumpVerticalRun": 0,
+          "jumpHorizontalStand": 0,
+          "jumpHorizontalRun": 0
+        },
+        "armor": {
+          "name": "",
+          "rating": 0,
+          "soak": 0,
+          "resistance": 0,
+          "damageScale": "S",
+          "notes": ""
+        },
+        "soak": {
+          "physical": 0,
+          "energy": 0,
+          "magic": 0,
+          "psychic": 0
+        },
+        "resistance": {
+          "physical": 0,
+          "energy": 0,
+          "magic": 0,
+          "psychic": 0,
+          "toxins": 0,
+          "horror": 0
+        },
+        "notes": ""
       },
       "magic": {
         "heat": 0,
@@ -437,6 +496,12 @@
           "scars": {
             "value": 0,
             "max": 5
+          },
+          "thresholds": {
+            "wounded": 0,
+            "bloodied": 0,
+            "critical": 0,
+            "death": 0
           }
         },
         "defense": {
@@ -511,7 +576,26 @@
             "bonus": 0,
             "override": null,
             "total": 0
-          }
+          },
+          "meleeToHit": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "rangedToHit": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "damageBonus": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "damageScale": "S"
         },
         "movement": {
           "reaction": {
@@ -536,6 +620,30 @@
             "verticalRun": 0,
             "horizontalStand": 0,
             "horizontalRun": 0
+          },
+          "run": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "sprint": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "climb": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "swim": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
           }
         },
         "social": {
@@ -572,6 +680,93 @@
             "total": 0
           },
           "horrorWillpower": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          }
+        },
+        "armor": {
+          "name": "",
+          "rating": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "soak": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "resistance": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "damageScale": "S",
+          "notes": ""
+        },
+        "soak": {
+          "physical": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "energy": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "magic": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "psychic": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          }
+        },
+        "resistance": {
+          "physical": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "energy": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "magic": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "psychic": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "toxins": {
+            "base": 0,
+            "bonus": 0,
+            "override": null,
+            "total": 0
+          },
+          "horror": {
             "base": 0,
             "bonus": 0,
             "override": null,
@@ -625,7 +820,8 @@
       "parry": "",
       "special": "",
       "notes": "",
-      "isMDC": false
+      "isMDC": false,
+      "damageScale": "S"
     },
     "armor": {
       "ar": 0,
@@ -659,7 +855,10 @@
       "weight": "",
       "cost": "",
       "prowlPenalty": 0,
-      "notes": ""
+      "notes": "",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "S"
     },
     "powerArmor": {
       "description": "",
@@ -694,7 +893,10 @@
       "speed": "",
       "weight": "",
       "cost": "",
-      "notes": ""
+      "notes": "",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "S"
     },
     "vehicle": {
       "description": "",
@@ -822,7 +1024,8 @@
       "description": "",
       "quantity": 1,
       "weight": "",
-      "cost": ""
+      "cost": "",
+      "eeDerived": {}
     }
   }
 }
