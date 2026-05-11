@@ -109,42 +109,42 @@
       <div class="ee-ee-attr">
         <label class="ee-tooltip" data-tooltip="Animus — life force / spiritual presence.">ANM</label>
         <input type="number" name="system.eeAttributes.anm.value" value="{{system.eeAttributes.anm.value}}"/>
-        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.anm.value}}" data-label="ANM" title="Roll ANM (d20 roll-under)"><i class="fas fa-dice-d20"></i></a>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.anm.value}}" data-label="ANM" title="Roll ANM (Errant Earth)"><i class="fas fa-dice-d20"></i></a>
       </div>
       <div class="ee-ee-attr">
         <label class="ee-tooltip" data-tooltip="Bravado — daring, presence under pressure.">BRV</label>
         <input type="number" name="system.eeAttributes.brv.value" value="{{system.eeAttributes.brv.value}}"/>
-        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.brv.value}}" data-label="BRV" title="Roll BRV"><i class="fas fa-dice-d20"></i></a>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.brv.value}}" data-label="BRV" title="Roll BRV"><i class="fas fa-dice-d20"></i></a>
       </div>
       <div class="ee-ee-attr">
         <label class="ee-tooltip" data-tooltip="Composure — mental discipline.">COM</label>
         <input type="number" name="system.eeAttributes.com.value" value="{{system.eeAttributes.com.value}}"/>
-        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.com.value}}" data-label="COM" title="Roll COM"><i class="fas fa-dice-d20"></i></a>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.com.value}}" data-label="COM" title="Roll COM"><i class="fas fa-dice-d20"></i></a>
       </div>
       <div class="ee-ee-attr">
         <label class="ee-tooltip" data-tooltip="Finesse — manual dexterity, agility.">FIN</label>
         <input type="number" name="system.eeAttributes.fin.value" value="{{system.eeAttributes.fin.value}}"/>
-        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.fin.value}}" data-label="FIN" title="Roll FIN"><i class="fas fa-dice-d20"></i></a>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.fin.value}}" data-label="FIN" title="Roll FIN"><i class="fas fa-dice-d20"></i></a>
       </div>
       <div class="ee-ee-attr">
         <label class="ee-tooltip" data-tooltip="Hardiness — physical resilience.">HRD</label>
         <input type="number" name="system.eeAttributes.hrd.value" value="{{system.eeAttributes.hrd.value}}"/>
-        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.hrd.value}}" data-label="HRD" title="Roll HRD"><i class="fas fa-dice-d20"></i></a>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.hrd.value}}" data-label="HRD" title="Roll HRD"><i class="fas fa-dice-d20"></i></a>
       </div>
       <div class="ee-ee-attr">
         <label class="ee-tooltip" data-tooltip="Power — raw strength, force.">POW</label>
         <input type="number" name="system.eeAttributes.pow.value" value="{{system.eeAttributes.pow.value}}"/>
-        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.pow.value}}" data-label="POW" title="Roll POW"><i class="fas fa-dice-d20"></i></a>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.pow.value}}" data-label="POW" title="Roll POW"><i class="fas fa-dice-d20"></i></a>
       </div>
       <div class="ee-ee-attr">
         <label class="ee-tooltip" data-tooltip="Speed — quickness.">SPD</label>
         <input type="number" name="system.eeAttributes.spd.value" value="{{system.eeAttributes.spd.value}}"/>
-        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.spd.value}}" data-label="SPD" title="Roll SPD"><i class="fas fa-dice-d20"></i></a>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.spd.value}}" data-label="SPD" title="Roll SPD"><i class="fas fa-dice-d20"></i></a>
       </div>
       <div class="ee-ee-attr">
         <label class="ee-tooltip" data-tooltip="Will — resolve, mental defense.">WIL</label>
         <input type="number" name="system.eeAttributes.wil.value" value="{{system.eeAttributes.wil.value}}"/>
-        <a class="ee-roll-attr" data-action="roll" data-roll-type="attrCheck" data-target="{{system.eeAttributes.wil.value}}" data-label="WIL" title="Roll WIL"><i class="fas fa-dice-d20"></i></a>
+        <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.wil.value}}" data-label="WIL" title="Roll WIL"><i class="fas fa-dice-d20"></i></a>
       </div>
     </div>
     <section class="ee-ee-derived-panel">
@@ -258,11 +258,11 @@
       <div class="ee-ee-derived-category">
         <h4>Saves</h4>
         <div class="ee-ee-adjust-grid">
-          <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Applied Bonus</div><div class="ee-ee-adjust-head">Manual Bonus</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
-          <label>Psychic Resistance</label><output>{{eeDerived.saves.psychicResistance.base}}</output><output>{{eeDerived.saves.psychicResistance.bonus}}</output><input type="number" name="system.eeDerived.saves.psychicResistance.bonus" value="{{system.eeDerived.saves.psychicResistance.bonus}}"/><input type="number" name="system.eeDerived.saves.psychicResistance.override" value="{{system.eeDerived.saves.psychicResistance.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.psychicResistance.total}}</output>
-          <label>Magic Resistance</label><output>{{eeDerived.saves.magicResistance.base}}</output><output>{{eeDerived.saves.magicResistance.bonus}}</output><input type="number" name="system.eeDerived.saves.magicResistance.bonus" value="{{system.eeDerived.saves.magicResistance.bonus}}"/><input type="number" name="system.eeDerived.saves.magicResistance.override" value="{{system.eeDerived.saves.magicResistance.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.magicResistance.total}}</output>
-          <label>Horror — Anima</label><output>{{eeDerived.saves.horrorAnima.base}}</output><output>{{eeDerived.saves.horrorAnima.bonus}}</output><input type="number" name="system.eeDerived.saves.horrorAnima.bonus" value="{{system.eeDerived.saves.horrorAnima.bonus}}"/><input type="number" name="system.eeDerived.saves.horrorAnima.override" value="{{system.eeDerived.saves.horrorAnima.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.horrorAnima.total}}</output>
-          <label>Horror — Willpower</label><output>{{eeDerived.saves.horrorWillpower.base}}</output><output>{{eeDerived.saves.horrorWillpower.bonus}}</output><input type="number" name="system.eeDerived.saves.horrorWillpower.bonus" value="{{system.eeDerived.saves.horrorWillpower.bonus}}"/><input type="number" name="system.eeDerived.saves.horrorWillpower.override" value="{{system.eeDerived.saves.horrorWillpower.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.horrorWillpower.total}}</output>
+          <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Applied Bonus</div><div class="ee-ee-adjust-head">Manual Bonus</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div><div class="ee-ee-adjust-head">Roll</div>
+          <label>Psychic Resistance</label><output>{{eeDerived.saves.psychicResistance.base}}</output><output>{{eeDerived.saves.psychicResistance.bonus}}</output><input type="number" name="system.eeDerived.saves.psychicResistance.bonus" value="{{system.eeDerived.saves.psychicResistance.bonus}}"/><input type="number" name="system.eeDerived.saves.psychicResistance.override" value="{{system.eeDerived.saves.psychicResistance.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.psychicResistance.total}}</output><a data-action="roll" data-roll-type="eeSave" data-target="{{eeDerived.saves.psychicResistance.total}}" data-tier="{{eeDerived.tier}}" data-label="Psychic Resistance" title="Roll Psychic Resistance"><i class="fas fa-dice-d20"></i></a>
+          <label>Magic Resistance</label><output>{{eeDerived.saves.magicResistance.base}}</output><output>{{eeDerived.saves.magicResistance.bonus}}</output><input type="number" name="system.eeDerived.saves.magicResistance.bonus" value="{{system.eeDerived.saves.magicResistance.bonus}}"/><input type="number" name="system.eeDerived.saves.magicResistance.override" value="{{system.eeDerived.saves.magicResistance.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.magicResistance.total}}</output><a data-action="roll" data-roll-type="eeSave" data-target="{{eeDerived.saves.magicResistance.total}}" data-tier="{{eeDerived.tier}}" data-label="Magic Resistance" title="Roll Magic Resistance"><i class="fas fa-dice-d20"></i></a>
+          <label>Horror — Anima</label><output>{{eeDerived.saves.horrorAnima.base}}</output><output>{{eeDerived.saves.horrorAnima.bonus}}</output><input type="number" name="system.eeDerived.saves.horrorAnima.bonus" value="{{system.eeDerived.saves.horrorAnima.bonus}}"/><input type="number" name="system.eeDerived.saves.horrorAnima.override" value="{{system.eeDerived.saves.horrorAnima.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.horrorAnima.total}}</output><a data-action="roll" data-roll-type="eeSave" data-target="{{eeDerived.saves.horrorAnima.total}}" data-tier="{{eeDerived.tier}}" data-label="Horror — Anima" title="Roll Horror — Anima"><i class="fas fa-dice-d20"></i></a>
+          <label>Horror — Willpower</label><output>{{eeDerived.saves.horrorWillpower.base}}</output><output>{{eeDerived.saves.horrorWillpower.bonus}}</output><input type="number" name="system.eeDerived.saves.horrorWillpower.bonus" value="{{system.eeDerived.saves.horrorWillpower.bonus}}"/><input type="number" name="system.eeDerived.saves.horrorWillpower.override" value="{{system.eeDerived.saves.horrorWillpower.override}}" placeholder="Auto"/><output class="ee-ee-derived-total">{{eeDerived.saves.horrorWillpower.total}}</output><a data-action="roll" data-roll-type="eeSave" data-target="{{eeDerived.saves.horrorWillpower.total}}" data-tier="{{eeDerived.tier}}" data-label="Horror — Willpower" title="Roll Horror — Willpower"><i class="fas fa-dice-d20"></i></a>
         </div>
       </div>
     </section>
@@ -421,7 +421,11 @@
               <td class="ee-total">{{total}}</td>
               <td><select name="system.skills.list.{{_index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category}}</select></td>
               <td class="ee-actions">
+                {{#if ../isEE}}
+                <a data-action="roll" data-roll-type="eeSkill" data-target="{{total}}" data-tags="{{tags}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth skill"><i class="fas fa-dice-d20"></i></a>
+                {{else}}
                 <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
+                {{/if}}
                 <a data-action="delete-row" data-path="skills.list" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
               </td>
             </tr>
@@ -584,13 +588,14 @@
         <div class="ee-panel ee-weapons">
           <h3>Modern Weapons</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th>Roll</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th>Roll</th><th></th></tr></thead>
             <tbody>
               {{#each system.weapons.modern}}
               <tr>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.name"    value="{{name}}"/></td>
                 <td><select name="system.weapons.modern.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.damage"  value="{{damage}}"/></td>
+                <td><select name="system.weapons.modern.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.ammo"    value="{{ammo}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.payload" value="{{payload}}"/></td>
                 <td><input type="text" name="system.weapons.modern.{{@index}}.strike"  value="{{strike}}"/></td>
@@ -599,7 +604,7 @@
                 <td><input type="text" name="system.weapons.modern.{{@index}}.special" value="{{special}}"/></td>
                 <td class="ee-actions">
                   <a data-action="roll" data-roll-type="d20"    data-bonus="{{strike}}"  data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
-                  <a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}"        title="Roll Damage"><i class="fas fa-burst"></i></a>
+                  {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
                 </td>
                 <td><a data-action="delete-row" data-path="weapons.modern" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
@@ -611,19 +616,20 @@
           {{#if weaponItemsModern.length}}
           <h4>Modern Weapon Items</h4>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Range</th><th>Rate</th><th>Roll</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Range</th><th>Rate</th><th>Roll</th><th></th></tr></thead>
             <tbody>
               {{#each weaponItemsModern}}
               <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
                 <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
                 <td>{{lookup ../config.DAMAGE_TYPES system.damageType}}</td>
                 <td>{{system.damage}}</td>
+                <td>{{lookup ../config.EE_DAMAGE_SCALES system.damageScale}}</td>
                 <td>{{system.ammo}}</td>
                 <td>{{system.range}}</td>
                 <td>{{system.rate}}</td>
                 <td class="ee-actions">
                   <a data-action="roll" data-roll-type="d20"    data-bonus="{{system.strike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
-                  <a data-action="roll" data-roll-type="damage" data-formula="{{system.damage}}" data-label="{{name}}"      title="Roll Damage"><i class="fas fa-burst"></i></a>
+                  {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{system.damage}}" data-scale="{{system.damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{system.damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
                 </td>
                 <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
               </tr>
@@ -635,13 +641,14 @@
 
           <h3>Ancient Weapons</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th>Roll</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th>Roll</th><th></th></tr></thead>
             <tbody>
               {{#each system.weapons.ancient}}
               <tr>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.name"    value="{{name}}"/></td>
                 <td><select name="system.weapons.ancient.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.damage"  value="{{damage}}"/></td>
+                <td><select name="system.weapons.ancient.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></td>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.ammo"    value="{{ammo}}"/></td>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.strike"  value="{{strike}}"/></td>
                 <td><input type="text" name="system.weapons.ancient.{{@index}}.parry"   value="{{parry}}"/></td>
@@ -649,7 +656,7 @@
                 <td class="ee-actions">
                   <a data-action="roll" data-roll-type="d20"    data-bonus="{{strike}}"  data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
                   <a data-action="roll" data-roll-type="d20"    data-bonus="{{parry}}"   data-label="{{name}} Parry"  title="Roll Parry"><i class="fas fa-shield-alt"></i></a>
-                  <a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}"        title="Roll Damage"><i class="fas fa-burst"></i></a>
+                  {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
                 </td>
                 <td><a data-action="delete-row" data-path="weapons.ancient" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
@@ -661,19 +668,20 @@
           {{#if weaponItemsAncient.length}}
           <h4>Ancient Weapon Items</h4>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Strike</th><th>Parry</th><th>Roll</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Strike</th><th>Parry</th><th>Roll</th><th></th></tr></thead>
             <tbody>
               {{#each weaponItemsAncient}}
               <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
                 <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
                 <td>{{lookup ../config.DAMAGE_TYPES system.damageType}}</td>
                 <td>{{system.damage}}</td>
+                <td>{{lookup ../config.EE_DAMAGE_SCALES system.damageScale}}</td>
                 <td>{{system.strike}}</td>
                 <td>{{system.parry}}</td>
                 <td class="ee-actions">
                   <a data-action="roll" data-roll-type="d20"    data-bonus="{{system.strike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
                   <a data-action="roll" data-roll-type="d20"    data-bonus="{{system.parry}}"  data-label="{{name}} Parry"  title="Roll Parry"><i class="fas fa-shield-alt"></i></a>
-                  <a data-action="roll" data-roll-type="damage" data-formula="{{system.damage}}" data-label="{{name}}"      title="Roll Damage"><i class="fas fa-burst"></i></a>
+                  {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{system.damage}}" data-scale="{{system.damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{system.damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
                 </td>
                 <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
               </tr>
@@ -862,20 +870,21 @@
         <div class="ee-panel ee-pa-weapons">
           <h3>Weapons</h3>
           <table class="ee-table">
-            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Strike</th><th>Range</th><th>Special</th><th>Roll</th><th></th></tr></thead>
+            <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Strike</th><th>Range</th><th>Special</th><th>Roll</th><th></th></tr></thead>
             <tbody>
               {{#each system.powerArmor.weapons}}
               <tr>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.name"    value="{{name}}"/></td>
                 <td><select name="system.powerArmor.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.damage"  value="{{damage}}"/></td>
+                <td><select name="system.powerArmor.weapons.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></td>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.ammo"    value="{{ammo}}"/></td>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.strike"  value="{{strike}}"/></td>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.range"   value="{{range}}"/></td>
                 <td><input type="text" name="system.powerArmor.weapons.{{@index}}.special" value="{{special}}"/></td>
                 <td class="ee-actions">
                   <a data-action="roll" data-roll-type="d20"    data-bonus="{{strike}}"  data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
-                  <a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}"        title="Roll Damage"><i class="fas fa-burst"></i></a>
+                  {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
                 </td>
                 <td><a data-action="delete-row" data-path="powerArmor.weapons" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
@@ -1169,16 +1178,17 @@
         <div class="ee-panel">
           <h3>Weapon Systems</h3>
           <table class="ee-table">
-            <thead><tr><th>Type</th><th>Dmg Type</th><th>Damage</th><th>Ammo</th><th>Roll</th><th></th></tr></thead>
+            <thead><tr><th>Type</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Roll</th><th></th></tr></thead>
             <tbody>
               {{#each system.vehicle.weapons}}
               <tr>
                 <td><input type="text" name="system.vehicle.weapons.{{@index}}.type"   value="{{type}}"/></td>
                 <td><select name="system.vehicle.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
                 <td><input type="text" name="system.vehicle.weapons.{{@index}}.damage" value="{{damage}}"/></td>
+                <td><select name="system.vehicle.weapons.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></td>
                 <td><input type="text" name="system.vehicle.weapons.{{@index}}.ammo"   value="{{ammo}}"/></td>
                 <td class="ee-actions">
-                  <a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{type}}" title="Roll Damage"><i class="fas fa-burst"></i></a>
+                  {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{type}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{type}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
                 </td>
                 <td><a data-action="delete-row" data-path="vehicle.weapons" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>

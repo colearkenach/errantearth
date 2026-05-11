@@ -616,6 +616,7 @@
     "weapon": {
       "category": "modern",
       "damage": "",
+      "damageScale": "S",
       "damageType": "",
       "range": "",
       "ammo": "",

@@ -579,35 +579,136 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return this.actor.update({ "system.mode": mode });
   }
 
+  static _EE_DIFFICULTY_BANDS = [
+    { key: "easy",      label: "Easy",      d20: 4,  percent: 20 },
+    { key: "routine",   label: "Routine",   d20: 2,  percent: 10 },
+    { key: "standard",  label: "Standard",  d20: 0,  percent: 0  },
+    { key: "difficult", label: "Difficult", d20: -2, percent: -10 },
+    { key: "hard",      label: "Hard",      d20: -4, percent: -20 },
+    { key: "hellish",   label: "Hellish",   d20: -6, percent: -30 }
+  ];
+
+  static _EE_TIER_STEPS = {
+    Mortal: 0,
+    Augmented: 1,
+    Mechanical: 2,
+    Supernatural: 3,
+    Exalted: 4,
+    Divine: 5
+  };
+
+  static _EE_DAMAGE_SCALE_STEPS = { S: 0, M: 1, G: 2, U: 3 };
+
   /** Pop a single-select dialog asking the player which difficulty band the
-   *  GM has set for this skill check. Returns { modifier, label } or null on
-   *  cancel. */
-  static async _promptDifficulty(rollLabel) {
-    const bands = [
-      { key: "easy",     label: "Easy",     modifier: 20 },
-      { key: "routine",  label: "Routine",  modifier: 10 },
-      { key: "standard", label: "Standard", modifier: 0  },
-      { key: "difficult",label: "Difficult",modifier: -10 },
-      { key: "hard",     label: "Hard",     modifier: -20 },
-      { key: "hellish",  label: "Hellish",  modifier: -30 }
-    ];
+   *  GM has set for this Errant Earth check. Returns a difficulty descriptor
+   *  with d20 and percentage modifiers, or null on cancel. */
+  static async _promptDifficulty(rollLabel, mode = "percent") {
     return new Promise((resolve) => {
       const buttons = {};
-      for (const b of bands) {
-        const sign = b.modifier >= 0 ? "+" : "";
+      for (const b of ErrantEarthCharacterSheet._EE_DIFFICULTY_BANDS) {
+        const modifier = mode === "d20" ? b.d20 : b.percent;
+        const suffix = mode === "d20" ? "" : "%";
+        const sign = modifier >= 0 ? "+" : "";
         buttons[b.key] = {
-          label: `${b.label} (${sign}${b.modifier}%)`,
-          callback: () => resolve({ modifier: b.modifier, label: b.label })
+          label: `${b.label} (${sign}${modifier}${suffix})`,
+          callback: () => resolve({ ...b, modifier, mode })
         };
       }
       new Dialog({
         title: `Difficulty: ${rollLabel}`,
-        content: `<p>Pick the difficulty band for this skill check.</p>`,
+        content: `<p>Pick the difficulty band for this Errant Earth roll.</p>`,
         buttons,
         default: "standard",
         close: () => resolve(null)
       }, { classes: ["errantearth", "dialog", "ee-difficulty"], width: 460 }).render(true);
     });
+  }
+
+  static _parseSkillTags(raw) {
+    if (!raw) return [];
+    const cfg = CONFIG.EE?.EE_SKILL_TAGS ?? {};
+    return String(raw).split(/[|,]/)
+      .map(t => t.trim())
+      .filter(Boolean)
+      .map(t => Object.keys(cfg).find(k => k.toLowerCase() === t.toLowerCase()) ?? t);
+  }
+
+  static _formatSkillTags(tags) {
+    const cfg = CONFIG.EE?.EE_SKILL_TAGS ?? {};
+    return tags.map(t => cfg[t] ?? t).join(", ");
+  }
+
+  static _eeTierStep(tier) {
+    return ErrantEarthCharacterSheet._EE_TIER_STEPS[tier] ?? 0;
+  }
+
+  static _eeDifficultyParts(choice, suffix = "") {
+    if (!choice) return ["Standard"];
+    const sign = choice.modifier >= 0 ? "+" : "";
+    return [`${choice.label} (${sign}${choice.modifier}${suffix})`];
+  }
+
+  static _eeAutoRule(natural, die, mode = "rollUnder") {
+    if (die === 100) {
+      if (natural <= 1) return "success";
+      if (natural >= 99) return "failure";
+      return null;
+    }
+    if (die === 20) {
+      if (mode === "rollOver") {
+        if (natural === 20) return "success";
+        if (natural === 1) return "failure";
+      } else {
+        if (natural === 1) return "success";
+        if (natural === 20) return "failure";
+      }
+    }
+    return null;
+  }
+
+  static _eeDegree({ success, margin = 0, natural, die, tags = [] }) {
+    const has = tag => tags.includes(tag);
+    if (success) {
+      let degree = natural && ErrantEarthCharacterSheet._eeAutoRule(natural, die) === "success" ? "Critical Success"
+        : margin >= (die === 100 ? 30 : 6) ? "Strong Success"
+        : "Success";
+      if (has("Aced") && degree === "Success") degree = "Strong Success";
+      if (has("Fated") && degree === "Strong Success") degree = "Critical Success";
+      return degree;
+    }
+    if (has("Reliable") && margin >= -(die === 100 ? 5 : 1)) return "Mixed Success";
+    return natural && ErrantEarthCharacterSheet._eeAutoRule(natural, die) === "failure" ? "Critical Failure" : "Failure";
+  }
+
+  static _eeApplyTags({ success, auto, target, natural, tags = [] }) {
+    if (auto === "failure" && tags.includes("Assurance") && natural <= target) {
+      return { success: true, auto: null, note: "Assurance cancels automatic failure." };
+    }
+    if (auto === "failure" && tags.includes("Fated")) {
+      return { success: false, auto: null, note: "Fated downgrades automatic failure." };
+    }
+    return { success, auto, note: "" };
+  }
+
+  static _eeDamageScale(rawScale = "S", tier = "Mortal") {
+    const cfg = CONFIG.EE?.EE_DAMAGE_SCALES ?? {};
+    const key = String(rawScale || "S").trim().toUpperCase();
+    const scale = Object.prototype.hasOwnProperty.call(cfg, key) ? key : "S";
+    const label = cfg[scale] ?? scale;
+    const tierStep = ErrantEarthCharacterSheet._eeTierStep(tier);
+    const scaleStep = ErrantEarthCharacterSheet._EE_DAMAGE_SCALE_STEPS[scale] ?? 0;
+    const delta = scaleStep - tierStep;
+    return { key: scale, label, tier, scaleStep, tierStep, delta };
+  }
+
+  static _eeSpendableResources(sys = {}, eeDerived = {}) {
+    const resources = [];
+    const add = (label, value) => resources.push(`${label}: ${Number(value ?? 0)}`);
+    add("Momentum", eeDerived.combat?.momentum?.total ?? sys.eeCombat?.momentum);
+    add("ESP", eeDerived.resources?.esp?.total);
+    add("MP", eeDerived.resources?.mp?.total);
+    add("Glimmer", eeDerived.resources?.glimmer?.total);
+    return resources.join(", ");
   }
 
   static _parseIntSafe(v) {
@@ -622,21 +723,103 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const type  = el.dataset.rollType;
     const label = el.dataset.label || "Roll";
     const PIS = ErrantEarthCharacterSheet._parseIntSafe;
+    const isEE = this.actor.system.mode === "errantEarth";
+    const eeDerived = ErrantEarthCharacterSheet.eeDerivedData(this.actor.system);
 
     const card = { kind: type, label, subtitle: "", outcome: "", outcomeClass: "" };
 
     try {
       let roll;
       switch (type) {
+        case "eeSkill": {
+          const baseTarget = Number(el.dataset.target ?? 0);
+          const tags = ErrantEarthCharacterSheet._parseSkillTags(el.dataset.tags);
+          const choice = await ErrantEarthCharacterSheet._promptDifficulty(label, "percent");
+          if (choice === null) return;
+          const target = Math.clamp?.(baseTarget + choice.percent, 1, 100) ?? Math.max(1, Math.min(100, baseTarget + choice.percent));
+          roll = await new Roll("1d100").evaluate();
+          const natural = roll.total;
+          const auto = ErrantEarthCharacterSheet._eeAutoRule(natural, 100);
+          const preliminary = auto ? auto === "success" : natural <= target;
+          const tagged = ErrantEarthCharacterSheet._eeApplyTags({ success: preliminary, auto, target, natural, tags });
+          const success = tagged.auto ? tagged.auto === "success" : tagged.success;
+          const margin = target - natural;
+          const subParts = [`Target ${target}% (roll under)`, ...ErrantEarthCharacterSheet._eeDifficultyParts(choice, "%"), `Tier ${el.dataset.tier || eeDerived.tier}`];
+          if (tags.length) subParts.push(`Tags: ${ErrantEarthCharacterSheet._formatSkillTags(tags)}`);
+          if (tagged.note) subParts.push(tagged.note);
+          card.subtitle = subParts.join(" — ");
+          card.tags = ErrantEarthCharacterSheet._formatSkillTags(tags);
+          card.tier = el.dataset.tier || eeDerived.tier;
+          card.difficulty = choice.label;
+          card.spendableResources = ErrantEarthCharacterSheet._eeSpendableResources(this.actor.system, eeDerived);
+          card.successDegree = ErrantEarthCharacterSheet._eeDegree({ success, margin, natural, die: 100, tags });
+          card.outcome = card.successDegree;
+          card.outcomeClass = success ? "success" : "failure";
+          break;
+        }
+        case "eeAttribute": {
+          const baseTarget = Number(el.dataset.target ?? 0);
+          const tier = el.dataset.tier || eeDerived.tier;
+          const choice = await ErrantEarthCharacterSheet._promptDifficulty(label, "d20");
+          if (choice === null) return;
+          const tierBonus = ErrantEarthCharacterSheet._eeTierStep(tier);
+          const target = Math.max(1, Math.min(20, baseTarget + choice.d20 + tierBonus));
+          roll = await new Roll("1d20").evaluate();
+          const natural = roll.total;
+          const auto = ErrantEarthCharacterSheet._eeAutoRule(natural, 20, "rollUnder");
+          const success = auto ? auto === "success" : natural <= target;
+          const margin = target - natural;
+          card.subtitle = [`Target ${target} (d20 roll-under)`, ...ErrantEarthCharacterSheet._eeDifficultyParts(choice), `Tier ${tier}${tierBonus ? ` (+${tierBonus})` : ""}`].join(" — ");
+          card.tier = tier;
+          card.difficulty = choice.label;
+          card.spendableResources = ErrantEarthCharacterSheet._eeSpendableResources(this.actor.system, eeDerived);
+          card.successDegree = ErrantEarthCharacterSheet._eeDegree({ success, margin, natural, die: 20 });
+          card.outcome = card.successDegree;
+          card.outcomeClass = success ? "success" : "failure";
+          break;
+        }
+        case "eeSave": {
+          const baseTarget = Number(el.dataset.target ?? el.dataset.base ?? 0);
+          const tier = el.dataset.tier || eeDerived.tier;
+          const choice = await ErrantEarthCharacterSheet._promptDifficulty(label, "d20");
+          if (choice === null) return;
+          const tierBonus = ErrantEarthCharacterSheet._eeTierStep(tier);
+          const target = Math.max(1, Math.min(20, baseTarget + choice.d20 + tierBonus));
+          roll = await new Roll("1d20").evaluate();
+          const natural = roll.total;
+          const auto = ErrantEarthCharacterSheet._eeAutoRule(natural, 20, "rollUnder");
+          const success = auto ? auto === "success" : natural <= target;
+          const margin = target - natural;
+          card.subtitle = [`Resist ${target} or under`, ...ErrantEarthCharacterSheet._eeDifficultyParts(choice), `Tier ${tier}${tierBonus ? ` (+${tierBonus})` : ""}`].join(" — ");
+          card.tier = tier;
+          card.difficulty = choice.label;
+          card.spendableResources = ErrantEarthCharacterSheet._eeSpendableResources(this.actor.system, eeDerived);
+          card.successDegree = ErrantEarthCharacterSheet._eeDegree({ success, margin, natural, die: 20 });
+          card.outcome = card.successDegree;
+          card.outcomeClass = success ? "success" : "failure";
+          break;
+        }
+        case "eeDamage": {
+          const formula = (el.dataset.formula || "").trim();
+          if (!formula) return ui.notifications?.warn(`${label}: no damage formula set.`);
+          const tier = el.dataset.tier || eeDerived.tier;
+          const scale = ErrantEarthCharacterSheet._eeDamageScale(el.dataset.scale, tier);
+          roll = await new Roll(formula).evaluate();
+          card.damageScale = scale.label;
+          card.tier = tier;
+          card.subtitle = [`Damage`, `${scale.label} scale`, `Tier ${tier}`].join(" — ");
+          if (scale.delta > 0) card.subtitle += ` — ${scale.delta} scale step${scale.delta === 1 ? "" : "s"} above tier`;
+          else if (scale.delta < 0) card.subtitle += ` — ${Math.abs(scale.delta)} scale step${Math.abs(scale.delta) === 1 ? "" : "s"} below tier`;
+          break;
+        }
         case "skill": {
           const baseTarget = Number(el.dataset.target ?? 0);
-          const isEE = this.actor.system.mode === "errantEarth";
           let modifier = 0;
           let modLabel = "";
           if (isEE) {
-            const choice = await ErrantEarthCharacterSheet._promptDifficulty(label);
+            const choice = await ErrantEarthCharacterSheet._promptDifficulty(label, "percent");
             if (choice === null) return; // cancelled
-            modifier = choice.modifier;
+            modifier = choice.percent;
             modLabel = choice.label;
           }
           const target = baseTarget + modifier;
@@ -654,7 +837,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
           break;
         }
         case "attrCheck": {
-          // EE attribute check: d20 roll-under against the attribute value.
           const target = Number(el.dataset.target ?? 0);
           roll = await new Roll("1d20").evaluate();
           const success = roll.total <= target;
@@ -788,14 +970,14 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     switch (kind) {
       case "skill":         return { key: "", name: "", base: 0, perLvl: 0, misc: 0, category: "", custom: true };
       case "wpCustom":      return { name: "" };
-      case "modernWeapon":  return { name: "", damageType: "", damage: "", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
-      case "ancientWeapon": return { name: "", damageType: "", damage: "", ammo: "", strike: "", parry: "", special: "" };
+      case "modernWeapon":  return { name: "", damageType: "", damage: "", damageScale: "S", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
+      case "ancientWeapon": return { name: "", damageType: "", damage: "", damageScale: "S", ammo: "", strike: "", parry: "", special: "" };
       case "saveExtra":     return { name: "", base: 0, bonus: 0 };
       case "h2hExtra":      return { name: "", value: 0 };
       case "armorExtra":    return { name: "", current: 0, max: 0 };
       case "power":         return { name: "", source: "", cost: "", range: "", saving: "", damage: "", duration: "", description: "" };
-      case "paWeapon":      return { name: "", damageType: "", damage: "", ammo: "", strike: "", range: "", special: "" };
-      case "vehicleWeapon": return { type: "", damageType: "", damage: "", ammo: "" };
+      case "paWeapon":      return { name: "", damageType: "", damage: "", damageScale: "S", ammo: "", strike: "", range: "", special: "" };
+      case "vehicleWeapon": return { type: "", damageType: "", damage: "", damageScale: "S", ammo: "" };
       case "contact":       return { name: "", occupation: "", notes: "" };
       case "outfit":        return { name: "", checked: false };
       case "psionic":       return { name: "", isp: "", notes: "" };
@@ -856,6 +1038,10 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     scrubArr(sys.weapons?.ancient,   "damageType", cfg.DAMAGE_TYPES);
     scrubArr(sys.powerArmor?.weapons,"damageType", cfg.DAMAGE_TYPES);
     scrubArr(sys.vehicle?.weapons,   "damageType", cfg.DAMAGE_TYPES);
+    scrubArr(sys.weapons?.modern,    "damageScale", cfg.EE_DAMAGE_SCALES);
+    scrubArr(sys.weapons?.ancient,   "damageScale", cfg.EE_DAMAGE_SCALES);
+    scrubArr(sys.powerArmor?.weapons,"damageScale", cfg.EE_DAMAGE_SCALES);
+    scrubArr(sys.vehicle?.weapons,   "damageScale", cfg.EE_DAMAGE_SCALES);
     scrubArr(sys.powers,             "source",     cfg.POWER_SOURCES);
     return expanded;
   }
