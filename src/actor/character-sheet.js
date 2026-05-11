@@ -189,6 +189,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const anm = attr("anm");
     const brv = attr("brv");
     const com = attr("com");
+    const fin = attr("fin");
     const hrd = attr("hrd");
     const pow = attr("pow");
     const spd = attr("spd");
