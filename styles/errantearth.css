@@ -614,7 +614,7 @@ color: var(--ee-red, #8a1f1f);
 .ee-create-item {
     float: right;
     cursor: pointer;
-    color: var(--ee-red,#8a1f1f);
+    /*color: var(--ee-red,#8a1f1f);*/
     font-size: 0.85em;
     margin-left: 6px
 }
