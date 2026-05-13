@@ -780,6 +780,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     html.on("change", "[data-action='add-skill']", this._onAddSkill.bind(this));
     html.on("click", "[data-action='delete-row']", this._onDeleteRow.bind(this));
     html.on("click", "[data-action='roll']",       this._onRoll.bind(this));
+    html.on("click", "[data-action='edit-adjustable']", this._onEditAdjustable.bind(this));
     html.on("click", "[data-action='edit-item']",  this._onEditItem.bind(this));
     html.on("click", "[data-action='delete-item']", this._onDeleteItem.bind(this));
     html.on("click", "[data-action='create-item']", this._onCreateItem.bind(this));
@@ -933,6 +934,16 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     { key: "hellish",   label: "Hellish",   d20: -6, percent: -30 }
   ];
 
+  // Defaulting complexity table (Drifter Defaulting rules): attribute × multiplier = target.
+  static _EE_DEFAULT_COMPLEXITY = [
+    { key: "pathetic",  label: "Pathetic",  mult: 4,    display: "×4"  },
+    { key: "easy",      label: "Easy",      mult: 3,    display: "×3"  },
+    { key: "routine",   label: "Routine",   mult: 2,    display: "×2"  },
+    { key: "difficult", label: "Difficult", mult: 1,    display: "×1"  },
+    { key: "hard",      label: "Hard",      mult: 0.5,  display: "×½"  },
+    { key: "hellish",   label: "Hellish",   mult: 0.25, display: "×¼"  }
+  ];
+
   static _EE_TIER_STEPS = {
     Mortal: 0,
     Augmented: 1,
@@ -966,6 +977,43 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         default: "standard",
         close: () => resolve(null)
       }, { classes: ["errantearth", "dialog", "ee-difficulty"], width: 460 }).render(true);
+    });
+  }
+
+  /** First-step dialog: Raw attribute check (d20 roll-under) or Defaulting
+   *  (skill check with attribute × complexity multiplier). Returns
+   *  { mode: "raw" | "default" } or null on cancel. */
+  static async _promptCheckMode(rollLabel) {
+    return new Promise((resolve) => {
+      new Dialog({
+        title: `Attribute Check: ${rollLabel}`,
+        content: `<p>How is ${rollLabel} being checked?</p>
+                  <p class="ee-muted">A <strong>Raw Check</strong> rolls 1d20 and must come in at or under the attribute value.
+                  <strong>Defaulting</strong> makes a Skill Check (d100) against the attribute multiplied by a Complexity step.</p>`,
+        buttons: {
+          raw:     { label: "Raw Check",   callback: () => resolve({ mode: "raw" }) },
+          default: { label: "Defaulting",  callback: () => resolve({ mode: "default" }) }
+        },
+        default: "raw",
+        close: () => resolve(null)
+      }, { classes: ["errantearth", "dialog", "ee-attribute-mode"], width: 460 }).render(true);
+    });
+  }
+
+  /** Defaulting complexity selector. Returns the chosen complexity entry or null. */
+  static async _promptComplexity(rollLabel) {
+    return new Promise((resolve) => {
+      const buttons = {};
+      for (const c of ErrantEarthCharacterSheet._EE_DEFAULT_COMPLEXITY) {
+        buttons[c.key] = { label: `${c.label} (${c.display})`, callback: () => resolve(c) };
+      }
+      new Dialog({
+        title: `Defaulting Complexity: ${rollLabel}`,
+        content: `<p>Pick the Complexity the GM has set for this Defaulted check.</p>`,
+        buttons,
+        default: "routine",
+        close: () => resolve(null)
+      }, { classes: ["errantearth", "dialog", "ee-complexity"], width: 460 }).render(true);
     });
   }
 
@@ -1105,6 +1153,28 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         case "eeAttribute": {
           const baseTarget = Number(el.dataset.target ?? 0);
           const tier = el.dataset.tier || eeDerived.tier;
+          const mode = await ErrantEarthCharacterSheet._promptCheckMode(label);
+          if (mode === null) return;
+
+          if (mode.mode === "default") {
+            const complexity = await ErrantEarthCharacterSheet._promptComplexity(label);
+            if (complexity === null) return;
+            const target = Math.max(1, Math.floor(baseTarget * complexity.mult));
+            roll = await new Roll("1d100").evaluate();
+            const natural = roll.total;
+            const auto = ErrantEarthCharacterSheet._eeAutoRule(natural, 100);
+            const success = auto ? auto === "success" : natural <= target;
+            const margin = target - natural;
+            card.subtitle = [`Defaulting`, `${label} ${baseTarget} ${complexity.display} = ${target} (d100 roll-under)`, `${complexity.label} Complexity`, `Tier ${tier}`].join(" — ");
+            card.tier = tier;
+            card.difficulty = `${complexity.label} (${complexity.display})`;
+            card.spendableResources = ErrantEarthCharacterSheet._eeSpendableResources(this.actor.system, eeDerived);
+            card.successDegree = ErrantEarthCharacterSheet._eeDegree({ success, margin, natural, die: 100 });
+            card.outcome = card.successDegree;
+            card.outcomeClass = success ? "success" : "failure";
+            break;
+          }
+
           const choice = await ErrantEarthCharacterSheet._promptDifficulty(label, "d20");
           if (choice === null) return;
           const tierBonus = ErrantEarthCharacterSheet._eeTierStep(tier);
@@ -1114,7 +1184,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
           const auto = ErrantEarthCharacterSheet._eeAutoRule(natural, 20, "rollUnder");
           const success = auto ? auto === "success" : natural <= target;
           const margin = target - natural;
-          card.subtitle = [`Target ${target} (d20 roll-under)`, ...ErrantEarthCharacterSheet._eeDifficultyParts(choice), `Tier ${tier}${tierBonus ? ` (+${tierBonus})` : ""}`].join(" — ");
+          card.subtitle = [`Raw Check`, `Target ${target} (d20 roll-under)`, ...ErrantEarthCharacterSheet._eeDifficultyParts(choice), `Tier ${tier}${tierBonus ? ` (+${tierBonus})` : ""}`].join(" — ");
           card.tier = tier;
           card.difficulty = choice.label;
           card.spendableResources = ErrantEarthCharacterSheet._eeSpendableResources(this.actor.system, eeDerived);
@@ -1282,6 +1352,101 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     }
   }
 
+
+  /** Pencil-icon edit dialog for any Errant Earth derived adjustable value.
+   *  Lets the user edit the manual `bonus` and `override` stored under
+   *  `system.eeDerived.<path>`. If `data-base-path` is supplied, the dialog
+   *  also exposes that path (e.g. `eeCombat.armor.soak`) as the "Gear Base"
+   *  so equipped armor's underlying soak/resistance/AR can be set too. */
+  async _onEditAdjustable(ev) {
+    ev.preventDefault();
+    const el = ev.currentTarget;
+    const path = el.dataset.path;
+    if (!path) return;
+    const label = el.dataset.label || path;
+    const basePath = el.dataset.basePath || "";
+
+    const eeDerived = ErrantEarthCharacterSheet.eeDerivedData(this.actor.system);
+    const adj = path.split(".").reduce((o, k) => (o ? o[k] : undefined), eeDerived);
+    if (!adj) return ui.notifications?.warn(`No derived value at ${path}.`);
+
+    const sys = this.actor.system;
+    const stored = path.split(".").reduce((o, k) => (o ? o[k] : undefined), sys.eeDerived ?? {}) ?? {};
+    const baseValue = basePath
+      ? basePath.split(".").reduce((o, k) => (o ? o[k] : undefined), sys)
+      : undefined;
+
+    const baseRow = basePath
+      ? `<div class="form-group"><label>Gear Base</label>
+           <input type="number" name="baseValue" value="${baseValue ?? 0}" />
+           <p class="hint">Stored at <code>system.${basePath}</code>. Treated as the gear's raw value.</p>
+         </div>`
+      : `<div class="form-group"><label>Computed Base</label>
+           <input type="number" value="${Number(adj.base ?? 0)}" disabled />
+           <p class="hint">Derived from attributes/tier/species. Use Bonus or Override to adjust.</p>
+         </div>`;
+
+    const content = `
+      <form class="ee-edit-adjustable">
+        <p class="ee-muted">Editing <strong>${label}</strong>. Total = Base + Bonus, unless an Override is set (which replaces the total).</p>
+        ${baseRow}
+        <div class="form-group">
+          <label>Manual Bonus</label>
+          <input type="number" name="bonus" value="${Number(stored.bonus ?? 0)}" />
+          <p class="hint">Adds on top of the base and any auto-detected source bonuses.</p>
+        </div>
+        <div class="form-group">
+          <label>Override</label>
+          <input type="number" name="override" value="${stored.override ?? ""}" placeholder="(blank = use computed total)" />
+          <p class="hint">If set, replaces the computed total entirely.</p>
+        </div>
+        <div class="form-group">
+          <label>Current Total</label>
+          <input type="number" value="${Number(adj.total ?? 0)}" disabled />
+        </div>
+      </form>`;
+
+    return new Promise((resolve) => {
+      new Dialog({
+        title: `Edit ${label}`,
+        content,
+        buttons: {
+          save: {
+            label: "Save",
+            callback: async (html) => {
+              const form = html[0].querySelector("form");
+              const bonusRaw = form.elements.bonus.value;
+              const overrideRaw = form.elements.override.value;
+              const update = {
+                [`system.eeDerived.${path}.bonus`]: bonusRaw === "" ? 0 : Number(bonusRaw),
+                [`system.eeDerived.${path}.override`]: overrideRaw === "" ? null : Number(overrideRaw)
+              };
+              if (basePath) {
+                const raw = form.elements.baseValue.value;
+                update[`system.${basePath}`] = raw === "" ? 0 : Number(raw);
+              }
+              await this.actor.update(update);
+              resolve();
+            }
+          },
+          clear: {
+            label: "Reset",
+            callback: async () => {
+              const update = {
+                [`system.eeDerived.${path}.bonus`]: 0,
+                [`system.eeDerived.${path}.override`]: null
+              };
+              await this.actor.update(update);
+              resolve();
+            }
+          },
+          cancel: { label: "Cancel", callback: () => resolve() }
+        },
+        default: "save",
+        close: () => resolve()
+      }, { classes: ["errantearth", "dialog", "ee-edit-adjustable"], width: 460 }).render(true);
+    });
+  }
 
   async _onEditItem(ev) {
     ev.preventDefault();

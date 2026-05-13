@@ -365,6 +365,18 @@ color: var(--ee-red, #8a1f1f);
     width: 120px;
 }
 
+.ee-kv a.ee-edit {
+  opacity: 0.45;
+  font-size: 11px;
+  margin-left: 2px;
+}
+.ee-kv a.ee-edit:hover { opacity: 1; color: #2b6cb0; }
+
+.ee-edit-adjustable .form-group { margin-bottom: 6px; }
+.ee-edit-adjustable .form-group label { display: block; font-weight: 600; }
+.ee-edit-adjustable .form-group input { width: 100%; }
+.ee-edit-adjustable .form-group .hint { font-size: 11px; color: #666; margin: 2px 0 0; }
+
 .ee-armor-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
