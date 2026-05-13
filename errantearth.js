@@ -92,10 +92,6 @@ Hooks.once("ready", async () => {
       }
     }
 
-    if (actor.system.mode === "errantEarth") {
-      Object.assign(update, ErrantEarthCharacterSheet.buildErrantEarthBackfillUpdate(actor.system));
-    }
-
     if (Object.keys(update).length) await actor.update(update);
   }
 });

@@ -333,121 +333,149 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     };
   }
 
-  static _eeAdjustableDefaults(base = 0, total = base) {
-    return { base, bonus: 0, override: null, total };
+  static _parseFlatBonus(value) {
+    if (typeof value === "number" && Number.isFinite(value)) return value;
+    const text = String(value ?? "").trim();
+    if (!text) return 0;
+    if (!/^[+-]?\d+$/.test(text)) return null;
+    return Number(text);
   }
 
-  /** Defaults for Errant Earth-only actor data. These are merged into older
-   *  actors only when a field is absent, so RIFTS data and existing Errant
-   *  Earth entries survive mode switches and migrations. */
-  static _eeSchemaDefaults() {
-    const adj = ErrantEarthCharacterSheet._eeAdjustableDefaults;
+  static _formatSigned(value) {
+    const n = Number(value ?? 0) || 0;
+    return n >= 0 ? `+${n}` : String(n);
+  }
+
+  static _blankRiftsSourceTotals() {
     return {
-      eeAttributes: {
-        anm: { value: 0 }, brv: { value: 0 }, com: { value: 0 }, fin: { value: 0 },
-        hrd: { value: 0 }, pow: { value: 0 }, spd: { value: 0 }, wil: { value: 0 }
-      },
-      eeAttributeTier: "Mortal",
-      eeCombat: { actions: 0, momentum: 0, reactions: 0 },
-      backgrounds: [],
-      occupations: [],
-      magic: { heat: 0, burnout: 0 },
-      psychic: { heat: 0 },
-      eeDerived: {
-        health: {
-          endurance: adj(),
-          health: adj(),
-          scars: { value: 0, max: 5 }
-        },
-        defense: {
-          size: "Average",
-          nsr: adj(4, 4),
-          msr: adj(),
-          armorRating: adj()
-        },
-        resources: {
-          esp: adj(),
-          mp: adj(),
-          glimmer: { ...adj(), description: "None / Flickering" }
-        },
-        combat: {
-          strength: { rating: 0, sdBonus: 0, mdCapable: false, meleeToHit: 0 },
-          actions: adj(1, 1),
-          momentum: adj(),
-          reactions: adj(),
-          initiative: adj()
-        },
-        movement: {
-          reaction: { rating: 0, initiativeBonus: 0, pace: 1 },
-          pace: adj(1, 1),
-          liftCarryJump: {
-            light: 0, medium: 0, heavy: 0, overhead: 0, offGround: 0, push: 0,
-            verticalStand: 0, verticalRun: 0, horizontalStand: 0, horizontalRun: 0
-          }
-        },
-        social: {
-          demeanor: { rating: 0, bonus: 0, contacts: 1, attitude: "Repulsed, Horrified, Hated" },
-          atbBonus: adj()
-        },
-        saves: {
-          psychicResistance: adj(),
-          magicResistance: adj(),
-          horrorAnima: adj(),
-          horrorWillpower: adj()
-        }
-      }
+      attributeBonuses: { iq: 0, me: 0, ma: 0, ps: 0, pp: 0, pe: 0, pb: 0, spd: 0 },
+      poolBonuses: { hp: 0, sdc: 0, mdc: 0, isp: 0, ppe: 0 },
+      combatBonuses: { attacks: 0, initiative: 0, damage: 0, strike: 0, parry: 0, dodge: 0, pullPunch: 0, roll: 0 },
+      saveBonuses: { psionics: 0, drugPoison: 0, insanity: 0, death: 0 }
     };
   }
 
-  static _isNumericKeyObject(v) {
-    if (!v || typeof v !== "object" || Array.isArray(v)) return false;
-    const keys = Object.keys(v);
-    return keys.length > 0 && keys.every(k => /^\d+$/.test(k));
+  static _addRiftsSourceTotal(target, section, key, value) {
+    if (!target?.[section] || !(key in target[section])) return;
+    target[section][key] += Number(value ?? 0) || 0;
   }
 
-  static _flattenMissing(target, defaults, prefix = "system") {
-    const update = {};
-    for (const [key, value] of Object.entries(defaults)) {
-      const path = `${prefix}.${key}`;
-      const current = target?.[key];
-      if (current === undefined) {
-        update[path] = foundry.utils.deepClone(value);
+  static _parseRiftsTextBonuses(text, patterns) {
+    const raw = String(text ?? "").trim();
+    const applied = [];
+    const ambiguous = [];
+    if (!raw) return { applied, ambiguous };
+
+    const chunks = raw.split(/[\n;,]+/).map(part => part.trim()).filter(Boolean);
+    for (const chunk of chunks) {
+      const match = chunk.match(/([+-]\s*\d+)/);
+      if (!match) {
+        ambiguous.push(chunk);
         continue;
       }
-      if (Array.isArray(value)) {
-        if (!Array.isArray(current)) update[path] = ErrantEarthCharacterSheet._toArray(current);
-        continue;
+
+      const value = Number(match[1].replace(/\s+/g, ""));
+      const lower = chunk.toLowerCase();
+      const matches = patterns.filter(pattern => pattern.tests.every(test => test.test(lower)));
+      if (matches.length === 1) {
+        applied.push({ key: matches[0].key, label: matches[0].label, value, text: chunk });
+      } else {
+        ambiguous.push(chunk);
       }
-      if (value && typeof value === "object") {
-        if (current === null || typeof current !== "object" || Array.isArray(current)) {
-          update[path] = foundry.utils.deepClone(value);
-          continue;
+    }
+    return { applied, ambiguous };
+  }
+
+  static _buildRiftsSources(items) {
+    const toArr = ErrantEarthCharacterSheet._toArray;
+    const totals = ErrantEarthCharacterSheet._blankRiftsSourceTotals();
+    const sources = [];
+    const attrLabels = { iq: "IQ", me: "ME", ma: "MA", ps: "PS", pp: "PP", pe: "PE", pb: "PB", spd: "SPD" };
+    const poolLabels = { hp: "HP", sdc: "SDC", mdc: "MDC", isp: "ISP", ppe: "PPE" };
+    const combatPatterns = [
+      { key: "attacks", label: "Attacks", tests: [/\b(attacks?|actions?)\b/, /\b(melee|round|action)\b/] },
+      { key: "initiative", label: "Initiative", tests: [/\binit(iative)?\b/] },
+      { key: "damage", label: "Damage", tests: [/\bdamage\b/] },
+      { key: "strike", label: "Strike", tests: [/\bstrike\b/] },
+      { key: "parry", label: "Parry", tests: [/\bparry\b/] },
+      { key: "dodge", label: "Dodge", tests: [/\bdodge\b/, /^(?!.*\b(auto|automatic)\b)/] },
+      { key: "pullPunch", label: "Pull Punch", tests: [/\bpull\b/, /\bpunch\b/] },
+      { key: "roll", label: "Roll with Punch/Fall", tests: [/\broll\b/, /\b(punch|fall|impact)\b/] }
+    ];
+    const savePatterns = [
+      { key: "psionics", label: "Save vs Psionics", tests: [/\b(psi|psionic|psionics)\b/] },
+      { key: "drugPoison", label: "Save vs Toxins/Poisons", tests: [/\b(poison|poisons|toxin|toxins|drug|drugs)\b/] },
+      { key: "insanity", label: "Save vs Insanity", tests: [/\binsanity\b/] },
+      { key: "death", label: "Save vs Coma/Death", tests: [/\b(coma|death)\b/] }
+    ];
+
+    for (const item of items.filter(Boolean)) {
+      const source = {
+        name: item.name,
+        type: item.system?.isRCC ? "RCC" : (item.type === "race" ? "Race" : "OCC"),
+        isRCC: !!item.system?.isRCC,
+        attributeBonuses: [],
+        poolBonuses: [],
+        combatBonuses: [],
+        saveBonuses: [],
+        abilities: [],
+        warnings: [],
+        hasDetails: false
+      };
+
+      for (const [key, label] of Object.entries(attrLabels)) {
+        const raw = item.system?.attributeBonuses?.[key];
+        const parsed = ErrantEarthCharacterSheet._parseFlatBonus(raw);
+        if (parsed === null) {
+          source.attributeBonuses.push({ key, label, raw, applied: false });
+          source.warnings.push(`${label} bonus “${raw}” was not auto-applied.`);
+        } else if (parsed) {
+          ErrantEarthCharacterSheet._addRiftsSourceTotal(totals, "attributeBonuses", key, parsed);
+          source.attributeBonuses.push({ key, label, value: parsed, display: ErrantEarthCharacterSheet._formatSigned(parsed), applied: true });
         }
-        Object.assign(update, ErrantEarthCharacterSheet._flattenMissing(current, value, path));
       }
-    }
-    return update;
-  }
 
-  /** Build a minimal update payload that backfills missing Errant Earth schema
-   *  fields on an actor without removing or overwriting any existing data. */
-  static buildErrantEarthBackfillUpdate(system = {}) {
-    const update = ErrantEarthCharacterSheet._flattenMissing(system, ErrantEarthCharacterSheet._eeSchemaDefaults());
-    if (ErrantEarthCharacterSheet._isNumericKeyObject(system.backgrounds)) {
-      update["system.backgrounds"] = ErrantEarthCharacterSheet._toArray(system.backgrounds);
-    }
-    if (ErrantEarthCharacterSheet._isNumericKeyObject(system.occupations)) {
-      update["system.occupations"] = ErrantEarthCharacterSheet._toArray(system.occupations);
-    }
-    return update;
-  }
+      for (const [key, label] of Object.entries(poolLabels)) {
+        const raw = item.system?.poolBonuses?.[key];
+        const parsed = ErrantEarthCharacterSheet._parseFlatBonus(raw);
+        if (parsed === null) {
+          source.poolBonuses.push({ key, label, raw, applied: false });
+          source.warnings.push(`${label} pool bonus “${raw}” was not auto-applied.`);
+        } else if (parsed) {
+          ErrantEarthCharacterSheet._addRiftsSourceTotal(totals, "poolBonuses", key, parsed);
+          source.poolBonuses.push({ key, label, value: parsed, display: ErrantEarthCharacterSheet._formatSigned(parsed), applied: true });
+        }
+      }
 
-  static async backfillErrantEarthActor(actor) {
-    if (!actor || actor.type !== "character") return false;
-    const update = ErrantEarthCharacterSheet.buildErrantEarthBackfillUpdate(actor.system ?? {});
-    if (!Object.keys(update).length) return false;
-    await actor.update(update);
-    return true;
+      const combat = ErrantEarthCharacterSheet._parseRiftsTextBonuses(item.system?.combatBonuses, combatPatterns);
+      for (const bonus of combat.applied) {
+        ErrantEarthCharacterSheet._addRiftsSourceTotal(totals, "combatBonuses", bonus.key, bonus.value);
+        source.combatBonuses.push({ ...bonus, display: ErrantEarthCharacterSheet._formatSigned(bonus.value), applied: true });
+      }
+      for (const raw of combat.ambiguous) {
+        source.combatBonuses.push({ raw, applied: false });
+        source.warnings.push(`Combat bonus “${raw}” was left as a note.`);
+      }
+
+      const saves = ErrantEarthCharacterSheet._parseRiftsTextBonuses(item.system?.saveBonuses, savePatterns);
+      for (const bonus of saves.applied) {
+        ErrantEarthCharacterSheet._addRiftsSourceTotal(totals, "saveBonuses", bonus.key, bonus.value);
+        source.saveBonuses.push({ ...bonus, display: ErrantEarthCharacterSheet._formatSigned(bonus.value), applied: true });
+      }
+      for (const raw of saves.ambiguous) {
+        source.saveBonuses.push({ raw, applied: false });
+        source.warnings.push(`Save bonus “${raw}” was left as a note.`);
+      }
+
+      source.abilities = toArr(item.system?.abilities)
+        .filter(a => a?.name || a?.description)
+        .map(a => ({ name: a.name ?? "", description: a.description ?? "" }));
+
+      source.hasDetails = !!(source.attributeBonuses.length || source.poolBonuses.length || source.combatBonuses.length || source.saveBonuses.length || source.abilities.length || source.warnings.length);
+      sources.push(source);
+    }
+
+    return { sources, totals, warnings: [] };
   }
 
   /** Coerce a value that may be an object with numeric keys back into an array. */
@@ -893,11 +921,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   async _onToggleMode(ev) {
     const mode = ev.currentTarget.checked ? "errantEarth" : "rifts";
-    const update = { "system.mode": mode };
-    if (mode === "errantEarth") {
-      Object.assign(update, ErrantEarthCharacterSheet.buildErrantEarthBackfillUpdate(this.actor.system ?? {}));
-    }
-    return this.actor.update(update);
+    return this.actor.update({ "system.mode": mode });
   }
 
   static _EE_DIFFICULTY_BANDS = [
@@ -1395,58 +1419,12 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return Object.prototype.hasOwnProperty.call(choices, value) ? value : "";
   }
 
-  static _validateEnumList(value, choices) {
-    const scrub = v => ErrantEarthCharacterSheet._validateEnum(v, choices);
-    if (Array.isArray(value)) return value.map(scrub).filter(Boolean);
-    if (value && typeof value === "object") {
-      const out = {};
-      for (const [key, entry] of Object.entries(value)) {
-        const candidate = typeof entry === "boolean" ? key : entry;
-        const valid = scrub(candidate);
-        if (valid) out[key] = typeof entry === "boolean" ? entry : valid;
-      }
-      return out;
-    }
-    const valid = scrub(value);
-    return valid ? [valid] : [];
-  }
-
-  static _validateErrantEarthFields(root, cfg) {
-    if (!root || typeof root !== "object") return;
-    const visit = value => {
-      if (!value || typeof value !== "object") return;
-      if (Array.isArray(value)) {
-        for (const entry of value) visit(entry);
-        return;
-      }
-      if ("eeSkillCategory" in value)
-        value.eeSkillCategory = ErrantEarthCharacterSheet._validateEnum(value.eeSkillCategory, cfg.EE_SKILL_CATEGORIES);
-      if ("skillCategory" in value)
-        value.skillCategory = ErrantEarthCharacterSheet._validateEnum(value.skillCategory, cfg.EE_SKILL_CATEGORIES);
-      if ("category" in value)
-        value.category = ErrantEarthCharacterSheet._validateEnum(value.category, cfg.EE_SKILL_CATEGORIES);
-      if ("eeSkillTags" in value)
-        value.eeSkillTags = ErrantEarthCharacterSheet._validateEnumList(value.eeSkillTags, cfg.EE_SKILL_TAGS);
-      if ("skillTags" in value)
-        value.skillTags = ErrantEarthCharacterSheet._validateEnumList(value.skillTags, cfg.EE_SKILL_TAGS);
-      if ("tags" in value)
-        value.tags = ErrantEarthCharacterSheet._validateEnumList(value.tags, cfg.EE_SKILL_TAGS);
-      if ("damageScale" in value)
-        value.damageScale = ErrantEarthCharacterSheet._validateEnum(value.damageScale, cfg.EE_DAMAGE_SCALES);
-      if ("eeDamageScale" in value)
-        value.eeDamageScale = ErrantEarthCharacterSheet._validateEnum(value.eeDamageScale, cfg.EE_DAMAGE_SCALES);
-      for (const entry of Object.values(value)) visit(entry);
-    };
-    visit(root);
-  }
-
   static _validateEnums(expanded) {
     const cfg = CONFIG.EE;
     if (!cfg || !expanded?.system) return expanded;
     const sys = expanded.system;
     if ("alignment" in sys)    sys.alignment    = ErrantEarthCharacterSheet._validateEnum(sys.alignment,    cfg.ALIGNMENTS);
     if ("psionicLevel" in sys) sys.psionicLevel = ErrantEarthCharacterSheet._validateEnum(sys.psionicLevel, cfg.PSIONIC_LEVELS);
-    if ("eeAttributeTier" in sys) sys.eeAttributeTier = ErrantEarthCharacterSheet._validateEnum(sys.eeAttributeTier, cfg.EE_ATTRIBUTE_TIERS);
     if (sys.vehicle && "type" in sys.vehicle)
       sys.vehicle.type = ErrantEarthCharacterSheet._validateEnum(sys.vehicle.type, cfg.VEHICLE_TYPES);
     if (sys.handToHand && "type" in sys.handToHand)
@@ -1469,14 +1447,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     scrubArr(sys.powerArmor?.weapons,"damageScale", cfg.EE_DAMAGE_SCALES);
     scrubArr(sys.vehicle?.weapons,   "damageScale", cfg.EE_DAMAGE_SCALES);
     scrubArr(sys.powers,             "source",     cfg.POWER_SOURCES);
-
-    // Future Errant Earth-only row paths can opt into validation with these
-    // field names without affecting the legacy RIFTS skill/category fields.
-    ErrantEarthCharacterSheet._validateErrantEarthFields(sys.eeSkills, cfg);
-    ErrantEarthCharacterSheet._validateErrantEarthFields(sys.eeDamage, cfg);
-    ErrantEarthCharacterSheet._validateErrantEarthFields(sys.eeCombat, cfg);
-    ErrantEarthCharacterSheet._validateErrantEarthFields(sys.magic, cfg);
-    ErrantEarthCharacterSheet._validateErrantEarthFields(sys.psychic, cfg);
+    scrubArr(sys.eeSkills?.list,     "attribute",  cfg.EE_ATTRIBUTES);
+    scrubArr(sys.eeSkills?.list,     "category",   cfg.EE_SKILL_CATEGORIES);
     return expanded;
   }
 
