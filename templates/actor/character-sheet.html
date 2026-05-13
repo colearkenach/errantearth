@@ -677,20 +677,31 @@
                         <div class="ee-kv">
                             <label>Initiative:</label><output>{{eeDerived.combat.initiative.total}}</output>
                             <a data-action="roll" data-roll-type="eeInitiative" data-bonus="{{eeDerived.combat.initiative.total}}" data-label="Errant Earth Initiative" title="Roll Errant Earth Initiative"><i class="fas fa-dice-d20"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.initiative" data-label="Initiative" title="Edit Initiative"><i class="fas fa-pencil"></i></a>
                         </div>
-                        <div class="ee-kv"><label>Actions:</label><output>{{eeDerived.combat.actions.total}}</output></div>
-                        <div class="ee-kv"><label>Reactions:</label><output>{{eeDerived.combat.reactions.total}}</output></div>
-                        <div class="ee-kv"><label>Momentum:</label><output>{{eeDerived.combat.momentum.total}}</output></div>
+                        <div class="ee-kv"><label>Actions:</label><output>{{eeDerived.combat.actions.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.actions" data-label="Actions" title="Edit Actions"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Reactions:</label><output>{{eeDerived.combat.reactions.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.reactions" data-label="Reactions" title="Edit Reactions"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Momentum:</label><output>{{eeDerived.combat.momentum.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.momentum" data-label="Momentum" title="Edit Momentum"><i class="fas fa-pencil"></i></a>
+                        </div>
                         <div class="ee-kv">
                             <label>Melee To-Hit:</label><output>{{eeDerived.combat.meleeToHit.total}}</output>
                             <a data-action="roll" data-roll-type="eeAttack" data-bonus="{{eeDerived.combat.meleeToHit.total}}" data-label="Errant Earth Melee Attack" title="Roll Errant Earth melee attack"><i class="fas fa-crosshairs"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.meleeToHit" data-label="Melee To-Hit" title="Edit Melee To-Hit"><i class="fas fa-pencil"></i></a>
                         </div>
                         <div class="ee-kv">
                             <label>Ranged To-Hit:</label><output>{{eeDerived.combat.rangedToHit.total}}</output>
                             <a data-action="roll" data-roll-type="eeAttack" data-bonus="{{eeDerived.combat.rangedToHit.total}}" data-label="Errant Earth Ranged Attack" title="Roll Errant Earth ranged attack"><i class="fas fa-crosshairs"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.rangedToHit" data-label="Ranged To-Hit" title="Edit Ranged To-Hit"><i class="fas fa-pencil"></i></a>
                         </div>
-                        <div class="ee-kv"><label>Damage Bonus:</label><output>{{eeDerived.combat.damageBonus.total}}</output></div>
-                        <div class="ee-kv"><label>Damage Scale:</label><output>{{eeDerived.combat.damageScale}}</output></div>
+                        <div class="ee-kv"><label>Damage Bonus:</label><output>{{eeDerived.combat.damageBonus.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.damageBonus" data-label="Damage Bonus" title="Edit Damage Bonus"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Damage Scale:</label><input type="text" name="system.eeCombat.damageScale" value="{{eeDerived.combat.damageScale}}" /></div>
                     </div>
 
                     <div class="ee-panel">
@@ -699,21 +710,28 @@
                         <div class="ee-kv">
                             <label>Natural Survival Rating:</label><output>{{eeDerived.defense.nsr.total}}</output>
                             <a data-action="roll" data-roll-type="eeDefense" data-target="{{eeDerived.defense.nsr.total}}" data-label="Natural Survival Rating" title="Roll NSR"><i class="fas fa-shield-halved"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="defense.nsr" data-label="Natural Survival Rating" title="Edit NSR"><i class="fas fa-pencil"></i></a>
                         </div>
                         <div class="ee-kv">
                             <label>Mystic Survival Rating:</label><output>{{eeDerived.defense.msr.total}}</output>
                             <a data-action="roll" data-roll-type="eeDefense" data-target="{{eeDerived.defense.msr.total}}" data-label="Mystic Survival Rating" title="Roll MSR"><i class="fas fa-shield-halved"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="defense.msr" data-label="Mystic Survival Rating" title="Edit MSR"><i class="fas fa-pencil"></i></a>
                         </div>
                         <div class="ee-kv">
                             <label>Armor Rating:</label><output>{{eeDerived.defense.armorRating.total}}</output>
                             <a data-action="roll" data-roll-type="eeDefense" data-target="{{eeDerived.defense.armorRating.total}}" data-label="Armor Rating" title="Roll Armor Rating"><i class="fas fa-shield"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="defense.armorRating" data-base-path="eeCombat.armor.rating" data-label="Armor Rating" title="Edit Armor Rating"><i class="fas fa-pencil"></i></a>
                         </div>
                     </div>
 
                     <div class="ee-panel">
                         <h3>Health & Thresholds</h3>
-                        <div class="ee-kv"><label>Endurance:</label><output>{{eeDerived.health.endurance.total}}</output></div>
-                        <div class="ee-kv"><label>Health:</label><output>{{eeDerived.health.health.total}}</output></div>
+                        <div class="ee-kv"><label>Endurance:</label><output>{{eeDerived.health.endurance.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="health.endurance" data-label="Endurance" title="Edit Endurance"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Health:</label><output>{{eeDerived.health.health.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="health.health" data-label="Health" title="Edit Health"><i class="fas fa-pencil"></i></a>
+                        </div>
                         <div class="ee-kv"><label>Scars:</label><input type="number" name="system.eeDerived.health.scars.value" value="{{eeDerived.health.scars.value}}" /> / <input type="number" name="system.eeDerived.health.scars.max" value="{{eeDerived.health.scars.max}}" /></div>
                         <div class="ee-kv"><label>Wounded:</label><input type="number" name="system.eeCombat.health.thresholds.wounded" value="{{eeDerived.health.thresholds.wounded}}" /></div>
                         <div class="ee-kv"><label>Bloodied:</label><input type="number" name="system.eeCombat.health.thresholds.bloodied" value="{{eeDerived.health.thresholds.bloodied}}" /></div>
@@ -726,11 +744,21 @@
                     <div class="ee-panel">
                         <h3>Movement</h3>
                         <div class="ee-kv"><label>Reaction Rating:</label><output>{{eeDerived.movement.reaction.rating}}</output></div>
-                        <div class="ee-kv"><label>Pace:</label><output>{{eeDerived.movement.pace.total}}</output></div>
-                        <div class="ee-kv"><label>Run:</label><output>{{eeDerived.movement.run.total}}</output></div>
-                        <div class="ee-kv"><label>Sprint:</label><output>{{eeDerived.movement.sprint.total}}</output></div>
-                        <div class="ee-kv"><label>Climb:</label><output>{{eeDerived.movement.climb.total}}</output></div>
-                        <div class="ee-kv"><label>Swim:</label><output>{{eeDerived.movement.swim.total}}</output></div>
+                        <div class="ee-kv"><label>Pace:</label><output>{{eeDerived.movement.pace.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="movement.pace" data-label="Pace" title="Edit Pace"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Run:</label><output>{{eeDerived.movement.run.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="movement.run" data-label="Run" title="Edit Run"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Sprint:</label><output>{{eeDerived.movement.sprint.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="movement.sprint" data-label="Sprint" title="Edit Sprint"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Climb:</label><output>{{eeDerived.movement.climb.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="movement.climb" data-label="Climb" title="Edit Climb"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Swim:</label><output>{{eeDerived.movement.swim.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="movement.swim" data-label="Swim" title="Edit Swim"><i class="fas fa-pencil"></i></a>
+                        </div>
                         <div class="ee-kv"><label>Jump Vert. Stand/Run:</label><output>{{eeDerived.movement.liftCarryJump.verticalStand}} / {{eeDerived.movement.liftCarryJump.verticalRun}}</output></div>
                         <div class="ee-kv"><label>Jump Horiz. Stand/Run:</label><output>{{eeDerived.movement.liftCarryJump.horizontalStand}} / {{eeDerived.movement.liftCarryJump.horizontalRun}}</output></div>
                     </div>
@@ -738,26 +766,42 @@
                     <div class="ee-panel">
                         <h3>Armor, Soak & Resistance</h3>
                         <div class="ee-kv"><label>Armor Name:</label><input type="text" name="system.eeCombat.armor.name" value="{{system.eeCombat.armor.name}}" /></div>
-                        <div class="ee-kv"><label>Armor Soak:</label><output>{{eeDerived.armor.soak.total}}</output></div>
-                        <div class="ee-kv"><label>Armor Resistance:</label><output>{{eeDerived.armor.resistance.total}}</output></div>
+                        <div class="ee-kv"><label>Armor Soak:</label><output>{{eeDerived.armor.soak.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="armor.soak" data-base-path="eeCombat.armor.soak" data-label="Armor Soak" title="Edit Armor Soak"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Armor Resistance:</label><output>{{eeDerived.armor.resistance.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="armor.resistance" data-base-path="eeCombat.armor.resistance" data-label="Armor Resistance" title="Edit Armor Resistance"><i class="fas fa-pencil"></i></a>
+                        </div>
                         <div class="ee-kv"><label>Armor Scale:</label><input type="text" name="system.eeCombat.armor.damageScale" value="{{eeDerived.armor.damageScale}}" /></div>
-                        <div class="ee-kv"><label>Physical Soak/Resist:</label><output>{{eeDerived.soak.physical.total}} / {{eeDerived.resistance.physical.total}}</output></div>
-                        <div class="ee-kv"><label>Energy Soak/Resist:</label><output>{{eeDerived.soak.energy.total}} / {{eeDerived.resistance.energy.total}}</output></div>
+                        <div class="ee-kv"><label>Physical Soak/Resist:</label><output>{{eeDerived.soak.physical.total}} / {{eeDerived.resistance.physical.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="soak.physical" data-base-path="eeCombat.soak.physical" data-label="Physical Soak" title="Edit Physical Soak"><i class="fas fa-pencil"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.physical" data-base-path="eeCombat.resistance.physical" data-label="Physical Resistance" title="Edit Physical Resistance"><i class="fas fa-shield-halved"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Energy Soak/Resist:</label><output>{{eeDerived.soak.energy.total}} / {{eeDerived.resistance.energy.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="soak.energy" data-base-path="eeCombat.soak.energy" data-label="Energy Soak" title="Edit Energy Soak"><i class="fas fa-pencil"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.energy" data-base-path="eeCombat.resistance.energy" data-label="Energy Resistance" title="Edit Energy Resistance"><i class="fas fa-shield-halved"></i></a>
+                        </div>
                         <div class="ee-kv">
                             <label>Magic Soak/Resist:</label><output>{{eeDerived.soak.magic.total}} / {{eeDerived.resistance.magic.total}}</output>
                             <a data-action="roll" data-roll-type="eeResistance" data-bonus="{{eeDerived.resistance.magic.total}}" data-label="Magic Resistance" title="Roll Magic Resistance"><i class="fas fa-wand-magic-sparkles"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="soak.magic" data-base-path="eeCombat.soak.magic" data-label="Magic Soak" title="Edit Magic Soak"><i class="fas fa-pencil"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.magic" data-base-path="eeCombat.resistance.magic" data-label="Magic Resistance" title="Edit Magic Resistance"><i class="fas fa-shield-halved"></i></a>
                         </div>
                         <div class="ee-kv">
                             <label>Psychic Soak/Resist:</label><output>{{eeDerived.soak.psychic.total}} / {{eeDerived.resistance.psychic.total}}</output>
                             <a data-action="roll" data-roll-type="eeResistance" data-bonus="{{eeDerived.resistance.psychic.total}}" data-label="Psychic Resistance" title="Roll Psychic Resistance"><i class="fas fa-brain"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="soak.psychic" data-base-path="eeCombat.soak.psychic" data-label="Psychic Soak" title="Edit Psychic Soak"><i class="fas fa-pencil"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.psychic" data-base-path="eeCombat.resistance.psychic" data-label="Psychic Resistance" title="Edit Psychic Resistance"><i class="fas fa-shield-halved"></i></a>
                         </div>
                         <div class="ee-kv">
                             <label>Toxin Resistance:</label><output>{{eeDerived.resistance.toxins.total}}</output>
                             <a data-action="roll" data-roll-type="eeResistance" data-bonus="{{eeDerived.resistance.toxins.total}}" data-label="Toxin Resistance" title="Roll Toxin Resistance"><i class="fas fa-flask"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.toxins" data-base-path="eeCombat.resistance.toxins" data-label="Toxin Resistance" title="Edit Toxin Resistance"><i class="fas fa-pencil"></i></a>
                         </div>
                         <div class="ee-kv">
                             <label>Horror Resistance:</label><output>{{eeDerived.resistance.horror.total}}</output>
                             <a data-action="roll" data-roll-type="eeResistance" data-bonus="{{eeDerived.resistance.horror.total}}" data-label="Horror Resistance" title="Roll Horror Resistance"><i class="fas fa-ghost"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.horror" data-base-path="eeCombat.resistance.horror" data-label="Horror Resistance" title="Edit Horror Resistance"><i class="fas fa-pencil"></i></a>
                         </div>
                     </div>
 
