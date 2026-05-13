@@ -189,6 +189,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const anm = attr("anm");
     const brv = attr("brv");
     const com = attr("com");
+    const fin = attr("fin");
     const hrd = attr("hrd");
     const pow = attr("pow");
     const spd = attr("spd");
@@ -466,6 +467,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
     ctx.mode = sys.mode === "errantEarth" ? "errantEarth" : "rifts";
     ctx.isEE = ctx.mode === "errantEarth";
+    ctx.sheetTitle = ctx.isEE ? "ERRANT EARTH" : "RIFTS / PALLADIUM";
 
     const A = sys.attributes ?? {};
     const iq = Number(A.iq?.value ?? 0);
@@ -478,33 +480,162 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const level = Number(sys.level ?? 1);
     const C = ErrantEarthCharacterSheet;
 
-    ctx.derived = {
-      iqBonus:         C.iqSkillBonus(iq),
-      psionicSave:     C.psionicSave(me),
-      insanitySave:    C.insanitySave(me),
-      trustIntimidate: C.trustIntimidate(ma),
-      psDamage:        C.psDamage(ps),
-      ppStrike:        C.ppStrike(pp),
-      ppParryDodge:    C.ppParryDodge(pp),
-      peComaSave:      C.peComaSave(pe),
-      peMagicPoison:   C.peMagicPoison(pe),
-      charmImpress:    C.charmImpress(pb),
+    const itemBuckets = {
+      psionicPower: [], spell: [], weapon: [], armor: [], powerArmor: [],
+      vehicle: [], race: [], occ: [], gear: []
+    };
+    for (const item of this.actor.items) {
+      const type = item.type in itemBuckets ? item.type : "gear";
+      itemBuckets[type].push(item);
+    }
+    ctx.itemsByType = itemBuckets;
+    ctx.equippedRaceId = sys.equippedRace ?? "";
+    ctx.equippedOccId  = sys.equippedOcc  ?? "";
+    ctx.equippedRaceItem = ctx.equippedRaceId ? this.actor.items.get(ctx.equippedRaceId) : null;
+    ctx.equippedOccItem  = ctx.equippedOccId  ? this.actor.items.get(ctx.equippedOccId)  : null;
+    ctx.isRCC = !!ctx.equippedOccItem?.system?.isRCC;
+
+    const riftsSources = C._buildRiftsSources([ctx.equippedOccItem, ctx.equippedRaceItem]);
+    if (ctx.isRCC && ctx.equippedRaceItem) riftsSources.warnings.push("RCC replaces Race.");
+    const riftsSourceTotals = riftsSources.totals;
+    const effectiveAttrs = {
+      iq: iq + riftsSourceTotals.attributeBonuses.iq,
+      me: me + riftsSourceTotals.attributeBonuses.me,
+      ma: ma + riftsSourceTotals.attributeBonuses.ma,
+      ps: ps + riftsSourceTotals.attributeBonuses.ps,
+      pp: pp + riftsSourceTotals.attributeBonuses.pp,
+      pe: pe + riftsSourceTotals.attributeBonuses.pe,
+      pb: pb + riftsSourceTotals.attributeBonuses.pb,
+      spd: Number(A.spd?.value ?? 0) + riftsSourceTotals.attributeBonuses.spd
+    };
+
+    const riftsNumber = value => Number(value ?? 0) || 0;
+    const riftsText = value => value == null ? "" : String(value);
+    const riftsCombatTotal = (manual, attribute, base = 0, source = 0) => {
+      const sourcedBase = base + source;
+      return { base: sourcedBase, styleBase: base, manual, attribute, source, total: sourcedBase + manual + attribute };
+    };
+    const riftsThresholdTotal = (manual, base = "") => {
+      const numericBase = Number(base);
+      const numericManual = Number(manual);
+      if (Number.isFinite(numericBase) && Number.isFinite(numericManual)) {
+        return { base, manual, attribute: "", total: numericBase + numericManual };
+      }
+      return { base, manual: riftsText(manual), attribute: "", total: riftsText(manual) || riftsText(base) };
+    };
+    const riftsSaveTotal = (entry, attribute, percent = false, source = 0) => {
+      const manual = riftsNumber(entry?.bonus);
+      const total = manual + attribute + source;
+      return { base: entry?.base ?? "", manual, attribute, source, total, percent, display: percent ? `${total}%` : total };
+    };
+
+    const iqSkillBonus = C.iqSkillBonus(effectiveAttrs.iq);
+    const psionicSave = C.psionicSave(effectiveAttrs.me);
+    const insanitySave = C.insanitySave(effectiveAttrs.me);
+    const trustIntimidate = C.trustIntimidate(effectiveAttrs.ma);
+    const psDamage = C.psDamage(effectiveAttrs.ps);
+    const ppStrike = C.ppStrike(effectiveAttrs.pp);
+    const ppParryDodge = C.ppParryDodge(effectiveAttrs.pp);
+    const peComaSave = C.peComaSave(effectiveAttrs.pe);
+    const peMagicPoison = C.peMagicPoison(effectiveAttrs.pe);
+    const charmImpress = C.charmImpress(effectiveAttrs.pb);
+
+    const hthTables = CONFIG.EE?.RIFTS_HTH_TABLES ?? {};
+    const hthType = hthTables[sys.handToHand?.type] ? sys.handToHand.type : "basic";
+    const hthTable = hthTables[hthType] ?? { levels: [] };
+    const hthBase = {
+      attacks: 0, initiative: 0, strike: 0, parry: 0, dodge: 0, damage: 0,
+      pullPunch: 0, roll: 0, critical: "", knockout: ""
+    };
+    const hthNotes = [];
+    for (const entry of hthTable.levels ?? []) {
+      if (Number(entry.level ?? 0) > level) continue;
+      for (const key of Object.keys(hthBase)) {
+        if (entry[key] !== undefined) hthBase[key] = entry[key];
+      }
+      hthNotes.push(...(entry.notes ?? []).map(note => ({ level: entry.level, text: note })));
+    }
+    const hthManual = {
+      attacks: riftsNumber(sys.handToHand?.attacks),
+      initiative: riftsNumber(sys.handToHand?.initiative),
+      damage: riftsNumber(sys.handToHand?.damage),
+      strike: riftsNumber(sys.handToHand?.strike),
+      parry: riftsNumber(sys.handToHand?.parry),
+      dodge: riftsNumber(sys.handToHand?.dodge),
+      pullPunch: riftsNumber(sys.handToHand?.pullPunch ?? sys.handToHand?.pullRoll),
+      roll: riftsNumber(sys.handToHand?.roll ?? sys.handToHand?.pullRoll),
+      critical: sys.handToHand?.critical ?? 0,
+      knockout: sys.handToHand?.knockout ?? 0
+    };
+    const handToHand = {
+      type: hthType,
+      label: hthTable.label ?? CONFIG.EE?.HTH_TYPES?.[hthType] ?? hthType,
+      level,
+      base: hthBase,
+      notes: hthNotes,
+      attacks: riftsCombatTotal(hthManual.attacks, 0, riftsNumber(hthBase.attacks), riftsSourceTotals.combatBonuses.attacks),
+      initiative: riftsCombatTotal(hthManual.initiative, 0, riftsNumber(hthBase.initiative), riftsSourceTotals.combatBonuses.initiative),
+      damage: riftsCombatTotal(hthManual.damage, psDamage, riftsNumber(hthBase.damage), riftsSourceTotals.combatBonuses.damage),
+      strike: riftsCombatTotal(hthManual.strike, ppStrike, riftsNumber(hthBase.strike), riftsSourceTotals.combatBonuses.strike),
+      parry: riftsCombatTotal(hthManual.parry, ppParryDodge, riftsNumber(hthBase.parry), riftsSourceTotals.combatBonuses.parry),
+      dodge: riftsCombatTotal(hthManual.dodge, ppParryDodge, riftsNumber(hthBase.dodge), riftsSourceTotals.combatBonuses.dodge),
+      pullPunch: riftsCombatTotal(hthManual.pullPunch, 0, riftsNumber(hthBase.pullPunch), riftsSourceTotals.combatBonuses.pullPunch),
+      roll: riftsCombatTotal(hthManual.roll, 0, riftsNumber(hthBase.roll), riftsSourceTotals.combatBonuses.roll),
+      critical: riftsThresholdTotal(hthManual.critical, hthBase.critical),
+      knockout: riftsThresholdTotal(hthManual.knockout, hthBase.knockout)
+    };
+
+    ctx.riftsDerived = {
+      iqSkillBonus,
+      psionicSave,
+      insanitySave,
+      trustIntimidate,
+      psDamage,
+      ppStrike,
+      ppParryDodge,
+      peComaSave,
+      peMagicPoison,
+      charmImpress,
       attrBonuses: {
-        iq:  C.iqSkillBonus(iq) ? `+${C.iqSkillBonus(iq)}% skills` : "",
-        me:  [C.psionicSave(me) ? `+${C.psionicSave(me)} psi` : "", C.insanitySave(me) ? `+${C.insanitySave(me)} insanity` : ""].filter(Boolean).join(", "),
-        ma:  C.trustIntimidate(ma) ? `${C.trustIntimidate(ma)}% trust/intim.` : "",
-        ps:  C.psDamage(ps) ? `+${C.psDamage(ps)} damage` : "",
-        pp:  [C.ppStrike(pp) ? `+${C.ppStrike(pp)} strike` : "", C.ppParryDodge(pp) ? `+${C.ppParryDodge(pp)} parry/dodge` : ""].filter(Boolean).join(", "),
-        pe:  [C.peComaSave(pe) ? `+${C.peComaSave(pe)}% coma/death` : "", C.peMagicPoison(pe) ? `+${C.peMagicPoison(pe)} magic/poison` : ""].filter(Boolean).join(", "),
-        pb:  C.charmImpress(pb) ? `${C.charmImpress(pb)}% charm/impress` : "",
+        iq:  iqSkillBonus ? `+${iqSkillBonus}% skills` : "",
+        me:  [psionicSave ? `+${psionicSave} psi` : "", insanitySave ? `+${insanitySave} insanity` : ""].filter(Boolean).join(", "),
+        ma:  trustIntimidate ? `${trustIntimidate}% trust/intim.` : "",
+        ps:  psDamage ? `+${psDamage} damage` : "",
+        pp:  [ppStrike ? `+${ppStrike} strike` : "", ppParryDodge ? `+${ppParryDodge} parry/dodge` : ""].filter(Boolean).join(", "),
+        pe:  [peComaSave ? `+${peComaSave}% coma/death` : "", peMagicPoison ? `+${peMagicPoison} magic/poison` : ""].filter(Boolean).join(", "),
+        pb:  charmImpress ? `${charmImpress}% charm/impress` : "",
         spd: ""
+      },
+      handToHand,
+      combat: {
+        damage: handToHand.damage,
+        strike: handToHand.strike,
+        parry: handToHand.parry,
+        dodge: handToHand.dodge
+      },
+      saves: {
+        psionics: riftsSaveTotal(sys.savingThrows?.psionics, psionicSave, false, riftsSourceTotals.saveBonuses.psionics),
+        insanity: riftsSaveTotal(sys.savingThrows?.insanity, insanitySave, false, riftsSourceTotals.saveBonuses.insanity),
+        drugPoison: riftsSaveTotal(sys.savingThrows?.drugPoison, peMagicPoison, false, riftsSourceTotals.saveBonuses.drugPoison),
+        death: riftsSaveTotal(sys.savingThrows?.death, peComaSave, true, riftsSourceTotals.saveBonuses.death)
+      },
+      sources: riftsSources.sources,
+      sourceWarnings: riftsSources.warnings,
+      sourceTotals: riftsSourceTotals,
+      effectiveAttrs,
+      pools: {
+        hp: { base: riftsNumber(sys.hp?.max), bonus: riftsSourceTotals.poolBonuses.hp, total: riftsNumber(sys.hp?.max) + riftsSourceTotals.poolBonuses.hp },
+        sdc: { base: riftsNumber(sys.sdc?.max), bonus: riftsSourceTotals.poolBonuses.sdc, total: riftsNumber(sys.sdc?.max) + riftsSourceTotals.poolBonuses.sdc },
+        mdc: { base: riftsNumber(sys.mdc?.max), bonus: riftsSourceTotals.poolBonuses.mdc, total: riftsNumber(sys.mdc?.max) + riftsSourceTotals.poolBonuses.mdc },
+        isp: { base: riftsNumber(sys.isp?.max), bonus: riftsSourceTotals.poolBonuses.isp, total: riftsNumber(sys.isp?.max) + riftsSourceTotals.poolBonuses.isp },
+        ppe: { base: riftsNumber(sys.ppe?.max), bonus: riftsSourceTotals.poolBonuses.ppe, total: riftsNumber(sys.ppe?.max) + riftsSourceTotals.poolBonuses.ppe }
       }
     };
 
     const toArr = ErrantEarthCharacterSheet._toArray;
 
     // Auto-compute skill totals: Base + PerLvl * (Level - 1) + Misc [+ IQ bonus, RIFTS only].
-    const iqBonusForSkills = ctx.isEE ? 0 : ctx.derived.iqBonus;
+    const iqBonusForSkills = ctx.isEE ? 0 : ctx.riftsDerived.iqSkillBonus;
     const skillRows = toArr(sys.skills?.list).map((r, i) => {
       const base   = Number(r.base   ?? 0);
       const perLvl = Number(r.perLvl ?? 0);
@@ -591,25 +722,10 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.system.eeSkills = { ...(ctx.system.eeSkills ?? {}), list: toArr(sys.eeSkills?.list) };
     if (ctx.system.money) ctx.system.money.outfits = toArr(sys.money?.outfits);
 
-    const itemBuckets = {
-      psionicPower: [], spell: [], weapon: [], armor: [], powerArmor: [],
-      vehicle: [], race: [], occ: [], gear: []
-    };
-    for (const item of this.actor.items) {
-      const type = item.type in itemBuckets ? item.type : "gear";
-      itemBuckets[type].push(item);
-    }
-    ctx.itemsByType = itemBuckets;
     const equipmentSources = this.actor.items.map(item => ({ ...item.system, name: item.name, type: item.type, system: item.system }));
     ctx.eeDerived = C.eeDerivedData(sys, equipmentSources);
     ctx.weaponItemsModern  = itemBuckets.weapon.filter(i => (i.system?.category ?? "modern") === "modern");
     ctx.weaponItemsAncient = itemBuckets.weapon.filter(i => i.system?.category === "ancient");
-
-    ctx.equippedRaceId = sys.equippedRace ?? "";
-    ctx.equippedOccId  = sys.equippedOcc  ?? "";
-    ctx.equippedRaceItem = ctx.equippedRaceId ? this.actor.items.get(ctx.equippedRaceId) : null;
-    ctx.equippedOccItem  = ctx.equippedOccId  ? this.actor.items.get(ctx.equippedOccId)  : null;
-    ctx.isRCC = !!ctx.equippedOccItem?.system?.isRCC;
 
     // Granted abilities from equipped OCC + Race, flattened with a source label
     // for display on the Powers tab.

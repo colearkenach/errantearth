@@ -44,6 +44,138 @@ EE.HTH_TYPES = {
   assassin:    "Assassin"
 };
 
+// RIFTS hand-to-hand advancement tables. Values are cumulative base bonuses
+// unlocked at the listed level; actor sheet manual fields are added on top.
+const RIFTS_HTH_BASE = {
+  attacks: 0,
+  initiative: 0,
+  strike: 0,
+  parry: 0,
+  dodge: 0,
+  damage: 0,
+  pullPunch: 0,
+  roll: 0,
+  critical: "",
+  knockout: ""
+};
+const RIFTS_HTH_STATS = Object.keys(RIFTS_HTH_BASE);
+const riftsHthLevels = entries => {
+  const running = { ...RIFTS_HTH_BASE };
+  return entries.map(entry => {
+    for (const key of RIFTS_HTH_STATS) {
+      if (entry[key] !== undefined) running[key] = entry[key];
+    }
+    return {
+      level: entry.level,
+      ...running,
+      notes: entry.notes ?? []
+    };
+  });
+};
+
+EE.RIFTS_HTH_TABLES = {
+  basic: {
+    label: EE.HTH_TYPES.basic,
+    levels: riftsHthLevels([
+      { level: 1, attacks: 4, strike: 0, parry: 0, dodge: 0, damage: 0, pullPunch: 0, roll: 0, critical: 20, knockout: 20, notes: ["Basic combat training"] },
+      { level: 2, parry: 2, dodge: 2, notes: ["Improved defensive footwork"] },
+      { level: 3, roll: 2, pullPunch: 2, notes: ["Pull punch and roll with punch/fall"] },
+      { level: 4, strike: 1 },
+      { level: 5, attacks: 5, notes: ["Additional attack per melee"] },
+      { level: 6, damage: 2 },
+      { level: 7, initiative: 1 },
+      { level: 8, strike: 2, parry: 3, dodge: 3 },
+      { level: 9, attacks: 6, notes: ["Additional attack per melee"] },
+      { level: 10, roll: 3, pullPunch: 3 },
+      { level: 11, critical: 19, notes: ["Improved critical strike range"] },
+      { level: 12, damage: 4 },
+      { level: 13, attacks: 7, notes: ["Additional attack per melee"] },
+      { level: 14, parry: 4, dodge: 4 },
+      { level: 15, strike: 3, initiative: 2 }
+    ])
+  },
+  expert: {
+    label: EE.HTH_TYPES.expert,
+    levels: riftsHthLevels([
+      { level: 1, attacks: 4, strike: 1, parry: 2, dodge: 2, damage: 0, pullPunch: 0, roll: 0, critical: 20, knockout: 20, notes: ["Expert combat training"] },
+      { level: 2, initiative: 1 },
+      { level: 3, roll: 2, pullPunch: 2, notes: ["Pull punch and roll with punch/fall"] },
+      { level: 4, strike: 2 },
+      { level: 5, attacks: 5, notes: ["Additional attack per melee"] },
+      { level: 6, parry: 3, dodge: 3 },
+      { level: 7, damage: 2 },
+      { level: 8, initiative: 2 },
+      { level: 9, attacks: 6, notes: ["Additional attack per melee"] },
+      { level: 10, critical: 19, notes: ["Improved critical strike range"] },
+      { level: 11, roll: 3, pullPunch: 3 },
+      { level: 12, strike: 3 },
+      { level: 13, attacks: 7, notes: ["Additional attack per melee"] },
+      { level: 14, parry: 4, dodge: 4, damage: 4 },
+      { level: 15, knockout: 19, notes: ["Improved knockout/stun range"] }
+    ])
+  },
+  martialArts: {
+    label: EE.HTH_TYPES.martialArts,
+    levels: riftsHthLevels([
+      { level: 1, attacks: 4, strike: 1, parry: 3, dodge: 3, damage: 0, pullPunch: 0, roll: 0, critical: 20, knockout: 20, notes: ["Martial arts training", "Kick attacks available"] },
+      { level: 2, initiative: 1, roll: 2, pullPunch: 2, notes: ["Pull punch and roll with punch/fall"] },
+      { level: 3, strike: 2 },
+      { level: 4, parry: 4, dodge: 4, notes: ["Body flip/throw options"] },
+      { level: 5, attacks: 5, notes: ["Additional attack per melee"] },
+      { level: 6, damage: 2 },
+      { level: 7, critical: 19, notes: ["Improved critical strike range"] },
+      { level: 8, initiative: 2 },
+      { level: 9, attacks: 6, roll: 3, pullPunch: 3, notes: ["Additional attack per melee"] },
+      { level: 10, strike: 3 },
+      { level: 11, knockout: 19, notes: ["Improved knockout/stun range"] },
+      { level: 12, parry: 5, dodge: 5, damage: 4 },
+      { level: 13, attacks: 7, notes: ["Additional attack per melee"] },
+      { level: 14, critical: 18, notes: ["Advanced critical strike range"] },
+      { level: 15, initiative: 3, strike: 4 }
+    ])
+  },
+  commando: {
+    label: EE.HTH_TYPES.commando,
+    levels: riftsHthLevels([
+      { level: 1, attacks: 5, initiative: 1, strike: 1, parry: 3, dodge: 3, damage: 2, pullPunch: 1, roll: 1, critical: 20, knockout: 20, notes: ["Military close-combat training", "Multiple armed/unarmed combat options"] },
+      { level: 2, roll: 2, pullPunch: 2, notes: ["Improved pull punch and roll with punch/fall"] },
+      { level: 3, strike: 2 },
+      { level: 4, parry: 4, dodge: 4 },
+      { level: 5, attacks: 6, notes: ["Additional attack per melee"] },
+      { level: 6, initiative: 2 },
+      { level: 7, critical: 19, notes: ["Improved critical strike range"] },
+      { level: 8, damage: 4 },
+      { level: 9, attacks: 7, notes: ["Additional attack per melee"] },
+      { level: 10, strike: 3, roll: 3, pullPunch: 3 },
+      { level: 11, knockout: 19, notes: ["Improved knockout/stun range"] },
+      { level: 12, parry: 5, dodge: 5 },
+      { level: 13, attacks: 8, notes: ["Additional attack per melee"] },
+      { level: 14, critical: 18, notes: ["Advanced critical strike range"] },
+      { level: 15, initiative: 3, strike: 4, damage: 6 }
+    ])
+  },
+  assassin: {
+    label: EE.HTH_TYPES.assassin,
+    levels: riftsHthLevels([
+      { level: 1, attacks: 4, strike: 2, parry: 2, dodge: 2, damage: 2, pullPunch: 0, roll: 0, critical: 20, knockout: 20, notes: ["Assassin combat training", "Lethal strikes emphasized"] },
+      { level: 2, initiative: 1 },
+      { level: 3, roll: 2, pullPunch: 2, notes: ["Pull punch and roll with punch/fall"] },
+      { level: 4, strike: 3 },
+      { level: 5, attacks: 5, notes: ["Additional attack per melee"] },
+      { level: 6, critical: 19, notes: ["Improved critical strike range"] },
+      { level: 7, damage: 4 },
+      { level: 8, parry: 3, dodge: 3 },
+      { level: 9, attacks: 6, initiative: 2, notes: ["Additional attack per melee"] },
+      { level: 10, knockout: 19, notes: ["Improved knockout/stun range"] },
+      { level: 11, strike: 4 },
+      { level: 12, roll: 3, pullPunch: 3 },
+      { level: 13, attacks: 7, notes: ["Additional attack per melee"] },
+      { level: 14, critical: 18, notes: ["Advanced critical strike range"] },
+      { level: 15, damage: 6, initiative: 3 }
+    ])
+  }
+};
+
 EE.VEHICLE_TYPES = {
   ground:     "Ground",
   air:        "Air",
@@ -409,28 +541,17 @@ EE.EE_ATTRIBUTE_TIERS = {
 };
 
 EE.EE_SKILL_CATEGORIES = {
-  academics:    "Academics",
-  animal:       "Animal",
-  arcane:       "Arcane",
-  athletics:    "Athletics",
-  awareness:    "Awareness",
-  combat:       "Combat",
-  craft:        "Craft",
-  culture:      "Culture",
-  deception:    "Deception",
-  exploration:  "Exploration",
-  influence:    "Influence",
-  medical:      "Medical",
-  mobility:     "Mobility",
-  operation:    "Operation",
-  performance:  "Performance",
-  science:      "Science",
-  stealth:      "Stealth",
-  streetwise:   "Streetwise",
-  survival:     "Survival",
-  technology:   "Technology",
-  vehicles:     "Vehicles",
-  wilderness:   "Wilderness"
+  cultural:    "Cultural and Domestic",
+  electronics: "Electronics and Mechanics",
+  espionage:   "Espionage and Rogue",
+  medical:     "Medical",
+  military:    "Military",
+  people:      "People",
+  science:     "Science",
+  technical:   "Technical",
+  psychic:     "Psychic",
+  magic:       "Magic",
+  wilderness:  "Wilderness"
 };
 
 EE.EE_SKILL_TAGS = {
@@ -463,31 +584,121 @@ EE.EE_SKILL_TAGS = {
   weapon:        "Weapon"
 };
 
+// Errant Earth uses a percentile skill model. Each skill has a Base success
+// chance plus three tiered progressions per level: Core (focus), Trained
+// (working knowledge), and Hobby (casual). The `open` flag marks skills that
+// require a specialization (e.g. "Language (Open)" -> player picks language).
 EE.EE_SKILL_LIST = [
-  { key: "acrobatics",     name: "Acrobatics",      attribute: "fin", category: "athletics",   tags: "mobility" },
-  { key: "animalHandling", name: "Animal Handling", attribute: "anm", category: "animal",      tags: "social,survival" },
-  { key: "arcana",         name: "Arcana",          attribute: "wil", category: "arcane",      tags: "magic,lore" },
-  { key: "athletics",      name: "Athletics",       attribute: "pow", category: "athletics",   tags: "mobility" },
-  { key: "craft",          name: "Craft",           attribute: "fin", category: "craft",       tags: "crafting,downtime" },
-  { key: "deception",      name: "Deception",       attribute: "com", category: "deception",   tags: "social,contested" },
-  { key: "drive",          name: "Drive",           attribute: "fin", category: "vehicles",    tags: "vehicle,pilot" },
-  { key: "endurance",      name: "Endurance",       attribute: "hrd", category: "survival",    tags: "survival" },
-  { key: "hacking",        name: "Hacking",         attribute: "wil", category: "technology",  tags: "tech,hacking" },
-  { key: "investigation",  name: "Investigation",   attribute: "wil", category: "awareness",   tags: "investigation" },
-  { key: "lore",           name: "Lore",            attribute: "wil", category: "academics",   tags: "lore" },
-  { key: "medicine",       name: "Medicine",        attribute: "wil", category: "medical",     tags: "medical" },
-  { key: "melee",          name: "Melee",           attribute: "pow", category: "combat",      tags: "combat,weapon" },
-  { key: "notice",         name: "Notice",          attribute: "wil", category: "awareness",   tags: "investigation" },
-  { key: "performance",    name: "Performance",     attribute: "com", category: "performance", tags: "social" },
-  { key: "persuasion",     name: "Persuasion",      attribute: "com", category: "influence",   tags: "social" },
-  { key: "pilot",          name: "Pilot",           attribute: "fin", category: "vehicles",    tags: "vehicle,pilot" },
-  { key: "ranged",         name: "Ranged",          attribute: "fin", category: "combat",      tags: "combat,weapon" },
-  { key: "science",        name: "Science",         attribute: "wil", category: "science",     tags: "investigation" },
-  { key: "sleightOfHand",  name: "Sleight of Hand", attribute: "fin", category: "deception",   tags: "contested" },
-  { key: "stealth",        name: "Stealth",         attribute: "fin", category: "stealth",     tags: "contested" },
-  { key: "streetwise",     name: "Streetwise",      attribute: "com", category: "streetwise",  tags: "social,investigation" },
-  { key: "survival",       name: "Survival",        attribute: "anm", category: "wilderness",  tags: "survival,exploration" },
-  { key: "technology",     name: "Technology",      attribute: "wil", category: "technology",  tags: "tech" }
+  // Cultural and Domestic
+  { key: "appraisal",         name: "Appraisal",         category: "cultural",    base: 35, core: 8,  trained: 3, hobby: 0 },
+  { key: "cooking",           name: "Cooking",           category: "cultural",    base: 50, core: 12, trained: 7, hobby: 3 },
+  { key: "domesticWork",      name: "Domestic Work",     category: "cultural",    base: 50, core: 12, trained: 7, hobby: 3 },
+  { key: "language",          name: "Language (Open)",   category: "cultural",    base: 35, core: 10, trained: 5, hobby: 1, open: true },
+  { key: "literacy",          name: "Literacy (Open)",   category: "cultural",    base: 20, core: 8,  trained: 3, hobby: 0, open: true },
+  { key: "loreCultural",      name: "Lore (Open)",       category: "cultural",    base: 50, core: 10, trained: 5, hobby: 1, open: true },
+  { key: "memetics",          name: "Memetics",          category: "cultural",    base: 50, core: 4,  trained: 0, hobby: 0 },
+  { key: "trade",             name: "Trade (Open)",      category: "cultural",    base: 35, core: 10, trained: 5, hobby: 1, open: true },
+  { key: "trinkets",          name: "Trinkets",          category: "cultural",    base: 50, core: 12, trained: 7, hobby: 3 },
+  { key: "wardrobe",          name: "Wardrobe",          category: "cultural",    base: 50, core: 12, trained: 7, hobby: 3 },
+
+  // Electronics and Mechanics
+  { key: "modeller3d",        name: "3D Modeller",       category: "electronics", base: 20, core: 8,  trained: 3, hobby: 0 },
+  { key: "collapseMechnika",  name: "Collapse Mechnika", category: "electronics", base: 5,  core: 10, trained: 5, hobby: 0 },
+  { key: "computerUse",       name: "Computer Use",      category: "electronics", base: 20, core: 8,  trained: 3, hobby: 0 },
+  { key: "cybernetics",       name: "Cybernetics",       category: "electronics", base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "demolitions",       name: "Demolitions",       category: "electronics", base: 20, core: 8,  trained: 3, hobby: 0 },
+  { key: "earthMechanics",    name: "Earth Mechanics (Open)", category: "electronics", base: 50, core: 10, trained: 5, hobby: 0, open: true },
+  { key: "exoMechanics",      name: "Exo Mechanics",     category: "electronics", base: 5,  core: 8,  trained: 3, hobby: 0 },
+  { key: "radio",             name: "Radio",             category: "electronics", base: 50, core: 12, trained: 7, hobby: 3 },
+  { key: "robotics",          name: "Robotics",          category: "electronics", base: 35, core: 10, trained: 5, hobby: 1 },
+
+  // Espionage and Rogue
+  { key: "concealment",       name: "Concealment",       category: "espionage",   base: 50, core: 10, trained: 5, hobby: 1 },
+  { key: "disguise",          name: "Disguise",          category: "espionage",   base: 35, core: 12, trained: 7, hobby: 3 },
+  { key: "forgery",           name: "Forgary",           category: "espionage",   base: 20, core: 8,  trained: 3, hobby: 0 },
+  { key: "gambling",          name: "Gambling",          category: "espionage",   base: 35, core: 12, trained: 7, hobby: 3 },
+  { key: "intelGathering",    name: "Intelligence Gathering", category: "espionage", base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "investigation",     name: "Investigation",     category: "espionage",   base: 35, core: 12, trained: 7, hobby: 3 },
+  { key: "lockpicking",       name: "Lockpicking",       category: "espionage",   base: 35, core: 8,  trained: 3, hobby: 0 },
+  { key: "search",            name: "Search",            category: "espionage",   base: 50, core: 12, trained: 7, hobby: 3 },
+  { key: "sleightOfHand",     name: "Sleight of Hand",   category: "espionage",   base: 50, core: 10, trained: 5, hobby: 1 },
+  { key: "stealth",           name: "Stealth",           category: "espionage",   base: 50, core: 12, trained: 7, hobby: 3 },
+  { key: "streetwise",        name: "Streetwise",        category: "espionage",   base: 50, core: 12, trained: 7, hobby: 3 },
+
+  // Medical
+  { key: "cyberdoctoring",    name: "Cyberdoctoring",    category: "medical",     base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "exodoctoring",      name: "Exodoctoring",      category: "medical",     base: 5,  core: 8,  trained: 3, hobby: 0 },
+  { key: "fieldMedicine",     name: "Field Medicine",    category: "medical",     base: 35, core: 8,  trained: 3, hobby: 0 },
+  { key: "holisticMedicine",  name: "Holistic Medicine", category: "medical",     base: 50, core: 12, trained: 7, hobby: 3 },
+  { key: "medtech",           name: "Medtech",           category: "medical",     base: 20, core: 8,  trained: 3, hobby: 0 },
+  { key: "psychology",        name: "Psychology",        category: "medical",     base: 20, core: 8,  trained: 3, hobby: 0 },
+  { key: "traditionalMedicine", name: "Traditional Medicine", category: "medical", base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "veterinary",        name: "Veterinary",        category: "medical",     base: 35, core: 8,  trained: 3, hobby: 0 },
+
+  // Military
+  { key: "armory",            name: "Armory",            category: "military",    base: 50, core: 8,  trained: 3, hobby: 0 },
+  { key: "commandStructure",  name: "Command Structure", category: "military",    base: 50, core: 8,  trained: 3, hobby: 0 },
+  { key: "dueling",           name: "Dueling",           category: "military",    base: 35, core: 8,  trained: 3, hobby: 0 },
+  { key: "electronicWarfare", name: "Electronic Warfare", category: "military",   base: 20, core: 8,  trained: 3, hobby: 0 },
+  { key: "fortification",     name: "Fortification",     category: "military",    base: 35, core: 8,  trained: 3, hobby: 0 },
+  { key: "militaryHistory",   name: "Military History",  category: "military",    base: 50, core: 4,  trained: 0, hobby: 0 },
+  { key: "monsterHunter",     name: "Monster Hunter",    category: "military",    base: 20, core: 10, trained: 5, hobby: 1 },
+  { key: "scouter",           name: "Scouter",           category: "military",    base: 35, core: 12, trained: 7, hobby: 3 },
+  { key: "tactics",           name: "Tactics",           category: "military",    base: 20, core: 8,  trained: 3, hobby: 0 },
+
+  // People
+  { key: "animalHusbandry",   name: "Animal Husbandry",  category: "people",      base: 50, core: 8,  trained: 3, hobby: 0 },
+  { key: "banter",            name: "Banter",            category: "people",      base: 50, core: 12, trained: 7, hobby: 3 },
+  { key: "barter",            name: "Barter",            category: "people",      base: 50, core: 8,  trained: 3, hobby: 0 },
+  { key: "charm",             name: "Charm",             category: "people",      base: 50, core: 10, trained: 5, hobby: 1 },
+  { key: "command",           name: "Command",           category: "people",      base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "diplomacy",         name: "Diplomacy",         category: "people",      base: 20, core: 10, trained: 5, hobby: 1 },
+  { key: "empathy",           name: "Empathy",           category: "people",      base: 20, core: 12, trained: 7, hobby: 3 },
+  { key: "etiquette",         name: "Etiquette",         category: "people",      base: 50, core: 8,  trained: 3, hobby: 0 },
+  { key: "performance",       name: "Performance (Open)", category: "people",     base: 50, core: 10, trained: 5, hobby: 1, open: true },
+  { key: "signLanguage",      name: "Sign Language (Open)", category: "people",   base: 20, core: 10, trained: 5, hobby: 1, open: true },
+
+  // Science
+  { key: "astraKnowledge",    name: "Astra Knowledge",   category: "science",     base: 20, core: 4,  trained: 0, hobby: 0 },
+  { key: "formalScience",     name: "Formal Science (Open)", category: "science", base: 20, core: 10, trained: 5, hobby: 1, open: true },
+  { key: "naturalSciences",   name: "Natural Sciences (Open)", category: "science", base: 20, core: 10, trained: 5, hobby: 1, open: true },
+  { key: "preCollapseHistory", name: "Pre-Collapse History", category: "science", base: 5,  core: 4,  trained: 0, hobby: 0 },
+  { key: "psychoPhenomenon",  name: "Psycho Phenomenon", category: "science",     base: 20, core: 4,  trained: 0, hobby: 0 },
+  { key: "socialSciences",    name: "Social Sciences (Open)", category: "science", base: 35, core: 10, trained: 5, hobby: 1, open: true },
+  { key: "tearKnowledge",     name: "Tear Knowledge",    category: "science",     base: 5,  core: 10, trained: 5, hobby: 1 },
+  { key: "xenoScience",       name: "Xeno Science (Open)", category: "science",   base: 5,  core: 8,  trained: 3, hobby: 0, open: true },
+
+  // Technical
+  { key: "architecture",      name: "Architecture",      category: "technical",   base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "daredevil",         name: "Daredevil",         category: "technical",   base: 20, core: 10, trained: 5, hobby: 1 },
+  { key: "navigation",        name: "Navigation",        category: "technical",   base: 50, core: 8,  trained: 3, hobby: 0 },
+  { key: "piloting",          name: "Piloting (Open)",   category: "technical",   base: 50, core: 8,  trained: 3, hobby: 0, open: true },
+  { key: "salvageOperations", name: "Salvage Operations", category: "technical",  base: 50, core: 12, trained: 7, hobby: 3 },
+  { key: "sensorEquipment",   name: "Sensor Equipment",  category: "technical",   base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "technical",         name: "Technical (Open)",  category: "technical",   base: 35, core: 10, trained: 5, hobby: 1, open: true },
+
+  // Psychic
+  { key: "identifyPsychicPower", name: "Identify Psychic Power", category: "psychic", base: 20, core: 12, trained: 7, hobby: 3 },
+  { key: "readPsychicSignature", name: "Read Psychic Signature", category: "psychic", base: 35, core: 12, trained: 7, hobby: 3 },
+  { key: "shivers",           name: "Shivers",           category: "psychic",     base: 50, core: 4,  trained: 0, hobby: 0 },
+  { key: "trancing",          name: "Trancing",          category: "psychic",     base: 20, core: 10, trained: 5, hobby: 1 },
+
+  // Magic
+  { key: "druidicCircles",    name: "Druidic Circles",   category: "magic",       base: 20, core: 8,  trained: 3, hobby: 0 },
+  { key: "elementalPhysics",  name: "Elemental Physics", category: "magic",       base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "fiendKnowledge",    name: "Fiend Knowledge",   category: "magic",       base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "schoolOfOccultism", name: "School of Occultism", category: "magic",     base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "technomancy",       name: "Technomancy",       category: "magic",       base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "theurgy",           name: "Theurgy",           category: "magic",       base: 20, core: 8,  trained: 3, hobby: 0 },
+  { key: "tulpamancy",        name: "Tulpamancy",        category: "magic",       base: 5,  core: 4,  trained: 0, hobby: 0 },
+
+  // Wilderness
+  { key: "camouflage",        name: "Camouflage",        category: "wilderness",  base: 50, core: 8,  trained: 3, hobby: 0 },
+  { key: "naturalism",        name: "Naturalism",        category: "wilderness",  base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "landNavigation",    name: "Land Navigation",   category: "wilderness",  base: 35, core: 12, trained: 7, hobby: 3 },
+  { key: "tracking",          name: "Tracking",          category: "wilderness",  base: 35, core: 10, trained: 5, hobby: 1 },
+  { key: "bushcraft",         name: "Bushcraft",         category: "wilderness",  base: 50, core: 8,  trained: 3, hobby: 0 },
+  { key: "homesteading",      name: "Homesteading",      category: "wilderness",  base: 20, core: 10, trained: 5, hobby: 1 }
 ];
 
 EE.EE_DAMAGE_SCALES = {
