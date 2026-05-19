@@ -685,7 +685,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       const rank        = Number(r.rank ?? 0);
       const proficiency = Number(r.proficiency ?? 0);
       const bonus       = Number(r.bonus ?? 0);
-      const total       = attrValue + rank + proficiency + bonus;
+      const total       = attrValue + rank + (proficiency * Math.max(1, level)) + bonus;
       return { ...r, _index: i, attrValue, total };
     });
     ctx.eeSkills = { list: eeSkillRows };
