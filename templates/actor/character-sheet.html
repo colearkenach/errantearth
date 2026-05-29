@@ -1298,7 +1298,8 @@
                             <h4>Ancient</h4>
                             {{#each wpAncient}}
                             <label class="ee-wp-check">
-                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                                <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" value="true" {{eeChecked checked}} />
                                 {{name}}
                             </label>
                             {{/each}}
@@ -1307,7 +1308,8 @@
                             <h4>Modern</h4>
                             {{#each wpModern}}
                             <label class="ee-wp-check">
-                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                                <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" value="true" {{eeChecked checked}} />
                                 {{name}}
                             </label>
                             {{/each}}
