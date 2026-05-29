@@ -7,6 +7,23 @@ Hooks.once("init", async () => {
   CONFIG.EE = EE;
   game.ee = EE;
 
+  game.settings.register("errantearth", "rulesMode", {
+    name: "Rules Mode",
+    hint: "Choose whether each character sheet can select its own rules mode, or force all sheets to use Errant Earth or RIFTS rules.",
+    scope: "world",
+    config: true,
+    type: String,
+    default: "perSheet",
+    choices: {
+      perSheet: "Per-sheet toggle",
+      errantEarth: "Use Errant Earth Rules",
+      rifts: "Use RIFTS Rules"
+    },
+    onChange: () => {
+      for (const actor of game.actors ?? []) actor.sheet?.render(false);
+    }
+  });
+
   Actors.unregisterSheet("core", ActorSheet);
   Items.unregisterSheet("core", ItemSheet);
   Actors.registerSheet("errantearth", ErrantEarthCharacterSheet, {

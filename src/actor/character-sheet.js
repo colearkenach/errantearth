@@ -564,8 +564,14 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const sys = ctx.actor.system;
     ctx.config = CONFIG.EE ?? {};
 
-    ctx.mode = sys.mode === "errantEarth" ? "errantEarth" : "rifts";
+    ctx.rulesModeSetting = C._rulesModeSetting();
+    ctx.canToggleMode = ctx.rulesModeSetting === "perSheet";
+    ctx.mode = C._effectiveRulesMode(sys);
     ctx.isEE = ctx.mode === "errantEarth";
+    ctx.rulesModeLabel = ctx.isEE ? "Use Errant Earth Rules" : "Use RIFTS Rules";
+    ctx.rulesModeHint = ctx.canToggleMode
+      ? "Switch this character between Errant Earth and RIFTS rules. Character data is preserved."
+      : `World setting is forcing ${ctx.rulesModeLabel}; per-sheet switching is disabled.`;
     ctx.sheetTitle = ctx.isEE ? "ERRANT EARTH" : "RIFTS / PALLADIUM";
 
     const A = sys.attributes ?? {};
@@ -1033,7 +1039,28 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     });
   }
 
+  static _rulesModeSetting() {
+    try {
+      return game.settings.get("errantearth", "rulesMode") ?? "perSheet";
+    } catch (err) {
+      return "perSheet";
+    }
+  }
+
+  static _effectiveRulesMode(sys = {}) {
+    const setting = ErrantEarthCharacterSheet._rulesModeSetting();
+    if (setting === "errantEarth" || setting === "rifts") return setting;
+    return sys.mode === "errantEarth" ? "errantEarth" : "rifts";
+  }
+
+  _isErrantEarthMode() {
+    return ErrantEarthCharacterSheet._effectiveRulesMode(this.actor.system) === "errantEarth";
+  }
+
   async _onToggleMode(ev) {
+    if (ErrantEarthCharacterSheet._rulesModeSetting() !== "perSheet") {
+      return this.render(false);
+    }
     const mode = ev.currentTarget.checked ? "errantEarth" : "rifts";
     return this.actor.update({ "system.mode": mode });
   }
@@ -1229,7 +1256,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const type  = el.dataset.rollType;
     const label = el.dataset.label || "Roll";
     const PIS = ErrantEarthCharacterSheet._parseIntSafe;
-    const isEE = this.actor.system.mode === "errantEarth";
+    const isEE = this._isErrantEarthMode();
     const eeDerived = ErrantEarthCharacterSheet.eeDerivedData(this.actor.system);
 
     const card = { kind: type, label, subtitle: "", outcome: "", outcomeClass: "" };
@@ -1584,7 +1611,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const btn = ev.currentTarget;
     let path = btn.dataset.path;
     const kind = btn.dataset.kind;
-    if (kind === "skill" && this.actor.system.mode === "errantEarth") path = "eeSkills.list";
+    if (kind === "skill" && this._isErrantEarthMode()) path = "eeSkills.list";
     const arr  = foundry.utils.deepClone(this._getArrayPath(path));
     arr.push(this._blankRow(kind, path));
     await this.actor.update({ [`system.${path}`]: arr });
@@ -1595,7 +1622,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const sel = ev.currentTarget;
     const key = sel.value;
     const category = sel.dataset.category;
-    const isEE = this.actor.system.mode === "errantEarth" || sel.dataset.ee === "true";
+    const isEE = this._isErrantEarthMode() || sel.dataset.ee === "true";
     if (!key) return;
 
     if (isEE) {
@@ -1662,7 +1689,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   _blankRow(kind, path = "") {
     switch (kind) {
       case "skill":
-        if (path === "eeSkills.list" || this.actor.system.mode === "errantEarth") {
+        if (path === "eeSkills.list" || this._isErrantEarthMode()) {
           return { key: "", name: "", category: "", tags: "", rank: 0, proficiency: 0, bonus: 0, notes: "", custom: true };
         }
         return { key: "", name: "", base: 0, perLvl: 0, misc: 0, category: "", custom: true };
