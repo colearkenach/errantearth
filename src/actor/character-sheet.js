@@ -1644,6 +1644,33 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return Object.prototype.hasOwnProperty.call(choices, value) ? value : "";
   }
 
+  static _coerceBoolean(value) {
+    if (Array.isArray(value)) return ErrantEarthCharacterSheet._coerceBoolean(value.at(-1));
+    if (typeof value === "boolean") return value;
+    if (typeof value === "string") return ["true", "on", "1", "yes"].includes(value.toLowerCase());
+    return !!value;
+  }
+
+  static _normalizeWeaponProficiencies(expanded) {
+    const selected = expanded?.system?.weaponProficiencies?.selected;
+    const wpList = CONFIG.EE?.WP_LIST;
+    if (!selected || !wpList) return expanded;
+
+    const normalized = { ...selected };
+    const known = [
+      ...(wpList.ancient ?? []),
+      ...(wpList.modern ?? [])
+    ];
+
+    for (const { key } of known) {
+      if (!key) continue;
+      normalized[key] = ErrantEarthCharacterSheet._coerceBoolean(selected[key]);
+    }
+
+    expanded.system.weaponProficiencies.selected = normalized;
+    return expanded;
+  }
+
   static _normalizeEeDerivedAdjustments(expanded) {
     const walk = value => {
       if (!value || typeof value !== "object" || Array.isArray(value)) return;
