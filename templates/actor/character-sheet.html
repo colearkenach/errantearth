@@ -179,7 +179,7 @@
                 <div class="ee-ee-adjust-grid">
                     <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Bonus</div><div class="ee-ee-adjust-head">Manual</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
                     <label>Natural Survival Rating (NSR)</label><output>{{eeDerived.defense.nsr.base}}</output><output>{{eeDerived.defense.nsr.bonus}}</output><input type="number" name="system.eeDerived.defense.nsr.bonus" value="{{system.eeDerived.defense.nsr.bonus}}" /><input type="number" name="system.eeDerived.defense.nsr.override" value="{{system.eeDerived.defense.nsr.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.defense.nsr.total}}</output>
-                    <label>Mystic Survival Rating (MSR)</label><output>{{eeDerived.defense.msr.base}}</output><output>{{eeDerived.defense.msr.bonus}}</output><input type="number" name="system.eeDerived.defense.msr.bonus" value="{{system.eeDerived.defense.msr.bonus}}" /><input type="number" name="system.eeDerived.defense.msr.override" value="{{system.eeDerived.defense.msr.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.defense.msr.total}}</output>
+                    <label>Mechanized Survival Rating (MSR)</label><output>{{eeDerived.defense.msr.base}}</output><output>{{eeDerived.defense.msr.bonus}}</output><input type="number" name="system.eeDerived.defense.msr.bonus" value="{{system.eeDerived.defense.msr.bonus}}" /><input type="number" name="system.eeDerived.defense.msr.override" value="{{system.eeDerived.defense.msr.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.defense.msr.total}}</output>
                     <label>Armor Rating</label><output>{{eeDerived.defense.armorRating.base}}</output><output>{{eeDerived.defense.armorRating.bonus}}</output><input type="number" name="system.eeDerived.defense.armorRating.bonus" value="{{system.eeDerived.defense.armorRating.bonus}}" /><input type="number" name="system.eeDerived.defense.armorRating.override" value="{{system.eeDerived.defense.armorRating.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.defense.armorRating.total}}</output>
                 </div>
             </div>
@@ -709,9 +709,9 @@
                             <a class="ee-edit" data-action="edit-adjustable" data-path="defense.nsr" data-label="Natural Survival Rating" title="Edit NSR"><i class="fas fa-pencil"></i></a>
                         </div>
                         <div class="ee-kv">
-                            <label>Mystic Survival Rating:</label><output>{{eeDerived.defense.msr.total}}</output>
-                            <a data-action="roll" data-roll-type="eeDefense" data-target="{{eeDerived.defense.msr.total}}" data-label="Mystic Survival Rating" title="Roll MSR"><i class="fas fa-shield-halved"></i></a>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="defense.msr" data-label="Mystic Survival Rating" title="Edit MSR"><i class="fas fa-pencil"></i></a>
+                            <label>Mechanized Survival Rating:</label><output>{{eeDerived.defense.msr.total}}</output>
+                            <a data-action="roll" data-roll-type="eeDefense" data-target="{{eeDerived.defense.msr.total}}" data-label="Mechanized Survival Rating" title="Roll MSR"><i class="fas fa-shield-halved"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="defense.msr" data-label="Mechanized Survival Rating" title="Edit MSR"><i class="fas fa-pencil"></i></a>
                         </div>
                         <div class="ee-kv">
                             <label>Armor Rating:</label><output>{{eeDerived.defense.armorRating.total}}</output>
