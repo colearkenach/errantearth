@@ -5,10 +5,16 @@
     <header class="ee-banner">
         <img class="ee-banner-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
         <div class="ee-banner-title">{{sheetTitle}}</div>
-        <label class="ee-mode-toggle" title="Switch this character to Errant Earth rules. RIFTS data is preserved.">
+        {{#if canToggleMode}}
+        <label class="ee-mode-toggle" title="{{rulesModeHint}}">
             <input type="checkbox" data-action="toggle-mode" {{#if isEE}} checked{{/if}} />
-            {{#if isEE}}Use Errant Earth Rules{{else}}Using RIFTS Rules{{/if}}
+            {{rulesModeLabel}}
         </label>
+        {{else}}
+        <div class="ee-mode-toggle ee-mode-locked" title="{{rulesModeHint}}">
+            <i class="fas fa-lock"></i> {{rulesModeLabel}}
+        </div>
+        {{/if}}
     </header>
 
     {{!-- ============ CHARACTER OVERVIEW ============ --}}

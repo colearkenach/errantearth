@@ -860,6 +860,11 @@ color: var(--ee-red, #8a1f1f);
   cursor: pointer; z-index: 2;
 }
 .ee-mode-toggle input { cursor: pointer; }
+.ee-mode-locked {
+  cursor: default;
+  opacity: 0.85;
+}
+.ee-mode-locked i { margin-right: 2px; }
 .ee-ee-attrs label { font-weight: bold; }
 .ee-ee-attrs input { width: 3em; }
 .ee-roll-attr { cursor: pointer; color: var(--ee-red, #8a1f1f); margin-right: 4px; }
