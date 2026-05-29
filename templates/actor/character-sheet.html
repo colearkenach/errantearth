@@ -525,7 +525,7 @@
                             <td class="ee-total">{{total}}</td>
                             <td><input type="text" name="system.eeSkills.list.{{_index}}.notes" value="{{notes}}" /></td>
                             <td class="ee-actions">
-                                <a data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
+                                <a data-action="roll" data-roll-type="eeSkill" data-tags="{{tags}}" data-tier="{{../eeDerived.tier}}" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
                                 <a data-action="delete-row" data-path="eeSkills.list" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
                             </td>
                         </tr>
