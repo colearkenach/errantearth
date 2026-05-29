@@ -138,10 +138,18 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   static _eeAdjustable(base, path, bonus = 0) {
     const stored = path && typeof path === "object" ? path : {};
-    const storedBonus = Number(stored.bonus ?? 0);
+    const manualBonus = Number(stored.bonus ?? 0);
+    const sourceBonus = Number(bonus ?? 0);
     const override = stored.override === "" || stored.override === null || stored.override === undefined ? null : Number(stored.override);
-    const total = Number.isFinite(override) ? override : Number(base ?? 0) + Number(bonus ?? 0) + storedBonus;
-    return { base: Number(base ?? 0), bonus: Number(bonus ?? 0) + storedBonus, override: Number.isFinite(override) ? override : null, total };
+    const total = Number.isFinite(override) ? override : Number(base ?? 0) + sourceBonus + manualBonus;
+    return {
+      base: Number(base ?? 0),
+      sourceBonus,
+      manualBonus,
+      bonus: sourceBonus + manualBonus,
+      override: Number.isFinite(override) ? override : null,
+      total
+    };
   }
 
   static _eeTextBonus(source, keys) {
@@ -1580,6 +1588,16 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return Object.prototype.hasOwnProperty.call(choices, value) ? value : "";
   }
 
+  static _normalizeEeDerivedAdjustments(expanded) {
+    const walk = value => {
+      if (!value || typeof value !== "object" || Array.isArray(value)) return;
+      if (Object.prototype.hasOwnProperty.call(value, "override") && value.override === "") value.override = null;
+      for (const child of Object.values(value)) walk(child);
+    };
+    walk(expanded?.system?.eeDerived);
+    return expanded;
+  }
+
   static _validateEnums(expanded) {
     const cfg = CONFIG.EE;
     if (!cfg || !expanded?.system) return expanded;
@@ -1614,6 +1632,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   async _updateObject(event, formData) {
     const expanded = ErrantEarthCharacterSheet._coerceArrays(foundry.utils.expandObject(formData));
+    ErrantEarthCharacterSheet._normalizeEeDerivedAdjustments(expanded);
     ErrantEarthCharacterSheet._validateEnums(expanded);
     return this.document.update(expanded);
   }
