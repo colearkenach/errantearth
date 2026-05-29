@@ -174,7 +174,14 @@
             <div class="ee-ee-derived-category">
                 <h4>Defense</h4>
                 <div class="ee-ee-derived-cards">
-                    <label class="ee-ee-derived-card ee-ee-derived-editable"><span class="ee-ee-derived-label">Size</span><input type="text" name="system.eeDerived.defense.size" value="{{eeDerived.defense.size}}" /></label>
+                    <label class="ee-ee-derived-card ee-ee-derived-editable">
+                        <span class="ee-ee-derived-label">Size</span>
+                        <select name="system.eeCombat.defenses.size">
+                            {{#each eeSizeOptions}}
+                            <option value="{{this}}" {{#if (eq this ../eeDerived.defense.size)}}selected{{/if}}>{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </label>
                 </div>
                 <div class="ee-ee-adjust-grid">
                     <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Bonus</div><div class="ee-ee-adjust-head">Manual</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
@@ -522,7 +529,14 @@
                 <div class="ee-ee-derived-category">
                     <h4>Defense</h4>
                     <div class="ee-ee-derived-cards">
-                        <label class="ee-ee-derived-card ee-ee-derived-editable"><span class="ee-ee-derived-label">Size</span><input type="text" name="system.eeDerived.defense.size" value="{{eeDerived.defense.size}}" /></label>
+                        <label class="ee-ee-derived-card ee-ee-derived-editable">
+                            <span class="ee-ee-derived-label">Size</span>
+                            <select name="system.eeCombat.defenses.size">
+                                {{#each eeSizeOptions}}
+                                <option value="{{this}}" {{#if (eq this ../eeDerived.defense.size)}}selected{{/if}}>{{this}}</option>
+                                {{/each}}
+                            </select>
+                        </label>
                     </div>
                     <div class="ee-ee-adjust-grid">
                         <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Bonus</div><div class="ee-ee-adjust-head">Manual</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
