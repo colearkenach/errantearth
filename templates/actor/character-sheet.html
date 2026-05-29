@@ -46,7 +46,11 @@
             </select>
             {{/unless}}
             <label>Alignment:</label>
+            {{#if isEE}}
+            <button type="button" class="ee-ee-alignment-btn" data-action="ee-alignment" title="Choose Errant Earth alignment (Morality × Ethics)">{{#if system.eeAlignment.name}}{{system.eeAlignment.name}}{{else}}— Set Alignment —{{/if}}</button>
+            {{else}}
             <select name="system.alignment">{{eeSelectOptions config.ALIGNMENTS system.alignment}}</select>
+            {{/if}}
             <label>Level:</label>     <input type="number" name="system.level" value="{{system.level}}" min="1" />
             <label>XP:</label>        <input type="number" name="system.xp" value="{{system.xp}}" />
             <label>Next Level:</label><input type="number" name="system.nextLevel" value="{{system.nextLevel}}" />
@@ -54,12 +58,21 @@
 
         <div class="ee-row">
             <label>Age:</label>       <input type="text" name="system.bio.age" value="{{system.bio.age}}" />
-            <label>Life Span:</label> <input type="text" name="system.bio.lifeSpan" value="{{system.bio.lifeSpan}}" />
             <label>Height:</label>    <input type="text" name="system.bio.height" value="{{system.bio.height}}" />
             <label>Weight:</label>    <input type="text" name="system.bio.weight" value="{{system.bio.weight}}" />
+            {{#unless isEE}}
+            <label>Life Span:</label> <input type="text" name="system.bio.lifeSpan" value="{{system.bio.lifeSpan}}" />
             <label>Chi:</label>       <input type="text" name="system.bio.chi" value="{{system.bio.chi}}" />
+            {{/unless}}
         </div>
 
+        {{#if isEE}}
+        <div class="ee-row">
+            <label>Current Karma:</label><input type="number" name="system.karma.current" value="{{system.karma.current}}" />
+            <label>Total Karma:</label>  <input type="number" name="system.karma.total" value="{{system.karma.total}}" />
+            <label>Native Language(s):</label><input type="text" name="system.bio.nativeLanguages" value="{{system.bio.nativeLanguages}}" />
+        </div>
+        {{else}}
         <div class="ee-row">
             <label>Family Origin:</label>    <input type="text" name="system.bio.familyOrigin" value="{{system.bio.familyOrigin}}" />
             <label>Environment:</label>      <input type="text" name="system.bio.environment" value="{{system.bio.environment}}" />
@@ -71,6 +84,7 @@
             <label>Sentiments — Evil:</label><input type="text" name="system.bio.sentimentsEvil" value="{{system.bio.sentimentsEvil}}" />
             <label>Insanity:</label>         <input type="text" name="system.bio.insanity" value="{{system.bio.insanity}}" />
         </div>
+        {{/if}}
 
         {{#unless isEE}}
         <div class="ee-row ee-attrs">
@@ -203,9 +217,6 @@
             <label>Health:</label><input type="number" value="{{eeDerived.health.health.total}}" disabled />
             <label>Scars:</label><input type="number" value="{{eeDerived.health.scars.value}}" disabled /> /
             <input type="number" value="{{eeDerived.health.scars.max}}" disabled />
-            <label>Hunger:</label>
-            <input type="number" name="system.hunger.value" value="{{system.hunger.value}}" /> /
-            <input type="number" name="system.hunger.max" value="{{system.hunger.max}}" />
         </div>
 
         <div class="ee-row ee-pools ee-ee-header-pools">
@@ -332,7 +343,7 @@
         {{#if isEE}}<a class="item" data-tab="derived">Derived</a>{{/if}}
         <a class="item" data-tab="powers">Powers</a>
         <a class="item" data-tab="vehicle">Vehicle</a>
-        <a class="item" data-tab="items">Items</a>
+        {{#unless isEE}}<a class="item" data-tab="items">Items</a>{{/unless}}
         <a class="item" data-tab="misc">Misc</a>
     </nav>
 
@@ -362,7 +373,7 @@
                         <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Bonus</div><div class="ee-ee-adjust-head">Manual</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
                         <label>Endurance</label><output>{{eeDerived.health.endurance.base}}</output><output>{{eeDerived.health.endurance.bonus}}</output><input type="number" name="system.eeDerived.health.endurance.bonus" value="{{eeDerived.health.endurance.manualBonus}}" /><input type="number" name="system.eeDerived.health.endurance.override" value="{{eeDerived.health.endurance.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.health.endurance.total}}</output>
                         <label>Health</label><output>{{eeDerived.health.health.base}}</output><output>{{eeDerived.health.health.bonus}}</output><input type="number" name="system.eeDerived.health.health.bonus" value="{{eeDerived.health.health.manualBonus}}" /><input type="number" name="system.eeDerived.health.health.override" value="{{eeDerived.health.health.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.health.health.total}}</output>
-                        <label>Scars</label><output>—</output><output>—</output><output title="Current scars">{{eeDerived.health.scars.value}}</output><output title="Maximum scars">{{eeDerived.health.scars.max}}</output><output class="ee-ee-derived-total">{{eeDerived.health.scars.value}} / {{eeDerived.health.scars.max}}</output>
+                        <label>Scars</label><output>—</output><output>—</output><input type="number" name="system.eeCombat.health.scars.value" value="{{eeDerived.health.scars.value}}" title="Current scars" /><input type="number" name="system.eeCombat.health.scars.max" value="{{eeDerived.health.scars.max}}" title="Maximum scars" /><output class="ee-ee-derived-total">{{eeDerived.health.scars.value}} / {{eeDerived.health.scars.max}}</output>
                     </div>
                 </div>
 
@@ -451,37 +462,21 @@
                 </div>
 
                 <div class="ee-ee-derived-category">
-                    <h4>Armor</h4>
-                    <div class="ee-ee-adjust-grid">
-                        <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Bonus</div><div class="ee-ee-adjust-head">Manual</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
-                        <label>Armor Rating</label><output>{{eeDerived.armor.rating.base}}</output><output>{{eeDerived.armor.rating.bonus}}</output><input type="number" name="system.eeDerived.armor.rating.bonus" value="{{eeDerived.armor.rating.manualBonus}}" /><input type="number" name="system.eeDerived.armor.rating.override" value="{{eeDerived.armor.rating.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.armor.rating.total}}</output>
-                        <label>Armor Soak</label><output>{{eeDerived.armor.soak.base}}</output><output>{{eeDerived.armor.soak.bonus}}</output><input type="number" name="system.eeDerived.armor.soak.bonus" value="{{eeDerived.armor.soak.manualBonus}}" /><input type="number" name="system.eeDerived.armor.soak.override" value="{{eeDerived.armor.soak.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.armor.soak.total}}</output>
-                        <label>Armor Resistance</label><output>{{eeDerived.armor.resistance.base}}</output><output>{{eeDerived.armor.resistance.bonus}}</output><input type="number" name="system.eeDerived.armor.resistance.bonus" value="{{eeDerived.armor.resistance.manualBonus}}" /><input type="number" name="system.eeDerived.armor.resistance.override" value="{{eeDerived.armor.resistance.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.armor.resistance.total}}</output>
+                    <h4>Armor (Worn)</h4>
+                    <div class="ee-ee-derived-cards">
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Durability</span><output>{{eeDerived.armorSummary.durability.value}} / {{eeDerived.armorSummary.durability.max}}</output></div>
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Armor Rating</span><output>{{eeDerived.armorSummary.ar.total}}</output></div>
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Best Base AR</span><output>{{eeDerived.armorSummary.ar.best}}</output></div>
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">AR Bonus</span><output>{{eeDerived.armorSummary.ar.bonus}}</output></div>
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Maneuverability</span><output>{{eeDerived.armorSummary.maneuver.flat}} / {{eeDerived.armorSummary.maneuver.percent}}%</output></div>
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Simmer Rating</span><output>{{eeDerived.armorSummary.sr}}</output></div>
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Formality</span><output>{{eeDerived.armorSummary.formality}}</output></div>
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Heat Resist</span><output>{{eeDerived.armorSummary.resist.heat}}</output></div>
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Cold Resist</span><output>{{eeDerived.armorSummary.resist.cold}}</output></div>
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Radiation Resist</span><output>{{eeDerived.armorSummary.resist.radiation}}</output></div>
+                        <div class="ee-ee-derived-card"><span class="ee-ee-derived-label">Earthblood Resist</span><output>{{eeDerived.armorSummary.resist.earthblood}}</output></div>
                     </div>
-                </div>
-
-                <div class="ee-ee-derived-category">
-                    <h4>Soak</h4>
-                    <div class="ee-ee-adjust-grid">
-                        <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Bonus</div><div class="ee-ee-adjust-head">Manual</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
-                        <label>Physical Soak</label><output>{{eeDerived.soak.physical.base}}</output><output>{{eeDerived.soak.physical.bonus}}</output><input type="number" name="system.eeDerived.soak.physical.bonus" value="{{eeDerived.soak.physical.manualBonus}}" /><input type="number" name="system.eeDerived.soak.physical.override" value="{{eeDerived.soak.physical.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.soak.physical.total}}</output>
-                        <label>Energy Soak</label><output>{{eeDerived.soak.energy.base}}</output><output>{{eeDerived.soak.energy.bonus}}</output><input type="number" name="system.eeDerived.soak.energy.bonus" value="{{eeDerived.soak.energy.manualBonus}}" /><input type="number" name="system.eeDerived.soak.energy.override" value="{{eeDerived.soak.energy.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.soak.energy.total}}</output>
-                        <label>Magic Soak</label><output>{{eeDerived.soak.magic.base}}</output><output>{{eeDerived.soak.magic.bonus}}</output><input type="number" name="system.eeDerived.soak.magic.bonus" value="{{eeDerived.soak.magic.manualBonus}}" /><input type="number" name="system.eeDerived.soak.magic.override" value="{{eeDerived.soak.magic.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.soak.magic.total}}</output>
-                        <label>Psychic Soak</label><output>{{eeDerived.soak.psychic.base}}</output><output>{{eeDerived.soak.psychic.bonus}}</output><input type="number" name="system.eeDerived.soak.psychic.bonus" value="{{eeDerived.soak.psychic.manualBonus}}" /><input type="number" name="system.eeDerived.soak.psychic.override" value="{{eeDerived.soak.psychic.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.soak.psychic.total}}</output>
-                    </div>
-                </div>
-
-                <div class="ee-ee-derived-category">
-                    <h4>Resistance</h4>
-                    <div class="ee-ee-adjust-grid">
-                        <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Bonus</div><div class="ee-ee-adjust-head">Manual</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
-                        <label>Physical Resistance</label><output>{{eeDerived.resistance.physical.base}}</output><output>{{eeDerived.resistance.physical.bonus}}</output><input type="number" name="system.eeDerived.resistance.physical.bonus" value="{{eeDerived.resistance.physical.manualBonus}}" /><input type="number" name="system.eeDerived.resistance.physical.override" value="{{eeDerived.resistance.physical.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.resistance.physical.total}}</output>
-                        <label>Energy Resistance</label><output>{{eeDerived.resistance.energy.base}}</output><output>{{eeDerived.resistance.energy.bonus}}</output><input type="number" name="system.eeDerived.resistance.energy.bonus" value="{{eeDerived.resistance.energy.manualBonus}}" /><input type="number" name="system.eeDerived.resistance.energy.override" value="{{eeDerived.resistance.energy.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.resistance.energy.total}}</output>
-                        <label>Magic Resistance</label><output>{{eeDerived.resistance.magic.base}}</output><output>{{eeDerived.resistance.magic.bonus}}</output><input type="number" name="system.eeDerived.resistance.magic.bonus" value="{{eeDerived.resistance.magic.manualBonus}}" /><input type="number" name="system.eeDerived.resistance.magic.override" value="{{eeDerived.resistance.magic.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.resistance.magic.total}}</output>
-                        <label>Psychic Resistance</label><output>{{eeDerived.resistance.psychic.base}}</output><output>{{eeDerived.resistance.psychic.bonus}}</output><input type="number" name="system.eeDerived.resistance.psychic.bonus" value="{{eeDerived.resistance.psychic.manualBonus}}" /><input type="number" name="system.eeDerived.resistance.psychic.override" value="{{eeDerived.resistance.psychic.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.resistance.psychic.total}}</output>
-                        <label>Toxin Resistance</label><output>{{eeDerived.resistance.toxins.base}}</output><output>{{eeDerived.resistance.toxins.bonus}}</output><input type="number" name="system.eeDerived.resistance.toxins.bonus" value="{{eeDerived.resistance.toxins.manualBonus}}" /><input type="number" name="system.eeDerived.resistance.toxins.override" value="{{eeDerived.resistance.toxins.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.resistance.toxins.total}}</output>
-                        <label>Horror Resistance</label><output>{{eeDerived.resistance.horror.base}}</output><output>{{eeDerived.resistance.horror.bonus}}</output><input type="number" name="system.eeDerived.resistance.horror.bonus" value="{{eeDerived.resistance.horror.manualBonus}}" /><input type="number" name="system.eeDerived.resistance.horror.override" value="{{eeDerived.resistance.horror.override}}" placeholder="Auto" /><output class="ee-ee-derived-total">{{eeDerived.resistance.horror.total}}</output>
-                    </div>
+                    <p class="ee-muted">Combined from worn armor pieces (Eq) on the Combat tab.</p>
                 </div>
 
                 <div class="ee-ee-derived-category">
@@ -542,14 +537,6 @@
                     </div>
                 </div>
             </section>
-
-            <div class="ee-row ee-ee-tier">
-                <label>Attribute Tier:</label>
-                <select name="system.eeAttributeTier">{{eeSelectOptions config.EE_ATTRIBUTE_TIERS system.eeAttributeTier}}</select>
-                <label>Actions:</label><input type="number" name="system.eeCombat.actions" value="{{system.eeCombat.actions}}" />
-                <label>Momentum:</label><input type="number" name="system.eeCombat.momentum" value="{{system.eeCombat.momentum}}" />
-                <label>Reactions:</label><input type="number" name="system.eeCombat.reactions" value="{{system.eeCombat.reactions}}" />
-            </div>
         </div>
         {{/if}}
 
@@ -799,7 +786,6 @@
                     </div>
                 </div>
 
-                <div class="ee-combat-top">
                     <div class="ee-panel">
                         <h3>Movement</h3>
                         <div class="ee-kv"><label>Reaction Rating:</label><output>{{eeDerived.movement.reaction.rating}}</output></div>
@@ -822,46 +808,52 @@
                         <div class="ee-kv"><label>Jump Horiz. Stand/Run:</label><output>{{eeDerived.movement.liftCarryJump.horizontalStand}} / {{eeDerived.movement.liftCarryJump.horizontalRun}}</output></div>
                     </div>
 
-                    <div class="ee-panel">
-                        <h3>Armor, Soak & Resistance</h3>
-                        <div class="ee-kv"><label>Armor Name:</label><input type="text" name="system.eeCombat.armor.name" value="{{system.eeCombat.armor.name}}" /></div>
-                        <div class="ee-kv"><label>Armor Soak:</label><output>{{eeDerived.armor.soak.total}}</output>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="armor.soak" data-base-path="eeCombat.armor.soak" data-label="Armor Soak" title="Edit Armor Soak"><i class="fas fa-pencil"></i></a>
+                    <div class="ee-panel ee-ee-armor">
+                        <h3>Armor</h3>
+                        <div class="ee-ee-armor-summary">
+                            <div class="ee-kv"><label>Durability (worn):</label><output>{{eeDerived.armorSummary.durability.value}} / {{eeDerived.armorSummary.durability.max}}</output></div>
+                            <div class="ee-kv"><label>Armor Rating:</label><output>{{eeDerived.armorSummary.ar.total}}</output> <span class="ee-muted">(best {{eeDerived.armorSummary.ar.best}} + {{eeDerived.armorSummary.ar.bonus}} bonus)</span></div>
+                            <div class="ee-kv"><label>Maneuverability:</label><output>{{eeDerived.armorSummary.maneuver.flat}} / {{eeDerived.armorSummary.maneuver.percent}}%</output></div>
+                            <div class="ee-kv"><label>Simmer Rating (SR):</label><output>{{eeDerived.armorSummary.sr}}</output></div>
+                            <div class="ee-kv"><label>Formality:</label><output>{{eeDerived.armorSummary.formality}}</output></div>
+                            <div class="ee-kv"><label>Resist (Heat/Cold/Rad/Earthblood):</label><output>{{eeDerived.armorSummary.resist.heat}} / {{eeDerived.armorSummary.resist.cold}} / {{eeDerived.armorSummary.resist.radiation}} / {{eeDerived.armorSummary.resist.earthblood}}</output></div>
                         </div>
-                        <div class="ee-kv"><label>Armor Resistance:</label><output>{{eeDerived.armor.resistance.total}}</output>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="armor.resistance" data-base-path="eeCombat.armor.resistance" data-label="Armor Resistance" title="Edit Armor Resistance"><i class="fas fa-pencil"></i></a>
-                        </div>
-                        <div class="ee-kv"><label>Armor Scale:</label><input type="text" name="system.eeCombat.armor.damageScale" value="{{eeDerived.armor.damageScale}}" /></div>
-                        <div class="ee-kv"><label>Physical Soak/Resist:</label><output>{{eeDerived.soak.physical.total}} / {{eeDerived.resistance.physical.total}}</output>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="soak.physical" data-base-path="eeCombat.soak.physical" data-label="Physical Soak" title="Edit Physical Soak"><i class="fas fa-pencil"></i></a>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.physical" data-base-path="eeCombat.resistance.physical" data-label="Physical Resistance" title="Edit Physical Resistance"><i class="fas fa-shield-halved"></i></a>
-                        </div>
-                        <div class="ee-kv"><label>Energy Soak/Resist:</label><output>{{eeDerived.soak.energy.total}} / {{eeDerived.resistance.energy.total}}</output>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="soak.energy" data-base-path="eeCombat.soak.energy" data-label="Energy Soak" title="Edit Energy Soak"><i class="fas fa-pencil"></i></a>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.energy" data-base-path="eeCombat.resistance.energy" data-label="Energy Resistance" title="Edit Energy Resistance"><i class="fas fa-shield-halved"></i></a>
-                        </div>
-                        <div class="ee-kv">
-                            <label>Magic Soak/Resist:</label><output>{{eeDerived.soak.magic.total}} / {{eeDerived.resistance.magic.total}}</output>
-                            <a data-action="roll" data-roll-type="eeResistance" data-bonus="{{eeDerived.resistance.magic.total}}" data-label="Magic Resistance" title="Roll Magic Resistance"><i class="fas fa-wand-magic-sparkles"></i></a>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="soak.magic" data-base-path="eeCombat.soak.magic" data-label="Magic Soak" title="Edit Magic Soak"><i class="fas fa-pencil"></i></a>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.magic" data-base-path="eeCombat.resistance.magic" data-label="Magic Resistance" title="Edit Magic Resistance"><i class="fas fa-shield-halved"></i></a>
-                        </div>
-                        <div class="ee-kv">
-                            <label>Psychic Soak/Resist:</label><output>{{eeDerived.soak.psychic.total}} / {{eeDerived.resistance.psychic.total}}</output>
-                            <a data-action="roll" data-roll-type="eeResistance" data-bonus="{{eeDerived.resistance.psychic.total}}" data-label="Psychic Resistance" title="Roll Psychic Resistance"><i class="fas fa-brain"></i></a>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="soak.psychic" data-base-path="eeCombat.soak.psychic" data-label="Psychic Soak" title="Edit Psychic Soak"><i class="fas fa-pencil"></i></a>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.psychic" data-base-path="eeCombat.resistance.psychic" data-label="Psychic Resistance" title="Edit Psychic Resistance"><i class="fas fa-shield-halved"></i></a>
-                        </div>
-                        <div class="ee-kv">
-                            <label>Toxin Resistance:</label><output>{{eeDerived.resistance.toxins.total}}</output>
-                            <a data-action="roll" data-roll-type="eeResistance" data-bonus="{{eeDerived.resistance.toxins.total}}" data-label="Toxin Resistance" title="Roll Toxin Resistance"><i class="fas fa-flask"></i></a>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.toxins" data-base-path="eeCombat.resistance.toxins" data-label="Toxin Resistance" title="Edit Toxin Resistance"><i class="fas fa-pencil"></i></a>
-                        </div>
-                        <div class="ee-kv">
-                            <label>Horror Resistance:</label><output>{{eeDerived.resistance.horror.total}}</output>
-                            <a data-action="roll" data-roll-type="eeResistance" data-bonus="{{eeDerived.resistance.horror.total}}" data-label="Horror Resistance" title="Roll Horror Resistance"><i class="fas fa-ghost"></i></a>
-                            <a class="ee-edit" data-action="edit-adjustable" data-path="resistance.horror" data-base-path="eeCombat.resistance.horror" data-label="Horror Resistance" title="Edit Horror Resistance"><i class="fas fa-pencil"></i></a>
-                        </div>
+                        <table class="ee-table ee-ee-armor-table">
+                            <thead><tr>
+                                <th title="Worn">Eq</th><th>Name</th><th>Layer</th><th>Weight</th><th>Variant</th>
+                                <th title="Current / Max">Durability</th><th title="Base AR">AR</th><th title="AR Bonus">+AR</th>
+                                <th title="Maneuverability flat / %">Maneuver</th><th title="Simmer Rating">SR</th><th>Form.</th>
+                                <th title="Heat">Ht</th><th title="Cold">Cd</th><th title="Radiation">Rd</th><th title="Earthblood">EB</th><th></th>
+                            </tr></thead>
+                            <tbody>
+                                {{#each system.eeCombat.armorPieces}}
+                                <tr>
+                                    <td><input type="checkbox" data-action="armor-equip" data-index="{{@index}}" {{#if equipped}}checked{{/if}} title="Worn (one per layer)" /></td>
+                                    <td><input type="text" name="system.eeCombat.armorPieces.{{@index}}.name" value="{{name}}" /></td>
+                                    <td><select name="system.eeCombat.armorPieces.{{@index}}.layer">
+                                        <option value="UA" {{#if (eq layer "UA")}}selected{{/if}}>UA</option>
+                                        <option value="OA" {{#if (eq layer "OA")}}selected{{/if}}>OA</option>
+                                        <option value="PLATE" {{#if (eq layer "PLATE")}}selected{{/if}}>PLATE</option>
+                                    </select></td>
+                                    <td><input type="text" name="system.eeCombat.armorPieces.{{@index}}.weight" value="{{weight}}" placeholder="Light…" /></td>
+                                    <td><input type="text" name="system.eeCombat.armorPieces.{{@index}}.variant" value="{{variant}}" placeholder="HEV…" /></td>
+                                    <td class="ee-ee-armor-pair"><input type="number" name="system.eeCombat.armorPieces.{{@index}}.durability.value" value="{{durability.value}}" /> / <input type="number" name="system.eeCombat.armorPieces.{{@index}}.durability.max" value="{{durability.max}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.ar.base" value="{{ar.base}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.ar.bonus" value="{{ar.bonus}}" /></td>
+                                    <td class="ee-ee-armor-pair"><input type="number" name="system.eeCombat.armorPieces.{{@index}}.maneuver.flat" value="{{maneuver.flat}}" /> / <input type="number" name="system.eeCombat.armorPieces.{{@index}}.maneuver.percent" value="{{maneuver.percent}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.sr" value="{{sr}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.formality" value="{{formality}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.resist.heat" value="{{resist.heat}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.resist.cold" value="{{resist.cold}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.resist.radiation" value="{{resist.radiation}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.resist.earthblood" value="{{resist.earthblood}}" /></td>
+                                    <td><a data-action="delete-row" data-path="eeCombat.armorPieces" data-index="{{@index}}" title="Remove"><i class="fas fa-times"></i></a></td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <button type="button" class="ee-add" data-action="add-row" data-path="eeCombat.armorPieces" data-kind="eeArmor">+ Add Armor</button>
+                        <p class="ee-muted">Tick <strong>Eq</strong> for each worn piece (one Under, one Over, one Plating). Worn pieces combine: Durability adds, best Base AR plus every AR bonus, and Maneuverability / SR / Formality / resistances add together.</p>
                     </div>
 
                     <div class="ee-panel ee-weapons">
@@ -885,6 +877,30 @@
                         </table>
                         <button type="button" class="ee-add" data-action="add-row" data-path="weapons.modern" data-kind="modernWeapon">+ Add Weapon</button>
                     </div>
+
+                <div class="ee-panel ee-weapon-proficiencies">
+                    <h3>Weapon Proficiencies</h3>
+                    <p class="ee-muted">Archaic Projectile/Melee Weapons and Archaic Firearms cover all Standard-damage variants; the rest are Mega-damage proficiencies.</p>
+                    <div class="ee-wp-flat">
+                        {{#each eeWp}}
+                        <label class="ee-wp-check">
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                            {{name}}
+                        </label>
+                        {{/each}}
+                    </div>
+                    <h4>Custom W.P.</h4>
+                    <table class="ee-table">
+                        <tbody>
+                            {{#each system.weaponProficiencies.custom}}
+                            <tr>
+                                <td><input type="text" name="system.weaponProficiencies.custom.{{@index}}.name" value="{{name}}" placeholder="Custom W.P." /></td>
+                                <td class="ee-actions"><a data-action="delete-row" data-path="weaponProficiencies.custom" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies.custom" data-kind="wpCustom">+ Add Custom W.P.</button>
                 </div>
 
                 <div class="ee-panel">
@@ -1222,42 +1238,6 @@
                         </tbody>
                     </table>
                     {{/if}}
-
-                    <h3>Weapon Proficiencies</h3>
-                    <div class="ee-wp-grid">
-                        <div class="ee-wp-col">
-                            <h4>Ancient</h4>
-                            {{#each wpAncient}}
-                            <label class="ee-wp-check">
-                                <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
-                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" value="true" {{eeChecked checked}} />
-                                {{name}}
-                            </label>
-                            {{/each}}
-                        </div>
-                        <div class="ee-wp-col">
-                            <h4>Modern</h4>
-                            {{#each wpModern}}
-                            <label class="ee-wp-check">
-                                <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
-                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" value="true" {{eeChecked checked}} />
-                                {{name}}
-                            </label>
-                            {{/each}}
-                        </div>
-                    </div>
-                    <h4>Custom W.P.</h4>
-                    <table class="ee-table">
-                        <tbody>
-                            {{#each system.weaponProficiencies.custom}}
-                            <tr>
-                                <td><input type="text" name="system.weaponProficiencies.custom.{{@index}}.name" value="{{name}}" placeholder="Custom W.P." /></td>
-                                <td class="ee-actions"><a data-action="delete-row" data-path="weaponProficiencies.custom" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies.custom" data-kind="wpCustom">+ Add Custom W.P.</button>
                 </div>
             </div>
 
@@ -1789,6 +1769,7 @@
 
 
         {{!-- ===== ITEMS TAB ===== --}}
+        {{#unless isEE}}
         <div class="tab ee-items-tab" data-group="primary" data-tab="items">
             <h2 class="ee-bar">ITEMS</h2>
             <p>Drag items from the Items directory onto this sheet, or click + to create a new one.</p>
@@ -1921,6 +1902,7 @@
                 </ul>
             </div>
         </div>
+        {{/unless}}
 
         {{!-- ===== MISC TAB ===== --}}
         <div class="tab" data-group="primary" data-tab="misc">
@@ -1929,6 +1911,9 @@
             <div class="ee-misc-grid">
                 <div class="ee-panel">
                     <h3>Currency</h3>
+                    {{#if isEE}}
+                    <div class="ee-kv"><label>Credits (GLC):</label><input type="number" name="system.currency.credits" value="{{system.currency.credits}}" /></div>
+                    {{else}}
                     <div class="ee-kv"><label>Coalition Credits:</label><input type="number" name="system.currency.coalition" value="{{system.currency.coalition}}" /></div>
                     <div class="ee-kv"><label>NGMI Credits:</label><input type="number" name="system.currency.ngmi" value="{{system.currency.ngmi}}" /></div>
                     <div class="ee-kv"><label>Black Market Credits:</label><input type="number" name="system.currency.blackMarket" value="{{system.currency.blackMarket}}" /></div>
@@ -1937,6 +1922,7 @@
                     <div class="ee-kv"><label>Other:</label><input type="number" name="system.currency.other" value="{{system.currency.other}}" /></div>
                     <div class="ee-kv"><label>Salary:</label><input type="text" name="system.money.salary" value="{{system.money.salary}}" /></div>
                     <div class="ee-kv"><label>Black Market Items:</label><input type="text" name="system.money.blackMarketItems" value="{{system.money.blackMarketItems}}" /></div>
+                    {{/if}}
                 </div>
 
                 <div class="ee-panel ee-equipment">

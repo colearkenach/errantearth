@@ -75,27 +75,9 @@
           "jumpHorizontalRun": 0
         },
         "armor": {
-          "name": "",
-          "rating": 0,
-          "soak": 0,
-          "resistance": 0,
-          "damageScale": "S",
-          "notes": ""
+          "rating": 0
         },
-        "soak": {
-          "physical": 0,
-          "energy": 0,
-          "magic": 0,
-          "psychic": 0
-        },
-        "resistance": {
-          "physical": 0,
-          "energy": 0,
-          "magic": 0,
-          "psychic": 0,
-          "toxins": 0,
-          "horror": 0
-        },
+        "armorPieces": [],
         "notes": ""
       },
       "magic": {
@@ -120,6 +102,15 @@
       "xp": 0,
       "nextLevel": 0,
       "alignment": "",
+      "eeAlignment": {
+        "morality": "",
+        "ethics": "",
+        "name": ""
+      },
+      "karma": {
+        "current": 0,
+        "total": 0
+      },
       "psionicLevel": "none",
       "bio": {
         "age": "",
@@ -471,6 +462,7 @@
       "contacts": [],
       "characterHistory": "",
       "currency": {
+        "credits": 0,
         "coalition": 0,
         "ngmi": 0,
         "blackMarket": 0,
@@ -682,93 +674,6 @@
             "total": 0
           },
           "horrorWillpower": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          }
-        },
-        "armor": {
-          "name": "",
-          "rating": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "soak": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "resistance": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "damageScale": "S",
-          "notes": ""
-        },
-        "soak": {
-          "physical": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "energy": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "magic": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "psychic": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          }
-        },
-        "resistance": {
-          "physical": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "energy": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "magic": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "psychic": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "toxins": {
-            "base": 0,
-            "bonus": 0,
-            "override": null,
-            "total": 0
-          },
-          "horror": {
             "base": 0,
             "bonus": 0,
             "override": null,

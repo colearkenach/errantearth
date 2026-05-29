@@ -298,6 +298,21 @@ color: var(--ee-red, #8a1f1f);
   margin-bottom: 6px;
 }
 
+.ee-wp-flat {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 2px 12px;
+  margin-bottom: 6px;
+}
+
+.ee-ee-alignment-btn {
+  width: auto;
+  height: 22px;
+  line-height: 20px;
+  padding: 0 10px;
+  font-weight: 600;
+}
+
 .ee-wp-col h4 {
   margin: 0 0 2px 0;
   font-size: 12px;

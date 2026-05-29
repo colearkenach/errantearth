@@ -145,6 +145,35 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return Math.ceil(nums.reduce((sum, v) => sum + v, 0) / Math.max(1, nums.length));
   }
 
+  /** Aggregate the Drifter's worn armor per the Errant Earth rules:
+   *  Durability/Maneuverability/SR/Formality/Resistances all add together,
+   *  while Armor Rating takes the BEST base and adds every AR bonus on top.
+   *  Only pieces flagged `equipped` are counted. */
+  static _eeAggregateArmor(pieces) {
+    const equipped = ErrantEarthCharacterSheet._toArray(pieces)
+      .map((p, i) => ({ ...p, _index: i }))
+      .filter(p => p && ErrantEarthCharacterSheet._coerceBoolean(p.equipped));
+    const num = (p, path) => Number(path.split(".").reduce((o, k) => (o ? o[k] : undefined), p)) || 0;
+    const sum = path => equipped.reduce((t, p) => t + num(p, path), 0);
+    const best = path => equipped.reduce((m, p) => Math.max(m, num(p, path)), 0);
+    const bestBase = best("ar.base");
+    const bonus = sum("ar.bonus");
+    return {
+      count: equipped.length,
+      durability: { value: sum("durability.value"), max: sum("durability.max") },
+      ar: { best: bestBase, bonus, total: bestBase + bonus },
+      maneuver: { flat: sum("maneuver.flat"), percent: sum("maneuver.percent") },
+      sr: sum("sr"),
+      formality: sum("formality"),
+      resist: {
+        heat: sum("resist.heat"),
+        cold: sum("resist.cold"),
+        radiation: sum("resist.radiation"),
+        earthblood: sum("resist.earthblood")
+      }
+    };
+  }
+
   static _eeAdjustable(base, path, bonus = 0) {
     const stored = path && typeof path === "object" ? path : {};
     const manualBonus = Number(stored.bonus ?? 0);
@@ -254,14 +283,14 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const momentum = ErrantEarthCharacterSheet._eeAdjustable(momentumBase, stored.combat?.momentum, bonus("combat.momentum", ["momentum"]));
     const reactions = ErrantEarthCharacterSheet._eeAdjustable(reactionsBase, stored.combat?.reactions, bonus("combat.reactions", ["reactions?"]));
     const thresholds = combatStored.health?.thresholds ?? {};
-    const armorBlock = combatStored.armor ?? {};
+    const eeArmor = ErrantEarthCharacterSheet._eeAggregateArmor(combatStored.armorPieces);
     const equipmentArmorRating = equipmentSources.reduce((max, source) => Math.max(max, Number(source?.ar ?? source?.system?.ar ?? 0)), 0);
-    const armorRatingBase = Math.max(Number(combatStored.defenses?.armorRating ?? combatStored.armor?.rating ?? 0), equipmentArmorRating);
-    const soakSource = key => Number(combatStored.soak?.[key] ?? 0) + Number(armorBlock.soak ?? 0);
-    const resistanceSource = key => Number(combatStored.resistance?.[key] ?? 0) + Number(armorBlock.resistance ?? 0);
+    // EE rule: best Base AR among all sources, plus the sum of every AR bonus.
+    const armorRatingBase = Math.max(Number(combatStored.defenses?.armorRating ?? combatStored.armor?.rating ?? 0), equipmentArmorRating, eeArmor.ar.best) + eeArmor.ar.bonus;
 
     return {
       tier,
+      armorSummary: eeArmor,
       health: {
         endurance: ErrantEarthCharacterSheet._eeAdjustable(enduranceBase, stored.health?.endurance, bonus("health.endurance", ["endurance"])),
         health: ErrantEarthCharacterSheet._eeAdjustable(healthBase, stored.health?.health, bonus("health.health", ["health"])),
@@ -314,28 +343,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
           horizontalStand: Math.max(0, pow - 6),
           horizontalRun: Math.max(0, pow - 2)
         }
-      },
-      armor: {
-        name: armorBlock.name || "",
-        rating: ErrantEarthCharacterSheet._eeAdjustable(armorRatingBase, stored.armor?.rating, bonus("armor.rating", ["armor rating", "ar"])),
-        soak: ErrantEarthCharacterSheet._eeAdjustable(Number(armorBlock.soak ?? 0), stored.armor?.soak, bonus("armor.soak", ["soak"])),
-        resistance: ErrantEarthCharacterSheet._eeAdjustable(Number(armorBlock.resistance ?? 0), stored.armor?.resistance, bonus("armor.resistance", ["resistance"])),
-        damageScale: armorBlock.damageScale || combatStored.damageScale || tierMods.damageScale,
-        notes: armorBlock.notes || ""
-      },
-      soak: {
-        physical: ErrantEarthCharacterSheet._eeAdjustable(soakSource("physical"), stored.soak?.physical, bonus("soak.physical", ["physical soak"])),
-        energy: ErrantEarthCharacterSheet._eeAdjustable(soakSource("energy"), stored.soak?.energy, bonus("soak.energy", ["energy soak"])),
-        magic: ErrantEarthCharacterSheet._eeAdjustable(soakSource("magic"), stored.soak?.magic, bonus("soak.magic", ["magic soak"])),
-        psychic: ErrantEarthCharacterSheet._eeAdjustable(soakSource("psychic"), stored.soak?.psychic, bonus("soak.psychic", ["psychic soak"]))
-      },
-      resistance: {
-        physical: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("physical"), stored.resistance?.physical, bonus("resistance.physical", ["physical resistance"])),
-        energy: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("energy"), stored.resistance?.energy, bonus("resistance.energy", ["energy resistance"])),
-        magic: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("magic"), stored.resistance?.magic, bonus("resistance.magic", ["magic resistance"])),
-        psychic: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("psychic"), stored.resistance?.psychic, bonus("resistance.psychic", ["psychic resistance"])),
-        toxins: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("toxins"), stored.resistance?.toxins, bonus("resistance.toxins", ["toxin resistance", "poison resistance"])),
-        horror: ErrantEarthCharacterSheet._eeAdjustable(resistanceSource("horror"), stored.resistance?.horror, bonus("resistance.horror", ["horror resistance"]))
       },
       social: {
         demeanor,
@@ -788,6 +795,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     }));
     ctx.wpAncient = wpDecorate(CONFIG.EE?.WP_LIST?.ancient ?? []);
     ctx.wpModern  = wpDecorate(CONFIG.EE?.WP_LIST?.modern  ?? []);
+    ctx.eeWp      = wpDecorate(CONFIG.EE?.EE_WP_LIST ?? []);
     ctx.system.armor.primary.extras = toArr(sys.armor?.primary?.extras);
     ctx.system.armor.secondary.extras = toArr(sys.armor?.secondary?.extras);
     ctx.system.powerArmor.handToHand.extras = toArr(sys.powerArmor?.handToHand?.extras);
@@ -809,6 +817,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.system.backgrounds = toArr(sys.backgrounds);
     ctx.system.occupations = toArr(sys.occupations);
     ctx.system.eeSkills = { ...(ctx.system.eeSkills ?? {}), list: toArr(sys.eeSkills?.list) };
+    if (ctx.system.eeCombat) ctx.system.eeCombat.armorPieces = toArr(sys.eeCombat?.armorPieces);
     if (ctx.system.money) ctx.system.money.outfits = toArr(sys.money?.outfits);
 
     const equipmentSources = this.actor.items.map(item => ({ ...item.system, name: item.name, type: item.type, system: item.system }));
@@ -840,6 +849,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     html.on("click", "[data-action='add-row']",    this._onAddRow.bind(this));
     html.on("change", "[data-action='add-skill']", this._onAddSkill.bind(this));
     html.on("click", "[data-action='delete-row']", this._onDeleteRow.bind(this));
+    html.on("change", "[data-action='armor-equip']", this._onArmorEquip.bind(this));
+    html.on("click", "[data-action='ee-alignment']", this._onEeAlignment.bind(this));
     html.on("click", "[data-action='roll']",       this._onRoll.bind(this));
     html.on("click", "[data-action='edit-adjustable']", this._onEditAdjustable.bind(this));
     html.on("click", "[data-action='edit-item']",  this._onEditItem.bind(this));
@@ -979,6 +990,47 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       if (mergedSkills) update["system.skills.list"] = mergedSkills;
       return this.actor.update(update);
     }
+  }
+
+  /** Errant Earth alignment picker: choose a Morality and an Ethics; the 5x4
+   *  grid names the resulting alignment (e.g. Paragon + Ontological = Messiah). */
+  async _onEeAlignment(ev) {
+    ev.preventDefault();
+    const moralities = CONFIG.EE?.EE_ALIGNMENT_MORALITIES ?? {};
+    const ethics = CONFIG.EE?.EE_ALIGNMENT_ETHICS ?? {};
+    const grid = CONFIG.EE?.EE_ALIGNMENT_GRID ?? {};
+    const current = this.actor.system.eeAlignment ?? {};
+    const opt = (obj, sel) => Object.entries(obj)
+      .map(([k, v]) => `<option value="${k}" ${k === sel ? "selected" : ""}>${v}</option>`).join("");
+    const content = `
+      <form class="ee-ee-alignment">
+        <div class="form-group"><label>Morality</label>
+          <select name="morality"><option value="">—</option>${opt(moralities, current.morality)}</select></div>
+        <div class="form-group"><label>Ethics</label>
+          <select name="ethics"><option value="">—</option>${opt(ethics, current.ethics)}</select></div>
+        <p class="hint">The intersection names your alignment (e.g. Paragon + Ontological = Messiah).</p>
+      </form>`;
+    return new Promise((resolve) => {
+      new Dialog({
+        title: "Errant Earth Alignment",
+        content,
+        buttons: {
+          save: {
+            label: "Save",
+            callback: async (html) => {
+              const form = html[0].querySelector("form");
+              const morality = form.elements.morality.value;
+              const ethics = form.elements.ethics.value;
+              const name = grid[morality]?.[ethics] ?? "";
+              await this.actor.update({ "system.eeAlignment": { morality, ethics, name } });
+              resolve();
+            }
+          },
+          cancel: { label: "Cancel", callback: () => resolve() }
+        },
+        default: "save"
+      }, { classes: ["errantearth", "dialog", "ee-alignment"], width: 400 }).render(true);
+    });
   }
 
   async _onToggleMode(ev) {
@@ -1581,6 +1633,22 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     await this.actor.update({ "system.skills.list": arr });
   }
 
+  /** Toggle a worn armor piece. Equipping a piece auto-unequips any other
+   *  piece sharing its layer (one Under, one Over, one Plating at a time). */
+  async _onArmorEquip(ev) {
+    ev.preventDefault();
+    const idx = Number(ev.currentTarget.dataset.index);
+    const checked = ev.currentTarget.checked;
+    const pieces = foundry.utils.deepClone(this._getArrayPath("eeCombat.armorPieces"));
+    if (!pieces[idx]) return;
+    pieces[idx].equipped = checked;
+    if (checked) {
+      const layer = pieces[idx].layer;
+      pieces.forEach((p, i) => { if (i !== idx && p.layer === layer) p.equipped = false; });
+    }
+    await this.actor.update({ "system.eeCombat.armorPieces": pieces });
+  }
+
   async _onDeleteRow(ev) {
     ev.preventDefault();
     const btn  = ev.currentTarget;
@@ -1604,6 +1672,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       case "saveExtra":     return { name: "", base: 0, bonus: 0 };
       case "h2hExtra":      return { name: "", value: 0 };
       case "armorExtra":    return { name: "", current: 0, max: 0 };
+      case "eeArmor":       return { name: "", layer: "OA", weight: "", variant: "", equipped: false, durability: { value: 0, max: 0 }, ar: { base: 0, bonus: 0 }, maneuver: { flat: 0, percent: 0 }, sr: 0, formality: 0, resist: { heat: 0, cold: 0, radiation: 0, earthblood: 0 }, notes: "" };
       case "power":         return { name: "", source: "", cost: "", range: "", saving: "", damage: "", duration: "", description: "" };
       case "paWeapon":      return { name: "", damageType: "", damage: "", damageScale: "S", ammo: "", strike: "", range: "", special: "" };
       case "vehicleWeapon": return { type: "", damageType: "", damage: "", damageScale: "S", ammo: "" };
@@ -1713,8 +1782,21 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return expanded;
   }
 
+  /** The armor-piece `equipped` toggle is handler-driven (no form input), so a
+   *  normal field edit would otherwise resubmit the array without it. Restore
+   *  each row's worn flag from the actor's current state, keyed by index. */
+  _preserveArmorEquipped(expanded) {
+    const submitted = expanded?.system?.eeCombat?.armorPieces;
+    if (!Array.isArray(submitted)) return;
+    const current = ErrantEarthCharacterSheet._toArray(this.actor.system?.eeCombat?.armorPieces);
+    submitted.forEach((row, i) => {
+      if (row && typeof row === "object" && current[i]) row.equipped = !!current[i].equipped;
+    });
+  }
+
   async _updateObject(event, formData) {
     const expanded = ErrantEarthCharacterSheet._coerceArrays(foundry.utils.expandObject(formData));
+    this._preserveArmorEquipped(expanded);
     ErrantEarthCharacterSheet._normalizeEeDerivedAdjustments(expanded);
     ErrantEarthCharacterSheet._validateEnums(expanded);
     ErrantEarthCharacterSheet._normalizeWeaponProficiencies(expanded);

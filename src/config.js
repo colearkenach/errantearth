@@ -515,6 +515,25 @@ EE.WP_LIST = {
   ]
 };
 
+// Errant Earth weapon proficiencies — the canonical short list (rulebook
+// "Weapon Proficiencies" table). Keys match EE.WP_LIST so checkbox state
+// carries over between the RIFTS and Errant Earth views.
+EE.EE_WP_LIST = [
+  { key: "wpArchaicProjectileWeapons", name: "Archaic Projectile Weapons" },
+  { key: "wpArchaicMeleeWeapons",      name: "Archaic Melee Weapons" },
+  { key: "wpModernMeleeWeapons",       name: "Modern Melee Weapons" },
+  { key: "wpArchaicFirearms",          name: "Archaic Firearms" },
+  { key: "wpUnarmed",                  name: "Unarmed" },
+  { key: "wpKineticHandgun",           name: "Kinetic Handgun" },
+  { key: "wpEnergyHandgun",            name: "Energy Handgun" },
+  { key: "wpKineticLongGun",           name: "Kinetic Long Gun" },
+  { key: "wpEnergyLongGun",            name: "Energy Long Gun" },
+  { key: "wpKineticAutomatics",        name: "Kinetic Automatics" },
+  { key: "wpEnergyAutomatics",         name: "Energy Automatics" },
+  { key: "wpHeavyWeapons",             name: "Heavy Weapons" },
+  { key: "wpVehicleHardpoints",        name: "Vehicle Hardpoints" }
+];
+
 EE.ATTRIBUTES = {
   iq:  "IQ",
   me:  "ME",
@@ -540,6 +559,31 @@ EE.EE_ATTRIBUTE_TIERS = {
   Supernatural: "Supernatural",
   Exalted:      "Exalted",
   Divine:       "Divine"
+};
+
+// Errant Earth alignment is a 5x4 grid: Morality (row) x Ethics (column).
+// The intersection names the alignment (e.g. Paragon + Ontological = Messiah).
+EE.EE_ALIGNMENT_MORALITIES = {
+  paragon:   "Paragon",
+  lawful:    "Lawful",
+  arbitrary: "Arbitrary",
+  miscreant: "Miscreant",
+  aberrant:  "Aberrant"
+};
+
+EE.EE_ALIGNMENT_ETHICS = {
+  ontological: "Ontological",
+  realist:     "Realist",
+  relativist:  "Relativist",
+  nihilist:    "Nihilist"
+};
+
+EE.EE_ALIGNMENT_GRID = {
+  paragon:   { ontological: "Messiah",     realist: "Missionary", relativist: "Vigilante",     nihilist: "Lone Ranger" },
+  lawful:    { ontological: "Adjudicator", realist: "Officer",    relativist: "Citizen",       nihilist: "Bureaucratic" },
+  arbitrary: { ontological: "Egoist",      realist: "Prideful",   relativist: "Self-Centered", nihilist: "Anarchist" },
+  miscreant: { ontological: "Psychopath",  realist: "Syndicate",  relativist: "Punk",          nihilist: "Sociopath" },
+  aberrant:  { ontological: "Devil",       realist: "Maniac",     relativist: "Sophist",       nihilist: "Defiler" }
 };
 
 EE.EE_SKILL_CATEGORIES = {
