@@ -467,38 +467,51 @@ EE.SKILL_LIST = [
   { key: "trackTrapAnimals",       name: "Track & Trap Animals",                group: "Wilderness", base: 20, perLvl: 5 }
 ];
 
-// Master W.P. list (p.303). Rendered as checkboxes on the Combat tab.
+// Master W.P. list. Rendered as checkboxes on the Combat tab; includes Errant Earth weapon proficiencies.
 EE.WP_LIST = {
   ancient: [
-    { key: "wpArchery",         name: "W.P. Archery" },
-    { key: "wpAxe",             name: "W.P. Axe" },
-    { key: "wpBlunt",           name: "W.P. Blunt" },
-    { key: "wpChain",           name: "W.P. Chain" },
-    { key: "wpForked",          name: "W.P. Forked" },
-    { key: "wpGrapplingHook",   name: "W.P. Grappling Hook" },
-    { key: "wpKnife",           name: "W.P. Knife" },
-    { key: "wpPairedWeapons",   name: "W.P. Paired Weapons (Men at Arms)" },
-    { key: "wpPoleArm",         name: "W.P. Pole Arm" },
-    { key: "wpQuickDraw",       name: "W.P. Quick Draw" },
-    { key: "wpRope",            name: "W.P. Rope" },
-    { key: "wpShield",          name: "W.P. Shield" },
-    { key: "wpSpear",           name: "W.P. Spear" },
-    { key: "wpStaff",           name: "W.P. Staff" },
-    { key: "wpSword",           name: "W.P. Sword" },
-    { key: "wpTargeting",       name: "W.P. Targeting" },
-    { key: "wpWhip",            name: "W.P. Whip" }
+    { key: "wpArchaicProjectileWeapons", name: "W.P. Archaic Projectile Weapons" },
+    { key: "wpArchaicMeleeWeapons",      name: "W.P. Archaic Melee Weapons" },
+    { key: "wpModernMeleeWeapons",       name: "W.P. Modern Melee Weapons" },
+    { key: "wpArchaicFirearms",          name: "W.P. Archaic Firearms" },
+    { key: "wpUnarmed",                  name: "W.P. Unarmed" },
+    { key: "wpArchery",                  name: "W.P. Archery" },
+    { key: "wpAxe",                      name: "W.P. Axe" },
+    { key: "wpBlunt",                    name: "W.P. Blunt" },
+    { key: "wpChain",                    name: "W.P. Chain" },
+    { key: "wpForked",                   name: "W.P. Forked" },
+    { key: "wpGrapplingHook",            name: "W.P. Grappling Hook" },
+    { key: "wpKnife",                    name: "W.P. Knife" },
+    { key: "wpPairedWeapons",            name: "W.P. Paired Weapons (Men at Arms)" },
+    { key: "wpPoleArm",                  name: "W.P. Pole Arm" },
+    { key: "wpQuickDraw",                name: "W.P. Quick Draw" },
+    { key: "wpRope",                     name: "W.P. Rope" },
+    { key: "wpShield",                   name: "W.P. Shield" },
+    { key: "wpSpear",                    name: "W.P. Spear" },
+    { key: "wpStaff",                    name: "W.P. Staff" },
+    { key: "wpSword",                    name: "W.P. Sword" },
+    { key: "wpTargeting",                name: "W.P. Targeting" },
+    { key: "wpWhip",                     name: "W.P. Whip" }
   ],
   modern: [
-    { key: "wpHandguns",        name: "W.P. Handguns" },
-    { key: "wpRifles",          name: "W.P. Rifles" },
-    { key: "wpShotgun",         name: "W.P. Shotgun" },
-    { key: "wpSubmachineGun",   name: "W.P. Submachine-Gun" },
-    { key: "wpHeavyMilitary",   name: "W.P. Heavy Military Weapons" },
-    { key: "wpFlamethrowers",   name: "W.P. Military Flamethrowers" },
-    { key: "wpHarpoonSpearGun", name: "W.P. Harpoon & Spear Gun" },
-    { key: "wpEnergyPistol",    name: "W.P. Energy Pistol" },
-    { key: "wpEnergyRifle",     name: "W.P. Energy Rifle" },
-    { key: "wpHeavyMD",         name: "W.P. Heavy M.D. Weapons" }
+    { key: "wpKineticHandgun",           name: "W.P. Kinetic Handgun" },
+    { key: "wpEnergyHandgun",            name: "W.P. Energy Handgun" },
+    { key: "wpKineticLongGun",           name: "W.P. Kinetic Long Gun" },
+    { key: "wpEnergyLongGun",            name: "W.P. Energy Long Gun" },
+    { key: "wpKineticAutomatics",        name: "W.P. Kinetic Automatics" },
+    { key: "wpEnergyAutomatics",         name: "W.P. Energy Automatics" },
+    { key: "wpHeavyWeapons",             name: "W.P. Heavy Weapons" },
+    { key: "wpVehicleHardpoints",        name: "W.P. Vehicle Hardpoints" },
+    { key: "wpHandguns",                 name: "W.P. Handguns" },
+    { key: "wpRifles",                   name: "W.P. Rifles" },
+    { key: "wpShotgun",                  name: "W.P. Shotgun" },
+    { key: "wpSubmachineGun",            name: "W.P. Submachine-Gun" },
+    { key: "wpHeavyMilitary",            name: "W.P. Heavy Military Weapons" },
+    { key: "wpFlamethrowers",            name: "W.P. Military Flamethrowers" },
+    { key: "wpHarpoonSpearGun",          name: "W.P. Harpoon & Spear Gun" },
+    { key: "wpEnergyPistol",             name: "W.P. Energy Pistol" },
+    { key: "wpEnergyRifle",              name: "W.P. Energy Rifle" },
+    { key: "wpHeavyMD",                  name: "W.P. Heavy M.D. Weapons" }
   ]
 };
 
