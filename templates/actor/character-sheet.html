@@ -1025,6 +1025,42 @@
                 </div>
             </div>
 
+            <div class="ee-panel ee-weapon-proficiencies">
+                <h3>Weapon Proficiencies</h3>
+                <div class="ee-wp-grid">
+                    <div class="ee-wp-col">
+                        <h4>Ancient</h4>
+                        {{#each wpAncient}}
+                        <label class="ee-wp-check">
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                            {{name}}
+                        </label>
+                        {{/each}}
+                    </div>
+                    <div class="ee-wp-col">
+                        <h4>Modern</h4>
+                        {{#each wpModern}}
+                        <label class="ee-wp-check">
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                            {{name}}
+                        </label>
+                        {{/each}}
+                    </div>
+                </div>
+                <h4>Custom W.P.</h4>
+                <table class="ee-table">
+                    <tbody>
+                        {{#each system.weaponProficiencies.custom}}
+                        <tr>
+                            <td><input type="text" name="system.weaponProficiencies.custom.{{@index}}.name" value="{{name}}" placeholder="Custom W.P." /></td>
+                            <td class="ee-actions"><a data-action="delete-row" data-path="weaponProficiencies.custom" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies.custom" data-kind="wpCustom">+ Add Custom W.P.</button>
+            </div>
+
             <div class="ee-combat-top">
                 {{!-- Hand to Hand --}}
                 <div class="ee-panel">
@@ -1292,39 +1328,6 @@
                     </table>
                     {{/if}}
 
-                    <h3>Weapon Proficiencies</h3>
-                    <div class="ee-wp-grid">
-                        <div class="ee-wp-col">
-                            <h4>Ancient</h4>
-                            {{#each wpAncient}}
-                            <label class="ee-wp-check">
-                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
-                                {{name}}
-                            </label>
-                            {{/each}}
-                        </div>
-                        <div class="ee-wp-col">
-                            <h4>Modern</h4>
-                            {{#each wpModern}}
-                            <label class="ee-wp-check">
-                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
-                                {{name}}
-                            </label>
-                            {{/each}}
-                        </div>
-                    </div>
-                    <h4>Custom W.P.</h4>
-                    <table class="ee-table">
-                        <tbody>
-                            {{#each system.weaponProficiencies.custom}}
-                            <tr>
-                                <td><input type="text" name="system.weaponProficiencies.custom.{{@index}}.name" value="{{name}}" placeholder="Custom W.P." /></td>
-                                <td class="ee-actions"><a data-action="delete-row" data-path="weaponProficiencies.custom" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies.custom" data-kind="wpCustom">+ Add Custom W.P.</button>
                 </div>
             </div>
 
