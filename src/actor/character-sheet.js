@@ -178,8 +178,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   }
 
   static _eeGlimmer(esp, mp) {
-    const fromEsp = Math.floor(Number(esp ?? 0) / 25) * 2;
-    const fromMp = Math.floor(Number(mp ?? 0) / 25) * 2;
+    const fromEsp = Math.floor(Number(esp ?? 0) / 10);
+    const fromMp = Math.floor(Number(mp ?? 0) / 10);
     return fromEsp + fromMp;
   }
 
