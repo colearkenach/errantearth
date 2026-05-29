@@ -570,7 +570,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const pe = Number(A.pe?.value ?? 0);
     const pb = Number(A.pb?.value ?? 0);
     const level = Number(sys.level ?? 1);
-    const C = ErrantEarthCharacterSheet;
     ctx.eeSizeOptions = C._EE_SIZE_CATEGORIES;
 
     const itemBuckets = {
