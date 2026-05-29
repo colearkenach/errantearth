@@ -1483,29 +1483,6 @@
             </p>
             {{/if}}
 
-            <h3 class="ee-subbar">Spells / Psionics / Abilities</h3>
-            <table class="ee-table ee-powers-table">
-                <thead>
-                    <tr><th>Name</th><th>Source</th><th>Cost</th><th>Range</th><th>Saving Throw</th><th>Damage</th><th>Duration</th><th>Description</th><th></th></tr>
-                </thead>
-                <tbody>
-                    {{#each system.powers}}
-                    <tr>
-                        <td><input type="text" name="system.powers.{{@index}}.name" value="{{name}}" /></td>
-                        <td><select name="system.powers.{{@index}}.source">{{eeSelectOptions ../config.POWER_SOURCES source}}</select></td>
-                        <td><input type="text" name="system.powers.{{@index}}.cost" value="{{cost}}" /></td>
-                        <td><input type="text" name="system.powers.{{@index}}.range" value="{{range}}" /></td>
-                        <td><input type="text" name="system.powers.{{@index}}.saving" value="{{saving}}" /></td>
-                        <td><input type="text" name="system.powers.{{@index}}.damage" value="{{damage}}" /></td>
-                        <td><input type="text" name="system.powers.{{@index}}.duration" value="{{duration}}" /></td>
-                        <td><input type="text" name="system.powers.{{@index}}.description" value="{{description}}" /></td>
-                        <td><a data-action="delete-row" data-path="powers" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-            <button type="button" class="ee-add" data-action="add-row" data-path="powers" data-kind="power">+ Add</button>
-
             {{#if itemsByType.spell.length}}
             <h3 class="ee-subbar">Spell Items</h3>
             <table class="ee-table">
@@ -1549,80 +1526,22 @@
             {{/if}}
             <a class="ee-create-item" data-action="create-item" data-type="psionicPower" title="Create Psionic Power Item"><i class="fas fa-plus"></i> Psionic Power Item</a>
 
-            <h2 class="ee-bar">PSIONIC ABILITIES</h2>
-            <div class="ee-psi-grid">
-                <div class="ee-panel">
-                    <h3>Healing</h3>
-                    <table class="ee-table">
-                        <thead><tr><th>Name</th><th>ISP</th><th>Notes</th><th></th></tr></thead>
-                        <tbody>
-                            {{#each system.psionics.healing}}
-                            <tr>
-                                <td><input type="text" name="system.psionics.healing.{{@index}}.name" value="{{name}}" /></td>
-                                <td><input type="text" name="system.psionics.healing.{{@index}}.isp" value="{{isp}}" /></td>
-                                <td><input type="text" name="system.psionics.healing.{{@index}}.notes" value="{{notes}}" /></td>
-                                <td><a data-action="delete-row" data-path="psionics.healing" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="psionics.healing" data-kind="psionic">+ Add</button>
-                </div>
-
-                <div class="ee-panel">
-                    <h3>Sensitive</h3>
-                    <table class="ee-table">
-                        <thead><tr><th>Name</th><th>ISP</th><th>Notes</th><th></th></tr></thead>
-                        <tbody>
-                            {{#each system.psionics.sensitive}}
-                            <tr>
-                                <td><input type="text" name="system.psionics.sensitive.{{@index}}.name" value="{{name}}" /></td>
-                                <td><input type="text" name="system.psionics.sensitive.{{@index}}.isp" value="{{isp}}" /></td>
-                                <td><input type="text" name="system.psionics.sensitive.{{@index}}.notes" value="{{notes}}" /></td>
-                                <td><a data-action="delete-row" data-path="psionics.sensitive" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="psionics.sensitive" data-kind="psionic">+ Add</button>
-                </div>
-
-                <div class="ee-panel">
-                    <h3>Physical</h3>
-                    <table class="ee-table">
-                        <thead><tr><th>Name</th><th>ISP</th><th>Notes</th><th></th></tr></thead>
-                        <tbody>
-                            {{#each system.psionics.physical}}
-                            <tr>
-                                <td><input type="text" name="system.psionics.physical.{{@index}}.name" value="{{name}}" /></td>
-                                <td><input type="text" name="system.psionics.physical.{{@index}}.isp" value="{{isp}}" /></td>
-                                <td><input type="text" name="system.psionics.physical.{{@index}}.notes" value="{{notes}}" /></td>
-                                <td><a data-action="delete-row" data-path="psionics.physical" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="psionics.physical" data-kind="psionic">+ Add</button>
-                </div>
-
-                <div class="ee-panel">
-                    <h3>Super</h3>
-                    <table class="ee-table">
-                        <thead><tr><th>Name</th><th>ISP</th><th>Notes</th><th></th></tr></thead>
-                        <tbody>
-                            {{#each system.psionics.super}}
-                            <tr>
-                                <td><input type="text" name="system.psionics.super.{{@index}}.name" value="{{name}}" /></td>
-                                <td><input type="text" name="system.psionics.super.{{@index}}.isp" value="{{isp}}" /></td>
-                                <td><input type="text" name="system.psionics.super.{{@index}}.notes" value="{{notes}}" /></td>
-                                <td><a data-action="delete-row" data-path="psionics.super" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="psionics.super" data-kind="psionic">+ Add</button>
-                </div>
-            </div>
+            {{#if itemsByType.ability.length}}
+            <h3 class="ee-subbar">Ability Items</h3>
+            <table class="ee-table">
+                <thead><tr><th>Name</th><th>Description</th><th></th></tr></thead>
+                <tbody>
+                    {{#each itemsByType.ability}}
+                    <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+                        <td>{{system.description}}</td>
+                        <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{/if}}
+            <a class="ee-create-item" data-action="create-item" data-type="ability" title="Create Ability Item"><i class="fas fa-plus"></i> Ability Item</a>
         </div>
 
         {{!-- ===== VEHICLE TAB ===== --}}
@@ -1784,6 +1703,18 @@
                 <h3>Psionic Powers <a class="ee-create-item" data-action="create-item" data-type="psionicPower" title="Create Psionic Power"><i class="fas fa-plus"></i></a></h3>
                 <ul class="ee-item-list">
                     {{#each itemsByType.psionicPower}}
+                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+                        <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+
+            <div class="ee-panel">
+                <h3>Abilities <a class="ee-create-item" data-action="create-item" data-type="ability" title="Create Ability"><i class="fas fa-plus"></i></a></h3>
+                <ul class="ee-item-list">
+                    {{#each itemsByType.ability}}
                     <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
                         <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
                         <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>

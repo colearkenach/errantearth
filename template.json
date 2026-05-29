@@ -687,6 +687,7 @@
     "types": [
       "psionicPower",
       "spell",
+      "ability",
       "weapon",
       "armor",
       "powerArmor",
@@ -714,6 +715,9 @@
       "savingThrow": "",
       "damage": "",
       "isMDC": false
+    },
+    "ability": {
+      "description": ""
     },
     "weapon": {
       "category": "modern",

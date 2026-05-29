@@ -36,6 +36,10 @@
       <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
     {{/if}}
 
+    {{#if (eq item.type "ability")}}
+      <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
+    {{/if}}
+
     {{#if (eq item.type "weapon")}}
       <div class="ee-grid-2">
         <label>Category <select name="system.category">{{eeSelectOptions config.WEAPON_CATEGORIES system.category}}</select></label>

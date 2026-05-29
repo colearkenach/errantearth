@@ -31,6 +31,7 @@ EE.DAMAGE_TYPES = {
 EE.POWER_SOURCES = {
   magic:        "Magic",
   psionic:      "Psionic",
+  natural:      "Natural",
   mutation:     "Mutation",
   technology:   "Technology",
   supernatural: "Supernatural"
