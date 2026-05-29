@@ -15,7 +15,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     });
   }
 
-  /** RIFTS attribute-bonus chart (p.281). Each table is keyed 16..30; values
+  /** EE Legacy attribute-bonus chart (p.281). Each table is keyed 16..30; values
    *  beyond 30 are extended by the rules in "Attributes Beyond 30" (p.284). */
   static _ATTR_TABLES = {
     iqSkill:        { 16:2, 17:3, 18:4, 19:5, 20:6, 21:7, 22:8, 23:9, 24:10, 25:11, 26:12, 27:13, 28:14, 29:15, 30:16 },
@@ -568,11 +568,11 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.canToggleMode = ctx.rulesModeSetting === "perSheet";
     ctx.mode = C._effectiveRulesMode(sys);
     ctx.isEE = ctx.mode === "errantEarth";
-    ctx.rulesModeLabel = ctx.isEE ? "Use Errant Earth Rules" : "Use RIFTS Rules";
+    ctx.rulesModeLabel = ctx.isEE ? "Use Errant Earth Rules" : "Use EE Legacy Rules";
     ctx.rulesModeHint = ctx.canToggleMode
-      ? "Switch this character between Errant Earth and RIFTS rules. Character data is preserved."
+      ? "Switch this character between Errant Earth and EE Legacy rules. Character data is preserved."
       : `World setting is forcing ${ctx.rulesModeLabel}; per-sheet switching is disabled.`;
-    ctx.sheetTitle = ctx.isEE ? "ERRANT EARTH" : "RIFTS / PALLADIUM";
+    ctx.sheetTitle = ctx.isEE ? "ERRANT EARTH" : "EE LEGACY";
 
     const A = sys.attributes ?? {};
     const iq = Number(A.iq?.value ?? 0);
@@ -739,7 +739,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
     const toArr = ErrantEarthCharacterSheet._toArray;
 
-    // Auto-compute skill totals: Base + PerLvl * (Level - 1) + Misc [+ IQ bonus, RIFTS only].
+    // Auto-compute skill totals: Base + PerLvl * (Level - 1) + Misc [+ IQ bonus, EE Legacy only].
     const iqBonusForSkills = ctx.isEE ? 0 : ctx.riftsDerived.iqSkillBonus;
     const skillRows = toArr(sys.skills?.list).map((r, i) => {
       const base   = Number(r.base   ?? 0);
