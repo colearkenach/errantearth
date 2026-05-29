@@ -512,7 +512,6 @@
           }
         },
         "defense": {
-          "size": "Average",
           "nsr": {
             "base": 4,
             "bonus": 0,
