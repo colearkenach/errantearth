@@ -3,5 +3,7 @@
   "TYPES.Item.psionicPower": "Psionic Power",
   "TYPES.Item.weapon": "Weapon",
   "TYPES.Item.armor": "Armor",
-  "TYPES.Item.gear": "Gear"
+  "TYPES.Item.gear": "Gear",
+  "TYPES.Item.ability": "Ability",
+  "TYPES.Item.spell": "Spell"
 }

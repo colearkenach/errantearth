@@ -586,7 +586,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.eeSizeOptions = C._EE_SIZE_CATEGORIES;
 
     const itemBuckets = {
-      psionicPower: [], spell: [], weapon: [], armor: [], powerArmor: [],
+      psionicPower: [], spell: [], ability: [], weapon: [], armor: [], powerArmor: [],
       vehicle: [], race: [], occ: [], gear: []
     };
     for (const item of this.actor.items) {
@@ -808,12 +808,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.system.powerArmor.armor.extras = toArr(sys.powerArmor?.armor?.extras);
     ctx.system.powerArmor.weapons = toArr(sys.powerArmor?.weapons);
     ctx.system.powers = toArr(sys.powers);
-    if (ctx.system.psionics) {
-      ctx.system.psionics.healing   = toArr(sys.psionics?.healing);
-      ctx.system.psionics.sensitive = toArr(sys.psionics?.sensitive);
-      ctx.system.psionics.physical  = toArr(sys.psionics?.physical);
-      ctx.system.psionics.super     = toArr(sys.psionics?.super);
-    }
     if (ctx.system.vehicle) {
       ctx.system.vehicle.handToHand.extras = toArr(sys.vehicle?.handToHand?.extras);
       ctx.system.vehicle.armor.extras = toArr(sys.vehicle?.armor?.extras);
@@ -883,6 +877,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const labels = {
       psionicPower: "Psionic Power",
       spell: "Spell",
+      ability: "Ability",
       weapon: "Weapon",
       armor: "Armor",
       powerArmor: "Power Armor",
@@ -1705,7 +1700,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       case "vehicleWeapon": return { type: "", damageType: "", damage: "", damageScale: "S", ammo: "" };
       case "contact":       return { name: "", occupation: "", notes: "" };
       case "outfit":        return { name: "", checked: false };
-      case "psionic":       return { name: "", isp: "", notes: "" };
       case "bgocc":         return { name: "", notes: "" };
       default:              return { name: "" };
     }
