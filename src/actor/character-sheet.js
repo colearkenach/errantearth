@@ -115,6 +115,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     { min: 25, max: Infinity, bonus: 5 }
   ];
 
+  static _EE_SIZE_CATEGORIES = ["Tiny", "Small", "Average", "Big", "Huge", "Massive"];
+
   static _EE_NSR_BY_SIZE = { tiny: 6, small: 5, average: 4, big: 3, huge: 2, massive: 1 };
 
   static _EE_TIER_MODS = {
@@ -125,6 +127,13 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     Exalted:      { actions: 3, momentum: 3, reactions: 3, health: 8, endurance: 20, damageScale: "G" },
     Divine:       { actions: 4, momentum: 4, reactions: 4, health: 10, endurance: 25, damageScale: "U" }
   };
+
+  static _eeCanonicalSize(value) {
+    const raw = String(value ?? "").trim();
+    if (!raw) return null;
+    const lower = raw.toLowerCase();
+    return ErrantEarthCharacterSheet._EE_SIZE_CATEGORIES.find(size => size.toLowerCase() === lower) ?? null;
+  }
 
   static _eeBand(table, value) {
     const numeric = Number(value ?? 0);
@@ -224,8 +233,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     delete reaction.min;
     delete reaction.max;
 
-    const size = String(stored.defense?.size ?? combatStored.defenses?.size ?? sys.species?.size ?? "Average");
-    const nsrBase = ErrantEarthCharacterSheet._EE_NSR_BY_SIZE[size.toLowerCase()] ?? ErrantEarthCharacterSheet._EE_NSR_BY_SIZE.average;
+    const size = ErrantEarthCharacterSheet._eeCanonicalSize(combatStored.defenses?.size) ?? "Average";
+    const nsrBase = ErrantEarthCharacterSheet._EE_NSR_BY_SIZE[size.toLowerCase()];
     const enduranceBase = 7 + hrd + Math.ceil(2.5 * level) + tierMods.endurance;
     const healthBase = hrd + tierMods.health;
     const espBase = anm * 2;
@@ -256,7 +265,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       health: {
         endurance: ErrantEarthCharacterSheet._eeAdjustable(enduranceBase, stored.health?.endurance, bonus("health.endurance", ["endurance"])),
         health: ErrantEarthCharacterSheet._eeAdjustable(healthBase, stored.health?.health, bonus("health.health", ["health"])),
-        scars: { value: Number(stored.health?.scars?.value ?? combatStored.health?.scars?.value ?? 0), max: Number(stored.health?.scars?.max ?? combatStored.health?.scars?.max ?? 5) },
+        scars: ErrantEarthCharacterSheet._eeScars(combatStored, stored),
         thresholds: {
           wounded: Number(thresholds.wounded ?? Math.ceil(healthBase * 0.75)),
           bloodied: Number(thresholds.bloodied ?? Math.ceil(healthBase * 0.5)),
@@ -496,8 +505,55 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return [];
   }
 
+  static _eeHasScars(scars) {
+    return !!scars && (scars.value !== undefined || scars.max !== undefined);
+  }
+
+  static _eeScars(combatStored = {}, stored = {}) {
+    const combatScars = combatStored.health?.scars;
+    const legacyScars = stored.health?.scars;
+    return {
+      value: Number(combatScars?.value ?? legacyScars?.value ?? 0),
+      max: Number(combatScars?.max ?? legacyScars?.max ?? 5)
+    };
+  }
+
+  static async _migrateLegacyScars(actor) {
+    const sourceSys = actor?._source?.system;
+    if (!sourceSys) return;
+    const legacyScars = sourceSys.eeDerived?.health?.scars;
+    if (!ErrantEarthCharacterSheet._eeHasScars(legacyScars)) return;
+
+    const combatScars = sourceSys.eeCombat?.health?.scars;
+    const update = {};
+    if (combatScars?.value === undefined && legacyScars.value !== undefined) {
+      update["system.eeCombat.health.scars.value"] = Number(legacyScars.value ?? 0);
+    }
+    if (combatScars?.max === undefined && legacyScars.max !== undefined) {
+      update["system.eeCombat.health.scars.max"] = Number(legacyScars.max ?? 5);
+    }
+    if (Object.keys(update).length) await actor.update(update, { render: false });
+  }
+
+  static _migrateSubmittedLegacyScars(expanded) {
+    const legacyScars = expanded?.system?.eeDerived?.health?.scars;
+    if (!ErrantEarthCharacterSheet._eeHasScars(legacyScars)) return;
+    expanded.system.eeCombat ??= {};
+    expanded.system.eeCombat.health ??= {};
+    expanded.system.eeCombat.health.scars ??= {};
+    if (expanded.system.eeCombat.health.scars.value === undefined && legacyScars.value !== undefined) {
+      expanded.system.eeCombat.health.scars.value = Number(legacyScars.value ?? 0);
+    }
+    if (expanded.system.eeCombat.health.scars.max === undefined && legacyScars.max !== undefined) {
+      expanded.system.eeCombat.health.scars.max = Number(legacyScars.max ?? 5);
+    }
+    delete expanded.system.eeDerived.health.scars;
+  }
+
   async getData(options) {
     const ctx = await super.getData(options);
+    const C = ErrantEarthCharacterSheet;
+    await C._migrateLegacyScars(this.actor);
     const sys = ctx.actor.system;
     ctx.config = CONFIG.EE ?? {};
 
@@ -515,6 +571,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const pb = Number(A.pb?.value ?? 0);
     const level = Number(sys.level ?? 1);
     const C = ErrantEarthCharacterSheet;
+    ctx.eeSizeOptions = C._EE_SIZE_CATEGORIES;
 
     const itemBuckets = {
       psionicPower: [], spell: [], weapon: [], armor: [], powerArmor: [],
@@ -1634,6 +1691,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const expanded = ErrantEarthCharacterSheet._coerceArrays(foundry.utils.expandObject(formData));
     ErrantEarthCharacterSheet._normalizeEeDerivedAdjustments(expanded);
     ErrantEarthCharacterSheet._validateEnums(expanded);
+    ErrantEarthCharacterSheet._normalizeWeaponProficiencies(expanded);
     return this.document.update(expanded);
   }
 }

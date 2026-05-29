@@ -369,7 +369,14 @@
                 <div class="ee-ee-derived-category">
                     <h4>Defense</h4>
                     <div class="ee-ee-derived-cards">
-                        <label class="ee-ee-derived-card ee-ee-derived-editable"><span class="ee-ee-derived-label">Size</span><input type="text" name="system.eeDerived.defense.size" value="{{eeDerived.defense.size}}" /></label>
+                        <label class="ee-ee-derived-card ee-ee-derived-editable">
+                            <span class="ee-ee-derived-label">Size</span>
+                            <select name="system.eeCombat.defenses.size">
+                                {{#each eeSizeOptions}}
+                                <option value="{{this}}" {{#if (eq this ../eeDerived.defense.size)}}selected{{/if}}>{{this}}</option>
+                                {{/each}}
+                            </select>
+                        </label>
                     </div>
                     <div class="ee-ee-adjust-grid">
                         <div class="ee-ee-adjust-head">Trait</div><div class="ee-ee-adjust-head">Base</div><div class="ee-ee-adjust-head">Bonus</div><div class="ee-ee-adjust-head">Manual</div><div class="ee-ee-adjust-head">Override</div><div class="ee-ee-adjust-head">Total</div>
@@ -784,7 +791,7 @@
                         <div class="ee-kv"><label>Health:</label><output>{{eeDerived.health.health.total}}</output>
                             <a class="ee-edit" data-action="edit-adjustable" data-path="health.health" data-label="Health" title="Edit Health"><i class="fas fa-pencil"></i></a>
                         </div>
-                        <div class="ee-kv"><label>Scars:</label><input type="number" name="system.eeDerived.health.scars.value" value="{{eeDerived.health.scars.value}}" /> / <input type="number" name="system.eeDerived.health.scars.max" value="{{eeDerived.health.scars.max}}" /></div>
+                        <div class="ee-kv"><label>Scars:</label><output>{{eeDerived.health.scars.value}}</output> / <output>{{eeDerived.health.scars.max}}</output></div>
                         <div class="ee-kv"><label>Wounded:</label><input type="number" name="system.eeCombat.health.thresholds.wounded" value="{{eeDerived.health.thresholds.wounded}}" /></div>
                         <div class="ee-kv"><label>Bloodied:</label><input type="number" name="system.eeCombat.health.thresholds.bloodied" value="{{eeDerived.health.thresholds.bloodied}}" /></div>
                         <div class="ee-kv"><label>Critical:</label><input type="number" name="system.eeCombat.health.thresholds.critical" value="{{eeDerived.health.thresholds.critical}}" /></div>
@@ -911,6 +918,42 @@
                     <label>Critical:</label>        <input type="text" name="system.physical.critical" value="{{system.physical.critical}}" />
                     <label>Death:</label>           <input type="text" name="system.physical.death" value="{{system.physical.death}}" />
                 </div>
+            </div>
+
+            <div class="ee-panel ee-weapon-proficiencies">
+                <h3>Weapon Proficiencies</h3>
+                <div class="ee-wp-grid">
+                    <div class="ee-wp-col">
+                        <h4>Ancient</h4>
+                        {{#each wpAncient}}
+                        <label class="ee-wp-check">
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                            {{name}}
+                        </label>
+                        {{/each}}
+                    </div>
+                    <div class="ee-wp-col">
+                        <h4>Modern</h4>
+                        {{#each wpModern}}
+                        <label class="ee-wp-check">
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                            {{name}}
+                        </label>
+                        {{/each}}
+                    </div>
+                </div>
+                <h4>Custom W.P.</h4>
+                <table class="ee-table">
+                    <tbody>
+                        {{#each system.weaponProficiencies.custom}}
+                        <tr>
+                            <td><input type="text" name="system.weaponProficiencies.custom.{{@index}}.name" value="{{name}}" placeholder="Custom W.P." /></td>
+                            <td class="ee-actions"><a data-action="delete-row" data-path="weaponProficiencies.custom" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies.custom" data-kind="wpCustom">+ Add Custom W.P.</button>
             </div>
 
             <div class="ee-combat-top">
@@ -1186,7 +1229,8 @@
                             <h4>Ancient</h4>
                             {{#each wpAncient}}
                             <label class="ee-wp-check">
-                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                                <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" value="true" {{eeChecked checked}} />
                                 {{name}}
                             </label>
                             {{/each}}
@@ -1195,7 +1239,8 @@
                             <h4>Modern</h4>
                             {{#each wpModern}}
                             <label class="ee-wp-check">
-                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                                <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                                <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" value="true" {{eeChecked checked}} />
                                 {{name}}
                             </label>
                             {{/each}}
