@@ -678,15 +678,12 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       unassigned: skillRows.filter(r => !r.category)
     };
 
-    const eeAttrs = sys.eeAttributes ?? {};
     const eeSkillRows = toArr(sys.eeSkills?.list).map((r, i) => {
-      const attrKey     = r.attribute ?? "";
-      const attrValue   = Number(eeAttrs[attrKey]?.value ?? 0);
       const rank        = Number(r.rank ?? 0);
       const proficiency = Number(r.proficiency ?? 0);
       const bonus       = Number(r.bonus ?? 0);
-      const total       = attrValue + rank + (proficiency * Math.max(1, level)) + bonus;
-      return { ...r, _index: i, attrValue, total };
+      const total       = rank + (proficiency * Math.max(1, level)) + bonus;
+      return { ...r, _index: i, total };
     });
     ctx.eeSkills = { list: eeSkillRows };
 
@@ -1492,7 +1489,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       arr.push({
         key: master.key,
         name: master.name,
-        attribute: master.attribute ?? "",
         category: master.category ?? category ?? "",
         tags: master.tags ?? "",
         rank: 0,
@@ -1535,7 +1531,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     switch (kind) {
       case "skill":
         if (path === "eeSkills.list" || this.actor.system.mode === "errantEarth") {
-          return { key: "", name: "", attribute: "", category: "", tags: "", rank: 0, proficiency: 0, bonus: 0, notes: "", custom: true };
+          return { key: "", name: "", category: "", tags: "", rank: 0, proficiency: 0, bonus: 0, notes: "", custom: true };
         }
         return { key: "", name: "", base: 0, perLvl: 0, misc: 0, category: "", custom: true };
       case "wpCustom":      return { name: "" };
@@ -1612,7 +1608,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     scrubArr(sys.powerArmor?.weapons,"damageScale", cfg.EE_DAMAGE_SCALES);
     scrubArr(sys.vehicle?.weapons,   "damageScale", cfg.EE_DAMAGE_SCALES);
     scrubArr(sys.powers,             "source",     cfg.POWER_SOURCES);
-    scrubArr(sys.eeSkills?.list,     "attribute",  cfg.EE_ATTRIBUTES);
     scrubArr(sys.eeSkills?.list,     "category",   cfg.EE_SKILL_CATEGORIES);
     return expanded;
   }

@@ -520,17 +520,6 @@ EE.SYSTEM_MODES = {
   errantEarth:  "Errant Earth"
 };
 
-EE.EE_ATTRIBUTES = {
-  anm: "ANM (Animus)",
-  brv: "BRV (Bravado)",
-  com: "COM (Composure)",
-  fin: "FIN (Finesse)",
-  hrd: "HRD (Hardiness)",
-  pow: "POW (Power)",
-  spd: "SPD (Speed)",
-  wil: "WIL (Will)"
-};
-
 EE.EE_ATTRIBUTE_TIERS = {
   Mortal:       "Mortal",
   Augmented:    "Augmented",
