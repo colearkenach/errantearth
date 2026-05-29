@@ -45,7 +45,7 @@ EE.HTH_TYPES = {
   assassin:    "Assassin"
 };
 
-// RIFTS hand-to-hand advancement tables. Values are cumulative base bonuses
+// EE Legacy hand-to-hand advancement tables. Values are cumulative base bonuses
 // unlocked at the listed level; actor sheet manual fields are added on top.
 const RIFTS_HTH_BASE = {
   attacks: 0,
@@ -207,7 +207,7 @@ EE.SKILL_CATEGORIES = {
   secondary:  "Secondary"
 };
 
-// Master Palladium / RIFTS skill list (p.302–303). Each entry seeds a row
+// Master EE Legacy skill list (p.302–303). Each entry seeds a row
 // when the player picks it from the Add-Skill picker. base/perLvl are
 // editable on the sheet; values shown here are the canonical defaults.
 // `group` is the source category used only for grouping in the picker UI.
@@ -431,7 +431,7 @@ EE.SKILL_LIST = [
   { key: "firefighting",           name: "Firefighting",                        group: "Technical", base: 30, perLvl: 5 },
   { key: "gemology",               name: "Gemology",                            group: "Technical", base: 25, perLvl: 5 },
   { key: "generalRepairMaintenance", name: "General Repair & Maintenance",      group: "Technical", base: 35, perLvl: 5 },
-  { key: "historyPreRifts",        name: "History: Pre-Rifts",                  group: "Technical", base: 32, perLvl: 4 },
+  { key: "historyPreRifts",        name: "History: Pre-EE Legacy",              group: "Technical", base: 32, perLvl: 4 },
   { key: "historyPostApocalypse",  name: "History: Post-Apocalypse",            group: "Technical", base: 35, perLvl: 5 },
   { key: "juryRig",                name: "Jury-Rig",                            group: "Technical", base: 25, perLvl: 5 },
   { key: "lawGeneral",             name: "Law (General)",                       group: "Technical", base: 35, perLvl: 5 },
@@ -518,7 +518,7 @@ EE.WP_LIST = {
 
 // Errant Earth weapon proficiencies — the canonical short list (rulebook
 // "Weapon Proficiencies" table). Keys match EE.WP_LIST so checkbox state
-// carries over between the RIFTS and Errant Earth views.
+// carries over between the EE Legacy and Errant Earth views.
 EE.EE_WP_LIST = [
   { key: "wpArchaicProjectileWeapons", name: "Archaic Projectile Weapons" },
   { key: "wpArchaicMeleeWeapons",      name: "Archaic Melee Weapons" },
@@ -549,7 +549,7 @@ EE.ATTRIBUTES = {
 // ===== Errant Earth-mode enums =====
 
 EE.SYSTEM_MODES = {
-  rifts:        "RIFTS",
+  rifts:        "EE Legacy",
   errantEarth:  "Errant Earth"
 };
 

@@ -9,7 +9,7 @@ Hooks.once("init", async () => {
 
   game.settings.register("errantearth", "rulesMode", {
     name: "Rules Mode",
-    hint: "Choose whether each character sheet can select its own rules mode, or force all sheets to use Errant Earth or RIFTS rules.",
+    hint: "Choose whether each character sheet can select its own rules mode, or force all sheets to use Errant Earth or EE Legacy rules.",
     scope: "world",
     config: true,
     type: String,
@@ -17,7 +17,7 @@ Hooks.once("init", async () => {
     choices: {
       perSheet: "Per-sheet toggle",
       errantEarth: "Use Errant Earth Rules",
-      rifts: "Use RIFTS Rules"
+      rifts: "Use EE Legacy Rules"
     },
     onChange: () => {
       for (const actor of game.actors ?? []) actor.sheet?.render(false);
