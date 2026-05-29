@@ -325,8 +325,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         atbBonus: ErrantEarthCharacterSheet._eeAdjustable(ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_ATB_TABLE, anm).bonus, stored.social?.atbBonus, bonus("social.atbBonus", ["atb"]))
       },
       saves: {
-        psychicResistance: ErrantEarthCharacterSheet._eeAdjustable(wil, stored.saves?.psychicResistance, bonus("saves.psychicResistance", ["psychic resistance"])),
-        magicResistance: ErrantEarthCharacterSheet._eeAdjustable(anm, stored.saves?.magicResistance, bonus("saves.magicResistance", ["magic resistance"])),
+        psychicResistance: ErrantEarthCharacterSheet._eeAdjustable(ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_ATB_TABLE, wil).bonus, stored.saves?.psychicResistance, bonus("saves.psychicResistance", ["psychic resistance"])),
+        magicResistance: ErrantEarthCharacterSheet._eeAdjustable(ErrantEarthCharacterSheet._eeBand(ErrantEarthCharacterSheet._EE_ATB_TABLE, anm).bonus, stored.saves?.magicResistance, bonus("saves.magicResistance", ["magic resistance"])),
         horrorAnima: ErrantEarthCharacterSheet._eeAdjustable(anm, stored.saves?.horrorAnima, bonus("saves.horrorAnima", ["horror anima", "horror factor"])),
         horrorWillpower: ErrantEarthCharacterSheet._eeAdjustable(wil, stored.saves?.horrorWillpower, bonus("saves.horrorWillpower", ["horror willpower", "horror factor"]))
       }
