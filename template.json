@@ -500,10 +500,6 @@
             "override": null,
             "total": 0
           },
-          "scars": {
-            "value": 0,
-            "max": 5
-          },
           "thresholds": {
             "wounded": 0,
             "bloodied": 0,
