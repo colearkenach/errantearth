@@ -147,10 +147,18 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   static _eeAdjustable(base, path, bonus = 0) {
     const stored = path && typeof path === "object" ? path : {};
-    const storedBonus = Number(stored.bonus ?? 0);
+    const manualBonus = Number(stored.bonus ?? 0);
+    const sourceBonus = Number(bonus ?? 0);
     const override = stored.override === "" || stored.override === null || stored.override === undefined ? null : Number(stored.override);
-    const total = Number.isFinite(override) ? override : Number(base ?? 0) + Number(bonus ?? 0) + storedBonus;
-    return { base: Number(base ?? 0), bonus: Number(bonus ?? 0) + storedBonus, override: Number.isFinite(override) ? override : null, total };
+    const total = Number.isFinite(override) ? override : Number(base ?? 0) + sourceBonus + manualBonus;
+    return {
+      base: Number(base ?? 0),
+      sourceBonus,
+      manualBonus,
+      bonus: sourceBonus + manualBonus,
+      override: Number.isFinite(override) ? override : null,
+      total
+    };
   }
 
   static _eeTextBonus(source, keys) {
@@ -1637,30 +1645,13 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return Object.prototype.hasOwnProperty.call(choices, value) ? value : "";
   }
 
-  static _coerceBoolean(value) {
-    if (Array.isArray(value)) return ErrantEarthCharacterSheet._coerceBoolean(value.at(-1));
-    if (typeof value === "boolean") return value;
-    if (typeof value === "string") return ["true", "on", "1", "yes"].includes(value.toLowerCase());
-    return !!value;
-  }
-
-  static _normalizeWeaponProficiencies(expanded) {
-    const selected = expanded?.system?.weaponProficiencies?.selected;
-    const wpList = CONFIG.EE?.WP_LIST;
-    if (!selected || !wpList) return expanded;
-
-    const normalized = { ...selected };
-    const known = [
-      ...(wpList.ancient ?? []),
-      ...(wpList.modern ?? [])
-    ];
-
-    for (const { key } of known) {
-      if (!key) continue;
-      normalized[key] = ErrantEarthCharacterSheet._coerceBoolean(selected[key]);
-    }
-
-    expanded.system.weaponProficiencies.selected = normalized;
+  static _normalizeEeDerivedAdjustments(expanded) {
+    const walk = value => {
+      if (!value || typeof value !== "object" || Array.isArray(value)) return;
+      if (Object.prototype.hasOwnProperty.call(value, "override") && value.override === "") value.override = null;
+      for (const child of Object.values(value)) walk(child);
+    };
+    walk(expanded?.system?.eeDerived);
     return expanded;
   }
 
@@ -1698,7 +1689,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   async _updateObject(event, formData) {
     const expanded = ErrantEarthCharacterSheet._coerceArrays(foundry.utils.expandObject(formData));
-    ErrantEarthCharacterSheet._migrateSubmittedLegacyScars(expanded);
+    ErrantEarthCharacterSheet._normalizeEeDerivedAdjustments(expanded);
     ErrantEarthCharacterSheet._validateEnums(expanded);
     ErrantEarthCharacterSheet._normalizeWeaponProficiencies(expanded);
     return this.document.update(expanded);
