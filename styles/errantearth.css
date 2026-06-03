@@ -204,6 +204,90 @@ display: flex;
     outline: none;
 }
 
+.ee-weapon-table {
+  min-width: 900px;
+}
+
+.ee-weapon-table th,
+.ee-weapon-table td {
+  box-sizing: border-box;
+}
+
+.ee-weapon-table th:first-child,
+.ee-weapon-table td:first-child {
+  min-width: 140px;
+}
+
+.ee-modern-weapon-table th:nth-child(10),
+.ee-modern-weapon-table td:nth-child(10),
+.ee-ancient-weapon-table th:nth-child(8),
+.ee-ancient-weapon-table td:nth-child(8) {
+  min-width: 180px;
+}
+
+.ee-modern-weapon-table th:nth-child(2),
+.ee-modern-weapon-table td:nth-child(2),
+.ee-ancient-weapon-table th:nth-child(2),
+.ee-ancient-weapon-table td:nth-child(2) {
+  width: 92px;
+}
+
+.ee-modern-weapon-table th:nth-child(4),
+.ee-modern-weapon-table td:nth-child(4),
+.ee-ancient-weapon-table th:nth-child(4),
+.ee-ancient-weapon-table td:nth-child(4) {
+  width: 78px;
+}
+
+.ee-modern-weapon-table th:nth-child(3),
+.ee-modern-weapon-table td:nth-child(3),
+.ee-ancient-weapon-table th:nth-child(3),
+.ee-ancient-weapon-table td:nth-child(3) {
+  width: 72px;
+}
+
+.ee-modern-weapon-table th:nth-child(5),
+.ee-modern-weapon-table td:nth-child(5),
+.ee-modern-weapon-table th:nth-child(6),
+.ee-modern-weapon-table td:nth-child(6),
+.ee-modern-weapon-table th:nth-child(7),
+.ee-modern-weapon-table td:nth-child(7),
+.ee-modern-weapon-table th:nth-child(8),
+.ee-modern-weapon-table td:nth-child(8),
+.ee-modern-weapon-table th:nth-child(9),
+.ee-modern-weapon-table td:nth-child(9),
+.ee-ancient-weapon-table th:nth-child(5),
+.ee-ancient-weapon-table td:nth-child(5),
+.ee-ancient-weapon-table th:nth-child(6),
+.ee-ancient-weapon-table td:nth-child(6),
+.ee-ancient-weapon-table th:nth-child(7),
+.ee-ancient-weapon-table td:nth-child(7) {
+  width: 62px;
+}
+
+.ee-modern-weapon-table th:nth-child(11),
+.ee-modern-weapon-table td:nth-child(11),
+.ee-ancient-weapon-table th:nth-child(9),
+.ee-ancient-weapon-table td:nth-child(9) {
+  width: 72px;
+}
+
+.ee-modern-weapon-table th:nth-child(12),
+.ee-modern-weapon-table td:nth-child(12),
+.ee-ancient-weapon-table th:nth-child(10),
+.ee-ancient-weapon-table td:nth-child(10) {
+  width: 32px;
+  text-align: center;
+}
+
+.ee-weapon-table select,
+.ee-weapon-table input {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+}
+
 .ee-total {
   text-align: center;
   font-weight: 700;
