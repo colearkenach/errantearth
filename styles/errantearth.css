@@ -209,6 +209,90 @@ display: flex;
     outline: none;
 }
 
+.ee-weapon-table {
+  min-width: 900px;
+}
+
+.ee-weapon-table th,
+.ee-weapon-table td {
+  box-sizing: border-box;
+}
+
+.ee-weapon-table th:first-child,
+.ee-weapon-table td:first-child {
+  min-width: 140px;
+}
+
+.ee-modern-weapon-table th:nth-child(10),
+.ee-modern-weapon-table td:nth-child(10),
+.ee-ancient-weapon-table th:nth-child(8),
+.ee-ancient-weapon-table td:nth-child(8) {
+  min-width: 180px;
+}
+
+.ee-modern-weapon-table th:nth-child(2),
+.ee-modern-weapon-table td:nth-child(2),
+.ee-ancient-weapon-table th:nth-child(2),
+.ee-ancient-weapon-table td:nth-child(2) {
+  width: 92px;
+}
+
+.ee-modern-weapon-table th:nth-child(4),
+.ee-modern-weapon-table td:nth-child(4),
+.ee-ancient-weapon-table th:nth-child(4),
+.ee-ancient-weapon-table td:nth-child(4) {
+  width: 78px;
+}
+
+.ee-modern-weapon-table th:nth-child(3),
+.ee-modern-weapon-table td:nth-child(3),
+.ee-ancient-weapon-table th:nth-child(3),
+.ee-ancient-weapon-table td:nth-child(3) {
+  width: 72px;
+}
+
+.ee-modern-weapon-table th:nth-child(5),
+.ee-modern-weapon-table td:nth-child(5),
+.ee-modern-weapon-table th:nth-child(6),
+.ee-modern-weapon-table td:nth-child(6),
+.ee-modern-weapon-table th:nth-child(7),
+.ee-modern-weapon-table td:nth-child(7),
+.ee-modern-weapon-table th:nth-child(8),
+.ee-modern-weapon-table td:nth-child(8),
+.ee-modern-weapon-table th:nth-child(9),
+.ee-modern-weapon-table td:nth-child(9),
+.ee-ancient-weapon-table th:nth-child(5),
+.ee-ancient-weapon-table td:nth-child(5),
+.ee-ancient-weapon-table th:nth-child(6),
+.ee-ancient-weapon-table td:nth-child(6),
+.ee-ancient-weapon-table th:nth-child(7),
+.ee-ancient-weapon-table td:nth-child(7) {
+  width: 62px;
+}
+
+.ee-modern-weapon-table th:nth-child(11),
+.ee-modern-weapon-table td:nth-child(11),
+.ee-ancient-weapon-table th:nth-child(9),
+.ee-ancient-weapon-table td:nth-child(9) {
+  width: 72px;
+}
+
+.ee-modern-weapon-table th:nth-child(12),
+.ee-modern-weapon-table td:nth-child(12),
+.ee-ancient-weapon-table th:nth-child(10),
+.ee-ancient-weapon-table td:nth-child(10) {
+  width: 32px;
+  text-align: center;
+}
+
+.ee-weapon-table select,
+.ee-weapon-table input {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+}
+
 .ee-total {
   text-align: center;
   font-weight: 700;
@@ -263,8 +347,29 @@ color: var(--ee-red, #8a1f1f);
 
 .ee-skill-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
   gap: 6px;
+}
+
+.ee-skill-col {
+  min-width: 0;
+  overflow-x: auto;
+}
+
+@media (min-width: 980px) {
+  .ee-skill-col--occ {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 520px) {
+  .ee-skill-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ee-skill-col--occ {
+    grid-column: auto;
+  }
 }
 
 .ee-skill-col h3 {
@@ -276,13 +381,19 @@ color: var(--ee-red, #8a1f1f);
 
 .ee-skill-add-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
   margin-top: 2px;
 }
 
 .ee-skill-add-row select {
-  flex: 1;
+  flex: 1 1 260px;
+  min-width: 0;
   font-size: 11px;
+}
+
+.ee-skill-add-row .ee-add {
+  flex: 0 0 auto;
 }
 
 .ee-skill-unassigned {

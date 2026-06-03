@@ -621,7 +621,7 @@
             </div>
 
             {{#*inline "skillSection"}}
-            <div class="ee-skill-col">
+            <div class="ee-skill-col {{sectionClass}}" data-skill-category="{{category}}">
                 <h3>{{title}}</h3>
                 <table class="ee-table">
                     <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
@@ -674,9 +674,9 @@
             {{/inline}}
 
             <div class="ee-skill-grid">
-                {{> skillSection title="OCC Skills"         category="occ"        rows=skills.occ}}
-                {{> skillSection title="OCC Related Skills" category="occRelated" rows=skills.occRelated}}
-                {{> skillSection title="Secondary Skills"   category="secondary"  rows=skills.secondary}}
+                {{> skillSection title="OCC Skills"         category="occ"        rows=skills.occ        sectionClass="ee-skill-col--occ"}}
+                {{> skillSection title="OCC Related Skills" category="occRelated" rows=skills.occRelated sectionClass="ee-skill-col--occ-related"}}
+                {{> skillSection title="Secondary Skills"   category="secondary"  rows=skills.secondary  sectionClass="ee-skill-col--secondary"}}
             </div>
 
             {{#if skills.unassigned.length}}
@@ -1142,8 +1142,7 @@
                 {{!-- Weapons --}}
                 <div class="ee-panel ee-weapons">
                     <h3>Modern Weapons</h3>
-                    <div class="ee-table-scroll">
-                    <table class="ee-table">
+                    <table class="ee-table ee-weapon-table ee-modern-weapon-table">
                         <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th>Roll</th><th></th></tr></thead>
                         <tbody>
                             {{#each system.weapons.modern}}
@@ -1197,8 +1196,7 @@
                     <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon Item"><i class="fas fa-plus"></i> Weapon Item</a>
 
                     <h3>Ancient Weapons</h3>
-                    <div class="ee-table-scroll">
-                    <table class="ee-table">
+                    <table class="ee-table ee-weapon-table ee-ancient-weapon-table">
                         <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th>Roll</th><th></th></tr></thead>
                         <tbody>
                             {{#each system.weapons.ancient}}
