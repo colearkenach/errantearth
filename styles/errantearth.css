@@ -224,6 +224,7 @@ display: flex;
 
 .ee-weapon-table {
   table-layout: auto;
+  min-width: 860px;
   margin-bottom: 6px;
   font-size: 12px;
   line-height: 1.25;
@@ -246,10 +247,29 @@ display: flex;
 .ee-weapon-table input,
 .ee-weapon-table select {
   width: 100%;
-  min-width: 0;
+  min-width: 5rem;
   height: 19px;
   padding: 0 2px;
   box-sizing: border-box;
+}
+
+.ee-weapon-table th:first-child,
+.ee-weapon-table td:first-child {
+  min-width: 7rem;
+}
+
+.ee-weapon-table th:nth-child(3),
+.ee-weapon-table td:nth-child(3),
+.ee-weapon-table th:nth-child(10),
+.ee-weapon-table td:nth-child(10) {
+  min-width: 6rem;
+}
+
+.ee-weapon-table th:last-child,
+.ee-weapon-table td:last-child {
+  width: 1.5rem;
+  min-width: 1.5rem;
+  text-align: center;
 }
 
 .ee-skill-table input,
@@ -503,6 +523,7 @@ color: var(--ee-red, #8a1f1f);
 
 .ee-weapons {
   grid-column: 1 / -1;
+  overflow-x: auto;
 }
 
 @media (max-width: 640px) {
