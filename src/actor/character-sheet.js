@@ -45,9 +45,14 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   static psionicSave(me)    { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.mePsionic, me); }
   static insanitySave(me)   { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.meInsanity, me); }
   static trustIntimidate(ma){ return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.maTrustPct, ma); }
-  static psDamage(ps)       { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.psDamage, ps); }
+  static psDamage(ps) {
+    const base = ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.psDamage, ps);
+    if (ps <= 30) return base;
+    return base + (ps - 30);
+  }
   static ppParryDodge(pp)   { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.ppParryDodge, pp); }
   static ppStrike(pp)       { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.ppStrike, pp); }
+  static ppInitiative(pp)   { return pp > 30 ? Math.min(6, Math.ceil((pp - 30) / 3)) : 0; }
   static peComaSave(pe) {
     const base = ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.peComaPct, pe);
     if (pe <= 30) return base;
@@ -55,8 +60,42 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   }
   static peMagicPoison(pe)  { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.peMagicPoison, pe); }
   static charmImpress(pb)   { return ErrantEarthCharacterSheet._lookup(ErrantEarthCharacterSheet._ATTR_TABLES.pbCharmPct, pb); }
+  static mePossession(me)   { return me >= 30 ? Math.max(1, Math.floor(me / 10) - 2) : 0; }
 
+  static _formatRiftsNumber(value, decimals = 1) {
+    const numeric = Number(value ?? 0);
+    if (!Number.isFinite(numeric)) return "";
+    const fixed = numeric.toFixed(decimals);
+    return fixed.replace(/\.0+$/, "").replace(/(\.\d*[1-9])0+$/, "$1");
+  }
 
+  static _legacyPhysicalStats(attrs = {}, handToHand = {}) {
+    const ps = Number(attrs.ps ?? 0);
+    const pe = Number(attrs.pe ?? 0);
+    const spd = Number(attrs.spd ?? 0);
+    const attacks = Math.max(1, Number(handToHand?.attacks?.total ?? 1) || 1);
+    const carryMultiplier = ps >= 17 ? 20 : 10;
+    const carry = Math.max(0, ps * carryMultiplier);
+    const lift = carry * 2;
+    const runYardsPerMinute = spd * 20;
+    const runYardsPerMelee = spd * 5;
+    const runFeetPerAttack = Math.round((runYardsPerMelee * 3 / attacks) * 10) / 10;
+    const runMph = spd * 15 / 22;
+    const runKph = runMph * 1.609344;
+    return {
+      carry: `${carry}`,
+      lift: `${lift}`,
+      throwMax: `${carry}`,
+      throwFt: "≤ carried weight; see W.P. Targeting for heavy/awkward objects",
+      runMph: ErrantEarthCharacterSheet._formatRiftsNumber(runMph),
+      runKph: ErrantEarthCharacterSheet._formatRiftsNumber(runKph),
+      runYardsPerMinute: `${runYardsPerMinute}`,
+      runYardsPerMelee: `${runYardsPerMelee}`,
+      runFeetPerAttack: ErrantEarthCharacterSheet._formatRiftsNumber(runFeetPerAttack),
+      startingHp: pe ? `${pe} + 1D6` : "PE + 1D6",
+      startingSdc: "2D6 + 12"
+    };
+  }
 
   /** Errant Earth derived-value bands from the core rules source of truth. */
   static _EE_STRENGTH_TABLE = [
@@ -375,7 +414,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       attributeBonuses: { iq: 0, me: 0, ma: 0, ps: 0, pp: 0, pe: 0, pb: 0, spd: 0 },
       poolBonuses: { hp: 0, sdc: 0, mdc: 0, isp: 0, ppe: 0 },
       combatBonuses: { attacks: 0, initiative: 0, damage: 0, strike: 0, parry: 0, dodge: 0, pullPunch: 0, roll: 0 },
-      saveBonuses: { psionics: 0, drugPoison: 0, insanity: 0, death: 0 }
+      saveBonuses: { psionics: 0, drugPoison: 0, insanity: 0, death: 0, possession: 0 }
     };
   }
 
@@ -430,6 +469,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       { key: "psionics", label: "Save vs Psionics", tests: [/\b(psi|psionic|psionics)\b/] },
       { key: "drugPoison", label: "Save vs Toxins/Poisons", tests: [/\b(poison|poisons|toxin|toxins|drug|drugs)\b/] },
       { key: "insanity", label: "Save vs Insanity", tests: [/\binsanity\b/] },
+      { key: "possession", label: "Save vs Possession", tests: [/\bpossession\b/] },
       { key: "death", label: "Save vs Coma/Death", tests: [/\b(coma|death)\b/] }
     ];
 
@@ -641,9 +681,11 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const psDamage = C.psDamage(effectiveAttrs.ps);
     const ppStrike = C.ppStrike(effectiveAttrs.pp);
     const ppParryDodge = C.ppParryDodge(effectiveAttrs.pp);
+    const ppInitiative = C.ppInitiative(effectiveAttrs.pp);
     const peComaSave = C.peComaSave(effectiveAttrs.pe);
     const peMagicPoison = C.peMagicPoison(effectiveAttrs.pe);
     const charmImpress = C.charmImpress(effectiveAttrs.pb);
+    const possessionSave = C.mePossession(effectiveAttrs.me);
 
     const hthTables = CONFIG.EE?.RIFTS_HTH_TABLES ?? {};
     const hthType = hthTables[sys.handToHand?.type] ? sys.handToHand.type : "basic";
@@ -679,7 +721,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       base: hthBase,
       notes: hthNotes,
       attacks: riftsCombatTotal(hthManual.attacks, 0, riftsNumber(hthBase.attacks), riftsSourceTotals.combatBonuses.attacks),
-      initiative: riftsCombatTotal(hthManual.initiative, 0, riftsNumber(hthBase.initiative), riftsSourceTotals.combatBonuses.initiative),
+      initiative: riftsCombatTotal(hthManual.initiative, ppInitiative, riftsNumber(hthBase.initiative), riftsSourceTotals.combatBonuses.initiative),
       damage: riftsCombatTotal(hthManual.damage, psDamage, riftsNumber(hthBase.damage), riftsSourceTotals.combatBonuses.damage),
       strike: riftsCombatTotal(hthManual.strike, ppStrike, riftsNumber(hthBase.strike), riftsSourceTotals.combatBonuses.strike),
       parry: riftsCombatTotal(hthManual.parry, ppParryDodge, riftsNumber(hthBase.parry), riftsSourceTotals.combatBonuses.parry),
@@ -698,6 +740,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       psDamage,
       ppStrike,
       ppParryDodge,
+      ppInitiative,
       peComaSave,
       peMagicPoison,
       charmImpress,
@@ -706,7 +749,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         me:  [psionicSave ? `+${psionicSave} psi` : "", insanitySave ? `+${insanitySave} insanity` : ""].filter(Boolean).join(", "),
         ma:  trustIntimidate ? `${trustIntimidate}% trust/intim.` : "",
         ps:  psDamage ? `+${psDamage} damage` : "",
-        pp:  [ppStrike ? `+${ppStrike} strike` : "", ppParryDodge ? `+${ppParryDodge} parry/dodge` : ""].filter(Boolean).join(", "),
+        pp:  [ppStrike ? `+${ppStrike} strike` : "", ppParryDodge ? `+${ppParryDodge} parry/dodge` : "", ppInitiative ? `+${ppInitiative} initiative` : ""].filter(Boolean).join(", "),
         pe:  [peComaSave ? `+${peComaSave}% coma/death` : "", peMagicPoison ? `+${peMagicPoison} magic/poison` : ""].filter(Boolean).join(", "),
         pb:  charmImpress ? `${charmImpress}% charm/impress` : "",
         spd: ""
@@ -722,7 +765,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         psionics: riftsSaveTotal(sys.savingThrows?.psionics, psionicSave, false, riftsSourceTotals.saveBonuses.psionics),
         insanity: riftsSaveTotal(sys.savingThrows?.insanity, insanitySave, false, riftsSourceTotals.saveBonuses.insanity),
         drugPoison: riftsSaveTotal(sys.savingThrows?.drugPoison, peMagicPoison, false, riftsSourceTotals.saveBonuses.drugPoison),
-        death: riftsSaveTotal(sys.savingThrows?.death, peComaSave, true, riftsSourceTotals.saveBonuses.death)
+        death: riftsSaveTotal(sys.savingThrows?.death, peComaSave, true, riftsSourceTotals.saveBonuses.death),
+        possession: riftsSaveTotal(sys.savingThrows?.possession, possessionSave, false, riftsSourceTotals.saveBonuses.possession)
       },
       sources: riftsSources.sources,
       sourceWarnings: riftsSources.warnings,
@@ -736,6 +780,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         ppe: { base: riftsNumber(sys.ppe?.max), bonus: riftsSourceTotals.poolBonuses.ppe, total: riftsNumber(sys.ppe?.max) + riftsSourceTotals.poolBonuses.ppe }
       }
     };
+    ctx.riftsDerived.physical = C._legacyPhysicalStats(effectiveAttrs, handToHand);
 
     const toArr = ErrantEarthCharacterSheet._toArray;
 

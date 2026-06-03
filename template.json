@@ -115,15 +115,7 @@
       "bio": {
         "age": "",
         "height": "",
-        "weight": "",
-        "lifeSpan": "",
-        "chi": "",
-        "familyOrigin": "",
-        "environment": "",
-        "sentimentsGood": "",
-        "sentimentsEvil": "",
-        "nativeLanguages": "",
-        "insanity": ""
+        "weight": ""
       },
       "attributes": {
         "iq": {
@@ -732,8 +724,7 @@
       "parry": "",
       "special": "",
       "notes": "",
-      "isMDC": false,
-      "damageScale": "S"
+      "isMDC": false
     },
     "armor": {
       "ar": 0,
