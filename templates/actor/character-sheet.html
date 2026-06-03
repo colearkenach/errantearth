@@ -623,7 +623,7 @@
             {{#*inline "skillSection"}}
             <div class="ee-skill-col">
                 <h3>{{title}}</h3>
-                <table class="ee-table">
+                <table class="ee-table ee-skill-table">
                     <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
                     <tbody>
                         {{#each rows}}
@@ -682,7 +682,7 @@
             {{#if skills.unassigned.length}}
             <details class="ee-skill-unassigned" open>
                 <summary>Unassigned ({{skills.unassigned.length}})</summary>
-                <table class="ee-table">
+                <table class="ee-table ee-skill-table">
                     <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
                     <tbody>
                         {{#each skills.unassigned}}
@@ -1142,7 +1142,7 @@
                 {{!-- Weapons --}}
                 <div class="ee-panel ee-weapons">
                     <h3>Modern Weapons</h3>
-                    <table class="ee-table">
+                    <table class="ee-table ee-weapon-table">
                         <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th>Roll</th><th></th></tr></thead>
                         <tbody>
                             {{#each system.weapons.modern}}
@@ -1170,7 +1170,7 @@
 
                     {{#if weaponItemsModern.length}}
                     <h4>Modern Weapon Items</h4>
-                    <table class="ee-table">
+                    <table class="ee-table ee-weapon-table">
                         <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Range</th><th>Rate</th><th>Roll</th><th></th></tr></thead>
                         <tbody>
                             {{#each weaponItemsModern}}
@@ -1195,7 +1195,7 @@
                     <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon Item"><i class="fas fa-plus"></i> Weapon Item</a>
 
                     <h3>Ancient Weapons</h3>
-                    <table class="ee-table">
+                    <table class="ee-table ee-weapon-table">
                         <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th>Roll</th><th></th></tr></thead>
                         <tbody>
                             {{#each system.weapons.ancient}}
@@ -1222,7 +1222,7 @@
 
                     {{#if weaponItemsAncient.length}}
                     <h4>Ancient Weapon Items</h4>
-                    <table class="ee-table">
+                    <table class="ee-table ee-weapon-table">
                         <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Strike</th><th>Parry</th><th>Roll</th><th></th></tr></thead>
                         <tbody>
                             {{#each weaponItemsAncient}}

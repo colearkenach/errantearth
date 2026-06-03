@@ -204,6 +204,33 @@ display: flex;
     outline: none;
 }
 
+.ee-skill-table,
+.ee-weapon-table {
+  font-size: 11px;
+}
+
+.ee-skill-table thead th,
+.ee-weapon-table thead th {
+  padding: 1px 2px;
+  white-space: nowrap;
+}
+
+.ee-skill-table td,
+.ee-weapon-table td {
+  padding: 0 2px;
+  vertical-align: middle;
+}
+
+.ee-skill-table input,
+.ee-skill-table select,
+.ee-weapon-table input,
+.ee-weapon-table select {
+  height: 18px;
+  padding: 0 2px;
+  box-sizing: border-box;
+  font-size: 11px;
+}
+
 .ee-total {
   text-align: center;
   font-weight: 700;
