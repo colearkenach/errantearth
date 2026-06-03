@@ -570,7 +570,7 @@
                                 <input type="hidden" name="system.eeSkills.list.{{_index}}.key" value="{{key}}" />
                                 <input type="hidden" name="system.eeSkills.list.{{_index}}.name" value="{{name}}" />
                                 <input type="hidden" name="system.eeSkills.list.{{_index}}.custom" value="false" />
-                                <span>{{name}}</span>
+                                <span class="ee-skill-name" title="{{name}}">{{name}}</span>
                                 {{/if}}
                             </td>
                             <td><select name="system.eeSkills.list.{{_index}}.category">{{eeSelectOptions ../config.EE_SKILL_CATEGORIES category}}</select></td>
@@ -623,7 +623,7 @@
             {{#*inline "skillSection"}}
             <div class="ee-skill-col">
                 <h3>{{title}}</h3>
-                <table class="ee-table">
+                <table class="ee-table ee-legacy-skill-table">
                     <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
                     <tbody>
                         {{#each rows}}
@@ -632,12 +632,12 @@
                                 {{#if custom}}
                                 <input type="hidden" name="system.skills.list.{{_index}}.key" value="" />
                                 <input type="hidden" name="system.skills.list.{{_index}}.custom" value="true" />
-                                <input type="text" name="system.skills.list.{{_index}}.name" value="{{name}}" placeholder="Custom skill" />
+                                <input class="ee-skill-name-input" type="text" name="system.skills.list.{{_index}}.name" value="{{name}}" placeholder="Custom skill" title="{{name}}" />
                                 {{else}}
                                 <input type="hidden" name="system.skills.list.{{_index}}.key" value="{{key}}" />
                                 <input type="hidden" name="system.skills.list.{{_index}}.name" value="{{name}}" />
                                 <input type="hidden" name="system.skills.list.{{_index}}.custom" value="false" />
-                                <span>{{name}}</span>
+                                <span class="ee-skill-name" title="{{name}}">{{name}}</span>
                                 {{/if}}
                             </td>
                             <td><input type="number" name="system.skills.list.{{_index}}.base" value="{{base}}" /></td>
@@ -682,7 +682,7 @@
             {{#if skills.unassigned.length}}
             <details class="ee-skill-unassigned" open>
                 <summary>Unassigned ({{skills.unassigned.length}})</summary>
-                <table class="ee-table">
+                <table class="ee-table ee-legacy-skill-table">
                     <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
                     <tbody>
                         {{#each skills.unassigned}}
@@ -691,12 +691,12 @@
                                 {{#if custom}}
                                 <input type="hidden" name="system.skills.list.{{_index}}.key" value="" />
                                 <input type="hidden" name="system.skills.list.{{_index}}.custom" value="true" />
-                                <input type="text" name="system.skills.list.{{_index}}.name" value="{{name}}" placeholder="Custom skill" />
+                                <input class="ee-skill-name-input" type="text" name="system.skills.list.{{_index}}.name" value="{{name}}" placeholder="Custom skill" title="{{name}}" />
                                 {{else}}
                                 <input type="hidden" name="system.skills.list.{{_index}}.key" value="{{key}}" />
                                 <input type="hidden" name="system.skills.list.{{_index}}.name" value="{{name}}" />
                                 <input type="hidden" name="system.skills.list.{{_index}}.custom" value="false" />
-                                <span>{{name}}</span>
+                                <span class="ee-skill-name" title="{{name}}">{{name}}</span>
                                 {{/if}}
                             </td>
                             <td><input type="number" name="system.skills.list.{{_index}}.base" value="{{base}}" /></td>
