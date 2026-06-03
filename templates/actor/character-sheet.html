@@ -66,29 +66,12 @@
             <label>Age:</label>       <input type="text" name="system.bio.age" value="{{system.bio.age}}" />
             <label>Height:</label>    <input type="text" name="system.bio.height" value="{{system.bio.height}}" />
             <label>Weight:</label>    <input type="text" name="system.bio.weight" value="{{system.bio.weight}}" />
-            {{#unless isEE}}
-            <label>Life Span:</label> <input type="text" name="system.bio.lifeSpan" value="{{system.bio.lifeSpan}}" />
-            <label>Chi:</label>       <input type="text" name="system.bio.chi" value="{{system.bio.chi}}" />
-            {{/unless}}
         </div>
 
         {{#if isEE}}
         <div class="ee-row">
             <label>Current Karma:</label><input type="number" name="system.karma.current" value="{{system.karma.current}}" />
             <label>Total Karma:</label>  <input type="number" name="system.karma.total" value="{{system.karma.total}}" />
-            <label>Native Language(s):</label><input type="text" name="system.bio.nativeLanguages" value="{{system.bio.nativeLanguages}}" />
-        </div>
-        {{else}}
-        <div class="ee-row">
-            <label>Family Origin:</label>    <input type="text" name="system.bio.familyOrigin" value="{{system.bio.familyOrigin}}" />
-            <label>Environment:</label>      <input type="text" name="system.bio.environment" value="{{system.bio.environment}}" />
-            <label>Native Language(s):</label><input type="text" name="system.bio.nativeLanguages" value="{{system.bio.nativeLanguages}}" />
-        </div>
-
-        <div class="ee-row">
-            <label>Sentiments — Good:</label><input type="text" name="system.bio.sentimentsGood" value="{{system.bio.sentimentsGood}}" />
-            <label>Sentiments — Evil:</label><input type="text" name="system.bio.sentimentsEvil" value="{{system.bio.sentimentsEvil}}" />
-            <label>Insanity:</label>         <input type="text" name="system.bio.insanity" value="{{system.bio.insanity}}" />
         </div>
         {{/if}}
 
@@ -919,26 +902,24 @@
             {{#unless isEE}}
             <div class="ee-panel">
                 <h3>Physical Capabilities</h3>
+                <p class="ee-hint">Auto-calculated from the attribute rules. Enter an override only when a race, OCC, skill, power, or house rule changes the result.</p>
                 <div class="ee-row">
-                    <label>Lift (lbs):</label>  <input type="text" name="system.physical.lift" value="{{system.physical.lift}}" />
-                    <label>Carry (lbs):</label> <input type="text" name="system.physical.carry" value="{{system.physical.carry}}" />
-                    <label>Throw Max (lbs):</label><input type="text" name="system.physical.throwMax" value="{{system.physical.throwMax}}" />
-                    <label>Throw (ft):</label>  <input type="text" name="system.physical.throwFt" value="{{system.physical.throwFt}}" />
+                    <label>Carry (lbs):</label> <input type="text" name="system.physical.carry" value="{{system.physical.carry}}" placeholder="{{riftsDerived.physical.carry}}" />
+                    <label>Lift (lbs):</label>  <input type="text" name="system.physical.lift" value="{{system.physical.lift}}" placeholder="{{riftsDerived.physical.lift}}" />
+                    <label>Throw Max (lbs):</label><input type="text" name="system.physical.throwMax" value="{{system.physical.throwMax}}" placeholder="{{riftsDerived.physical.throwMax}}" />
+                    <label>Throw (ft):</label>  <input type="text" name="system.physical.throwFt" value="{{system.physical.throwFt}}" placeholder="{{riftsDerived.physical.throwFt}}" />
                 </div>
                 <div class="ee-row">
-                    <label>Run (mph):</label>   <input type="text" name="system.physical.runMph" value="{{system.physical.runMph}}" />
-                    <label>Run (max melees):</label><input type="text" name="system.physical.runMelees" value="{{system.physical.runMelees}}" />
-                    <label>Swim (mph):</label>  <input type="text" name="system.physical.swimMph" value="{{system.physical.swimMph}}" />
-                    <label>Swim (max melees):</label><input type="text" name="system.physical.swimMelees" value="{{system.physical.swimMelees}}" />
-                    <label>Swim (ft/attack):</label><input type="text" name="system.physical.swimFtPerAttack" value="{{system.physical.swimFtPerAttack}}" />
+                    <label>Run (mph):</label>   <input type="text" name="system.physical.runMph" value="{{system.physical.runMph}}" placeholder="{{riftsDerived.physical.runMph}}" />
+                    <label>Run (yd/min):</label><output>{{riftsDerived.physical.runYardsPerMinute}}</output>
+                    <label>Run (yd/melee):</label><output>{{riftsDerived.physical.runYardsPerMelee}}</output>
+                    <label>Run (ft/attack):</label><output>{{riftsDerived.physical.runFeetPerAttack}}</output>
                 </div>
                 <div class="ee-row">
-                    <label>Leap Up (ft):</label>    <input type="text" name="system.physical.leapUp" value="{{system.physical.leapUp}}" />
-                    <label>Leap Across (ft):</label><input type="text" name="system.physical.leapAcross" value="{{system.physical.leapAcross}}" />
-                    <label>Flip (%):</label>        <input type="text" name="system.physical.flip" value="{{system.physical.flip}}" />
-                    <label>Knockout:</label>        <input type="text" name="system.physical.knockout" value="{{system.physical.knockout}}" />
-                    <label>Critical:</label>        <input type="text" name="system.physical.critical" value="{{system.physical.critical}}" />
-                    <label>Death:</label>           <input type="text" name="system.physical.death" value="{{system.physical.death}}" />
+                    <label>Starting HP:</label><output>{{riftsDerived.physical.startingHp}}</output>
+                    <label>Starting SDC:</label><output>{{riftsDerived.physical.startingSdc}}</output>
+                    <label>Coma/Death:</label><output>{{riftsDerived.saves.death.display}}</output>
+                    <label>Speed KPH:</label><output>{{riftsDerived.physical.runKph}}</output>
                 </div>
             </div>
 
@@ -1117,7 +1098,7 @@
                             <tr><td>Toxins/Poisons:</td><td><input type="text" name="system.savingThrows.drugPoison.base" value="{{system.savingThrows.drugPoison.base}}" /></td>   <td><input type="number" name="system.savingThrows.drugPoison.bonus" value="{{system.savingThrows.drugPoison.bonus}}" /></td>   <td>{{riftsDerived.saves.drugPoison.attribute}}</td><td>{{riftsDerived.saves.drugPoison.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.drugPoison.base}}" data-bonus="{{riftsDerived.saves.drugPoison.total}}" data-label="Save vs Toxins/Poisons"><i class="fas fa-dice-d20"></i></a></td></tr>
                             <tr><td>Harmful Drugs:</td> <td><input type="text" name="system.savingThrows.harmfulDrugs.base" value="{{system.savingThrows.harmfulDrugs.base}}" /></td> <td><input type="number" name="system.savingThrows.harmfulDrugs.bonus" value="{{system.savingThrows.harmfulDrugs.bonus}}" /></td> <td>0</td><td>{{system.savingThrows.harmfulDrugs.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.harmfulDrugs.base}}" data-bonus="{{system.savingThrows.harmfulDrugs.bonus}}" data-label="Save vs Harmful Drugs"><i class="fas fa-dice-d20"></i></a></td></tr>
                             <tr><td>Insanity:</td>      <td><input type="text" name="system.savingThrows.insanity.base" value="{{system.savingThrows.insanity.base}}" /></td>     <td><input type="number" name="system.savingThrows.insanity.bonus" value="{{system.savingThrows.insanity.bonus}}" /></td>     <td>{{riftsDerived.saves.insanity.attribute}}</td><td>{{riftsDerived.saves.insanity.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.insanity.base}}" data-bonus="{{riftsDerived.saves.insanity.total}}" data-label="Save vs Insanity"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Possession:</td>    <td><input type="text" name="system.savingThrows.possession.base" value="{{system.savingThrows.possession.base}}" /></td>   <td><input type="number" name="system.savingThrows.possession.bonus" value="{{system.savingThrows.possession.bonus}}" /></td>   <td>0</td><td>{{system.savingThrows.possession.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.possession.base}}" data-bonus="{{system.savingThrows.possession.bonus}}" data-label="Save vs Possession"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Possession:</td>    <td><input type="text" name="system.savingThrows.possession.base" value="{{system.savingThrows.possession.base}}" /></td>   <td><input type="number" name="system.savingThrows.possession.bonus" value="{{system.savingThrows.possession.bonus}}" /></td>   <td>{{riftsDerived.saves.possession.attribute}}</td><td>{{riftsDerived.saves.possession.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.possession.base}}" data-bonus="{{riftsDerived.saves.possession.total}}" data-label="Save vs Possession"><i class="fas fa-dice-d20"></i></a></td></tr>
                             <tr><td>Horror Factor:</td> <td><input type="text" name="system.savingThrows.horrorFactor.base" value="{{system.savingThrows.horrorFactor.base}}" /></td> <td><input type="number" name="system.savingThrows.horrorFactor.bonus" value="{{system.savingThrows.horrorFactor.bonus}}" /></td> <td>0</td><td>{{system.savingThrows.horrorFactor.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.horrorFactor.base}}" data-bonus="{{system.savingThrows.horrorFactor.bonus}}" data-label="Save vs Horror Factor"><i class="fas fa-dice-d20"></i></a></td></tr>
                             <tr><td>Coma/Death:</td>    <td><input type="text" name="system.savingThrows.death.base" value="{{system.savingThrows.death.base}}" /></td>        <td><input type="number" name="system.savingThrows.death.bonus" value="{{system.savingThrows.death.bonus}}" /></td>        <td>{{riftsDerived.saves.death.attribute}}%</td><td>{{riftsDerived.saves.death.display}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.death.base}}" data-bonus="{{riftsDerived.saves.death.total}}" data-label="Save vs Coma/Death"><i class="fas fa-dice-d20"></i></a></td></tr>
                             <tr><td>Pain:</td>          <td><input type="text" name="system.savingThrows.pain.base" value="{{system.savingThrows.pain.base}}" /></td>         <td><input type="number" name="system.savingThrows.pain.bonus" value="{{system.savingThrows.pain.bonus}}" /></td>         <td>0</td><td>{{system.savingThrows.pain.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.pain.base}}" data-bonus="{{system.savingThrows.pain.bonus}}" data-label="Save vs Pain"><i class="fas fa-dice-d20"></i></a></td></tr>
