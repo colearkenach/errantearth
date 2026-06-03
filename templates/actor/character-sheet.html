@@ -1142,6 +1142,7 @@
                 {{!-- Weapons --}}
                 <div class="ee-panel ee-weapons">
                     <h3>Modern Weapons</h3>
+                    <div class="ee-table-scroll">
                     <table class="ee-table">
                         <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th>Roll</th><th></th></tr></thead>
                         <tbody>
@@ -1166,6 +1167,7 @@
                             {{/each}}
                         </tbody>
                     </table>
+                    </div>
                     <button type="button" class="ee-add" data-action="add-row" data-path="weapons.modern" data-kind="modernWeapon">+ Add</button>
 
                     {{#if weaponItemsModern.length}}
@@ -1195,6 +1197,7 @@
                     <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon Item"><i class="fas fa-plus"></i> Weapon Item</a>
 
                     <h3>Ancient Weapons</h3>
+                    <div class="ee-table-scroll">
                     <table class="ee-table">
                         <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th>Roll</th><th></th></tr></thead>
                         <tbody>
@@ -1218,6 +1221,7 @@
                             {{/each}}
                         </tbody>
                     </table>
+                    </div>
                     <button type="button" class="ee-add" data-action="add-row" data-path="weapons.ancient" data-kind="ancientWeapon">+ Add</button>
 
                     {{#if weaponItemsAncient.length}}
