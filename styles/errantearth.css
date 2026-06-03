@@ -169,6 +169,14 @@ display: flex;
     padding: 4px;
 }
 
+.ee-sheet .sheet-body > .tab:not(.active) {
+  display: none !important;
+}
+
+.ee-sheet .sheet-body > .tab.active {
+  display: block !important;
+}
+
 /* ---------------- Tables ---------------- */
 .ee-table {
   width: 100%;
@@ -202,6 +210,79 @@ display: flex;
 .ee-table input:focus {
     background: #fff8c6;
     outline: none;
+}
+
+.ee-skill-table {
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.ee-weapon-table {
+  table-layout: auto;
+  margin-bottom: 6px;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.ee-skill-table thead th,
+.ee-weapon-table thead th {
+  padding: 2px 3px;
+  white-space: nowrap;
+}
+
+.ee-skill-table td,
+.ee-weapon-table td {
+  padding: 1px 3px;
+  vertical-align: middle;
+}
+
+.ee-skill-table input,
+.ee-skill-table select,
+.ee-weapon-table input,
+.ee-weapon-table select {
+  width: 100%;
+  min-width: 0;
+  height: 19px;
+  padding: 0 2px;
+  box-sizing: border-box;
+}
+
+.ee-skill-table input,
+.ee-skill-table select {
+  font-size: 11px;
+}
+
+.ee-weapon-table input,
+.ee-weapon-table select {
+  font-size: 12px;
+}
+
+.ee-weapons .ee-create-item {
+  float: none !important;
+  clear: both;
+  display: inline-block;
+  margin: 0 0 8px 0;
+}
+
+.ee-weapons h3,
+.ee-weapons h4,
+.ee-weapons .ee-weapon-table,
+.ee-weapons .ee-add {
+  clear: both;
+}
+
+.ee-weapons h4 {
+  margin: 8px 0 4px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--ee-red);
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ee-weapons .ee-add {
+  display: inline-block;
+  margin: 2px 0 8px;
 }
 
 .ee-total {
