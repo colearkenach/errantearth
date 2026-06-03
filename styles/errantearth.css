@@ -407,6 +407,55 @@ color: var(--ee-red, #8a1f1f);
   font-weight: bold;
 }
 
+.ee-legacy-skill-table th:first-child,
+.ee-legacy-skill-table td:first-child {
+  min-width: 9rem;
+  width: 9rem;
+}
+
+.ee-legacy-skill-table th:nth-child(2),
+.ee-legacy-skill-table th:nth-child(3),
+.ee-legacy-skill-table th:nth-child(4),
+.ee-legacy-skill-table th:nth-child(5),
+.ee-legacy-skill-table td:nth-child(2),
+.ee-legacy-skill-table td:nth-child(3),
+.ee-legacy-skill-table td:nth-child(4),
+.ee-legacy-skill-table td:nth-child(5) {
+  text-align: center;
+  width: 3.25rem;
+}
+
+.ee-legacy-skill-table td:nth-child(2) input,
+.ee-legacy-skill-table td:nth-child(3) input,
+.ee-legacy-skill-table td:nth-child(4) input {
+  text-align: center;
+}
+
+.ee-legacy-skill-table th:nth-child(6),
+.ee-legacy-skill-table td:nth-child(6) {
+  width: 4.5rem;
+}
+
+.ee-legacy-skill-table th:last-child,
+.ee-legacy-skill-table td:last-child {
+  text-align: center;
+  width: 2.75rem;
+}
+
+.ee-skill-name {
+  display: block;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.ee-skill-name-input {
+  min-width: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .ee-wp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
