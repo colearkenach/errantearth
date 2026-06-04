@@ -8,6 +8,7 @@ export class ErrantEarthItemSheet extends ItemSheet {
       submitOnChange: true,
       closeOnSubmit: false,
       submitOnClose: true,
+      scrollY: [".ee-item-body"],
       resizable: true
     });
   }

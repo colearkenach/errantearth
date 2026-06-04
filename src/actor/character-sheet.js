@@ -97,6 +97,169 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     };
   }
 
+  static _legacyLowAttributePenalties(attrs = {}) {
+    const attr = key => Number(attrs[key] ?? 0);
+    const penalties = {};
+    const set = (key, text) => { if (text) penalties[key] = text; };
+
+    const iq = attr("iq");
+    if (iq >= 7 && iq <= 8) set("iq", "O.C.C. Related Skills are halved; add 1D4 initial Secondary Skills.");
+    else if (iq >= 5 && iq <= 6) set("iq", "O.C.C. Skills -4, O.C.C. Related Skills halved, all skill bonuses halved; add 1D4+2 Secondary Skills.");
+    else if (iq >= 3 && iq <= 4) set("iq", "O.C.C. Skills halved, O.C.C. Related Skills total 1D4, no O.C.C. skill bonuses, related skill bonuses halved.");
+    else if (iq >= 1 && iq <= 2) set("iq", "Only 1D4+1 O.C.C. Skills, no O.C.C. Related Skills, only 1D4 Secondary Skills, and base/per-level skill progression is halved.");
+
+    const ma = attr("ma");
+    if (ma >= 5 && ma <= 7) set("ma", "-10% to several social/information skills, -20% Interrogation; +5% to skills where being overlooked helps.");
+    else if (ma >= 3 && ma <= 4) set("ma", "-20% to several social/information skills; -30% Interrogation and Seduction.");
+    else if (ma >= 1 && ma <= 2) set("ma", "Severe social penalties: -50% to many social/information skills, worse Seduction/Interrogation vulnerability, and no convincing lie.");
+
+    const me = attr("me");
+    if (me >= 5 && me <= 7) set("me", "-3 vs Horror Factor, -2 vs illusions, -1 vs will/psionics/mind control/insanity/possession, and -10% to several social skills.");
+    else if (me >= 3 && me <= 4) set("me", "-6 vs Horror Factor, -4 vs illusions, -3 vs will/psionics/mind control/possession, -2 vs insanity, plus phobia risk.");
+    else if (me >= 1 && me <= 2) set("me", "-8 vs Horror Factor, -6 vs illusions/will/psionics/mind control/possession, -5 vs insanity, and 1D4+1 phobias.");
+
+    const ps = attr("ps");
+    if (ps >= 5 && ps <= 7) set("ps", "No Hand to Hand/O.C.C./weapon damage bonuses; throwing range reduced by 25%. Guns do full damage.");
+    else if (ps >= 3 && ps <= 4) set("ps", "Physical damage and throwing range are halved. Guns do full damage.");
+    else if (ps >= 1 && ps <= 2) set("ps", "Punches do 1 damage, kicks 1D4, melee weapon damage halved, no damage bonuses, throwing range reduced by 75%.");
+
+    const pp = attr("pp");
+    if (pp >= 5 && pp <= 7) set("pp", "-1 initiative; -2 strike, parry, dodge, disarm, entangle, pull punch, and roll with impact; manual-dexterity skill penalties.");
+    else if (pp >= 3 && pp <= 4) set("pp", "-3 initiative; combat bonuses are halved; stronger manual-dexterity skill penalties.");
+    else if (pp >= 1 && pp <= 2) set("pp", "-5 initiative, no combat bonuses, drops/trips on some 1-4 rolls, and cannot perform high-dexterity skills.");
+
+    const pe = attr("pe");
+    if (pe >= 5 && pe <= 7) set("pe", "-2 vs disease, -3 vs drugs/poison, -3 vs magic, -5% vs coma/death, fatigues 25% faster.");
+    else if (pe >= 3 && pe <= 4) set("pe", "-6 vs disease, -5 vs drugs/poison, -4 vs magic, -10% vs coma/death, fatigues 50% faster.");
+    else if (pe >= 1 && pe <= 2) set("pe", "-8 vs disease, -6 vs drugs/poison, -5 vs magic, -20% vs coma/death, fatigues 75% faster.");
+
+    const pb = attr("pb");
+    if (pb >= 5 && pb <= 7) set("pb", "-5% to appearance-sensitive skills, -20% Seduction; +5% Interrogation.");
+    else if (pb >= 3 && pb <= 4) set("pb", "-10% to appearance-sensitive skills, -30% Seduction; +10% Interrogation and intimidation.");
+    else if (pb >= 1 && pb <= 2) set("pb", "-15% to appearance-sensitive skills, -40% Seduction, -10% Prowl; +15% Interrogation, +5% Gambling, +20% intimidation; Horror Factor 1D6+9.");
+
+    const spd = attr("spd");
+    if (spd >= 1 && spd <= 6) set("spd", "-1 initiative, -1 dodge, -10% Dance; +5% Prowl/Palm/Track and +1 Perception from slow careful movement.");
+
+    return penalties;
+  }
+
+  static _legacyAttributeEffects(attrs = {}, bonuses = {}, penalties = {}) {
+    const labels = { iq: "IQ", me: "ME", ma: "MA", ps: "PS", pp: "PP", pe: "PE", pb: "PB", spd: "SPD" };
+    return Object.entries(labels).map(([key, label]) => {
+      const bonus = bonuses[key] ?? "";
+      const penalty = penalties[key] ?? "";
+      return {
+        key,
+        label,
+        value: Number(attrs[key] ?? 0) || 0,
+        bonus,
+        penalty,
+        hasEffect: !!(bonus || penalty),
+        tone: penalty ? "penalty" : (bonus ? "bonus" : "")
+      };
+    });
+  }
+
+  static _countLegacyWpLevels(levels = [], level = 1) {
+    const current = Math.max(1, Number(level ?? 1) || 1);
+    return levels.filter(lvl => current >= Number(lvl ?? 0)).length;
+  }
+
+  static _legacyWpRule(key) {
+    const rules = CONFIG.EE?.RIFTS_WP_RULES ?? {};
+    const rule = rules[key] ?? {};
+    if (!rule.sameAs) return rule;
+    return { ...(rules[rule.sameAs] ?? {}), ...rule };
+  }
+
+  static _legacyWpBonus(key, level = 1, attrs = {}) {
+    if (!key) return {};
+    const rule = ErrantEarthCharacterSheet._legacyWpRule(key);
+    const count = levels => ErrantEarthCharacterSheet._countLegacyWpLevels(levels, level);
+    const bonus = {
+      strike: count(rule.strikeLevels),
+      parry: count(rule.parryLevels) + Number(rule.parryFlat ?? 0),
+      thrownStrike: count(rule.thrownStrikeLevels),
+      damage: count(rule.damageLevels),
+      disarm: count(rule.disarmLevels),
+      entangle: count(rule.entangleLevels),
+      initiative: 0,
+      rateOfFire: rule.rateOfFireBase ? Number(rule.rateOfFireBase) + count(rule.rateOfFireLevels) : 0,
+      thrownPenalty: Number(rule.thrownPenalty ?? 0)
+    };
+
+    if (rule.quickDraw) {
+      const pp = Number(attrs.pp ?? 0);
+      bonus.initiative = pp >= 31 ? 4 : pp >= 24 ? 3 : pp >= 18 ? 2 : 1;
+    }
+
+    return bonus;
+  }
+
+  static _legacyWpEntrySummary(entry, level = 1, attrs = {}, selected = {}) {
+    const key = entry?.key ?? "";
+    const rule = ErrantEarthCharacterSheet._legacyWpRule(key);
+    const bonus = ErrantEarthCharacterSheet._legacyWpBonus(key, level, attrs);
+    const parts = [];
+    const add = (label, value, extra = "") => {
+      if (!value) return;
+      parts.push(`${label} ${ErrantEarthCharacterSheet._formatSigned(value)}${extra}`);
+    };
+
+    add("Strike", bonus.strike);
+    add("Parry", bonus.parry, rule.parryLabel ? ` (${rule.parryLabel})` : "");
+    add("Thrown Strike", bonus.thrownStrike);
+    add("Damage", bonus.damage);
+    add("Disarm", bonus.disarm);
+    add("Entangle", bonus.entangle);
+    add("Initiative", bonus.initiative);
+    if (bonus.rateOfFire) parts.push(`Rate ${bonus.rateOfFire}/melee`);
+    if (bonus.thrownPenalty) parts.push(`Thrown ${ErrantEarthCharacterSheet._formatSigned(bonus.thrownPenalty)}`);
+    if (rule.skillBonus) parts.push(rule.skillBonus);
+
+    const summary = parts.length ? parts.join("; ") : "No level bonus listed.";
+    return {
+      ...entry,
+      checked: !!selected[key],
+      summary,
+      damage: rule.damage ?? "",
+      range: rule.range ?? "",
+      note: rule.note ?? "",
+      bonus
+    };
+  }
+
+  static _legacyWpOptions(entries = []) {
+    return Object.fromEntries(entries.map(e => [e.key, e.name]));
+  }
+
+  static _decorateLegacyWeaponRow(row, index, level, attrs, selected) {
+    const wpKey = row?.wpKey ?? "";
+    const wpName = [
+      ...(CONFIG.EE?.WP_LIST?.ancient ?? []),
+      ...(CONFIG.EE?.WP_LIST?.modern ?? [])
+    ].find(e => e.key === wpKey)?.name ?? "";
+    const wpSelected = !!(wpKey && selected?.[wpKey]);
+    const wpBonus = wpSelected ? ErrantEarthCharacterSheet._legacyWpBonus(wpKey, level, attrs) : {};
+    const manualStrike = ErrantEarthCharacterSheet._parseIntSafe(row?.strike);
+    const manualParry = ErrantEarthCharacterSheet._parseIntSafe(row?.parry);
+    const effectiveStrike = manualStrike + Number(wpBonus.strike ?? 0);
+    const effectiveParry = manualParry + Number(wpBonus.parry ?? 0);
+    return {
+      ...row,
+      _index: index,
+      wpKey,
+      wpName,
+      wpSelected,
+      wpBonus,
+      effectiveStrike,
+      effectiveParry,
+      effectiveStrikeDisplay: ErrantEarthCharacterSheet._formatSigned(effectiveStrike),
+      effectiveParryDisplay: ErrantEarthCharacterSheet._formatSigned(effectiveParry)
+    };
+  }
+
   /** Errant Earth derived-value bands from the core rules source of truth. */
   static _EE_STRENGTH_TABLE = [
     { min: 0,  max: 3,        sdBonus: -3, mdCapable: false, meleeToHit: -4 },
@@ -686,9 +849,22 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const peMagicPoison = C.peMagicPoison(effectiveAttrs.pe);
     const charmImpress = C.charmImpress(effectiveAttrs.pb);
     const possessionSave = C.mePossession(effectiveAttrs.me);
+    const attrBonuses = {
+      iq:  iqSkillBonus ? `+${iqSkillBonus}% skills` : "",
+      me:  [psionicSave ? `+${psionicSave} psi` : "", insanitySave ? `+${insanitySave} insanity` : ""].filter(Boolean).join(", "),
+      ma:  trustIntimidate ? `${trustIntimidate}% trust/intim.` : "",
+      ps:  psDamage ? `+${psDamage} damage` : "",
+      pp:  [ppStrike ? `+${ppStrike} strike` : "", ppParryDodge ? `+${ppParryDodge} parry/dodge` : "", ppInitiative ? `+${ppInitiative} initiative` : ""].filter(Boolean).join(", "),
+      pe:  [peComaSave ? `+${peComaSave}% coma/death` : "", peMagicPoison ? `+${peMagicPoison} magic/poison` : ""].filter(Boolean).join(", "),
+      pb:  charmImpress ? `${charmImpress}% charm/impress` : "",
+      spd: ""
+    };
+    const attrPenalties = C._legacyLowAttributePenalties(effectiveAttrs);
+    const attrEffects = C._legacyAttributeEffects(effectiveAttrs, attrBonuses, attrPenalties);
 
     const hthTables = CONFIG.EE?.RIFTS_HTH_TABLES ?? {};
-    const hthType = hthTables[sys.handToHand?.type] ? sys.handToHand.type : "basic";
+    const hthChoices = CONFIG.EE?.HTH_TYPES ?? {};
+    const hthType = Object.prototype.hasOwnProperty.call(hthChoices, sys.handToHand?.type) ? sys.handToHand.type : "basic";
     const hthTable = hthTables[hthType] ?? { levels: [] };
     const hthBase = {
       attacks: 0, initiative: 0, strike: 0, parry: 0, dodge: 0, damage: 0,
@@ -744,16 +920,10 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       peComaSave,
       peMagicPoison,
       charmImpress,
-      attrBonuses: {
-        iq:  iqSkillBonus ? `+${iqSkillBonus}% skills` : "",
-        me:  [psionicSave ? `+${psionicSave} psi` : "", insanitySave ? `+${insanitySave} insanity` : ""].filter(Boolean).join(", "),
-        ma:  trustIntimidate ? `${trustIntimidate}% trust/intim.` : "",
-        ps:  psDamage ? `+${psDamage} damage` : "",
-        pp:  [ppStrike ? `+${ppStrike} strike` : "", ppParryDodge ? `+${ppParryDodge} parry/dodge` : "", ppInitiative ? `+${ppInitiative} initiative` : ""].filter(Boolean).join(", "),
-        pe:  [peComaSave ? `+${peComaSave}% coma/death` : "", peMagicPoison ? `+${peMagicPoison} magic/poison` : ""].filter(Boolean).join(", "),
-        pb:  charmImpress ? `${charmImpress}% charm/impress` : "",
-        spd: ""
-      },
+      attrBonuses,
+      attrPenalties,
+      attrEffects,
+      attrEffectsActive: attrEffects.filter(effect => effect.hasEffect),
       handToHand,
       combat: {
         damage: handToHand.damage,
@@ -841,12 +1011,21 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       ? toArr(sys.weaponProficiencies.custom)
       : [];
     ctx.system.weaponProficiencies = { selected: wpSelected, custom: wpCustom };
-    const wpDecorate = (entries) => entries.map(e => ({
-      ...e, checked: !!wpSelected[e.key]
-    }));
+    const wpDecorate = (entries) => entries.map(e => C._legacyWpEntrySummary(e, level, effectiveAttrs, wpSelected));
     ctx.wpAncient = wpDecorate(CONFIG.EE?.WP_LIST?.ancient ?? []);
     ctx.wpModern  = wpDecorate(CONFIG.EE?.WP_LIST?.modern  ?? []);
     ctx.eeWp      = wpDecorate(CONFIG.EE?.EE_WP_LIST ?? []);
+    ctx.wpAncientOptions = C._legacyWpOptions(CONFIG.EE?.WP_LIST?.ancient ?? []);
+    ctx.wpModernOptions = C._legacyWpOptions(CONFIG.EE?.WP_LIST?.modern ?? []);
+    ctx.riftsWpNotes = CONFIG.EE?.RIFTS_WP_NOTES ?? [];
+    ctx.riftsDerived.weaponProficiencies = {
+      ancient: ctx.wpAncient.filter(wp => wp.checked),
+      modern: ctx.wpModern.filter(wp => wp.checked)
+    };
+    ctx.system.weapons.modern = ctx.system.weapons.modern
+      .map((row, index) => C._decorateLegacyWeaponRow(row, index, level, effectiveAttrs, wpSelected));
+    ctx.system.weapons.ancient = ctx.system.weapons.ancient
+      .map((row, index) => C._decorateLegacyWeaponRow(row, index, level, effectiveAttrs, wpSelected));
     ctx.system.armor.primary.extras = toArr(sys.armor?.primary?.extras);
     ctx.system.armor.secondary.extras = toArr(sys.armor?.secondary?.extras);
     ctx.system.powerArmor.handToHand.extras = toArr(sys.powerArmor?.handToHand?.extras);
@@ -1734,8 +1913,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         }
         return { key: "", name: "", base: 0, perLvl: 0, misc: 0, category: "", custom: true };
       case "wpCustom":      return { name: "" };
-      case "modernWeapon":  return { name: "", damageType: "", damage: "", damageScale: "S", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
-      case "ancientWeapon": return { name: "", damageType: "", damage: "", damageScale: "S", ammo: "", strike: "", parry: "", special: "" };
+      case "modernWeapon":  return { name: "", wpKey: "", damageType: "", damage: "", damageScale: "S", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
+      case "ancientWeapon": return { name: "", wpKey: "", damageType: "", damage: "", damageScale: "S", ammo: "", strike: "", parry: "", special: "" };
       case "saveExtra":     return { name: "", base: 0, bonus: 0 };
       case "h2hExtra":      return { name: "", value: 0 };
       case "armorExtra":    return { name: "", current: 0, max: 0 };
@@ -1794,7 +1973,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const normalized = { ...selected };
     const known = [
       ...(wpList.ancient ?? []),
-      ...(wpList.modern ?? [])
+      ...(wpList.modern ?? []),
+      ...(CONFIG.EE?.EE_WP_LIST ?? [])
     ];
 
     for (const { key } of known) {
@@ -1826,6 +2006,10 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       sys.vehicle.type = ErrantEarthCharacterSheet._validateEnum(sys.vehicle.type, cfg.VEHICLE_TYPES);
     if (sys.handToHand && "type" in sys.handToHand)
       sys.handToHand.type = ErrantEarthCharacterSheet._validateEnum(sys.handToHand.type, cfg.HTH_TYPES);
+    if (sys.handToHand && "strengthType" in sys.handToHand)
+      sys.handToHand.strengthType = ErrantEarthCharacterSheet._validateEnum(sys.handToHand.strengthType, cfg.LEGACY_PHYSICAL_TYPES);
+    if (sys.handToHand && "enduranceType" in sys.handToHand)
+      sys.handToHand.enduranceType = ErrantEarthCharacterSheet._validateEnum(sys.handToHand.enduranceType, cfg.LEGACY_PHYSICAL_TYPES);
     if (sys.powerArmor?.handToHand && "type" in sys.powerArmor.handToHand)
       sys.powerArmor.handToHand.type = ErrantEarthCharacterSheet._validateEnum(sys.powerArmor.handToHand.type, cfg.HTH_TYPES);
     const scrubArr = (arr, field, choices) => {

@@ -74,13 +74,25 @@ Hooks.once("ready", async () => {
   if (!game.user.isGM) return;
   const alignMap = {
     "Principled": "principled", "Scrupulous": "scrupulous",
-    "Unprincipled": "unprincipled", "Anarchist": "anarchist",
+    "Taoist": "taoist", "Unprincipled": "unprincipled", "Anarchist": "anarchist",
     "Miscreant": "miscreant", "Aberrant": "aberrant", "Diabolic": "diabolic"
   };
   const psiMap = { "None": "none", "Minor": "minor", "Major": "major", "Master": "master" };
   const hthMap = {
     "Basic": "basic", "Expert": "expert", "Martial Arts": "martialArts",
-    "Commando": "commando", "Assassin": "assassin"
+    "Commando": "commando", "Assassin": "assassin",
+    "Aikido": "aikido", "Judo": "judo", "Jujitsu": "jujitsu", "Karate": "karate",
+    "Kendo": "kendo", "Ninjitsu": "ninjitsu", "Samurai": "samurai", "Teng-Jutsu": "tengJutsu",
+    "Drunken Style Kung Fu": "drunkenStyleKungFu", "Dragon": "dragon",
+    "RPA Combat: Basic": "rpaBasic", "RPA Combat: Flying Power Armor": "rpaFlyingPowerArmor",
+    "RPA Combat: Ground-Based Power Armor": "rpaGroundBasedPowerArmor",
+    "RPA Combat: Heavy Vehicular Style Robots": "rpaHeavyVehicularStyleRobots",
+    "RPA Combat: Heavy Ground Robots": "rpaHeavyGroundRobots",
+    "RPA Combat: Light Ground Robots": "rpaLightGroundRobots",
+    "RPA Combat: Glitter Boy": "rpaGlitterBoy", "RPA Combat: Silverhawk": "rpaSilverhawk",
+    "RPA Combat: Battleram": "rpaBattleram", "RPA Combat: Bombard": "rpaBombard",
+    "Space Fighter: Basic": "spaceFighterBasic", "Space Fighter: Elite": "spaceFighterElite",
+    "Mystic Martial Art: Xian Pu Kung Fu (Drunken Style)": "mysticXianPuDrunken"
   };
 
   for (const actor of game.actors.contents) {

@@ -3,6 +3,7 @@ export const EE = {};
 EE.ALIGNMENTS = {
   principled:   "Principled",
   scrupulous:   "Scrupulous",
+  taoist:       "Taoist",
   unprincipled: "Unprincipled",
   anarchist:    "Anarchist",
   miscreant:    "Miscreant",
@@ -42,7 +43,38 @@ EE.HTH_TYPES = {
   expert:      "Expert",
   martialArts: "Martial Arts",
   commando:    "Commando",
-  assassin:    "Assassin"
+  assassin:    "Assassin",
+  aikido:      "Aikido",
+  judo:        "Judo",
+  jujitsu:     "Jujitsu",
+  karate:      "Karate",
+  kendo:       "Kendo",
+  ninjitsu:    "Ninjitsu",
+  samurai:     "Samurai",
+  tengJutsu:   "Teng-Jutsu",
+  drunkenStyleKungFu: "Drunken Style Kung Fu",
+  dragon:      "Dragon",
+  rpaBasic:    "RPA Combat: Basic",
+  rpaFlyingPowerArmor: "RPA Combat: Flying Power Armor",
+  rpaGroundBasedPowerArmor: "RPA Combat: Ground-Based Power Armor",
+  rpaHeavyVehicularStyleRobots: "RPA Combat: Heavy Vehicular Style Robots",
+  rpaHeavyGroundRobots: "RPA Combat: Heavy Ground Robots",
+  rpaLightGroundRobots: "RPA Combat: Light Ground Robots",
+  rpaGlitterBoy: "RPA Combat: Glitter Boy",
+  rpaSilverhawk: "RPA Combat: Silverhawk",
+  rpaBattleram: "RPA Combat: Battleram",
+  rpaBombard: "RPA Combat: Bombard",
+  spaceFighterBasic: "Space Fighter: Basic",
+  spaceFighterElite: "Space Fighter: Elite",
+  mysticXianPuDrunken: "Mystic Martial Art: Xian Pu Kung Fu (Drunken Style)"
+};
+
+EE.LEGACY_PHYSICAL_TYPES = {
+  normal: "Normal",
+  augmented: "Augmented",
+  robotic: "Robotic",
+  giantRobotic: "Giant Robotic",
+  supernatural: "Supernatural"
 };
 
 // EE Legacy hand-to-hand advancement tables. Values are cumulative base bonuses
@@ -468,14 +500,9 @@ EE.SKILL_LIST = [
   { key: "trackTrapAnimals",       name: "Track & Trap Animals",                group: "Wilderness", base: 20, perLvl: 5 }
 ];
 
-// Master W.P. list. Rendered as checkboxes on the Combat tab; includes Errant Earth weapon proficiencies.
+// Master EE Legacy W.P. list. Rendered as checkboxes on the legacy Combat tab.
 EE.WP_LIST = {
   ancient: [
-    { key: "wpArchaicProjectileWeapons", name: "W.P. Archaic Projectile Weapons" },
-    { key: "wpArchaicMeleeWeapons",      name: "W.P. Archaic Melee Weapons" },
-    { key: "wpModernMeleeWeapons",       name: "W.P. Modern Melee Weapons" },
-    { key: "wpArchaicFirearms",          name: "W.P. Archaic Firearms" },
-    { key: "wpUnarmed",                  name: "W.P. Unarmed" },
     { key: "wpArchery",                  name: "W.P. Archery" },
     { key: "wpAxe",                      name: "W.P. Axe" },
     { key: "wpBlunt",                    name: "W.P. Blunt" },
@@ -488,6 +515,7 @@ EE.WP_LIST = {
     { key: "wpQuickDraw",                name: "W.P. Quick Draw" },
     { key: "wpRope",                     name: "W.P. Rope" },
     { key: "wpShield",                   name: "W.P. Shield" },
+    { key: "wpSlingShot",                name: "W.P. Sling Shot" },
     { key: "wpSpear",                    name: "W.P. Spear" },
     { key: "wpStaff",                    name: "W.P. Staff" },
     { key: "wpSword",                    name: "W.P. Sword" },
@@ -495,14 +523,6 @@ EE.WP_LIST = {
     { key: "wpWhip",                     name: "W.P. Whip" }
   ],
   modern: [
-    { key: "wpKineticHandgun",           name: "W.P. Kinetic Handgun" },
-    { key: "wpEnergyHandgun",            name: "W.P. Energy Handgun" },
-    { key: "wpKineticLongGun",           name: "W.P. Kinetic Long Gun" },
-    { key: "wpEnergyLongGun",            name: "W.P. Energy Long Gun" },
-    { key: "wpKineticAutomatics",        name: "W.P. Kinetic Automatics" },
-    { key: "wpEnergyAutomatics",         name: "W.P. Energy Automatics" },
-    { key: "wpHeavyWeapons",             name: "W.P. Heavy Weapons" },
-    { key: "wpVehicleHardpoints",        name: "W.P. Vehicle Hardpoints" },
     { key: "wpHandguns",                 name: "W.P. Handguns" },
     { key: "wpRifles",                   name: "W.P. Rifles" },
     { key: "wpShotgun",                  name: "W.P. Shotgun" },
@@ -512,13 +532,185 @@ EE.WP_LIST = {
     { key: "wpHarpoonSpearGun",          name: "W.P. Harpoon & Spear Gun" },
     { key: "wpEnergyPistol",             name: "W.P. Energy Pistol" },
     { key: "wpEnergyRifle",              name: "W.P. Energy Rifle" },
-    { key: "wpHeavyMD",                  name: "W.P. Heavy M.D. Weapons" }
+    { key: "wpHeavyMD",                  name: "W.P. Heavy Mega-Damage Weapons" }
   ]
 };
 
-// Errant Earth weapon proficiencies — the canonical short list (rulebook
-// "Weapon Proficiencies" table). Keys match EE.WP_LIST so checkbox state
-// carries over between the EE Legacy and Errant Earth views.
+EE.RIFTS_WP_RULES = {
+  wpArchery: {
+    strikeLevels: [1, 2, 4, 6, 8, 10, 12, 14],
+    parryFlat: 1,
+    parryLabel: "bow weapon only",
+    disarmLevels: [2, 5, 10, 15],
+    rateOfFireBase: 2,
+    rateOfFireLevels: [2, 4, 5, 8, 10, 12, 14],
+    damage: "Short Bow 1D6; Long Bow 2D6; Compound Bow 2D6+1; Harpoon Gun 1D10; Light Crossbow 2D4; Heavy Crossbow 2D8; Pistol Crossbow 1D6.",
+    note: "Bows and crossbows may shoot up to 50% farther with no W.P. strike or disarm bonus. Running, flying, riding, vehicle fire, or other unbalanced shots lose all bonuses and halve rate of fire."
+  },
+  wpAxe: {
+    strikeLevels: [2, 5, 8, 12, 15],
+    parryLevels: [2, 5, 8, 12, 15],
+    thrownStrikeLevels: [5, 8, 12],
+    damage: "Large axes 2D6 or 2D8 by size/style; small axes and hatchets 1D6.",
+    note: "Not designed for throwing."
+  },
+  wpBlunt: {
+    strikeLevels: [1, 3, 6, 9, 12],
+    parryLevels: [1, 3, 6, 9, 12],
+    thrownStrikeLevels: [5, 10, 15],
+    damage: "Typically 1D6 or 2D4; largest or spiked blunt weapons 2D6.",
+    note: "Not designed for throwing."
+  },
+  wpChain: {
+    strikeLevels: [1, 3, 7, 10, 13],
+    parryLevels: [4, 8, 12],
+    thrownPenalty: -3,
+    damage: "Typically 2D6; large/spiked chain weapons such as Goupiillon flails 3D6.",
+    note: "Can parry only when wielded in two hands. Cannot entangle and cannot be thrown accurately."
+  },
+  wpForked: {
+    strikeLevels: [1, 3, 5, 8, 11, 13],
+    entangleLevels: [1, 3, 5, 8, 11, 13],
+    parryLevels: [1, 3, 6, 10, 13],
+    thrownStrikeLevels: [4, 10, 15],
+    damage: "Small forked weapons 1D8; most large spear-like forked weapons 2D6; trident 2D8.",
+    note: "Strike bonus can be used to strike or entangle. Not really designed for throwing."
+  },
+  wpGrapplingHook: {
+    strikeLevels: [3, 6, 9, 12],
+    entangleLevels: [3, 6, 9, 12],
+    skillBonus: "+5% Climbing when a grappling hook is used",
+    damage: "1D4 in hand-to-hand; 1D6 when swung and pulled back into a victim.",
+    note: "Can trip by hooking a foot, ankle, or leg. Cannot be used to parry."
+  },
+  wpKnife: {
+    strikeLevels: [2, 4, 7, 10, 13],
+    parryLevels: [1, 3, 6, 9, 12],
+    thrownStrikeLevels: [1, 3, 6, 8, 10, 13],
+    damage: "Very small knives 1D4; typical knives 1D6."
+  },
+  wpPairedWeapons: {
+    note: "Exclusive to Men at Arms O.C.C.s. Allows one-handed weapons in each hand: strike and parry simultaneously, twin strikes, strike two targets, or parry two attackers. Requires W.P. in each weapon used; two-handed weapons do not qualify."
+  },
+  wpPoleArm: {
+    strikeLevels: [1, 3, 6, 9, 12],
+    parryLevels: [1, 3, 6, 9, 12],
+    thrownStrikeLevels: [3, 8, 12],
+    damageLevels: [2, 8],
+    damage: "Typically 2D8; largest pole arms 3D6; Voulge 4D6.",
+    note: "Not designed for throwing."
+  },
+  wpQuickDraw: {
+    quickDraw: true,
+    note: "Initiative bonus is based on P.P.: +1 at 17 or less, +2 at 18-23, +3 at 24-30, +4 at 31 or higher."
+  },
+  wpRope: {
+    note: "Usually exclusive to the Cowboy O.C.C.; see Cowboy skills for the full description."
+  },
+  wpShield: {
+    strikeLevels: [4, 8, 12],
+    parryLevels: [1, 3, 7, 10, 13],
+    damage: "1D6 as a blunt weapon; 1D4 damage when thrown.",
+    note: "No bonus to strike when thrown. Shield blocks bullets or energy blasts only with no bonuses; blocking thrown weapons is -8 to parry and spears/arrows are -3."
+  },
+  wpSlingShot: {
+    sameAs: "wpTargeting",
+    note: "See W.P. Targeting."
+  },
+  wpSpear: {
+    strikeLevels: [1, 3, 6, 9, 12],
+    parryLevels: [1, 3, 6, 9, 12],
+    thrownStrikeLevels: [3, 6, 10, 14],
+    damage: "Short spear or javelin 1D6; long spear 2D6.",
+    note: "Maximum throwing range 150 feet."
+  },
+  wpStaff: {
+    strikeLevels: [1, 3, 7, 10, 13],
+    parryLevels: [2, 5, 8, 11, 14],
+    thrownStrikeLevels: [5, 10, 15],
+    damage: "Short Staff 1D6; Long Staff 2D4; Bo Staff or Quarter Staff 2D6.",
+    note: "Typically made of wood. Not designed for throwing."
+  },
+  wpSword: {
+    strikeLevels: [1, 3, 6, 9, 12, 15],
+    parryLevels: [2, 4, 7, 10, 13],
+    thrownStrikeLevels: [4, 8, 12],
+    damage: "Short Sword or Saber 2D4; Falchion/Scimitar 2D6; Broadsword 1D8+1; Long Sword and other large swords 2D6; huge swords 3D6.",
+    note: "Swords are not designed for being thrown."
+  },
+  wpTargeting: {
+    strikeLevels: [1, 3, 7, 10],
+    damage: "Bolas 2D4; blowgun/dart 1D4; boomerang, stone, javelin, sling/slingshot, spear, knives, sticks 1D6; throwing axe 2D4; trident 2D8; net no damage.",
+    note: "Applies to thrown/projectile weapons except bows, crossbows, and guns. Requires any one missile W.P. Running, flying, riding, vehicle use, or imbalance halves bonuses and rate of fire. Strength damage normally does not apply to arrows or thrown weapons unless an O.C.C. says otherwise."
+  },
+  wpWhip: {
+    strikeLevels: [2, 4, 7, 10, 13],
+    disarmLevels: [2, 4, 7, 10, 13],
+    entangleLevels: [2, 4, 7, 10, 13],
+    damageLevels: [2, 4, 8, 12],
+    damage: "Light Whip 1D6; Heavy Whip, Bull Whip, or Cat-O-Nine-Tails 2D6.",
+    note: "Cannot be used to parry and cannot be thrown."
+  },
+  wpHandguns: {
+    strikeLevels: [2, 4, 6, 8, 10, 12, 14],
+    damage: "Light caliber 2D6 to 3D6 S.D.C.; medium 3D6 to 4D6 S.D.C.; heavy/large 4D6 to 6D6 S.D.C. Short bursts from pistols double damage.",
+    range: "Average range 140 feet."
+  },
+  wpRifles: {
+    strikeLevels: [1, 3, 5, 7, 9, 11, 13],
+    damage: "Light caliber 5D6 S.D.C.; medium 6D6 S.D.C.; heavy/large 7D6 to 1D6x10+3 S.D.C. Short bursts double damage; long bursts triple damage.",
+    range: "Average range 1300 feet, plus 500 feet for precision bolt-action rifles."
+  },
+  wpShotgun: {
+    strikeLevels: [1, 3, 6, 10, 14],
+    damage: "Buckshot 2D6 S.D.C. in a 10 foot radius; light shot 3D6; medium shot 4D6 to 5D6; heavy shot/large bore 6D6. Double damage if both barrels fire simultaneously.",
+    range: "Sawed-Off 60 feet; hunting 200 feet; police/military 300 feet."
+  },
+  wpSubmachineGun: {
+    strikeLevels: [1, 3, 6, 9, 12, 15],
+    damage: "4D6 S.D.C. per single round or 1D4x10 S.D.C. per three-round burst.",
+    range: "Average range 500-600 feet.",
+    note: "Can only fire in bursts."
+  },
+  wpHeavyMilitary: {
+    strikeLevels: [1, 3, 6, 10, 14],
+    damage: "Machine-guns, grenade launchers, mortars, mini-guns, and similar military hardware; damage varies by weapon.",
+    note: "Many heavy weapons can only fire bursts or must be mounted/supported."
+  },
+  wpFlamethrowers: {
+    strikeLevels: [2, 5, 10, 15],
+    damage: "5D6 S.D.C. per burst of flame, with 01-75% likelihood of flammable targets catching fire.",
+    range: "Average range 60 feet."
+  },
+  wpHarpoonSpearGun: {
+    strikeLevels: [2, 4, 7, 10, 15],
+    damage: "Plain pointed end 2D6 S.D.C.; explosive head 4D6 M.D."
+  },
+  wpEnergyPistol: {
+    damage: "Mega-Damage varies.",
+    note: "Includes lasers, ion blasters, and other energy firing small arms."
+  },
+  wpEnergyRifle: {
+    damage: "Mega-Damage varies.",
+    note: "Includes all long-range energy firing rifles."
+  },
+  wpHeavyMD: {
+    damage: "Mega-Damage varies by weapon and manufacturer.",
+    note: "Includes plasma ejectors, M.D. rail guns, rocket launchers, mini-missile launchers, and mounted heavy weapon turrets."
+  }
+};
+
+EE.RIFTS_WP_NOTES = [
+  "Each W.P. counts as one skill and bonuses are cumulative with P.P., O.C.C., and Hand to Hand bonuses.",
+  "A character may use any weapon without its W.P., but does not receive W.P. bonuses.",
+  "Modern weapons without W.P.: no attribute or Hand to Hand bonuses apply, cannot make Aimed or Called Shots, and suffer -3 to burst attacks, -5 with heavy weapons, and -6 when shooting wild.",
+  "A Natural 19 or 20 to strike with a thrown weapon is a critical strike and inflicts double damage; an aimed/called disarm succeeds automatically unless matched or beaten by the defender's natural roll.",
+  "Strength damage does not apply to arrows or thrown weapons unless an O.C.C. description specifically says it does."
+];
+
+// Errant Earth weapon proficiencies - the canonical short list from the
+// Errant Earth "Weapon Proficiencies" table. Stored in the same selected map
+// as EE Legacy W.P.s so switching rules modes preserves both sets.
 EE.EE_WP_LIST = [
   { key: "wpArchaicProjectileWeapons", name: "Archaic Projectile Weapons" },
   { key: "wpArchaicMeleeWeapons",      name: "Archaic Melee Weapons" },

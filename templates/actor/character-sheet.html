@@ -95,16 +95,20 @@
             <input type="number" name="system.attributes.spd.value" value="{{system.attributes.spd.value}}" />
         </div>
 
-        <div class="ee-row ee-attr-bonuses">
-            <span class="ee-attr-bonus" title="IQ bonus">{{riftsDerived.attrBonuses.iq}}</span>
-            <span class="ee-attr-bonus" title="ME bonus">{{riftsDerived.attrBonuses.me}}</span>
-            <span class="ee-attr-bonus" title="MA bonus">{{riftsDerived.attrBonuses.ma}}</span>
-            <span class="ee-attr-bonus" title="PS bonus">{{riftsDerived.attrBonuses.ps}}</span>
-            <span class="ee-attr-bonus" title="PP bonus">{{riftsDerived.attrBonuses.pp}}</span>
-            <span class="ee-attr-bonus" title="PE bonus">{{riftsDerived.attrBonuses.pe}}</span>
-            <span class="ee-attr-bonus" title="PB bonus">{{riftsDerived.attrBonuses.pb}}</span>
-            <span class="ee-attr-bonus"></span>
-        </div>
+        <details class="ee-disclosure ee-attr-effects">
+            <summary>Attribute Effects</summary>
+            <div class="ee-effect-chip-grid">
+                {{#each riftsDerived.attrEffectsActive}}
+                <div class="ee-effect-chip ee-effect-chip--{{tone}}">
+                    <strong>{{label}} {{value}}</strong>
+                    {{#if bonus}}<span>{{bonus}}</span>{{/if}}
+                    {{#if penalty}}<span>{{penalty}}</span>{{/if}}
+                </div>
+                {{/each}}
+            </div>
+            {{#unless riftsDerived.attrEffectsActive.length}}<p class="ee-hint">No high-attribute bonuses or low-attribute penalties are active.</p>{{/unless}}
+            <p class="ee-hint">Low-attribute penalties with skill-selection changes are shown as rule notes; apply non-flat changes manually where needed.</p>
+        </details>
         {{/unless}}
 
         {{#if isEE}}
@@ -245,8 +249,8 @@
         </div>
 
         {{#if riftsDerived.sources.length}}
-        <div class="ee-panel ee-rifts-sources">
-            <h3>Active EE Legacy Sources</h3>
+        <details class="ee-panel ee-disclosure ee-rifts-sources">
+            <summary>Active EE Legacy Sources ({{riftsDerived.sources.length}})</summary>
             {{#if riftsDerived.sourceWarnings.length}}
             <ul class="ee-warnings">
                 {{#each riftsDerived.sourceWarnings}}
@@ -320,7 +324,7 @@
             {{#if riftsDerived.sourceTotals.poolBonuses}}
             <p class="ee-hint">Effective pool maxima: HP {{riftsDerived.pools.hp.total}}, SDC {{riftsDerived.pools.sdc.total}}, MDC {{riftsDerived.pools.mdc.total}}, ISP {{riftsDerived.pools.isp.total}}, PPE {{riftsDerived.pools.ppe.total}}. Non-flat bonuses remain notes.</p>
             {{/if}}
-        </div>
+        </details>
         {{/if}}
         {{/unless}}
     </section>
@@ -923,15 +927,31 @@
                 </div>
             </div>
 
-            <div class="ee-panel ee-weapon-proficiencies">
-                <h3>Weapon Proficiencies</h3>
+            <details class="ee-panel ee-disclosure ee-weapon-proficiencies">
+                <summary>
+                    Weapon Proficiencies
+                    <span class="ee-summary-chips">
+                        {{#each riftsDerived.weaponProficiencies.ancient}}<span>{{name}}</span>{{/each}}
+                        {{#each riftsDerived.weaponProficiencies.modern}}<span>{{name}}</span>{{/each}}
+                        {{#unless (or riftsDerived.weaponProficiencies.ancient.length riftsDerived.weaponProficiencies.modern.length)}}<span>None selected</span>{{/unless}}
+                    </span>
+                </summary>
+                <div class="ee-wp-notes">
+                    {{#each riftsWpNotes}}<div>{{this}}</div>{{/each}}
+                </div>
                 <div class="ee-wp-grid">
                     <div class="ee-wp-col">
                         <h4>Ancient</h4>
                         {{#each wpAncient}}
                         <label class="ee-wp-check">
                             <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
-                            {{name}}
+                            <span>
+                                <span class="ee-wp-name">{{name}}</span>
+                                <span class="ee-wp-rule">{{summary}}</span>
+                                {{#if damage}}<span class="ee-wp-rule">{{damage}}</span>{{/if}}
+                                {{#if range}}<span class="ee-wp-rule">{{range}}</span>{{/if}}
+                                {{#if note}}<span class="ee-wp-rule">{{note}}</span>{{/if}}
+                            </span>
                         </label>
                         {{/each}}
                     </div>
@@ -940,7 +960,13 @@
                         {{#each wpModern}}
                         <label class="ee-wp-check">
                             <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
-                            {{name}}
+                            <span>
+                                <span class="ee-wp-name">{{name}}</span>
+                                <span class="ee-wp-rule">{{summary}}</span>
+                                {{#if damage}}<span class="ee-wp-rule">{{damage}}</span>{{/if}}
+                                {{#if range}}<span class="ee-wp-rule">{{range}}</span>{{/if}}
+                                {{#if note}}<span class="ee-wp-rule">{{note}}</span>{{/if}}
+                            </span>
                         </label>
                         {{/each}}
                     </div>
@@ -957,7 +983,7 @@
                     </tbody>
                 </table>
                 <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies.custom" data-kind="wpCustom">+ Add Custom W.P.</button>
-            </div>
+            </details>
 
             <div class="ee-combat-top">
                 {{!-- Hand to Hand --}}
@@ -968,6 +994,14 @@
                         <select name="system.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.handToHand.type}}</select>
                     </div>
                     {{#unless isEE}}
+                    <div class="ee-kv">
+                        <label>Strength Type:</label>
+                        <select name="system.handToHand.strengthType">{{eeSelectOptions config.LEGACY_PHYSICAL_TYPES system.handToHand.strengthType}}</select>
+                    </div>
+                    <div class="ee-kv">
+                        <label>Endurance Type:</label>
+                        <select name="system.handToHand.enduranceType">{{eeSelectOptions config.LEGACY_PHYSICAL_TYPES system.handToHand.enduranceType}}</select>
+                    </div>
                     <p class="ee-hth-summary">Using {{riftsDerived.handToHand.label}} base bonuses through level {{riftsDerived.handToHand.level}}. Manual values below are misc adjustments added to the table and attribute bonuses.</p>
                     <table class="ee-table">
                         <thead><tr><th>Combat Bonus</th><th>Base</th><th>Attribute</th><th>Manual / Misc</th><th>Total</th><th>Roll</th></tr></thead>
@@ -1123,31 +1157,32 @@
                 {{!-- Weapons --}}
                 <div class="ee-panel ee-weapons">
                     <h3>Modern Weapons</h3>
-                    <table class="ee-table ee-weapon-table">
-                        <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Payload</th><th>Strike</th><th>Range</th><th>Rate</th><th>Special</th><th>Roll</th><th></th></tr></thead>
-                        <tbody>
-                            {{#each system.weapons.modern}}
-                            <tr>
-                                <td><input type="text" name="system.weapons.modern.{{@index}}.name" value="{{name}}" /></td>
-                                <td><select name="system.weapons.modern.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
-                                <td><input type="text" name="system.weapons.modern.{{@index}}.damage" value="{{damage}}" /></td>
-                                <td><select name="system.weapons.modern.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></td>
-                                <td><input type="text" name="system.weapons.modern.{{@index}}.ammo" value="{{ammo}}" /></td>
-                                <td><input type="text" name="system.weapons.modern.{{@index}}.payload" value="{{payload}}" /></td>
-                                <td><input type="text" name="system.weapons.modern.{{@index}}.strike" value="{{strike}}" /></td>
-                                <td><input type="text" name="system.weapons.modern.{{@index}}.range" value="{{range}}" /></td>
-                                <td><input type="text" name="system.weapons.modern.{{@index}}.rate" value="{{rate}}" /></td>
-                                <td><input type="text" name="system.weapons.modern.{{@index}}.special" value="{{special}}" /></td>
-                                <td class="ee-actions">
-                                    <a data-action="roll" data-roll-type="d20" data-bonus="{{strike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
-                                    {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
-                                </td>
-                                <td><a data-action="delete-row" data-path="weapons.modern" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="weapons.modern" data-kind="modernWeapon">+ Add</button>
+                    <div class="ee-weapon-list">
+                        {{#each system.weapons.modern}}
+                        <div class="ee-weapon-row ee-weapon-row-modern">
+                            <label class="ee-weapon-field ee-weapon-name"><span>Name</span><input type="text" name="system.weapons.modern.{{@index}}.name" value="{{name}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-wp"><span>W.P.</span><select name="system.weapons.modern.{{@index}}.wpKey">{{eeSelectOptions ../wpModernOptions wpKey}}</select>{{#if wpKey}}<em>{{#if wpSelected}}Strike {{wpBonus.strike}}{{else}}Not selected{{/if}}</em>{{/if}}</label>
+                            <label class="ee-weapon-field"><span>Dmg Type</span><select name="system.weapons.modern.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></label>
+                            <label class="ee-weapon-field"><span>Damage</span><input type="text" name="system.weapons.modern.{{@index}}.damage" value="{{damage}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-small"><span>Scale</span><select name="system.weapons.modern.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></label>
+                            <label class="ee-weapon-field"><span>Ammo</span><input type="text" name="system.weapons.modern.{{@index}}.ammo" value="{{ammo}}" /></label>
+                            <label class="ee-weapon-field"><span>Payload</span><input type="text" name="system.weapons.modern.{{@index}}.payload" value="{{payload}}" /></label>
+                            <label class="ee-weapon-field"><span>Strike</span><input type="text" name="system.weapons.modern.{{@index}}.strike" value="{{strike}}" /><em>Total {{effectiveStrikeDisplay}}</em></label>
+                            <label class="ee-weapon-field"><span>Range</span><input type="text" name="system.weapons.modern.{{@index}}.range" value="{{range}}" /></label>
+                            <label class="ee-weapon-field"><span>Rate</span><input type="text" name="system.weapons.modern.{{@index}}.rate" value="{{rate}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-special"><span>Special</span><input type="text" name="system.weapons.modern.{{@index}}.special" value="{{special}}" /></label>
+                            <div class="ee-weapon-rolls">
+                                <a data-action="roll" data-roll-type="d20" data-bonus="{{effectiveStrike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                                {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
+                                <a data-action="delete-row" data-path="weapons.modern" data-index="{{@index}}" title="Delete Weapon"><i class="fas fa-times"></i></a>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div class="ee-weapon-toolbar">
+                        <button type="button" class="ee-add" data-action="add-row" data-path="weapons.modern" data-kind="modernWeapon">+ Modern Weapon</button>
+                        <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon Item"><i class="fas fa-plus"></i> Weapon Item</a>
+                    </div>
 
                     {{#if weaponItemsModern.length}}
                     <h4>Modern Weapon Items</h4>
@@ -1173,33 +1208,31 @@
                         </tbody>
                     </table>
                     {{/if}}
-                    <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon Item"><i class="fas fa-plus"></i> Weapon Item</a>
-
                     <h3>Ancient Weapons</h3>
-                    <table class="ee-table ee-weapon-table">
-                        <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Strike</th><th>Parry</th><th>Special</th><th>Roll</th><th></th></tr></thead>
-                        <tbody>
-                            {{#each system.weapons.ancient}}
-                            <tr>
-                                <td><input type="text" name="system.weapons.ancient.{{@index}}.name" value="{{name}}" /></td>
-                                <td><select name="system.weapons.ancient.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
-                                <td><input type="text" name="system.weapons.ancient.{{@index}}.damage" value="{{damage}}" /></td>
-                                <td><select name="system.weapons.ancient.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></td>
-                                <td><input type="text" name="system.weapons.ancient.{{@index}}.ammo" value="{{ammo}}" /></td>
-                                <td><input type="text" name="system.weapons.ancient.{{@index}}.strike" value="{{strike}}" /></td>
-                                <td><input type="text" name="system.weapons.ancient.{{@index}}.parry" value="{{parry}}" /></td>
-                                <td><input type="text" name="system.weapons.ancient.{{@index}}.special" value="{{special}}" /></td>
-                                <td class="ee-actions">
-                                    <a data-action="roll" data-roll-type="d20" data-bonus="{{strike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
-                                    <a data-action="roll" data-roll-type="d20" data-bonus="{{parry}}" data-label="{{name}} Parry" title="Roll Parry"><i class="fas fa-shield-alt"></i></a>
-                                    {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
-                                </td>
-                                <td><a data-action="delete-row" data-path="weapons.ancient" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="weapons.ancient" data-kind="ancientWeapon">+ Add</button>
+                    <div class="ee-weapon-list">
+                        {{#each system.weapons.ancient}}
+                        <div class="ee-weapon-row ee-weapon-row-ancient">
+                            <label class="ee-weapon-field ee-weapon-name"><span>Name</span><input type="text" name="system.weapons.ancient.{{@index}}.name" value="{{name}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-wp"><span>W.P.</span><select name="system.weapons.ancient.{{@index}}.wpKey">{{eeSelectOptions ../wpAncientOptions wpKey}}</select>{{#if wpKey}}<em>{{#if wpSelected}}Strike {{wpBonus.strike}}, Parry {{wpBonus.parry}}{{else}}Not selected{{/if}}</em>{{/if}}</label>
+                            <label class="ee-weapon-field"><span>Dmg Type</span><select name="system.weapons.ancient.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></label>
+                            <label class="ee-weapon-field"><span>Damage</span><input type="text" name="system.weapons.ancient.{{@index}}.damage" value="{{damage}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-small"><span>Scale</span><select name="system.weapons.ancient.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></label>
+                            <label class="ee-weapon-field"><span>Ammo</span><input type="text" name="system.weapons.ancient.{{@index}}.ammo" value="{{ammo}}" /></label>
+                            <label class="ee-weapon-field"><span>Strike</span><input type="text" name="system.weapons.ancient.{{@index}}.strike" value="{{strike}}" /><em>Total {{effectiveStrikeDisplay}}</em></label>
+                            <label class="ee-weapon-field"><span>Parry</span><input type="text" name="system.weapons.ancient.{{@index}}.parry" value="{{parry}}" /><em>Total {{effectiveParryDisplay}}</em></label>
+                            <label class="ee-weapon-field ee-weapon-special"><span>Special</span><input type="text" name="system.weapons.ancient.{{@index}}.special" value="{{special}}" /></label>
+                            <div class="ee-weapon-rolls">
+                                <a data-action="roll" data-roll-type="d20" data-bonus="{{effectiveStrike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                                <a data-action="roll" data-roll-type="d20" data-bonus="{{effectiveParry}}" data-label="{{name}} Parry" title="Roll Parry"><i class="fas fa-shield-alt"></i></a>
+                                {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
+                                <a data-action="delete-row" data-path="weapons.ancient" data-index="{{@index}}" title="Delete Weapon"><i class="fas fa-times"></i></a>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div class="ee-weapon-toolbar">
+                        <button type="button" class="ee-add" data-action="add-row" data-path="weapons.ancient" data-kind="ancientWeapon">+ Ancient Weapon</button>
+                    </div>
 
                     {{#if weaponItemsAncient.length}}
                     <h4>Ancient Weapon Items</h4>

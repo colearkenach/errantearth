@@ -197,6 +197,8 @@
       },
       "handToHand": {
         "type": "basic",
+        "strengthType": "normal",
+        "enduranceType": "normal",
         "attacks": 0,
         "initiative": 0,
         "damage": 0,

@@ -124,6 +124,12 @@ display: flex;
     text-align: center;
 }
 
+.ee-row.ee-attrs {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 4px 8px;
+}
+
 .ee-pools input {
     width: 48px;
     min-width: 48px;
@@ -133,6 +139,84 @@ display: flex;
 .ee-pools > label,
 .ee-attrs > label {
     white-space: nowrap;
+}
+
+.ee-disclosure {
+  margin: 6px 0;
+  border: 1px solid #aaa;
+  background: #eee;
+}
+
+.ee-disclosure > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  padding: 3px 6px;
+  background: var(--ee-red);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1.2;
+  list-style-position: inside;
+}
+
+.ee-disclosure > summary::-webkit-details-marker {
+  color: #fff;
+}
+
+.ee-disclosure[open] > summary {
+  margin-bottom: 5px;
+}
+
+.ee-summary-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  min-width: 0;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.ee-summary-chips span {
+  padding: 1px 5px;
+  border: 1px solid rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  white-space: nowrap;
+}
+
+.ee-effect-chip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 5px;
+  padding: 0 6px 4px;
+}
+
+.ee-effect-chip {
+  display: grid;
+  gap: 2px;
+  padding: 5px 6px;
+  border: 1px solid #c7c7c7;
+  background: #fff;
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.ee-effect-chip strong {
+  color: #333;
+}
+
+.ee-effect-chip--bonus {
+  border-left: 3px solid #4b7c3f;
+}
+
+.ee-effect-chip--penalty {
+  border-left: 3px solid var(--ee-red);
+}
+
+.ee-attr-effects .ee-hint {
+  margin: 3px 6px 6px;
 }
 
 /* ---------------- Tabs ---------------- */
@@ -308,6 +392,114 @@ display: flex;
 .ee-weapons .ee-add {
   display: inline-block;
   margin: 2px 0 8px;
+}
+
+.ee-weapon-list {
+  display: grid;
+  gap: 6px;
+  margin: 4px 0;
+}
+
+.ee-weapon-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+  gap: 5px 6px;
+  align-items: end;
+  padding: 6px;
+  border: 1px solid #b8b8b8;
+  background: #f7f7f7;
+}
+
+.ee-weapon-field {
+  display: grid;
+  grid-template-rows: auto 22px auto;
+  gap: 2px;
+  min-width: 0;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.ee-weapon-field span {
+  color: #333;
+  white-space: nowrap;
+}
+
+.ee-weapon-field input,
+.ee-weapon-field select {
+  width: 100%;
+  min-width: 0;
+  height: 22px;
+  padding: 0 4px;
+  border: 1px solid #aaa;
+  background: #fff;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+.ee-weapon-field em {
+  min-height: 12px;
+  color: #555;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.ee-weapon-name,
+.ee-weapon-wp,
+.ee-weapon-special {
+  grid-column: span 2;
+}
+
+.ee-weapon-small {
+  min-width: 72px;
+}
+
+.ee-weapon-rolls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  min-height: 22px;
+  padding: 0 2px 12px;
+  white-space: nowrap;
+}
+
+.ee-weapon-rolls a {
+  cursor: pointer;
+}
+
+.ee-weapon-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 3px 0 10px;
+}
+
+.ee-weapon-toolbar .ee-add,
+.ee-weapon-toolbar .ee-create-item {
+  float: none !important;
+  clear: none;
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  margin: 0;
+  padding: 2px 4px;
+  line-height: 1.2;
+}
+
+.ee-weapons .ee-weapon-table {
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.ee-weapons .ee-weapon-table input,
+.ee-weapons .ee-weapon-table select {
+  min-width: 0;
 }
 
 .ee-total {
@@ -503,10 +695,45 @@ color: var(--ee-red, #8a1f1f);
 
 .ee-wp-check {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 4px;
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+
+.ee-wp-check input {
+  margin-top: 2px;
+  flex: 0 0 auto;
+}
+
+.ee-wp-name {
+  display: block;
+  font-weight: 600;
+}
+
+.ee-wp-rule {
+  display: block;
+  color: #555;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.ee-wp-notes {
+  display: grid;
+  gap: 2px;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.ee-wp-applied {
+  display: block;
+  margin-top: 2px;
+  color: #555;
+  font-size: 11px;
+  line-height: 1.2;
 }
 
 .ee-muted {
@@ -845,6 +1072,15 @@ color: var(--ee-red, #8a1f1f);
 
 .ee-create-item:hover {
     color: #000
+}
+
+.ee-weapons .ee-weapon-toolbar .ee-create-item {
+    float: none;
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .ee-items-tab.ee-drop-hover {
