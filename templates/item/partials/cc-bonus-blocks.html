@@ -1,15 +1,20 @@
 {{!-- Shared OCC/Race bonus & ability blocks. `system` is passed in by parent. --}}
 <h4 class="ee-section-h">Attribute Bonuses</h4>
-<p class="ee-hint">Dice formulas (e.g. <code>1d4</code>, <code>2d6</code>) or flat modifiers.</p>
-<div class="ee-grid-4">
-  <label>IQ <input type="text" name="system.attributeBonuses.iq" value="{{system.attributeBonuses.iq}}"/></label>
-  <label>ME <input type="text" name="system.attributeBonuses.me" value="{{system.attributeBonuses.me}}"/></label>
-  <label>MA <input type="text" name="system.attributeBonuses.ma" value="{{system.attributeBonuses.ma}}"/></label>
-  <label>PS <input type="text" name="system.attributeBonuses.ps" value="{{system.attributeBonuses.ps}}"/></label>
-  <label>PP <input type="text" name="system.attributeBonuses.pp" value="{{system.attributeBonuses.pp}}"/></label>
-  <label>PE <input type="text" name="system.attributeBonuses.pe" value="{{system.attributeBonuses.pe}}"/></label>
-  <label>PB <input type="text" name="system.attributeBonuses.pb" value="{{system.attributeBonuses.pb}}"/></label>
-  <label>SPD <input type="text" name="system.attributeBonuses.spd" value="{{system.attributeBonuses.spd}}"/></label>
+<p class="ee-hint">Legacy character-creation rolls. Equip this item on a character, then roll each formula once from the Active EE Legacy Sources panel.</p>
+<div class="ee-cc-attr-grid">
+  <div class="ee-cc-grid-head">Attr</div>
+  <div class="ee-cc-grid-head">Stat Bonus</div>
+  <div class="ee-cc-grid-head">Roll Formula</div>
+  <div class="ee-cc-grid-head">Result</div>
+  <div class="ee-cc-grid-head">Rolled</div>
+  <label>IQ</label><input type="number" name="system.attributeBonuses.iq.bonus" value="{{system.attributeBonuses.iq.bonus}}"/><input type="text" name="system.attributeBonuses.iq.formula" value="{{system.attributeBonuses.iq.formula}}" placeholder="1d6"/><input type="number" name="system.attributeBonuses.iq.value" value="{{system.attributeBonuses.iq.value}}"/><label class="ee-check"><input type="hidden" name="system.attributeBonuses.iq.rolled" value="false" /><input type="checkbox" name="system.attributeBonuses.iq.rolled" {{eeChecked system.attributeBonuses.iq.rolled}}/></label>
+  <label>ME</label><input type="number" name="system.attributeBonuses.me.bonus" value="{{system.attributeBonuses.me.bonus}}"/><input type="text" name="system.attributeBonuses.me.formula" value="{{system.attributeBonuses.me.formula}}" placeholder="1d6"/><input type="number" name="system.attributeBonuses.me.value" value="{{system.attributeBonuses.me.value}}"/><label class="ee-check"><input type="hidden" name="system.attributeBonuses.me.rolled" value="false" /><input type="checkbox" name="system.attributeBonuses.me.rolled" {{eeChecked system.attributeBonuses.me.rolled}}/></label>
+  <label>MA</label><input type="number" name="system.attributeBonuses.ma.bonus" value="{{system.attributeBonuses.ma.bonus}}"/><input type="text" name="system.attributeBonuses.ma.formula" value="{{system.attributeBonuses.ma.formula}}" placeholder="1d6"/><input type="number" name="system.attributeBonuses.ma.value" value="{{system.attributeBonuses.ma.value}}"/><label class="ee-check"><input type="hidden" name="system.attributeBonuses.ma.rolled" value="false" /><input type="checkbox" name="system.attributeBonuses.ma.rolled" {{eeChecked system.attributeBonuses.ma.rolled}}/></label>
+  <label>PS</label><input type="number" name="system.attributeBonuses.ps.bonus" value="{{system.attributeBonuses.ps.bonus}}"/><input type="text" name="system.attributeBonuses.ps.formula" value="{{system.attributeBonuses.ps.formula}}" placeholder="1d6"/><input type="number" name="system.attributeBonuses.ps.value" value="{{system.attributeBonuses.ps.value}}"/><label class="ee-check"><input type="hidden" name="system.attributeBonuses.ps.rolled" value="false" /><input type="checkbox" name="system.attributeBonuses.ps.rolled" {{eeChecked system.attributeBonuses.ps.rolled}}/></label>
+  <label>PP</label><input type="number" name="system.attributeBonuses.pp.bonus" value="{{system.attributeBonuses.pp.bonus}}"/><input type="text" name="system.attributeBonuses.pp.formula" value="{{system.attributeBonuses.pp.formula}}" placeholder="1d6"/><input type="number" name="system.attributeBonuses.pp.value" value="{{system.attributeBonuses.pp.value}}"/><label class="ee-check"><input type="hidden" name="system.attributeBonuses.pp.rolled" value="false" /><input type="checkbox" name="system.attributeBonuses.pp.rolled" {{eeChecked system.attributeBonuses.pp.rolled}}/></label>
+  <label>PE</label><input type="number" name="system.attributeBonuses.pe.bonus" value="{{system.attributeBonuses.pe.bonus}}"/><input type="text" name="system.attributeBonuses.pe.formula" value="{{system.attributeBonuses.pe.formula}}" placeholder="1d6"/><input type="number" name="system.attributeBonuses.pe.value" value="{{system.attributeBonuses.pe.value}}"/><label class="ee-check"><input type="hidden" name="system.attributeBonuses.pe.rolled" value="false" /><input type="checkbox" name="system.attributeBonuses.pe.rolled" {{eeChecked system.attributeBonuses.pe.rolled}}/></label>
+  <label>PB</label><input type="number" name="system.attributeBonuses.pb.bonus" value="{{system.attributeBonuses.pb.bonus}}"/><input type="text" name="system.attributeBonuses.pb.formula" value="{{system.attributeBonuses.pb.formula}}" placeholder="1d6"/><input type="number" name="system.attributeBonuses.pb.value" value="{{system.attributeBonuses.pb.value}}"/><label class="ee-check"><input type="hidden" name="system.attributeBonuses.pb.rolled" value="false" /><input type="checkbox" name="system.attributeBonuses.pb.rolled" {{eeChecked system.attributeBonuses.pb.rolled}}/></label>
+  <label>SPD</label><input type="number" name="system.attributeBonuses.spd.bonus" value="{{system.attributeBonuses.spd.bonus}}"/><input type="text" name="system.attributeBonuses.spd.formula" value="{{system.attributeBonuses.spd.formula}}" placeholder="1d6"/><input type="number" name="system.attributeBonuses.spd.value" value="{{system.attributeBonuses.spd.value}}"/><label class="ee-check"><input type="hidden" name="system.attributeBonuses.spd.rolled" value="false" /><input type="checkbox" name="system.attributeBonuses.spd.rolled" {{eeChecked system.attributeBonuses.spd.rolled}}/></label>
 </div>
 
 <h4 class="ee-section-h">Pool Bonuses</h4>
@@ -21,8 +26,106 @@
   <label>PPE <input type="text" name="system.poolBonuses.ppe" value="{{system.poolBonuses.ppe}}"/></label>
 </div>
 
-<label class="ee-block">Combat Bonuses<textarea name="system.combatBonuses" rows="3" placeholder="e.g. +1 attack/melee, +3 initiative, +2 pull punch, +2 disarm">{{system.combatBonuses}}</textarea></label>
-<label class="ee-block">Save Bonuses<textarea name="system.saveBonuses" rows="2" placeholder="e.g. +4 save vs psionics, +6 vs mind control, +8 vs poisons">{{system.saveBonuses}}</textarea></label>
+<h4 class="ee-section-h">Skill Bonuses</h4>
+<table class="ee-table ee-cc-skill-bonuses">
+  <thead><tr><th>Skill</th><th>Bonus %</th><th>Note</th><th></th></tr></thead>
+  <tbody>
+    {{#each system.skillBonuses}}
+    <tr>
+      <td>
+        {{#if custom}}
+        <input type="hidden" name="system.skillBonuses.{{@index}}.key" value=""/>
+        <input type="hidden" name="system.skillBonuses.{{@index}}.custom" value="true"/>
+        <input type="text" name="system.skillBonuses.{{@index}}.name" value="{{name}}" placeholder="Custom skill"/>
+        {{else}}
+        <input type="hidden" name="system.skillBonuses.{{@index}}.key" value="{{key}}"/>
+        <input type="hidden" name="system.skillBonuses.{{@index}}.name" value="{{name}}"/>
+        <input type="hidden" name="system.skillBonuses.{{@index}}.custom" value="false"/>
+        <span>{{name}}</span>
+        {{/if}}
+      </td>
+      <td><input type="number" name="system.skillBonuses.{{@index}}.bonus" value="{{bonus}}"/></td>
+      <td><input type="text" name="system.skillBonuses.{{@index}}.note" value="{{note}}"/></td>
+      <td><a data-action="delete-cc-skill-bonus" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div class="ee-skill-add-row">
+  <select data-action="add-cc-skill-bonus-from-list">
+    <option value="">+ Add from list...</option>
+    {{#each ccSkillBonusPicker}}
+    <optgroup label="{{group}}">
+      {{#each items}}
+      <option value="{{key}}">{{name}}</option>
+      {{/each}}
+    </optgroup>
+    {{/each}}
+  </select>
+  <button type="button" class="ee-add" data-action="add-cc-skill-bonus">+ Custom</button>
+</div>
+
+<h4 class="ee-section-h">Weapon Proficiencies</h4>
+<div class="ee-cc-wp-groups">
+  <section>
+    <h5>Ancient</h5>
+    <div class="ee-cc-check-grid">
+      {{#each wpAncient}}
+      <label class="ee-check"><input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}}/> {{name}}</label>
+      {{/each}}
+    </div>
+  </section>
+  <section>
+    <h5>Modern</h5>
+    <div class="ee-cc-check-grid">
+      {{#each wpModern}}
+      <label class="ee-check"><input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}}/> {{name}}</label>
+      {{/each}}
+    </div>
+  </section>
+</div>
+<table class="ee-table ee-cc-wp-custom">
+  <thead><tr><th>Custom W.P.</th><th></th></tr></thead>
+  <tbody>
+    {{#each system.weaponProficiencies.custom}}
+    <tr>
+      <td><input type="text" name="system.weaponProficiencies.custom.{{@index}}.name" value="{{name}}" placeholder="Custom W.P."/></td>
+      <td><a data-action="delete-cc-wp-custom" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button type="button" class="ee-add" data-action="add-cc-wp-custom">+ Add Custom W.P.</button>
+
+<h4 class="ee-section-h">Combat Bonuses</h4>
+<div class="ee-cc-bonus-grid">
+  <label>Attacks/Melee <input type="number" name="system.combatBonuses.attacks" value="{{system.combatBonuses.attacks}}"/></label>
+  <label>Initiative <input type="number" name="system.combatBonuses.initiative" value="{{system.combatBonuses.initiative}}"/></label>
+  <label>Damage <input type="number" name="system.combatBonuses.damage" value="{{system.combatBonuses.damage}}"/></label>
+  <label>Strike <input type="number" name="system.combatBonuses.strike" value="{{system.combatBonuses.strike}}"/></label>
+  <label>Parry <input type="number" name="system.combatBonuses.parry" value="{{system.combatBonuses.parry}}"/></label>
+  <label>Dodge <input type="number" name="system.combatBonuses.dodge" value="{{system.combatBonuses.dodge}}"/></label>
+  <label>Disarm <input type="number" name="system.combatBonuses.disarm" value="{{system.combatBonuses.disarm}}"/></label>
+  <label>Entangle <input type="number" name="system.combatBonuses.entangle" value="{{system.combatBonuses.entangle}}"/></label>
+  <label>Pull Punch <input type="number" name="system.combatBonuses.pullPunch" value="{{system.combatBonuses.pullPunch}}"/></label>
+  <label>Roll w/ Impact <input type="number" name="system.combatBonuses.roll" value="{{system.combatBonuses.roll}}"/></label>
+</div>
+
+<h4 class="ee-section-h">Save Bonuses</h4>
+<div class="ee-cc-bonus-grid">
+  <label>Spell <input type="number" name="system.saveBonuses.spell" value="{{system.saveBonuses.spell}}"/></label>
+  <label>Ritual <input type="number" name="system.saveBonuses.ritual" value="{{system.saveBonuses.ritual}}"/></label>
+  <label>Psionics <input type="number" name="system.saveBonuses.psionics" value="{{system.saveBonuses.psionics}}"/></label>
+  <label>Toxins/Poisons <input type="number" name="system.saveBonuses.drugPoison" value="{{system.saveBonuses.drugPoison}}"/></label>
+  <label>Harmful Drugs <input type="number" name="system.saveBonuses.harmfulDrugs" value="{{system.saveBonuses.harmfulDrugs}}"/></label>
+  <label>Insanity <input type="number" name="system.saveBonuses.insanity" value="{{system.saveBonuses.insanity}}"/></label>
+  <label>Possession <input type="number" name="system.saveBonuses.possession" value="{{system.saveBonuses.possession}}"/></label>
+  <label>Horror Factor <input type="number" name="system.saveBonuses.horrorFactor" value="{{system.saveBonuses.horrorFactor}}"/></label>
+  <label>Coma/Death <input type="number" name="system.saveBonuses.death" value="{{system.saveBonuses.death}}"/></label>
+  <label>Pain <input type="number" name="system.saveBonuses.pain" value="{{system.saveBonuses.pain}}"/></label>
+</div>
 
 <div class="ee-grid-2">
   <label class="ee-check"><input type="checkbox" name="system.grantsMagic"    {{eeChecked system.grantsMagic}}/> Grants Magic (spells)</label>
@@ -44,3 +147,5 @@
   </tbody>
 </table>
 <button type="button" class="ee-add" data-action="add-cc-ability">+ Add Ability</button>
+
+

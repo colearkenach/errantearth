@@ -219,6 +219,22 @@ display: flex;
   margin: 3px 6px 6px;
 }
 
+.ee-attr-source-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: -2px 0 5px;
+  padding: 0 6px;
+}
+
+.ee-attr-source-strip span {
+  padding: 2px 6px;
+  border: 1px solid #c9b8b8;
+  border-radius: 3px;
+  background: #fff8f2;
+  font-size: 11px;
+}
+
 /* ---------------- Tabs ---------------- */
 .ee-tabs {
   display: flex;
@@ -392,6 +408,31 @@ display: flex;
 .ee-weapons .ee-add {
   display: inline-block;
   margin: 2px 0 8px;
+}
+
+.ee-skill-stat-bonuses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-top: 3px;
+}
+
+.ee-skill-stat-bonuses .ee-chip {
+    font-size: 10px;
+    line-height: 1.2;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.ee-skill-stat-bonuses .ee-chip a,
+.ee-rifts-source-line .ee-chip a {
+  margin-left: 4px;
+  color: var(--ee-red, #8a1f1f);
+  cursor: pointer;
+}
+
+.ee-skill-stat-bonuses input[type="hidden"] {
+    display: none;
 }
 
 .ee-weapon-list {
@@ -694,12 +735,17 @@ color: var(--ee-red, #8a1f1f);
 }
 
 .ee-wp-check {
-  display: flex;
+    display: flex;
   align-items: flex-start;
   gap: 4px;
   font-size: 12px;
   line-height: 1.25;
   margin-bottom: 4px;
+}
+
+.ee-wp-check input:disabled + span,
+.ee-wp-check input:disabled ~ span {
+    opacity: 0.78;
 }
 
 .ee-wp-check input {
@@ -1226,6 +1272,97 @@ color: var(--ee-red, #8a1f1f);
 
 .ee-locations input, .ee-occ-skills input, .ee-occ-skills select {
     font-size: 12px
+}
+
+.ee-cc-attr-grid {
+    display: grid;
+    grid-template-columns: 52px 76px minmax(120px, 1fr) 72px 54px;
+    gap: 4px 6px;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid #c8bbb0;
+    background: #fffdf8;
+}
+
+.ee-cc-attr-grid > label {
+    min-height: 26px;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.ee-cc-attr-grid label.ee-check {
+    justify-content: center;
+}
+
+.ee-cc-grid-head {
+    color: #5a2222;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.ee-cc-bonus-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+    gap: 7px;
+    padding: 8px;
+    border: 1px solid #c8bbb0;
+    background: #fffdf8;
+}
+
+.ee-cc-bonus-grid label {
+    min-width: 0;
+}
+
+.ee-cc-skill-bonuses,
+.ee-cc-abilities {
+    background: #fffdf8;
+    border: 1px solid #c8bbb0;
+}
+
+.ee-cc-skill-bonuses th:nth-child(2) {
+    width: 76px;
+}
+
+.ee-cc-skill-bonuses th:last-child,
+.ee-cc-abilities th:last-child {
+    width: 28px;
+}
+
+.ee-cc-skill-bonuses td,
+.ee-cc-abilities td {
+    vertical-align: middle;
+}
+
+.ee-cc-wp-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.ee-cc-wp-groups section {
+    border: 1px solid #c8bbb0;
+    background: #fffdf8;
+    padding: 8px;
+}
+
+.ee-cc-wp-groups h5 {
+    margin: 0 0 6px;
+    color: #5a2222;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.ee-cc-check-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 4px 8px;
+}
+
+.ee-item-body .ee-cc-check-grid label.ee-check {
+    align-items: flex-start;
+    font-size: 11px;
+    line-height: 1.25;
 }
 
 .ee-equipped-badge {

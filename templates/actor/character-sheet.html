@@ -94,6 +94,13 @@
             <label class="ee-tooltip" data-tooltip="Speed — running speed. Multiply by 20 for yards per minute, or roughly SPD ÷ 3 mph on open ground.">SPD:</label>
             <input type="number" name="system.attributes.spd.value" value="{{system.attributes.spd.value}}" />
         </div>
+        <div class="ee-attr-source-strip">
+            {{#each riftsDerived.attributeSourceRows}}
+            {{#if hasSource}}
+            <span><strong>{{label}}</strong> {{base}} {{display}} = {{total}}</span>
+            {{/if}}
+            {{/each}}
+        </div>
 
         <details class="ee-disclosure ee-attr-effects">
             <summary>Attribute Effects</summary>
@@ -277,7 +284,28 @@
                     <div class="ee-rifts-source-line">
                         <strong>Attributes:</strong>
                         {{#each attributeBonuses}}
-                        <span class="ee-chip" title="{{#unless applied}}Not auto-applied{{/unless}}">{{label}} {{#if applied}}{{display}}{{else}}{{raw}}{{/if}}</span>
+                        <span class="ee-chip" title="{{#unless applied}}Roll once for character creation{{/unless}}">
+                            {{label}} {{#if applied}}{{display}}{{else}}{{formula}}{{/if}}
+                            {{#if rollable}}<a data-action="roll-cc-attribute" data-item-id="{{../itemId}}" data-attribute="{{key}}" data-label="{{../name}} {{label}}" title="Roll {{label}} bonus"><i class="fas fa-dice-d20"></i></a>{{/if}}
+                        </span>
+                        {{/each}}
+                    </div>
+                    {{/if}}
+
+                    {{#if skillBonuses.length}}
+                    <div class="ee-rifts-source-line">
+                        <strong>Skills:</strong>
+                        {{#each skillBonuses}}
+                        <span class="ee-chip" title="{{note}}">{{display}} {{label}}</span>
+                        {{/each}}
+                    </div>
+                    {{/if}}
+
+                    {{#if weaponProficiencies.length}}
+                    <div class="ee-rifts-source-line">
+                        <strong>W.P.s:</strong>
+                        {{#each weaponProficiencies}}
+                        <span class="ee-chip">{{name}}</span>
                         {{/each}}
                     </div>
                     {{/if}}
@@ -611,7 +639,7 @@
             <div class="ee-skill-col {{sectionClass}}" data-skill-category="{{category}}">
                 <h3>{{title}}</h3>
                 <table class="ee-table ee-skill-table">
-                    <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
+                    <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Source</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
                     <tbody>
                         {{#each rows}}
                         <tr>
@@ -626,10 +654,25 @@
                                 <input type="hidden" name="system.skills.list.{{_index}}.custom" value="false" />
                                 <span class="ee-skill-name" title="{{name}}">{{name}}</span>
                                 {{/if}}
+                                {{#if statBonusEntries.length}}
+                                <div class="ee-skill-stat-bonuses">
+                                    {{#each statBonusEntries}}
+                                    <span class="ee-chip">
+                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.bonus" value="{{bonus}}" />
+                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.formula" value="{{formula}}" />
+                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.value" value="{{value}}" />
+                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.rolled" value="{{rolled}}" />
+                                        {{label}} {{display}}
+                                        {{#if rollable}}<a data-action="roll-skill-stat-bonus" data-index="{{skillIndex}}" data-stat="{{key}}" data-label="{{../name}} {{label}}" title="Roll {{label}} bonus"><i class="fas fa-dice-d20"></i></a>{{/if}}
+                                    </span>
+                                    {{/each}}
+                                </div>
+                                {{/if}}
                             </td>
                             <td><input type="number" name="system.skills.list.{{_index}}.base" value="{{base}}" /></td>
                             <td><input type="number" name="system.skills.list.{{_index}}.perLvl" value="{{perLvl}}" /></td>
                             <td><input type="number" name="system.skills.list.{{_index}}.misc" value="{{misc}}" /></td>
+                            <td class="ee-total">{{sourceBonus}}</td>
                             <td class="ee-total">{{total}}</td>
                             <td><select name="system.skills.list.{{_index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category}}</select></td>
                             <td class="ee-actions">
@@ -670,7 +713,7 @@
             <details class="ee-skill-unassigned" open>
                 <summary>Unassigned ({{skills.unassigned.length}})</summary>
                 <table class="ee-table ee-skill-table">
-                    <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
+                    <thead><tr><th>Name</th><th>Base</th><th>Per Lvl</th><th>Misc</th><th>Source</th><th>Total</th><th>Cat.</th><th></th></tr></thead>
                     <tbody>
                         {{#each skills.unassigned}}
                         <tr>
@@ -685,10 +728,25 @@
                                 <input type="hidden" name="system.skills.list.{{_index}}.custom" value="false" />
                                 <span class="ee-skill-name" title="{{name}}">{{name}}</span>
                                 {{/if}}
+                                {{#if statBonusEntries.length}}
+                                <div class="ee-skill-stat-bonuses">
+                                    {{#each statBonusEntries}}
+                                    <span class="ee-chip">
+                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.bonus" value="{{bonus}}" />
+                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.formula" value="{{formula}}" />
+                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.value" value="{{value}}" />
+                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.rolled" value="{{rolled}}" />
+                                        {{label}} {{display}}
+                                        {{#if rollable}}<a data-action="roll-skill-stat-bonus" data-index="{{skillIndex}}" data-stat="{{key}}" data-label="{{../name}} {{label}}" title="Roll {{label}} bonus"><i class="fas fa-dice-d20"></i></a>{{/if}}
+                                    </span>
+                                    {{/each}}
+                                </div>
+                                {{/if}}
                             </td>
                             <td><input type="number" name="system.skills.list.{{_index}}.base" value="{{base}}" /></td>
                             <td><input type="number" name="system.skills.list.{{_index}}.perLvl" value="{{perLvl}}" /></td>
                             <td><input type="number" name="system.skills.list.{{_index}}.misc" value="{{misc}}" /></td>
+                            <td class="ee-total">{{sourceBonus}}</td>
                             <td class="ee-total">{{total}}</td>
                             <td><select name="system.skills.list.{{_index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category}}</select></td>
                             <td class="ee-actions">
@@ -877,7 +935,8 @@
                     <div class="ee-wp-flat">
                         {{#each eeWp}}
                         <label class="ee-wp-check">
-                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                            <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} {{#if sourceOnly}}disabled{{/if}} />
                             {{name}}
                         </label>
                         {{/each}}
@@ -944,7 +1003,8 @@
                         <h4>Ancient</h4>
                         {{#each wpAncient}}
                         <label class="ee-wp-check">
-                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                            <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} {{#if sourceOnly}}disabled{{/if}} />
                             <span>
                                 <span class="ee-wp-name">{{name}}</span>
                                 <span class="ee-wp-rule">{{summary}}</span>
@@ -959,7 +1019,8 @@
                         <h4>Modern</h4>
                         {{#each wpModern}}
                         <label class="ee-wp-check">
-                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} />
+                            <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} {{#if sourceOnly}}disabled{{/if}} />
                             <span>
                                 <span class="ee-wp-name">{{name}}</span>
                                 <span class="ee-wp-rule">{{summary}}</span>
@@ -1055,6 +1116,22 @@
                                 <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.dodge.total}}" data-label="HtH Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></td>
                             </tr>
                             <tr>
+                                <td>Disarm:</td>
+                                <td>{{riftsDerived.handToHand.disarm.base}}</td>
+                                <td>{{riftsDerived.handToHand.disarm.attribute}}</td>
+                                <td></td>
+                                <td>{{riftsDerived.handToHand.disarm.total}}</td>
+                                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.disarm.total}}" data-label="Disarm" title="Roll Disarm"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Entangle:</td>
+                                <td>{{riftsDerived.handToHand.entangle.base}}</td>
+                                <td>{{riftsDerived.handToHand.entangle.attribute}}</td>
+                                <td></td>
+                                <td>{{riftsDerived.handToHand.entangle.total}}</td>
+                                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.entangle.total}}" data-label="Entangle" title="Roll Entangle"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
                                 <td>Pull Punch:</td>
                                 <td>{{riftsDerived.handToHand.pullPunch.base}}</td>
                                 <td>{{riftsDerived.handToHand.pullPunch.attribute}}</td>
@@ -1124,23 +1201,24 @@
                 <div class="ee-panel">
                     <h3>Saving Throws</h3>
                     <table class="ee-table">
-                        <thead><tr><th></th><th>Base</th><th>Manual Bonus</th><th>Attribute Bonus</th><th>Total</th><th>Roll</th></tr></thead>
+                        <thead><tr><th></th><th>Base</th><th>Manual Bonus</th><th>Attribute Bonus</th><th>Source</th><th>Total</th><th>Roll</th></tr></thead>
                         <tbody>
-                            <tr><td>Spell:</td>        <td><input type="text" name="system.savingThrows.spell.base" value="{{system.savingThrows.spell.base}}" /></td>        <td><input type="number" name="system.savingThrows.spell.bonus" value="{{system.savingThrows.spell.bonus}}" /></td>        <td>0</td><td>{{system.savingThrows.spell.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.spell.base}}" data-bonus="{{system.savingThrows.spell.bonus}}" data-label="Save vs Spell"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Ritual:</td>       <td><input type="text" name="system.savingThrows.ritual.base" value="{{system.savingThrows.ritual.base}}" /></td>       <td><input type="number" name="system.savingThrows.ritual.bonus" value="{{system.savingThrows.ritual.bonus}}" /></td>       <td>0</td><td>{{system.savingThrows.ritual.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.ritual.base}}" data-bonus="{{system.savingThrows.ritual.bonus}}" data-label="Save vs Ritual"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Psionics:</td>     <td><input type="text" name="system.savingThrows.psionics.base" value="{{system.savingThrows.psionics.base}}" /></td>     <td><input type="number" name="system.savingThrows.psionics.bonus" value="{{system.savingThrows.psionics.bonus}}" /></td>     <td>{{riftsDerived.saves.psionics.attribute}}</td><td>{{riftsDerived.saves.psionics.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.psionics.base}}" data-bonus="{{riftsDerived.saves.psionics.total}}" data-label="Save vs Psionics"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Toxins/Poisons:</td><td><input type="text" name="system.savingThrows.drugPoison.base" value="{{system.savingThrows.drugPoison.base}}" /></td>   <td><input type="number" name="system.savingThrows.drugPoison.bonus" value="{{system.savingThrows.drugPoison.bonus}}" /></td>   <td>{{riftsDerived.saves.drugPoison.attribute}}</td><td>{{riftsDerived.saves.drugPoison.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.drugPoison.base}}" data-bonus="{{riftsDerived.saves.drugPoison.total}}" data-label="Save vs Toxins/Poisons"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Harmful Drugs:</td> <td><input type="text" name="system.savingThrows.harmfulDrugs.base" value="{{system.savingThrows.harmfulDrugs.base}}" /></td> <td><input type="number" name="system.savingThrows.harmfulDrugs.bonus" value="{{system.savingThrows.harmfulDrugs.bonus}}" /></td> <td>0</td><td>{{system.savingThrows.harmfulDrugs.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.harmfulDrugs.base}}" data-bonus="{{system.savingThrows.harmfulDrugs.bonus}}" data-label="Save vs Harmful Drugs"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Insanity:</td>      <td><input type="text" name="system.savingThrows.insanity.base" value="{{system.savingThrows.insanity.base}}" /></td>     <td><input type="number" name="system.savingThrows.insanity.bonus" value="{{system.savingThrows.insanity.bonus}}" /></td>     <td>{{riftsDerived.saves.insanity.attribute}}</td><td>{{riftsDerived.saves.insanity.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.insanity.base}}" data-bonus="{{riftsDerived.saves.insanity.total}}" data-label="Save vs Insanity"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Possession:</td>    <td><input type="text" name="system.savingThrows.possession.base" value="{{system.savingThrows.possession.base}}" /></td>   <td><input type="number" name="system.savingThrows.possession.bonus" value="{{system.savingThrows.possession.bonus}}" /></td>   <td>{{riftsDerived.saves.possession.attribute}}</td><td>{{riftsDerived.saves.possession.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.possession.base}}" data-bonus="{{riftsDerived.saves.possession.total}}" data-label="Save vs Possession"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Horror Factor:</td> <td><input type="text" name="system.savingThrows.horrorFactor.base" value="{{system.savingThrows.horrorFactor.base}}" /></td> <td><input type="number" name="system.savingThrows.horrorFactor.bonus" value="{{system.savingThrows.horrorFactor.bonus}}" /></td> <td>0</td><td>{{system.savingThrows.horrorFactor.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.horrorFactor.base}}" data-bonus="{{system.savingThrows.horrorFactor.bonus}}" data-label="Save vs Horror Factor"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Coma/Death:</td>    <td><input type="text" name="system.savingThrows.death.base" value="{{system.savingThrows.death.base}}" /></td>        <td><input type="number" name="system.savingThrows.death.bonus" value="{{system.savingThrows.death.bonus}}" /></td>        <td>{{riftsDerived.saves.death.attribute}}%</td><td>{{riftsDerived.saves.death.display}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.death.base}}" data-bonus="{{riftsDerived.saves.death.total}}" data-label="Save vs Coma/Death"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Pain:</td>          <td><input type="text" name="system.savingThrows.pain.base" value="{{system.savingThrows.pain.base}}" /></td>         <td><input type="number" name="system.savingThrows.pain.bonus" value="{{system.savingThrows.pain.bonus}}" /></td>         <td>0</td><td>{{system.savingThrows.pain.bonus}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.pain.base}}" data-bonus="{{system.savingThrows.pain.bonus}}" data-label="Save vs Pain"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Spell:</td>        <td><input type="text" name="system.savingThrows.spell.base" value="{{system.savingThrows.spell.base}}" /></td>        <td><input type="number" name="system.savingThrows.spell.bonus" value="{{system.savingThrows.spell.bonus}}" /></td>        <td>0</td><td>{{riftsDerived.saves.spell.source}}</td><td>{{riftsDerived.saves.spell.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.spell.base}}" data-bonus="{{riftsDerived.saves.spell.total}}" data-label="Save vs Spell"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Ritual:</td>       <td><input type="text" name="system.savingThrows.ritual.base" value="{{system.savingThrows.ritual.base}}" /></td>       <td><input type="number" name="system.savingThrows.ritual.bonus" value="{{system.savingThrows.ritual.bonus}}" /></td>       <td>0</td><td>{{riftsDerived.saves.ritual.source}}</td><td>{{riftsDerived.saves.ritual.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.ritual.base}}" data-bonus="{{riftsDerived.saves.ritual.total}}" data-label="Save vs Ritual"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Psionics:</td>     <td><input type="text" name="system.savingThrows.psionics.base" value="{{system.savingThrows.psionics.base}}" /></td>     <td><input type="number" name="system.savingThrows.psionics.bonus" value="{{system.savingThrows.psionics.bonus}}" /></td>     <td>{{riftsDerived.saves.psionics.attribute}}</td><td>{{riftsDerived.saves.psionics.source}}</td><td>{{riftsDerived.saves.psionics.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.psionics.base}}" data-bonus="{{riftsDerived.saves.psionics.total}}" data-label="Save vs Psionics"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Toxins/Poisons:</td><td><input type="text" name="system.savingThrows.drugPoison.base" value="{{system.savingThrows.drugPoison.base}}" /></td>   <td><input type="number" name="system.savingThrows.drugPoison.bonus" value="{{system.savingThrows.drugPoison.bonus}}" /></td>   <td>{{riftsDerived.saves.drugPoison.attribute}}</td><td>{{riftsDerived.saves.drugPoison.source}}</td><td>{{riftsDerived.saves.drugPoison.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.drugPoison.base}}" data-bonus="{{riftsDerived.saves.drugPoison.total}}" data-label="Save vs Toxins/Poisons"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Harmful Drugs:</td> <td><input type="text" name="system.savingThrows.harmfulDrugs.base" value="{{system.savingThrows.harmfulDrugs.base}}" /></td> <td><input type="number" name="system.savingThrows.harmfulDrugs.bonus" value="{{system.savingThrows.harmfulDrugs.bonus}}" /></td> <td>0</td><td>{{riftsDerived.saves.harmfulDrugs.source}}</td><td>{{riftsDerived.saves.harmfulDrugs.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.harmfulDrugs.base}}" data-bonus="{{riftsDerived.saves.harmfulDrugs.total}}" data-label="Save vs Harmful Drugs"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Insanity:</td>      <td><input type="text" name="system.savingThrows.insanity.base" value="{{system.savingThrows.insanity.base}}" /></td>     <td><input type="number" name="system.savingThrows.insanity.bonus" value="{{system.savingThrows.insanity.bonus}}" /></td>     <td>{{riftsDerived.saves.insanity.attribute}}</td><td>{{riftsDerived.saves.insanity.source}}</td><td>{{riftsDerived.saves.insanity.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.insanity.base}}" data-bonus="{{riftsDerived.saves.insanity.total}}" data-label="Save vs Insanity"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Possession:</td>    <td><input type="text" name="system.savingThrows.possession.base" value="{{system.savingThrows.possession.base}}" /></td>   <td><input type="number" name="system.savingThrows.possession.bonus" value="{{system.savingThrows.possession.bonus}}" /></td>   <td>{{riftsDerived.saves.possession.attribute}}</td><td>{{riftsDerived.saves.possession.source}}</td><td>{{riftsDerived.saves.possession.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.possession.base}}" data-bonus="{{riftsDerived.saves.possession.total}}" data-label="Save vs Possession"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Horror Factor:</td> <td><input type="text" name="system.savingThrows.horrorFactor.base" value="{{system.savingThrows.horrorFactor.base}}" /></td> <td><input type="number" name="system.savingThrows.horrorFactor.bonus" value="{{system.savingThrows.horrorFactor.bonus}}" /></td> <td>0</td><td>{{riftsDerived.saves.horrorFactor.source}}</td><td>{{riftsDerived.saves.horrorFactor.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.horrorFactor.base}}" data-bonus="{{riftsDerived.saves.horrorFactor.total}}" data-label="Save vs Horror Factor"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Coma/Death:</td>    <td><input type="text" name="system.savingThrows.death.base" value="{{system.savingThrows.death.base}}" /></td>        <td><input type="number" name="system.savingThrows.death.bonus" value="{{system.savingThrows.death.bonus}}" /></td>        <td>{{riftsDerived.saves.death.attribute}}%</td><td>{{riftsDerived.saves.death.source}}</td><td>{{riftsDerived.saves.death.display}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.death.base}}" data-bonus="{{riftsDerived.saves.death.total}}" data-label="Save vs Coma/Death"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Pain:</td>          <td><input type="text" name="system.savingThrows.pain.base" value="{{system.savingThrows.pain.base}}" /></td>         <td><input type="number" name="system.savingThrows.pain.bonus" value="{{system.savingThrows.pain.bonus}}" /></td>         <td>0</td><td>{{riftsDerived.saves.pain.source}}</td><td>{{riftsDerived.saves.pain.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.pain.base}}" data-bonus="{{riftsDerived.saves.pain.total}}" data-label="Save vs Pain"><i class="fas fa-dice-d20"></i></a></td></tr>
                             {{#each system.savingThrows.extras}}
                             <tr>
                                 <td><input type="text" name="system.savingThrows.extras.{{@index}}.name" value="{{name}}" placeholder="Save" /></td>
                                 <td><input type="text" name="system.savingThrows.extras.{{@index}}.base" value="{{base}}" /></td>
                                 <td><input type="number" name="system.savingThrows.extras.{{@index}}.bonus" value="{{bonus}}" /></td>
+                                <td>0</td>
                                 <td>0</td>
                                 <td>{{bonus}}</td>
                                 <td>
@@ -1258,6 +1336,31 @@
                         </tbody>
                     </table>
                     {{/if}}
+
+                    <h3>Unarmed & Natural Strikes</h3>
+                    <div class="ee-weapon-list">
+                        {{#each system.weapons.unarmed}}
+                        <div class="ee-weapon-row ee-weapon-row-unarmed">
+                            <label class="ee-weapon-field ee-weapon-name"><span>Name</span><input type="text" name="system.weapons.unarmed.{{@index}}.name" value="{{name}}" /></label>
+                            <label class="ee-weapon-field"><span>Dmg Type</span><select name="system.weapons.unarmed.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></label>
+                            <label class="ee-weapon-field"><span>Base Damage</span><input type="text" name="system.weapons.unarmed.{{@index}}.damage" value="{{damage}}" /><em>Total {{effectiveDamageDisplay}}</em></label>
+                            <label class="ee-weapon-field ee-weapon-small"><span>Scale</span><select name="system.weapons.unarmed.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></label>
+                            <label class="ee-weapon-field"><span>Strike Adj.</span><input type="text" name="system.weapons.unarmed.{{@index}}.strike" value="{{strike}}" /><em>Total {{effectiveStrikeDisplay}}</em></label>
+                            <label class="ee-weapon-field"><span>Parry Adj.</span><input type="text" name="system.weapons.unarmed.{{@index}}.parry" value="{{parry}}" /><em>Total {{effectiveParryDisplay}}</em></label>
+                            <label class="ee-weapon-field ee-weapon-small"><span>Actions</span><input type="text" name="system.weapons.unarmed.{{@index}}.actions" value="{{actions}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-special"><span>Special</span><input type="text" name="system.weapons.unarmed.{{@index}}.special" value="{{special}}" /></label>
+                            <div class="ee-weapon-rolls">
+                                <a data-action="roll" data-roll-type="d20" data-bonus="{{effectiveStrike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                                <a data-action="roll" data-roll-type="d20" data-bonus="{{effectiveParry}}" data-label="{{name}} Parry" title="Roll Parry"><i class="fas fa-shield-alt"></i></a>
+                                {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{effectiveDamage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{effectiveDamage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
+                                <a data-action="delete-row" data-path="weapons.unarmed" data-index="{{@index}}" title="Delete Strike"><i class="fas fa-times"></i></a>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div class="ee-weapon-toolbar">
+                        <button type="button" class="ee-add" data-action="add-row" data-path="weapons.unarmed" data-kind="unarmedStrike">+ Unarmed Strike</button>
+                    </div>
                 </div>
             </div>
 
@@ -1926,3 +2029,5 @@
 
     </section>
 </form>
+
+

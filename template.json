@@ -258,7 +258,39 @@
       },
       "weapons": {
         "modern": [],
-        "ancient": []
+        "ancient": [],
+        "unarmed": [
+          {
+            "name": "Punch",
+            "damageType": "kinetic",
+            "damage": "1d4",
+            "damageScale": "S",
+            "strike": "",
+            "parry": "",
+            "actions": "1",
+            "special": ""
+          },
+          {
+            "name": "Kick",
+            "damageType": "kinetic",
+            "damage": "1d6",
+            "damageScale": "S",
+            "strike": "",
+            "parry": "",
+            "actions": "1",
+            "special": ""
+          },
+          {
+            "name": "Power Punch",
+            "damageType": "kinetic",
+            "damage": "2d4",
+            "damageScale": "S",
+            "strike": "",
+            "parry": "",
+            "actions": "2",
+            "special": ""
+          }
+        ]
       },
       "weaponProficiencies": {
         "selected": {},
@@ -872,14 +904,14 @@
       "languages": "",
       "isMDC": false,
       "attributeBonuses": {
-        "iq": "",
-        "me": "",
-        "ma": "",
-        "ps": "",
-        "pp": "",
-        "pe": "",
-        "pb": "",
-        "spd": ""
+        "iq": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "me": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "ma": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "ps": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "pp": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "pe": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "pb": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "spd": { "bonus": 0, "formula": "", "value": 0, "rolled": false }
       },
       "poolBonuses": {
         "hp": "",
@@ -888,8 +920,35 @@
         "isp": "",
         "ppe": ""
       },
-      "combatBonuses": "",
-      "saveBonuses": "",
+      "skillBonuses": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
       "grantsMagic": false,
       "grantsPsionics": false,
       "abilities": []
@@ -903,14 +962,14 @@
       "equipment": "",
       "money": "",
       "attributeBonuses": {
-        "iq": "",
-        "me": "",
-        "ma": "",
-        "ps": "",
-        "pp": "",
-        "pe": "",
-        "pb": "",
-        "spd": ""
+        "iq": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "me": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "ma": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "ps": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "pp": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "pe": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "pb": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
+        "spd": { "bonus": 0, "formula": "", "value": 0, "rolled": false }
       },
       "poolBonuses": {
         "hp": "",
@@ -919,8 +978,35 @@
         "isp": "",
         "ppe": ""
       },
-      "combatBonuses": "",
-      "saveBonuses": "",
+      "skillBonuses": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
       "grantsMagic": false,
       "grantsPsionics": false,
       "abilities": []
