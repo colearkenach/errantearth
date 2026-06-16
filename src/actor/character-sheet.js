@@ -218,7 +218,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     if (bonus.thrownPenalty) parts.push(`Thrown ${ErrantEarthCharacterSheet._formatSigned(bonus.thrownPenalty)}`);
     if (rule.skillBonus) parts.push(rule.skillBonus);
 
-    const summary = parts.length ? parts.join("; ") : "No level bonus listed.";
+    const summary = rule.summary ?? (parts.length ? parts.join("; ") : "No level bonus listed.");
     return {
       ...entry,
       checked: !!selected[key],
@@ -271,6 +271,27 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     return base ? `${base} ${sign} ${Math.abs(numericBonus)}` : String(numericBonus);
   }
 
+  static _legacyCombatReferences(handToHand = {}) {
+    const sections = CONFIG.EE?.RIFTS_COMBAT_REFERENCES ?? [];
+    const hthDamage = Number(handToHand?.damage?.total ?? 0) || 0;
+    const bonusFor = key => Number(handToHand?.[key]?.total ?? 0) || 0;
+    return sections.map(section => ({
+      ...section,
+      entries: (section.entries ?? []).map(entry => {
+        const bonus = entry.bonusKey ? bonusFor(entry.bonusKey) : 0;
+        const damageFormula = entry.damage
+          ? ErrantEarthCharacterSheet._appendDamageBonus(entry.damage, entry.damageAddsHth ? hthDamage : 0)
+          : "";
+        return {
+          ...entry,
+          bonus,
+          bonusDisplay: entry.bonusKey ? ErrantEarthCharacterSheet._formatSigned(bonus) : "",
+          damageFormula
+        };
+      })
+    }));
+  }
+
   static _decorateUnarmedStrikeRow(row, index, handToHand = {}) {
     const manualStrike = ErrantEarthCharacterSheet._parseIntSafe(row?.strike);
     const manualParry = ErrantEarthCharacterSheet._parseIntSafe(row?.parry);
@@ -296,8 +317,15 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   static _defaultUnarmedStrikeRows() {
     return [
       { name: "Punch", damageType: "kinetic", damage: "1d4", damageScale: "S", strike: "", parry: "", actions: "1", special: "" },
-      { name: "Kick", damageType: "kinetic", damage: "1d6", damageScale: "S", strike: "", parry: "", actions: "1", special: "" },
-      { name: "Power Punch", damageType: "kinetic", damage: "2d4", damageScale: "S", strike: "", parry: "", actions: "2", special: "" }
+      { name: "Kick", damageType: "kinetic", damage: "1d8", damageScale: "S", strike: "", parry: "", actions: "1", special: "" },
+      { name: "Power Punch", damageType: "kinetic", damage: "(1d4 * 2)", damageScale: "S", strike: "", parry: "", actions: "2", special: "" },
+      { name: "Power Kick", damageType: "kinetic", damage: "(1d8 * 2)", damageScale: "S", strike: "", parry: "", actions: "2", special: "" },
+      { name: "Karate Punch", damageType: "kinetic", damage: "2d4", damageScale: "S", strike: "", parry: "", actions: "1", special: "Requires suitable HtH training" },
+      { name: "Karate Kick", damageType: "kinetic", damage: "2d6", damageScale: "S", strike: "", parry: "", actions: "1", special: "Requires suitable HtH training" },
+      { name: "Knee", damageType: "kinetic", damage: "1d6", damageScale: "S", strike: "", parry: "", actions: "1", special: "" },
+      { name: "Leap Kick", damageType: "kinetic", damage: "3d8", damageScale: "S", strike: "", parry: "", actions: "2", special: "Requires suitable HtH training" },
+      { name: "Body Flip / Throw", damageType: "kinetic", damage: "1d6", damageScale: "S", strike: "", parry: "", actions: "1", special: "Victim loses initiative and one action" },
+      { name: "Body Block / Tackle", damageType: "kinetic", damage: "1d4", damageScale: "S", strike: "", parry: "", actions: "2", special: "May knock target down" }
     ];
   }
 
@@ -430,6 +458,43 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       bonus: sourceBonus + manualBonus,
       override: Number.isFinite(override) ? override : null,
       total
+    };
+  }
+
+  static _eeCurrentValue(value, fallback = 0) {
+    if (value === "" || value === null || value === undefined) return Number(fallback ?? 0) || 0;
+    const numeric = Number(value);
+    return Number.isFinite(numeric) ? numeric : Number(fallback ?? 0) || 0;
+  }
+
+  static _eePoolState(sys = {}, eeDerived = {}) {
+    const health = sys.eeCombat?.health ?? {};
+    const resources = sys.eeCombat?.resources ?? {};
+    const current = ErrantEarthCharacterSheet._eeCurrentValue;
+    const legacyNonZero = value => {
+      if (value === "" || value === null || value === undefined) return undefined;
+      const numeric = Number(value);
+      return Number.isFinite(numeric) && numeric !== 0 ? numeric : undefined;
+    };
+    const pool = (value, maxValue) => {
+      const max = current(maxValue, 0);
+      return { value: current(value, max), max };
+    };
+    const heatPool = (value, rawMax) => {
+      const max = current(rawMax, value);
+      return { value, max: max === 0 && value !== 0 ? value : max };
+    };
+    const magicHeat = current(sys.magic?.heat, 0);
+    const psychicHeat = current(sys.psychic?.heat, 0);
+
+    return {
+      endurance: pool(health.enduranceCurrent ?? legacyNonZero(health.endurance), eeDerived.health?.endurance?.total),
+      health: pool(health.healthCurrent ?? legacyNonZero(health.health), eeDerived.health?.health?.total),
+      esp: pool(resources.espCurrent, eeDerived.resources?.esp?.total),
+      mp: pool(resources.mpCurrent, eeDerived.resources?.mp?.total),
+      glimmer: pool(resources.glimmerCurrent, eeDerived.resources?.glimmer?.total),
+      magicHeat: heatPool(magicHeat, sys.magic?.heatMax),
+      psychicHeat: heatPool(psychicHeat, sys.psychic?.heatMax)
     };
   }
 
@@ -661,6 +726,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       .map(([key, roll]) => {
         const total = Number(roll.total ?? 0) || 0;
         const parts = ErrantEarthCharacterSheet._riftsAttributeBonusParts(roll);
+        const manualValue = !!roll.formula;
         return {
           skillIndex: index,
           key,
@@ -668,11 +734,13 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
           bonus: roll.bonus,
           formula: roll.formula,
           value: roll.value,
+          inputValue: roll.value || "",
           rolled: roll.rolled,
           rollValue: roll.rollValue,
           total,
+          manualValue,
           display: parts.length ? `${parts.join(", ")} = ${ErrantEarthCharacterSheet._formatSigned(total)}` : ErrantEarthCharacterSheet._formatSigned(total),
-          rollable: !!(roll.formula && !roll.rolled)
+          rollable: false
         };
       });
   }
@@ -1114,11 +1182,11 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
     const hthTables = CONFIG.EE?.RIFTS_HTH_TABLES ?? {};
     const hthChoices = CONFIG.EE?.HTH_TYPES ?? {};
-    const hthType = Object.prototype.hasOwnProperty.call(hthChoices, sys.handToHand?.type) ? sys.handToHand.type : "basic";
+    const hthType = Object.prototype.hasOwnProperty.call(hthChoices, sys.handToHand?.type) ? sys.handToHand.type : "none";
     const hthTable = hthTables[hthType] ?? { levels: [] };
     const hthBase = {
       attacks: 0, initiative: 0, strike: 0, parry: 0, dodge: 0, damage: 0,
-      disarm: 0, entangle: 0, pullPunch: 0, roll: 0, horrorFactor: 0, critical: "", knockout: ""
+      disarm: 0, entangle: 0, pullPunch: 0, roll: 0, horrorFactor: 0, critical: 20, knockout: 20
     };
     const hthNotes = [];
     for (const entry of hthTable.levels ?? []) {
@@ -1135,6 +1203,8 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       strike: riftsNumber(sys.handToHand?.strike),
       parry: riftsNumber(sys.handToHand?.parry),
       dodge: riftsNumber(sys.handToHand?.dodge),
+      disarm: riftsNumber(sys.handToHand?.disarm),
+      entangle: riftsNumber(sys.handToHand?.entangle),
       pullPunch: riftsNumber(sys.handToHand?.pullPunch ?? sys.handToHand?.pullRoll),
       roll: riftsNumber(sys.handToHand?.roll ?? sys.handToHand?.pullRoll),
       critical: sys.handToHand?.critical ?? 0,
@@ -1152,12 +1222,62 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       strike: riftsCombatTotal(hthManual.strike, ppStrike, riftsNumber(hthBase.strike), riftsSourceTotals.combatBonuses.strike),
       parry: riftsCombatTotal(hthManual.parry, ppParryDodge, riftsNumber(hthBase.parry), riftsSourceTotals.combatBonuses.parry),
       dodge: riftsCombatTotal(hthManual.dodge, ppParryDodge, riftsNumber(hthBase.dodge), riftsSourceTotals.combatBonuses.dodge),
-      disarm: riftsCombatTotal(0, 0, riftsNumber(hthBase.disarm), riftsSourceTotals.combatBonuses.disarm),
-      entangle: riftsCombatTotal(0, 0, riftsNumber(hthBase.entangle), riftsSourceTotals.combatBonuses.entangle),
+      disarm: riftsCombatTotal(hthManual.disarm, 0, riftsNumber(hthBase.disarm), riftsSourceTotals.combatBonuses.disarm),
+      entangle: riftsCombatTotal(hthManual.entangle, 0, riftsNumber(hthBase.entangle), riftsSourceTotals.combatBonuses.entangle),
       pullPunch: riftsCombatTotal(hthManual.pullPunch, 0, riftsNumber(hthBase.pullPunch), riftsSourceTotals.combatBonuses.pullPunch),
       roll: riftsCombatTotal(hthManual.roll, 0, riftsNumber(hthBase.roll), riftsSourceTotals.combatBonuses.roll),
       critical: riftsThresholdTotal(hthManual.critical, hthBase.critical),
       knockout: riftsThresholdTotal(hthManual.knockout, hthBase.knockout)
+    };
+    const vehicleHthTables = CONFIG.EE?.POWER_ARMOR_HTH_TABLES ?? {};
+    const vehicleHthChoices = CONFIG.EE?.POWER_ARMOR_HTH_TYPES ?? {};
+    const vehicleHthSys = sys.vehicle?.handToHand ?? {};
+    const vehicleHthType = Object.prototype.hasOwnProperty.call(vehicleHthChoices, vehicleHthSys.type) ? vehicleHthSys.type : "none";
+    const vehicleHthTable = vehicleHthTables[vehicleHthType] ?? { levels: [] };
+    const vehicleHthBase = {
+      attacks: 0, initiative: 0, strike: 0, parry: 0, dodge: 0, damage: 0,
+      disarm: 0, entangle: 0, pullPunch: 0, roll: 0, horrorFactor: 0, critical: 20, knockout: 20
+    };
+    const vehicleHthNotes = [];
+    for (const entry of vehicleHthTable.levels ?? []) {
+      if (Number(entry.level ?? 0) > level) continue;
+      for (const key of Object.keys(vehicleHthBase)) {
+        if (entry[key] !== undefined) vehicleHthBase[key] = entry[key];
+      }
+      vehicleHthNotes.push(...(entry.notes ?? []).map(note => ({ level: entry.level, text: note })));
+    }
+    const vehicleHthManual = {
+      attacks: riftsNumber(vehicleHthSys.attacks),
+      initiative: riftsNumber(vehicleHthSys.initiative),
+      damage: riftsNumber(vehicleHthSys.damage),
+      strike: riftsNumber(vehicleHthSys.strike),
+      parry: riftsNumber(vehicleHthSys.parry),
+      dodge: riftsNumber(vehicleHthSys.dodge),
+      disarm: riftsNumber(vehicleHthSys.disarm),
+      entangle: riftsNumber(vehicleHthSys.entangle),
+      pullPunch: riftsNumber(vehicleHthSys.pullPunch ?? vehicleHthSys.pullRoll),
+      roll: riftsNumber(vehicleHthSys.roll ?? vehicleHthSys.pullRoll),
+      critical: vehicleHthSys.critical ?? 0,
+      knockout: vehicleHthSys.knockout ?? 0
+    };
+    const vehicleHandToHand = {
+      type: vehicleHthType,
+      label: vehicleHthTable.label ?? CONFIG.EE?.POWER_ARMOR_HTH_TYPES?.[vehicleHthType] ?? vehicleHthType,
+      level,
+      base: vehicleHthBase,
+      notes: vehicleHthNotes,
+      attacks: riftsCombatTotal(vehicleHthManual.attacks, 0, riftsNumber(vehicleHthBase.attacks)),
+      initiative: riftsCombatTotal(vehicleHthManual.initiative, 0, riftsNumber(vehicleHthBase.initiative)),
+      damage: riftsCombatTotal(vehicleHthManual.damage, 0, riftsNumber(vehicleHthBase.damage)),
+      strike: riftsCombatTotal(vehicleHthManual.strike, 0, riftsNumber(vehicleHthBase.strike)),
+      parry: riftsCombatTotal(vehicleHthManual.parry, 0, riftsNumber(vehicleHthBase.parry)),
+      dodge: riftsCombatTotal(vehicleHthManual.dodge, 0, riftsNumber(vehicleHthBase.dodge)),
+      disarm: riftsCombatTotal(vehicleHthManual.disarm, 0, riftsNumber(vehicleHthBase.disarm)),
+      entangle: riftsCombatTotal(vehicleHthManual.entangle, 0, riftsNumber(vehicleHthBase.entangle)),
+      pullPunch: riftsCombatTotal(vehicleHthManual.pullPunch, 0, riftsNumber(vehicleHthBase.pullPunch)),
+      roll: riftsCombatTotal(vehicleHthManual.roll, 0, riftsNumber(vehicleHthBase.roll)),
+      critical: riftsThresholdTotal(vehicleHthManual.critical, vehicleHthBase.critical),
+      knockout: riftsThresholdTotal(vehicleHthManual.knockout, vehicleHthBase.knockout)
     };
 
     ctx.riftsDerived = {
@@ -1177,12 +1297,14 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       attrEffects,
       attrEffectsActive: attrEffects.filter(effect => effect.hasEffect),
       handToHand,
+      vehicleHandToHand,
       combat: {
         damage: handToHand.damage,
         strike: handToHand.strike,
         parry: handToHand.parry,
         dodge: handToHand.dodge
       },
+      combatReferences: C._legacyCombatReferences(handToHand),
       saves: {
         spell: riftsSaveTotal(sys.savingThrows?.spell, 0, false, riftsSourceTotals.saveBonuses.spell),
         ritual: riftsSaveTotal(sys.savingThrows?.ritual, 0, false, riftsSourceTotals.saveBonuses.ritual),
@@ -1229,9 +1351,11 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       const base   = Number(r.base   ?? 0);
       const perLvl = Number(r.perLvl ?? 0);
       const misc   = Number(r.misc   ?? 0);
+      const definition = C._legacySkillDefinition(r);
+      const name = !r.custom && r.key && definition && !definition.specialization ? definition.name : r.name;
       const sourceBonus = C._riftsSkillSourceBonus(riftsSourceTotals, r);
       const total  = base + perLvl * Math.max(0, level - 1) + misc + iqBonusForSkills + sourceBonus;
-      return { ...r, _index: i, statBonusEntries: C._legacySkillStatEntries(r, i), sourceBonus, total };
+      return { ...r, name, _index: i, statBonusEntries: C._legacySkillStatEntries(r, i), sourceBonus, total };
     });
     ctx.skills = {
       occ:        skillRows.filter(r => r.category === "occ"),
@@ -1249,14 +1373,21 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     });
     ctx.eeSkills = { list: eeSkillRows };
 
-    // Master-list pickers: only show skills not already on the actor.
+    // Master-list pickers: only show skills not already on the actor, except
+    // repeatable specialized skills such as Language: Other.
     const usedKeys = new Set(skillRows.map(r => r.key).filter(Boolean));
-    const masterList = (CONFIG.EE?.SKILL_LIST ?? []).filter(s => !usedKeys.has(s.key));
-    const grouped = {};
-    for (const s of masterList) (grouped[s.group] ??= []).push(s);
-    ctx.skillPicker = Object.entries(grouped)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([group, items]) => ({ group, items }));
+    const buildSkillPicker = ({ secondary = false } = {}) => {
+      const masterList = (CONFIG.EE?.SKILL_LIST ?? [])
+        .filter(s => s.repeatable || !usedKeys.has(s.key))
+        .filter(s => !secondary || s.secondary !== false);
+      const grouped = {};
+      for (const s of masterList) (grouped[s.group] ??= []).push(s);
+      return Object.entries(grouped)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([group, items]) => ({ group, items }));
+    };
+    ctx.skillPicker = buildSkillPicker();
+    ctx.skillPickerSecondary = buildSkillPicker({ secondary: true });
 
     const usedEeKeys = new Set(eeSkillRows.map(r => r.key).filter(Boolean));
     const eeMasterList = (CONFIG.EE?.EE_SKILL_LIST ?? []).filter(s => !usedEeKeys.has(s.key));
@@ -1312,7 +1443,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     if (ctx.system.vehicle) {
       ctx.system.vehicle.handToHand.extras = toArr(sys.vehicle?.handToHand?.extras);
       ctx.system.vehicle.armor.extras = toArr(sys.vehicle?.armor?.extras);
-      ctx.system.vehicle.weapons = toArr(sys.vehicle?.weapons);
+      ctx.system.vehicle.weapons = toArr(sys.vehicle?.weapons).map(row => ({ ...row, name: row?.name ?? row?.type ?? "" }));
     }
     ctx.system.contacts = toArr(sys.contacts);
     ctx.system.backgrounds = toArr(sys.backgrounds);
@@ -1323,6 +1454,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
     const equipmentSources = this.actor.items.map(item => ({ ...item.system, name: item.name, type: item.type, system: item.system }));
     ctx.eeDerived = C.eeDerivedData(sys, equipmentSources);
+    ctx.eePools = C._eePoolState(sys, ctx.eeDerived);
     ctx.weaponItemsModern  = itemBuckets.weapon.filter(i => (i.system?.category ?? "modern") === "modern");
     ctx.weaponItemsAncient = itemBuckets.weapon.filter(i => i.system?.category === "ancient");
 
@@ -1345,6 +1477,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
+    this._restoreDisclosureStates(html);
     if (!this.isEditable) return;
 
     html.on("click", "[data-action='add-row']",    this._onAddRow.bind(this));
@@ -1360,7 +1493,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     html.on("click", "[data-action='equip-item']",   this._onEquipItem.bind(this));
     html.on("click", "[data-action='unequip-item']", this._onUnequipItem.bind(this));
     html.on("click", "[data-action='roll-cc-attribute']", this._onRollCcAttribute.bind(this));
-    html.on("click", "[data-action='roll-skill-stat-bonus']", this._onRollSkillStatBonus.bind(this));
     html.on("change", "[data-action='toggle-mode']", this._onToggleMode.bind(this));
     html.on("change", "[data-action='cc-pick']",     this._onCcPick.bind(this));
 
@@ -1372,6 +1504,20 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       });
       dropZone.addEventListener("drop", () => dropZone.classList.remove("ee-drop-hover"));
     }
+  }
+
+  _restoreDisclosureStates(html) {
+    this._disclosureStates ??= {};
+    html.find("details[data-disclosure-key]").each((_, el) => {
+      const key = el.dataset.disclosureKey;
+      if (!key) return;
+      if (Object.prototype.hasOwnProperty.call(this._disclosureStates, key)) {
+        el.open = !!this._disclosureStates[key];
+      }
+      el.addEventListener("toggle", () => {
+        this._disclosureStates[key] = el.open;
+      });
+    });
   }
 
   async _onCreateItem(ev) {
@@ -1438,51 +1584,15 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     }
   }
 
-  async _onRollSkillStatBonus(ev) {
-    ev.preventDefault();
-    const el = ev.currentTarget;
-    const index = Number(el.dataset.index);
-    const key = el.dataset.stat;
-    const skills = ErrantEarthCharacterSheet._toArray(this.actor.system.skills?.list);
-    const row = skills[index];
-    if (!row || !key) return;
-
-    const bonuses = ErrantEarthCharacterSheet._legacySkillStatBonuses(row);
-    const entry = bonuses[key];
-    if (!entry) return;
-    if (entry.rolled) return ui.notifications?.warn(`${row.name}: ${key.toUpperCase()} has already been rolled.`);
-    if (!entry.formula) return ui.notifications?.warn(`${row.name}: no ${key.toUpperCase()} formula set.`);
-
-    let formula = entry.formula.trim();
-    if (/^\+\d/.test(formula)) formula = formula.slice(1);
-    if (/^-\d/.test(formula)) formula = `0${formula}`;
-
-    try {
-      const roll = await new Roll(formula).evaluate();
-      const merged = foundry.utils.deepClone(row.statBonuses ?? {});
-      merged[key] = {
-        bonus: entry.bonus,
-        formula: entry.formula,
-        value: roll.total,
-        rolled: true
-      };
-      await this.actor.update({ [`system.skills.list.${index}.statBonuses`]: merged });
-      return roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: `${row.name}: ${key.toUpperCase()} skill stat bonus (${entry.formula})`
-      });
-    } catch (err) {
-      console.error("Errant Earth skill stat bonus roll failed", err);
-      return ui.notifications?.error(`Skill stat roll failed: ${err.message}`);
-    }
-  }
-
   /** Merge OCC starting skills into the actor's skill list. Skips any that
    *  are already on the actor (matched by key for canonical skills, by
    *  name+custom for free-text rows). Existing skill values are never
    *  overwritten. */
-  _mergeOccSkillsIntoActor(occItem) {
-    const occSkills = ErrantEarthCharacterSheet._toArray(occItem.system?.skills);
+  _mergeOccSkillsIntoActor(occItem, choiceSkills = []) {
+    const occSkills = [
+      ...ErrantEarthCharacterSheet._toArray(occItem.system?.skills),
+      ...ErrantEarthCharacterSheet._toArray(choiceSkills)
+    ];
     if (!occSkills.length) return null;
     const current = ErrantEarthCharacterSheet._toArray(this.actor.system.skills?.list);
     const usedKeys  = new Set(current.map(r => r.key).filter(Boolean));
@@ -1496,15 +1606,16 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         if (!nm || usedNames.has(nm.toLowerCase())) continue;
         usedNames.add(nm.toLowerCase());
       } else {
-        if (usedKeys.has(s.key)) continue;
-        usedKeys.add(s.key);
+        const definition = ErrantEarthCharacterSheet._legacySkillDefinition(s);
+        if (!definition?.repeatable && usedKeys.has(s.key)) continue;
+        if (!definition?.repeatable) usedKeys.add(s.key);
       }
       merged.push({
         key: s.key ?? "",
         name: s.name ?? "",
         base: Number(s.base ?? 0),
         perLvl: Number(s.perLvl ?? 0),
-        misc: 0,
+        misc: Number(s.misc ?? 0) || 0,
         category: s.category || "occ",
         custom: !!isCustom,
         statBonuses: foundry.utils.deepClone(s.statBonuses ?? ErrantEarthCharacterSheet._legacySkillDefinition(s)?.statBonuses ?? {})
@@ -1512,6 +1623,164 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       added++;
     }
     return added ? merged : null;
+  }
+
+  _existingLegacySkillKeys(extraRows = []) {
+    return new Set([
+      ...ErrantEarthCharacterSheet._toArray(this.actor.system.skills?.list),
+      ...ErrantEarthCharacterSheet._toArray(extraRows)
+    ].map(r => r.key).filter(Boolean));
+  }
+
+  static _wpChoicePool(pool = "any") {
+    const ancient = CONFIG.EE?.WP_LIST?.ancient ?? [];
+    const modern = CONFIG.EE?.WP_LIST?.modern ?? [];
+    if (pool === "ancient") return ancient;
+    if (pool === "modern") return modern;
+    return [...ancient, ...modern];
+  }
+
+  static _promptCheckboxChoice({ title, message, options, count, name }) {
+    if (!options.length || !count) return Promise.resolve([]);
+    const safeName = ErrantEarthCharacterSheet._escapeHtml(name);
+    const optionHtml = options.map(opt => `
+      <label class="ee-choice-option">
+        <input type="checkbox" name="${safeName}" value="${ErrantEarthCharacterSheet._escapeHtml(opt.key)}" />
+        <span>${ErrantEarthCharacterSheet._escapeHtml(opt.name)}</span>
+      </label>`).join("");
+    return new Promise((resolve) => {
+      let settled = false;
+      const finish = value => {
+        if (settled) return;
+        settled = true;
+        resolve(value);
+      };
+      new Dialog({
+        title,
+        content: `
+          <form class="ee-choice-dialog">
+            <p>${ErrantEarthCharacterSheet._escapeHtml(message)}</p>
+            <p class="hint">Select exactly ${count}.</p>
+            <div class="ee-choice-options">${optionHtml}</div>
+          </form>`,
+        buttons: {
+          ok: {
+            label: "Apply",
+            callback: (html) => {
+              const checked = Array.from(html[0].querySelectorAll(`input[type="checkbox"]:checked`)).map(el => el.value);
+              if (checked.length !== count) {
+                ui.notifications?.warn(`Select exactly ${count} option${count === 1 ? "" : "s"} for ${title}.`);
+                return false;
+              }
+              finish(checked);
+            }
+          },
+          cancel: { label: "Cancel", callback: () => finish(null) }
+        },
+        default: "ok",
+        close: () => finish(null)
+      }, { classes: ["errantearth", "dialog", "ee-choice-dialog"], width: 520 }).render(true);
+    });
+  }
+
+  async _promptOccSkillChoices(occItem) {
+    const choices = ErrantEarthCharacterSheet._toArray(occItem.system?.skillChoices)
+      .filter(choice => Number(choice?.count ?? 0) > 0);
+    if (!choices.length) return [];
+
+    const master = CONFIG.EE?.SKILL_LIST ?? [];
+    const fixedOccSkills = ErrantEarthCharacterSheet._toArray(occItem.system?.skills);
+    const usedKeys = this._existingLegacySkillKeys(fixedOccSkills);
+    const rows = [];
+
+    for (const [choiceIndex, choice] of choices.entries()) {
+      const count = Math.max(1, Number(choice.count ?? 1) || 1);
+      const category = choice.category || "occRelated";
+      const allowedKeys = ErrantEarthCharacterSheet._toArray(choice.allowedKeys).filter(Boolean);
+      const allowed = new Set(allowedKeys);
+      const available = master
+        .filter(skill => !allowed.size || allowed.has(skill.key))
+        .filter(skill => category !== "secondary" || skill.secondary !== false)
+        .filter(skill => skill.repeatable || !usedKeys.has(skill.key));
+      const label = choice.label || (category === "secondary" ? "Secondary Skills" : "OCC Related Skills");
+
+      if (available.length < count) {
+        ui.notifications?.warn(`${occItem.name}: ${label} has only ${available.length} available option${available.length === 1 ? "" : "s"} for ${count} pick${count === 1 ? "" : "s"}.`);
+        return null;
+      }
+
+      const selected = await ErrantEarthCharacterSheet._promptCheckboxChoice({
+        title: `${occItem.name}: ${label}`,
+        message: `Choose ${count} ${label.toLowerCase()} to add as ${CONFIG.EE?.SKILL_CATEGORIES?.[category] ?? category}.`,
+        options: available,
+        count,
+        name: `skillChoice${choiceIndex}`
+      });
+      if (selected === null) return null;
+
+      for (const key of selected) {
+        const skill = master.find(s => s.key === key);
+        if (!skill) continue;
+        const name = skill.specialization
+          ? await ErrantEarthCharacterSheet._promptSkillSpecialization(skill)
+          : skill.name;
+        if (!name) return null;
+        rows.push({
+          key: skill.key,
+          name,
+          base: skill.base,
+          perLvl: skill.perLvl,
+          misc: Number(choice.bonus ?? 0) || 0,
+          category,
+          custom: false,
+          statBonuses: foundry.utils.deepClone(skill.statBonuses ?? {})
+        });
+        if (!skill.repeatable) usedKeys.add(skill.key);
+      }
+    }
+
+    return rows;
+  }
+
+  async _promptCcWpChoices(item) {
+    const choices = ErrantEarthCharacterSheet._toArray(item.system?.weaponProficiencies?.choices)
+      .filter(choice => Number(choice?.count ?? 0) > 0);
+    if (!choices.length) return {};
+
+    const actorSelected = this.actor.system.weaponProficiencies?.selected ?? {};
+    const sourceSelected = item.system?.weaponProficiencies?.selected ?? {};
+    const usedKeys = new Set([
+      ...Object.entries(actorSelected).filter(([, selected]) => selected).map(([key]) => key),
+      ...Object.entries(sourceSelected).filter(([, selected]) => selected).map(([key]) => key)
+    ]);
+    const selectedWp = {};
+
+    for (const [choiceIndex, choice] of choices.entries()) {
+      const count = Math.max(1, Number(choice.count ?? 1) || 1);
+      const label = choice.label || "W.P. of choice";
+      const available = ErrantEarthCharacterSheet._wpChoicePool(choice.pool)
+        .filter(wp => !usedKeys.has(wp.key));
+
+      if (available.length < count) {
+        ui.notifications?.warn(`${item.name}: ${label} has only ${available.length} available option${available.length === 1 ? "" : "s"} for ${count} pick${count === 1 ? "" : "s"}.`);
+        return null;
+      }
+
+      const selected = await ErrantEarthCharacterSheet._promptCheckboxChoice({
+        title: `${item.name}: ${label}`,
+        message: `Choose ${count} ${label}.`,
+        options: available,
+        count,
+        name: `wpChoice${choiceIndex}`
+      });
+      if (selected === null) return null;
+      for (const key of selected) {
+        selectedWp[key] = true;
+        usedKeys.add(key);
+      }
+    }
+
+    return selectedWp;
   }
 
   async _onUnequipItem(ev) {
@@ -1555,19 +1824,51 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       const equippedOccId = this.actor.system.equippedOcc;
       const equippedOcc = equippedOccId ? this.actor.items.get(equippedOccId) : null;
       if (equippedOcc?.system?.isRCC) {
-        ui.notifications?.warn(`Cannot equip a Race while an RCC ("${equippedOcc.name}") is equipped.`);
-        return this.render(false);
+        const enforcement = ErrantEarthCharacterSheet._legacyPackageEnforcement();
+        if (enforcement === "strict") {
+          ui.notifications?.warn(`Cannot equip a Race while an RCC ("${equippedOcc.name}") is equipped.`);
+          return this.render(false);
+        }
+        if (enforcement === "warn") {
+          ui.notifications?.warn(`Equipping a Race while an RCC ("${equippedOcc.name}") is equipped. The Active EE Legacy Sources panel will flag this.`);
+        }
       }
-      return this.actor.update({ "system.equippedRace": item.id, "system.race": item.name });
+      const choiceWps = await this._promptCcWpChoices(item);
+      if (choiceWps === null) return this.render(false);
+      const update = { "system.equippedRace": item.id, "system.race": item.name };
+      if (Object.keys(choiceWps).length) {
+        update["system.weaponProficiencies.selected"] = {
+          ...(this.actor.system.weaponProficiencies?.selected ?? {}),
+          ...choiceWps
+        };
+      }
+      return this.actor.update(update);
     }
     if (item.type === "occ") {
       const update = { "system.equippedOcc": item.id, "system.occ": item.name };
       if (item.system?.isRCC) {
-        update["system.equippedRace"] = "";
-        update["system.race"] = item.name;
+        const enforcement = ErrantEarthCharacterSheet._legacyPackageEnforcement();
+        if (enforcement === "strict") {
+          update["system.equippedRace"] = "";
+          update["system.race"] = item.name;
+        } else if (enforcement === "warn" && this.actor.system.equippedRace) {
+          ui.notifications?.warn(`Equipping an RCC while a Race is equipped. The Active EE Legacy Sources panel will flag this.`);
+        } else if (!this.actor.system.equippedRace) {
+          update["system.race"] = item.name;
+        }
       }
-      const mergedSkills = this._mergeOccSkillsIntoActor(item);
+      const choiceSkills = await this._promptOccSkillChoices(item);
+      if (choiceSkills === null) return this.render(false);
+      const choiceWps = await this._promptCcWpChoices(item);
+      if (choiceWps === null) return this.render(false);
+      const mergedSkills = this._mergeOccSkillsIntoActor(item, choiceSkills);
       if (mergedSkills) update["system.skills.list"] = mergedSkills;
+      if (Object.keys(choiceWps).length) {
+        update["system.weaponProficiencies.selected"] = {
+          ...(this.actor.system.weaponProficiencies?.selected ?? {}),
+          ...choiceWps
+        };
+      }
       return this.actor.update(update);
     }
   }
@@ -1614,11 +1915,23 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   }
 
   static _rulesModeSetting() {
+    return ErrantEarthCharacterSheet._setting("rulesMode", "perSheet");
+  }
+
+  static _setting(key, fallback) {
     try {
-      return game.settings.get("errantearth", "rulesMode") ?? "perSheet";
+      return game.settings.get("errantearth", key) ?? fallback;
     } catch (err) {
-      return "perSheet";
+      return fallback;
     }
+  }
+
+  static _legacyPackageEnforcement() {
+    return ErrantEarthCharacterSheet._setting("legacyPackageEnforcement", "strict");
+  }
+
+  static _legacySkillModifierMode() {
+    return ErrantEarthCharacterSheet._setting("legacySkillModifierMode", "prompt");
   }
 
   static _effectiveRulesMode(sys = {}) {
@@ -1691,6 +2004,71 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         default: "standard",
         close: () => resolve(null)
       }, { classes: ["errantearth", "dialog", "ee-difficulty"], width: 460 }).render(true);
+    });
+  }
+
+  static _escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, ch => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#39;"
+    }[ch]));
+  }
+
+  static async _promptLegacySkillModifier(rollLabel) {
+    return new Promise((resolve) => {
+      const bands = [
+        { key: "bonus10", label: "Bonus +10%", modifier: 10 },
+        { key: "bonus20", label: "Bonus +20%", modifier: 20 },
+        { key: "bonus30", label: "Bonus +30%", modifier: 30 },
+        { key: "penalty10", label: "Penalty -10%", modifier: -10 },
+        { key: "penalty20", label: "Penalty -20%", modifier: -20 },
+        { key: "penalty30", label: "Penalty -30%", modifier: -30 }
+      ];
+      const buttons = {
+        standard: { label: "No Modifier", callback: () => resolve({ label: "No Modifier", modifier: 0 }) }
+      };
+      for (const b of bands) buttons[b.key] = { label: b.label, callback: () => resolve(b) };
+      new Dialog({
+        title: `Skill Modifier: ${rollLabel}`,
+        content: `<p>Add a situational bonus or impose a penalty for this EE Legacy skill roll.</p>`,
+        buttons,
+        default: "standard",
+        close: () => resolve(null)
+      }, { classes: ["errantearth", "dialog", "ee-legacy-skill-modifier"], width: 460 }).render(true);
+    });
+  }
+
+  static async _promptSkillSpecialization(master) {
+    return new Promise((resolve) => {
+      const baseName = master?.specializationBase ?? String(master?.name ?? "").replace(/:\s*Other\b/i, "");
+      const label = master?.specializationLabel ?? "Specialization";
+      new Dialog({
+        title: `${baseName}: ${label}`,
+        content: `
+          <form>
+            <div class="form-group">
+              <label>${ErrantEarthCharacterSheet._escapeHtml(label)}</label>
+              <input type="text" name="specialization" placeholder="Other" autofocus />
+            </div>
+            <p class="hint">Example: ${ErrantEarthCharacterSheet._escapeHtml(baseName)}: Euro</p>
+          </form>`,
+        buttons: {
+          ok: {
+            label: "Add",
+            callback: (html) => {
+              const form = html?.[0]?.querySelector("form");
+              const raw = form?.elements?.specialization?.value?.trim() ?? "";
+              resolve(raw ? `${baseName}: ${raw}` : master.name);
+            }
+          },
+          cancel: { label: "Cancel", callback: () => resolve(null) }
+        },
+        default: "ok",
+        close: () => resolve(null)
+      }, { classes: ["errantearth", "dialog", "ee-skill-specialization"], width: 420 }).render(true);
     });
   }
 
@@ -1811,10 +2189,12 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   static _eeSpendableResources(sys = {}, eeDerived = {}) {
     const resources = [];
     const add = (label, value) => resources.push(`${label}: ${Number(value ?? 0)}`);
+    const addPool = (label, pool) => resources.push(`${label}: ${Number(pool?.value ?? 0)}/${Number(pool?.max ?? 0)}`);
+    const pools = ErrantEarthCharacterSheet._eePoolState(sys, eeDerived);
     add("Momentum", eeDerived.combat?.momentum?.total ?? sys.eeCombat?.momentum);
-    add("ESP", eeDerived.resources?.esp?.total);
-    add("MP", eeDerived.resources?.mp?.total);
-    add("Glimmer", eeDerived.resources?.glimmer?.total);
+    addPool("ESP", pools.esp);
+    addPool("MP", pools.mp);
+    addPool("Glimmer", pools.glimmer);
     return resources.join(", ");
   }
 
@@ -1950,6 +2330,17 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
             if (choice === null) return; // cancelled
             modifier = choice.percent;
             modLabel = choice.label;
+          } else {
+            const mode = ErrantEarthCharacterSheet._legacySkillModifierMode();
+            if (mode === "none") {
+              modifier = 0;
+              modLabel = "No Modifier";
+            } else {
+              const choice = await ErrantEarthCharacterSheet._promptLegacySkillModifier(label);
+              if (choice === null) return; // cancelled
+              modifier = choice.modifier;
+              modLabel = choice.label;
+            }
           }
           const target = baseTarget + modifier;
           roll = await new Roll("1d100").evaluate();
@@ -1959,6 +2350,9 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
           if (isEE) {
             subParts.push(modLabel ? `${modLabel} (${modifier >= 0 ? "+" : ""}${modifier}%)` : "Standard");
             subParts.push("EE");
+          } else {
+            subParts.push(modifier ? `${modLabel} (${modifier >= 0 ? "+" : ""}${modifier}%)` : "No Modifier");
+            subParts.push("EE Legacy");
           }
           card.subtitle = subParts.join(" — ");
           card.outcome = autoFail ? "Auto-Fail (99/00)" : (success ? "Success" : "Failure");
@@ -2221,10 +2615,18 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
     const master = (CONFIG.EE?.SKILL_LIST ?? []).find(s => s.key === key);
     if (!master) { sel.value = ""; return; }
+    if (category === "secondary" && master.secondary === false) {
+      sel.value = "";
+      return ui.notifications?.warn(`${master.name} is not available as a Secondary Skill.`);
+    }
+    const name = master.specialization
+      ? await ErrantEarthCharacterSheet._promptSkillSpecialization(master)
+      : master.name;
+    if (!name) { sel.value = ""; return; }
     const arr = foundry.utils.deepClone(this._getArrayPath("skills.list"));
     arr.push({
       key: master.key,
-      name: master.name,
+      name,
       base: master.base,
       perLvl: master.perLvl,
       misc: 0,
@@ -2279,7 +2681,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       case "eeArmor":       return { name: "", layer: "OA", weight: "", variant: "", equipped: false, durability: { value: 0, max: 0 }, ar: { base: 0, bonus: 0 }, maneuver: { flat: 0, percent: 0 }, sr: 0, formality: 0, resist: { heat: 0, cold: 0, radiation: 0, earthblood: 0 }, notes: "" };
       case "power":         return { name: "", source: "", cost: "", range: "", saving: "", damage: "", duration: "", description: "" };
       case "paWeapon":      return { name: "", damageType: "", damage: "", damageScale: "S", ammo: "", strike: "", range: "", special: "" };
-      case "vehicleWeapon": return { type: "", damageType: "", damage: "", damageScale: "S", ammo: "" };
+      case "vehicleWeapon": return { name: "", damageType: "", damage: "", damageScale: "S", ammo: "", payload: "", strike: "", range: "", rate: "", special: "" };
       case "contact":       return { name: "", occupation: "", notes: "" };
       case "outfit":        return { name: "", checked: false };
       case "bgocc":         return { name: "", notes: "" };
@@ -2369,7 +2771,9 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     if (sys.handToHand && "enduranceType" in sys.handToHand)
       sys.handToHand.enduranceType = ErrantEarthCharacterSheet._validateEnum(sys.handToHand.enduranceType, cfg.LEGACY_PHYSICAL_TYPES);
     if (sys.powerArmor?.handToHand && "type" in sys.powerArmor.handToHand)
-      sys.powerArmor.handToHand.type = ErrantEarthCharacterSheet._validateEnum(sys.powerArmor.handToHand.type, cfg.HTH_TYPES);
+      sys.powerArmor.handToHand.type = ErrantEarthCharacterSheet._validateEnum(sys.powerArmor.handToHand.type, cfg.POWER_ARMOR_HTH_TYPES);
+    if (sys.vehicle?.handToHand && "type" in sys.vehicle.handToHand)
+      sys.vehicle.handToHand.type = ErrantEarthCharacterSheet._validateEnum(sys.vehicle.handToHand.type, cfg.POWER_ARMOR_HTH_TYPES);
     const scrubArr = (arr, field, choices) => {
       if (!Array.isArray(arr)) return;
       for (const row of arr) {

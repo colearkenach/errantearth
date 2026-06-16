@@ -170,10 +170,16 @@
         </div>
         <div class="ee-row ee-ee-resources">
             <label class="ee-tooltip" data-tooltip="Magic Heat — accumulates as spells are cast.">Magic Heat:</label>
-            <input type="number" name="system.magic.heat" value="{{system.magic.heat}}" />
+            <span class="ee-pool-pair">
+                <input type="number" name="system.magic.heat" value="{{eePools.magicHeat.value}}" title="Current Magic Heat" /> /
+                <input type="number" name="system.magic.heatMax" value="{{eePools.magicHeat.max}}" title="Maximum Magic Heat" />
+            </span>
             <label>Burnout:</label><input type="number" name="system.magic.burnout" value="{{system.magic.burnout}}" />
             <label class="ee-tooltip" data-tooltip="Psychic Heat — accumulates as psionic powers are used.">Psychic Heat:</label>
-            <input type="number" name="system.psychic.heat" value="{{system.psychic.heat}}" />
+            <span class="ee-pool-pair">
+                <input type="number" name="system.psychic.heat" value="{{eePools.psychicHeat.value}}" title="Current Psychic Heat" /> /
+                <input type="number" name="system.psychic.heatMax" value="{{eePools.psychicHeat.max}}" title="Maximum Psychic Heat" />
+            </span>
         </div>
 
         <div class="ee-ee-bgocc">
@@ -213,18 +219,46 @@
 
         {{#if isEE}}
         <div class="ee-row ee-pools ee-ee-header-pools">
-            <label>Endurance:</label><input type="number" value="{{eeDerived.health.endurance.total}}" disabled />
-            <label>Health:</label><input type="number" value="{{eeDerived.health.health.total}}" disabled />
+            <label>Endurance:</label>
+            <span class="ee-pool-pair">
+                <input type="number" name="system.eeCombat.health.enduranceCurrent" value="{{eePools.endurance.value}}" title="Current Endurance" /> /
+                <input type="number" value="{{eePools.endurance.max}}" title="Maximum Endurance" disabled />
+            </span>
+            <label>Health:</label>
+            <span class="ee-pool-pair">
+                <input type="number" name="system.eeCombat.health.healthCurrent" value="{{eePools.health.value}}" title="Current Health" /> /
+                <input type="number" value="{{eePools.health.max}}" title="Maximum Health" disabled />
+            </span>
             <label>Scars:</label><input type="number" value="{{eeDerived.health.scars.value}}" disabled /> /
             <input type="number" value="{{eeDerived.health.scars.max}}" disabled />
         </div>
 
         <div class="ee-row ee-pools ee-ee-header-pools">
-            <label>ESP:</label><input type="number" value="{{eeDerived.resources.esp.total}}" disabled />
-            <label>MP:</label><input type="number" value="{{eeDerived.resources.mp.total}}" disabled />
-            <label>Glimmer:</label><input type="number" value="{{eeDerived.resources.glimmer.total}}" disabled />
-            <label>Magic Heat:</label><input type="number" value="{{system.magic.heat}}" disabled />
-            <label>Psychic Heat:</label><input type="number" value="{{system.psychic.heat}}" disabled />
+            <label>ESP:</label>
+            <span class="ee-pool-pair">
+                <input type="number" name="system.eeCombat.resources.espCurrent" value="{{eePools.esp.value}}" title="Current ESP" /> /
+                <input type="number" value="{{eePools.esp.max}}" title="Maximum ESP" disabled />
+            </span>
+            <label>MP:</label>
+            <span class="ee-pool-pair">
+                <input type="number" name="system.eeCombat.resources.mpCurrent" value="{{eePools.mp.value}}" title="Current MP" /> /
+                <input type="number" value="{{eePools.mp.max}}" title="Maximum MP" disabled />
+            </span>
+            <label>Glimmer:</label>
+            <span class="ee-pool-pair">
+                <input type="number" name="system.eeCombat.resources.glimmerCurrent" value="{{eePools.glimmer.value}}" title="Current Glimmer" /> /
+                <input type="number" value="{{eePools.glimmer.max}}" title="Maximum Glimmer" disabled />
+            </span>
+            <label>Magic Heat:</label>
+            <span class="ee-pool-pair ee-pool-pair--readonly">
+                <input type="number" value="{{eePools.magicHeat.value}}" title="Current Magic Heat" disabled /> /
+                <input type="number" value="{{eePools.magicHeat.max}}" title="Maximum Magic Heat" disabled />
+            </span>
+            <label>Psychic Heat:</label>
+            <span class="ee-pool-pair ee-pool-pair--readonly">
+                <input type="number" value="{{eePools.psychicHeat.value}}" title="Current Psychic Heat" disabled /> /
+                <input type="number" value="{{eePools.psychicHeat.max}}" title="Maximum Psychic Heat" disabled />
+            </span>
         </div>
         {{/if}}
 
@@ -660,10 +694,17 @@
                                     <span class="ee-chip">
                                         <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.bonus" value="{{bonus}}" />
                                         <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.formula" value="{{formula}}" />
+                                        {{#if manualValue}}
+                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.rolled" value="true" />
+                                        <label class="ee-skill-stat-manual" title="Set {{label}} result from {{formula}}">
+                                            {{label}}
+                                            <input type="number" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.value" value="{{inputValue}}" placeholder="{{formula}}" />
+                                        </label>
+                                        {{else}}
                                         <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.value" value="{{value}}" />
                                         <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.rolled" value="{{rolled}}" />
                                         {{label}} {{display}}
-                                        {{#if rollable}}<a data-action="roll-skill-stat-bonus" data-index="{{skillIndex}}" data-stat="{{key}}" data-label="{{../name}} {{label}}" title="Roll {{label}} bonus"><i class="fas fa-dice-d20"></i></a>{{/if}}
+                                        {{/if}}
                                     </span>
                                     {{/each}}
                                 </div>
@@ -690,7 +731,7 @@
                 <div class="ee-skill-add-row">
                     <select data-action="add-skill" data-category="{{category}}">
                         <option value="">+ Add from list…</option>
-                        {{#each ../skillPicker}}
+                        {{#each picker}}
                         <optgroup label="{{group}}">
                             {{#each items}}
                             <option value="{{key}}">{{name}}</option>
@@ -704,9 +745,9 @@
             {{/inline}}
 
             <div class="ee-skill-grid">
-                {{> skillSection title="OCC Skills"         category="occ"        rows=skills.occ        sectionClass="ee-skill-col--occ"}}
-                {{> skillSection title="OCC Related Skills" category="occRelated" rows=skills.occRelated sectionClass="ee-skill-col--occ-related"}}
-                {{> skillSection title="Secondary Skills"   category="secondary"  rows=skills.secondary  sectionClass="ee-skill-col--secondary"}}
+                {{> skillSection title="OCC Skills"         category="occ"        rows=skills.occ        sectionClass="ee-skill-col--occ"         picker=skillPicker}}
+                {{> skillSection title="OCC Related Skills" category="occRelated" rows=skills.occRelated sectionClass="ee-skill-col--occ-related" picker=skillPicker}}
+                {{> skillSection title="Secondary Skills"   category="secondary"  rows=skills.secondary  sectionClass="ee-skill-col--secondary"   picker=skillPickerSecondary}}
             </div>
 
             {{#if skills.unassigned.length}}
@@ -734,10 +775,17 @@
                                     <span class="ee-chip">
                                         <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.bonus" value="{{bonus}}" />
                                         <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.formula" value="{{formula}}" />
+                                        {{#if manualValue}}
+                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.rolled" value="true" />
+                                        <label class="ee-skill-stat-manual" title="Set {{label}} result from {{formula}}">
+                                            {{label}}
+                                            <input type="number" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.value" value="{{inputValue}}" placeholder="{{formula}}" />
+                                        </label>
+                                        {{else}}
                                         <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.value" value="{{value}}" />
                                         <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.rolled" value="{{rolled}}" />
                                         {{label}} {{display}}
-                                        {{#if rollable}}<a data-action="roll-skill-stat-bonus" data-index="{{skillIndex}}" data-stat="{{key}}" data-label="{{../name}} {{label}}" title="Roll {{label}} bonus"><i class="fas fa-dice-d20"></i></a>{{/if}}
+                                        {{/if}}
                                     </span>
                                     {{/each}}
                                 </div>
@@ -823,10 +871,10 @@
 
                     <div class="ee-panel">
                         <h3>Health & Thresholds</h3>
-                        <div class="ee-kv"><label>Endurance:</label><output>{{eeDerived.health.endurance.total}}</output>
+                        <div class="ee-kv"><label>Endurance:</label><output>{{eePools.endurance.value}}</output> / <output>{{eePools.endurance.max}}</output>
                             <a class="ee-edit" data-action="edit-adjustable" data-path="health.endurance" data-label="Endurance" title="Edit Endurance"><i class="fas fa-pencil"></i></a>
                         </div>
-                        <div class="ee-kv"><label>Health:</label><output>{{eeDerived.health.health.total}}</output>
+                        <div class="ee-kv"><label>Health:</label><output>{{eePools.health.value}}</output> / <output>{{eePools.health.max}}</output>
                             <a class="ee-edit" data-action="edit-adjustable" data-path="health.health" data-label="Health" title="Edit Health"><i class="fas fa-pencil"></i></a>
                         </div>
                         <div class="ee-kv"><label>Scars:</label><output>{{eeDerived.health.scars.value}}</output> / <output>{{eeDerived.health.scars.max}}</output></div>
@@ -986,7 +1034,7 @@
                 </div>
             </div>
 
-            <details class="ee-panel ee-disclosure ee-weapon-proficiencies">
+            <details class="ee-panel ee-disclosure ee-weapon-proficiencies" data-disclosure-key="rifts-weapon-proficiencies">
                 <summary>
                     Weapon Proficiencies
                     <span class="ee-summary-chips">
@@ -1052,7 +1100,7 @@
                     <h3>Hand to Hand</h3>
                     <div class="ee-kv">
                         <label>Type:</label>
-                        <select name="system.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.handToHand.type}}</select>
+                        <select name="system.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.handToHand.type false}}</select>
                     </div>
                     {{#unless isEE}}
                     <div class="ee-kv">
@@ -1119,7 +1167,7 @@
                                 <td>Disarm:</td>
                                 <td>{{riftsDerived.handToHand.disarm.base}}</td>
                                 <td>{{riftsDerived.handToHand.disarm.attribute}}</td>
-                                <td></td>
+                                <td><input type="number" name="system.handToHand.disarm" value="{{riftsDerived.handToHand.disarm.manual}}" /></td>
                                 <td>{{riftsDerived.handToHand.disarm.total}}</td>
                                 <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.disarm.total}}" data-label="Disarm" title="Roll Disarm"><i class="fas fa-dice-d20"></i></a></td>
                             </tr>
@@ -1127,7 +1175,7 @@
                                 <td>Entangle:</td>
                                 <td>{{riftsDerived.handToHand.entangle.base}}</td>
                                 <td>{{riftsDerived.handToHand.entangle.attribute}}</td>
-                                <td></td>
+                                <td><input type="number" name="system.handToHand.entangle" value="{{riftsDerived.handToHand.entangle.manual}}" /></td>
                                 <td>{{riftsDerived.handToHand.entangle.total}}</td>
                                 <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.entangle.total}}" data-label="Entangle" title="Roll Entangle"><i class="fas fa-dice-d20"></i></a></td>
                             </tr>
@@ -1231,6 +1279,43 @@
                     </table>
                     <button type="button" class="ee-add" data-action="add-row" data-path="savingThrows.extras" data-kind="saveExtra">+ Add</button>
                 </div>
+
+                {{#unless isEE}}
+                <div class="ee-panel ee-combat-reference">
+                    <h3>Combat Quick Reference</h3>
+                    {{#each riftsDerived.combatReferences}}
+                    <details class="ee-disclosure ee-combat-ref-section" {{#if @first}}open{{/if}}>
+                        <summary>{{section}}</summary>
+                        <div class="ee-table-scroll">
+                            <table class="ee-table ee-combat-ref-table">
+                                <thead>
+                                    <tr><th>Move</th><th>Roll</th><th>Target</th><th>Actions</th><th>Damage</th><th>Note</th><th>Roll</th></tr>
+                                </thead>
+                                <tbody>
+                                    {{#each entries}}
+                                    <tr>
+                                        <td>
+                                            {{#if source}}<a href="{{source}}" target="_blank" rel="nofollow noopener">{{name}}</a>{{else}}{{name}}{{/if}}
+                                            {{#if bonusDisplay}}<span class="ee-combat-ref-bonus">{{bonusDisplay}}</span>{{/if}}
+                                        </td>
+                                        <td>{{roll}}</td>
+                                        <td>{{target}}</td>
+                                        <td>{{actions}}</td>
+                                        <td>{{#if damageFormula}}{{damageFormula}}{{else}}{{damage}}{{/if}}</td>
+                                        <td>{{note}}</td>
+                                        <td class="ee-actions">
+                                            {{#if bonusKey}}<a data-action="roll" data-roll-type="d20" data-bonus="{{bonus}}" data-label="{{name}}" title="Roll {{name}}"><i class="fas fa-dice-d20"></i></a>{{/if}}
+                                            {{#if damageFormula}}<a data-action="roll" data-roll-type="damage" data-formula="{{damageFormula}}" data-label="{{name}} Damage" title="Roll {{name}} Damage"><i class="fas fa-burst"></i></a>{{/if}}
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                    {{/each}}
+                </div>
+                {{/unless}}
 
                 {{!-- Weapons --}}
                 <div class="ee-panel ee-weapons">
@@ -1454,126 +1539,6 @@
             {{/if}}
             <a class="ee-create-item" data-action="create-item" data-type="armor" title="Create Armor Item"><i class="fas fa-plus"></i> Armor Item</a>
 
-            {{!-- Power Armor / Mech --}}
-            <h2 class="ee-bar">POWER ARMOR / MECH</h2>
-            <div class="ee-row"><label>Name:</label><input type="text" name="system.powerArmor.name" value="{{system.powerArmor.name}}" /></div>
-            <div class="ee-pa-grid">
-                <div class="ee-panel">
-                    <h3>Hand to Hand</h3>
-                    <div class="ee-kv">
-                        <label>Type:</label>
-                        <select name="system.powerArmor.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.powerArmor.handToHand.type}}</select>
-                    </div>
-                    <div class="ee-kv"><label>Attacks per Melee:</label><input type="number" name="system.powerArmor.handToHand.attacks" value="{{system.powerArmor.handToHand.attacks}}" /></div>
-                    <div class="ee-kv">
-                        <label>Initiative:</label><input type="number" name="system.powerArmor.handToHand.initiative" value="{{system.powerArmor.handToHand.initiative}}" />
-                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.initiative}}" data-label="PA Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a>
-                    </div>
-                    <div class="ee-kv"><label>Damage:</label><input type="number" name="system.powerArmor.handToHand.damage" value="{{system.powerArmor.handToHand.damage}}" /></div>
-                    <div class="ee-kv">
-                        <label>Strike:</label><input type="number" name="system.powerArmor.handToHand.strike" value="{{system.powerArmor.handToHand.strike}}" />
-                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.strike}}" data-label="PA Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a>
-                    </div>
-                    <div class="ee-kv">
-                        <label>Parry:</label><input type="number" name="system.powerArmor.handToHand.parry" value="{{system.powerArmor.handToHand.parry}}" />
-                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.parry}}" data-label="PA Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a>
-                    </div>
-                    <div class="ee-kv">
-                        <label>Dodge:</label><input type="number" name="system.powerArmor.handToHand.dodge" value="{{system.powerArmor.handToHand.dodge}}" />
-                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.dodge}}" data-label="PA Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a>
-                    </div>
-                    <div class="ee-kv">
-                        <label>Pull/Roll:</label><input type="number" name="system.powerArmor.handToHand.pullRoll" value="{{system.powerArmor.handToHand.pullRoll}}" />
-                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.powerArmor.handToHand.pullRoll}}" data-label="PA Pull/Roll" title="Roll Pull/Roll"><i class="fas fa-dice-d20"></i></a>
-                    </div>
-                    {{#each system.powerArmor.handToHand.extras}}
-                    <div class="ee-kv">
-                        <input type="text" name="system.powerArmor.handToHand.extras.{{@index}}.name" value="{{name}}" placeholder="Bonus" />
-                        <input type="number" name="system.powerArmor.handToHand.extras.{{@index}}.value" value="{{value}}" />
-                        <a data-action="delete-row" data-path="powerArmor.handToHand.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
-                    </div>
-                    {{/each}}
-                    <button type="button" class="ee-add" data-action="add-row" data-path="powerArmor.handToHand.extras" data-kind="h2hExtra">+ Add</button>
-                </div>
-
-                <div class="ee-panel">
-                    <h3>Armor</h3>
-                    <table class="ee-table">
-                        <thead><tr><th></th><th>Current</th><th>Max</th></tr></thead>
-                        <tbody>
-                            <tr><td>MainBody:</td> <td><input type="number" name="system.powerArmor.armor.mainBody.current" value="{{system.powerArmor.armor.mainBody.current}}" /></td><td><input type="number" name="system.powerArmor.armor.mainBody.max" value="{{system.powerArmor.armor.mainBody.max}}" /></td></tr>
-                            <tr><td>Head:</td>     <td><input type="number" name="system.powerArmor.armor.head.current" value="{{system.powerArmor.armor.head.current}}" /></td>    <td><input type="number" name="system.powerArmor.armor.head.max" value="{{system.powerArmor.armor.head.max}}" /></td></tr>
-                            <tr><td>Left Arm:</td> <td><input type="number" name="system.powerArmor.armor.leftArm.current" value="{{system.powerArmor.armor.leftArm.current}}" /></td> <td><input type="number" name="system.powerArmor.armor.leftArm.max" value="{{system.powerArmor.armor.leftArm.max}}" /></td></tr>
-                            <tr><td>Right Arm:</td><td><input type="number" name="system.powerArmor.armor.rightArm.current" value="{{system.powerArmor.armor.rightArm.current}}" /></td><td><input type="number" name="system.powerArmor.armor.rightArm.max" value="{{system.powerArmor.armor.rightArm.max}}" /></td></tr>
-                            <tr><td>Left Leg:</td> <td><input type="number" name="system.powerArmor.armor.leftLeg.current" value="{{system.powerArmor.armor.leftLeg.current}}" /></td> <td><input type="number" name="system.powerArmor.armor.leftLeg.max" value="{{system.powerArmor.armor.leftLeg.max}}" /></td></tr>
-                            <tr><td>Right Leg:</td><td><input type="number" name="system.powerArmor.armor.rightLeg.current" value="{{system.powerArmor.armor.rightLeg.current}}" /></td><td><input type="number" name="system.powerArmor.armor.rightLeg.max" value="{{system.powerArmor.armor.rightLeg.max}}" /></td></tr>
-                            {{#each system.powerArmor.armor.extras}}
-                            <tr>
-                                <td><input type="text" name="system.powerArmor.armor.extras.{{@index}}.name" value="{{name}}" placeholder="Location" /></td>
-                                <td><input type="number" name="system.powerArmor.armor.extras.{{@index}}.current" value="{{current}}" /></td>
-                                <td>
-                                    <input type="number" name="system.powerArmor.armor.extras.{{@index}}.max" value="{{max}}" />
-                                    <a data-action="delete-row" data-path="powerArmor.armor.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="powerArmor.armor.extras" data-kind="armorExtra">+ Add</button>
-                </div>
-
-                <div class="ee-panel ee-pa-weapons">
-                    <h3>Weapons</h3>
-                    <table class="ee-table">
-                        <thead><tr><th>Name</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Strike</th><th>Range</th><th>Special</th><th>Roll</th><th></th></tr></thead>
-                        <tbody>
-                            {{#each system.powerArmor.weapons}}
-                            <tr>
-                                <td><input type="text" name="system.powerArmor.weapons.{{@index}}.name" value="{{name}}" /></td>
-                                <td><select name="system.powerArmor.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
-                                <td><input type="text" name="system.powerArmor.weapons.{{@index}}.damage" value="{{damage}}" /></td>
-                                <td><select name="system.powerArmor.weapons.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></td>
-                                <td><input type="text" name="system.powerArmor.weapons.{{@index}}.ammo" value="{{ammo}}" /></td>
-                                <td><input type="text" name="system.powerArmor.weapons.{{@index}}.strike" value="{{strike}}" /></td>
-                                <td><input type="text" name="system.powerArmor.weapons.{{@index}}.range" value="{{range}}" /></td>
-                                <td><input type="text" name="system.powerArmor.weapons.{{@index}}.special" value="{{special}}" /></td>
-                                <td class="ee-actions">
-                                    <a data-action="roll" data-roll-type="d20" data-bonus="{{strike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
-                                    {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
-                                </td>
-                                <td><a data-action="delete-row" data-path="powerArmor.weapons" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="powerArmor.weapons" data-kind="paWeapon">+ Add</button>
-                </div>
-            </div>
-
-            {{#if itemsByType.powerArmor.length}}
-            <h3 class="ee-subbar">Power Armor Items</h3>
-            <table class="ee-table">
-                <thead><tr><th>Name</th><th>Type</th><th>AR</th><th>Main</th><th>Head</th><th>L Arm</th><th>R Arm</th><th>L Leg</th><th>R Leg</th><th>Speed</th><th></th></tr></thead>
-                <tbody>
-                    {{#each itemsByType.powerArmor}}
-                    <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
-                        <td>{{#if system.isMDC}}MDC{{else}}SDC{{/if}}</td>
-                        <td>{{system.ar}}</td>
-                        <td>{{system.locations.mainBody.current}}/{{system.locations.mainBody.max}}</td>
-                        <td>{{system.locations.head.current}}/{{system.locations.head.max}}</td>
-                        <td>{{system.locations.leftArm.current}}/{{system.locations.leftArm.max}}</td>
-                        <td>{{system.locations.rightArm.current}}/{{system.locations.rightArm.max}}</td>
-                        <td>{{system.locations.leftLeg.current}}/{{system.locations.leftLeg.max}}</td>
-                        <td>{{system.locations.rightLeg.current}}/{{system.locations.rightLeg.max}}</td>
-                        <td>{{system.speed}}</td>
-                        <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-            {{/if}}
-            <a class="ee-create-item" data-action="create-item" data-type="powerArmor" title="Create Power Armor Item"><i class="fas fa-plus"></i> Power Armor Item</a>
             {{/unless}}
         </div>
 
@@ -1674,27 +1639,38 @@
             <div class="ee-pa-grid">
                 <div class="ee-panel">
                     <h3>Combat</h3>
-                    <div class="ee-kv"><label># of Attacks:</label><input type="number" name="system.vehicle.handToHand.attacks" value="{{system.vehicle.handToHand.attacks}}" /></div>
                     <div class="ee-kv">
-                        <label>Initiative:</label><input type="number" name="system.vehicle.handToHand.initiative" value="{{system.vehicle.handToHand.initiative}}" />
-                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.vehicle.handToHand.initiative}}" data-label="Vehicle Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a>
+                        <label>Type:</label>
+                        <select name="system.vehicle.handToHand.type">{{eeSelectOptions config.POWER_ARMOR_HTH_TYPES system.vehicle.handToHand.type false}}</select>
                     </div>
+                    <p class="ee-hth-summary">Using {{riftsDerived.vehicleHandToHand.label}} base bonuses through level {{riftsDerived.vehicleHandToHand.level}}. Manual values below are misc adjustments added to the table.</p>
+                    <table class="ee-table">
+                        <thead><tr><th>Combat Bonus</th><th>Base</th><th>Manual / Misc</th><th>Total</th><th>Roll</th></tr></thead>
+                        <tbody>
+                            <tr><td>Attacks per Melee:</td><td>{{riftsDerived.vehicleHandToHand.attacks.base}}</td><td><input type="number" name="system.vehicle.handToHand.attacks" value="{{riftsDerived.vehicleHandToHand.attacks.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.attacks.total}}</td><td></td></tr>
+                            <tr><td>Initiative:</td><td>{{riftsDerived.vehicleHandToHand.initiative.base}}</td><td><input type="number" name="system.vehicle.handToHand.initiative" value="{{riftsDerived.vehicleHandToHand.initiative.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.initiative.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.initiative.total}}" data-label="Vehicle Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Damage:</td><td>{{riftsDerived.vehicleHandToHand.damage.base}}</td><td><input type="number" name="system.vehicle.handToHand.damage" value="{{riftsDerived.vehicleHandToHand.damage.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.damage.total}}</td><td><a data-action="roll" data-roll-type="damage" data-formula="0 + {{riftsDerived.vehicleHandToHand.damage.total}}" data-label="Vehicle HtH Damage Bonus" title="Roll Damage Bonus"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Strike:</td><td>{{riftsDerived.vehicleHandToHand.strike.base}}</td><td><input type="number" name="system.vehicle.handToHand.strike" value="{{riftsDerived.vehicleHandToHand.strike.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.strike.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.strike.total}}" data-label="Vehicle Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Parry:</td><td>{{riftsDerived.vehicleHandToHand.parry.base}}</td><td><input type="number" name="system.vehicle.handToHand.parry" value="{{riftsDerived.vehicleHandToHand.parry.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.parry.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.parry.total}}" data-label="Vehicle Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Dodge:</td><td>{{riftsDerived.vehicleHandToHand.dodge.base}}</td><td><input type="number" name="system.vehicle.handToHand.dodge" value="{{riftsDerived.vehicleHandToHand.dodge.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.dodge.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.dodge.total}}" data-label="Vehicle Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Disarm:</td><td>{{riftsDerived.vehicleHandToHand.disarm.base}}</td><td><input type="number" name="system.vehicle.handToHand.disarm" value="{{riftsDerived.vehicleHandToHand.disarm.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.disarm.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.disarm.total}}" data-label="Vehicle Disarm" title="Roll Disarm"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Entangle:</td><td>{{riftsDerived.vehicleHandToHand.entangle.base}}</td><td><input type="number" name="system.vehicle.handToHand.entangle" value="{{riftsDerived.vehicleHandToHand.entangle.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.entangle.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.entangle.total}}" data-label="Vehicle Entangle" title="Roll Entangle"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Pull Punch:</td><td>{{riftsDerived.vehicleHandToHand.pullPunch.base}}</td><td><input type="number" name="system.vehicle.handToHand.pullPunch" value="{{riftsDerived.vehicleHandToHand.pullPunch.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.pullPunch.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.pullPunch.total}}" data-label="Vehicle Pull Punch" title="Roll Pull Punch"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Roll w/ Punch/Fall:</td><td>{{riftsDerived.vehicleHandToHand.roll.base}}</td><td><input type="number" name="system.vehicle.handToHand.roll" value="{{riftsDerived.vehicleHandToHand.roll.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.roll.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.roll.total}}" data-label="Vehicle Roll w/ Punch/Fall" title="Roll w/ Punch/Fall"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Critical:</td><td>{{riftsDerived.vehicleHandToHand.critical.base}}</td><td><input type="text" name="system.vehicle.handToHand.critical" value="{{riftsDerived.vehicleHandToHand.critical.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.critical.total}}</td><td></td></tr>
+                            <tr><td>Knockout/Stun:</td><td>{{riftsDerived.vehicleHandToHand.knockout.base}}</td><td><input type="text" name="system.vehicle.handToHand.knockout" value="{{riftsDerived.vehicleHandToHand.knockout.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.knockout.total}}</td><td></td></tr>
+                        </tbody>
+                    </table>
+                    {{#if riftsDerived.vehicleHandToHand.notes.length}}
                     <div class="ee-kv">
-                        <label>Strike:</label><input type="number" name="system.vehicle.handToHand.strike" value="{{system.vehicle.handToHand.strike}}" />
-                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.vehicle.handToHand.strike}}" data-label="Vehicle Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a>
+                        <label>Special Abilities:</label>
+                        <ul>
+                            {{#each riftsDerived.vehicleHandToHand.notes}}
+                            <li>Level {{level}}: {{text}}</li>
+                            {{/each}}
+                        </ul>
                     </div>
-                    <div class="ee-kv">
-                        <label>Parry:</label><input type="number" name="system.vehicle.handToHand.parry" value="{{system.vehicle.handToHand.parry}}" />
-                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.vehicle.handToHand.parry}}" data-label="Vehicle Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a>
-                    </div>
-                    <div class="ee-kv">
-                        <label>Dodge:</label><input type="number" name="system.vehicle.handToHand.dodge" value="{{system.vehicle.handToHand.dodge}}" />
-                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.vehicle.handToHand.dodge}}" data-label="Vehicle Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a>
-                    </div>
-                    <div class="ee-kv">
-                        <label>Roll:</label><input type="number" name="system.vehicle.handToHand.roll" value="{{system.vehicle.handToHand.roll}}" />
-                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.vehicle.handToHand.roll}}" data-label="Vehicle Roll" title="Roll w/ Punch/Impact"><i class="fas fa-dice-d20"></i></a>
-                    </div>
+                    {{/if}}
                     <div class="ee-kv"><label>Tear:</label><input type="text" name="system.vehicle.handToHand.tear" value="{{system.vehicle.handToHand.tear}}" /></div>
                     <div class="ee-kv"><label>Restr. Punch:</label><input type="text" name="system.vehicle.handToHand.restrPunch" value="{{system.vehicle.handToHand.restrPunch}}" /></div>
                     <div class="ee-kv"><label>Punch:</label><input type="text" name="system.vehicle.handToHand.punch" value="{{system.vehicle.handToHand.punch}}" /></div>
@@ -1764,27 +1740,55 @@
 
                 <div class="ee-panel">
                     <h3>Weapon Systems</h3>
-                    <table class="ee-table">
-                        <thead><tr><th>Type</th><th>Dmg Type</th><th>Damage</th><th>Scale</th><th>Ammo</th><th>Roll</th><th></th></tr></thead>
-                        <tbody>
-                            {{#each system.vehicle.weapons}}
-                            <tr>
-                                <td><input type="text" name="system.vehicle.weapons.{{@index}}.type" value="{{type}}" /></td>
-                                <td><select name="system.vehicle.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></td>
-                                <td><input type="text" name="system.vehicle.weapons.{{@index}}.damage" value="{{damage}}" /></td>
-                                <td><select name="system.vehicle.weapons.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></td>
-                                <td><input type="text" name="system.vehicle.weapons.{{@index}}.ammo" value="{{ammo}}" /></td>
-                                <td class="ee-actions">
-                                    {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{type}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{type}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
-                                </td>
-                                <td><a data-action="delete-row" data-path="vehicle.weapons" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                    <div class="ee-weapon-list">
+                        {{#each system.vehicle.weapons}}
+                        <div class="ee-weapon-row ee-weapon-row-modern">
+                            <label class="ee-weapon-field ee-weapon-name"><span>Name</span><input type="text" name="system.vehicle.weapons.{{@index}}.name" value="{{name}}" /></label>
+                            <label class="ee-weapon-field"><span>Dmg Type</span><select name="system.vehicle.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></label>
+                            <label class="ee-weapon-field"><span>Damage</span><input type="text" name="system.vehicle.weapons.{{@index}}.damage" value="{{damage}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-small"><span>Scale</span><select name="system.vehicle.weapons.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></label>
+                            <label class="ee-weapon-field"><span>Ammo</span><input type="text" name="system.vehicle.weapons.{{@index}}.ammo" value="{{ammo}}" /></label>
+                            <label class="ee-weapon-field"><span>Payload</span><input type="text" name="system.vehicle.weapons.{{@index}}.payload" value="{{payload}}" /></label>
+                            <label class="ee-weapon-field"><span>Strike</span><input type="text" name="system.vehicle.weapons.{{@index}}.strike" value="{{strike}}" /></label>
+                            <label class="ee-weapon-field"><span>Range</span><input type="text" name="system.vehicle.weapons.{{@index}}.range" value="{{range}}" /></label>
+                            <label class="ee-weapon-field"><span>Rate</span><input type="text" name="system.vehicle.weapons.{{@index}}.rate" value="{{rate}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-special"><span>Special</span><input type="text" name="system.vehicle.weapons.{{@index}}.special" value="{{special}}" /></label>
+                            <div class="ee-weapon-rolls">
+                                <a data-action="roll" data-roll-type="d20" data-bonus="{{strike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                                {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
+                                <a data-action="delete-row" data-path="vehicle.weapons" data-index="{{@index}}" title="Delete Weapon"><i class="fas fa-times"></i></a>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
                     <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.weapons" data-kind="vehicleWeapon">+ Add</button>
                 </div>
             </div>
+
+            {{#if itemsByType.powerArmor.length}}
+            <h3 class="ee-subbar">Power Armor Items</h3>
+            <table class="ee-table">
+                <thead><tr><th>Name</th><th>Type</th><th>AR</th><th>Main</th><th>Head</th><th>L Arm</th><th>R Arm</th><th>L Leg</th><th>R Leg</th><th>Speed</th><th></th></tr></thead>
+                <tbody>
+                    {{#each itemsByType.powerArmor}}
+                    <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+                        <td>{{#if system.isMDC}}MDC{{else}}SDC{{/if}}</td>
+                        <td>{{system.ar}}</td>
+                        <td>{{system.locations.mainBody.current}}/{{system.locations.mainBody.max}}</td>
+                        <td>{{system.locations.head.current}}/{{system.locations.head.max}}</td>
+                        <td>{{system.locations.leftArm.current}}/{{system.locations.leftArm.max}}</td>
+                        <td>{{system.locations.rightArm.current}}/{{system.locations.rightArm.max}}</td>
+                        <td>{{system.locations.leftLeg.current}}/{{system.locations.leftLeg.max}}</td>
+                        <td>{{system.locations.rightLeg.current}}/{{system.locations.rightLeg.max}}</td>
+                        <td>{{system.speed}}</td>
+                        <td><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{/if}}
+            <a class="ee-create-item" data-action="create-item" data-type="powerArmor" title="Create Power Armor Item"><i class="fas fa-plus"></i> Power Armor Item</a>
 
             {{#if itemsByType.vehicle.length}}
             <h3 class="ee-subbar">Vehicle Items</h3>

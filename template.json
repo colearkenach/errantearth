@@ -51,7 +51,9 @@
         },
         "health": {
           "endurance": 0,
+          "enduranceCurrent": null,
           "health": 0,
+          "healthCurrent": null,
           "scars": {
             "value": 0,
             "max": 5
@@ -62,6 +64,11 @@
             "critical": 0,
             "death": 0
           }
+        },
+        "resources": {
+          "espCurrent": null,
+          "mpCurrent": null,
+          "glimmerCurrent": null
         },
         "movement": {
           "pace": 1,
@@ -82,10 +89,12 @@
       },
       "magic": {
         "heat": 0,
+        "heatMax": 0,
         "burnout": 0
       },
       "psychic": {
-        "heat": 0
+        "heat": 0,
+        "heatMax": 0
       },
       "backgrounds": [],
       "occupations": [],
@@ -196,7 +205,7 @@
         "list": []
       },
       "handToHand": {
-        "type": "basic",
+        "type": "none",
         "strengthType": "normal",
         "enduranceType": "normal",
         "attacks": 0,
@@ -205,6 +214,8 @@
         "strike": 0,
         "parry": 0,
         "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
         "pullRoll": 0,
         "pullPunch": 0,
         "roll": 0,
@@ -273,7 +284,7 @@
           {
             "name": "Kick",
             "damageType": "kinetic",
-            "damage": "1d6",
+            "damage": "1d8",
             "damageScale": "S",
             "strike": "",
             "parry": "",
@@ -283,12 +294,82 @@
           {
             "name": "Power Punch",
             "damageType": "kinetic",
-            "damage": "2d4",
+            "damage": "(1d4 * 2)",
             "damageScale": "S",
             "strike": "",
             "parry": "",
             "actions": "2",
             "special": ""
+          },
+          {
+            "name": "Power Kick",
+            "damageType": "kinetic",
+            "damage": "(1d8 * 2)",
+            "damageScale": "S",
+            "strike": "",
+            "parry": "",
+            "actions": "2",
+            "special": ""
+          },
+          {
+            "name": "Karate Punch",
+            "damageType": "kinetic",
+            "damage": "2d4",
+            "damageScale": "S",
+            "strike": "",
+            "parry": "",
+            "actions": "1",
+            "special": "Requires suitable HtH training"
+          },
+          {
+            "name": "Karate Kick",
+            "damageType": "kinetic",
+            "damage": "2d6",
+            "damageScale": "S",
+            "strike": "",
+            "parry": "",
+            "actions": "1",
+            "special": "Requires suitable HtH training"
+          },
+          {
+            "name": "Knee",
+            "damageType": "kinetic",
+            "damage": "1d6",
+            "damageScale": "S",
+            "strike": "",
+            "parry": "",
+            "actions": "1",
+            "special": ""
+          },
+          {
+            "name": "Leap Kick",
+            "damageType": "kinetic",
+            "damage": "3d8",
+            "damageScale": "S",
+            "strike": "",
+            "parry": "",
+            "actions": "2",
+            "special": "Requires suitable HtH training"
+          },
+          {
+            "name": "Body Flip / Throw",
+            "damageType": "kinetic",
+            "damage": "1d6",
+            "damageScale": "S",
+            "strike": "",
+            "parry": "",
+            "actions": "1",
+            "special": "Victim loses initiative and one action"
+          },
+          {
+            "name": "Body Block / Tackle",
+            "damageType": "kinetic",
+            "damage": "1d4",
+            "damageScale": "S",
+            "strike": "",
+            "parry": "",
+            "actions": "2",
+            "special": "May knock target down"
           }
         ]
       },
@@ -369,7 +450,7 @@
       "powerArmor": {
         "name": "",
         "handToHand": {
-          "type": "basic",
+          "type": "none",
           "attacks": 0,
           "initiative": 0,
           "damage": 0,
@@ -419,12 +500,19 @@
         "name": "",
         "type": "",
         "handToHand": {
+          "type": "none",
           "attacks": 0,
+          "initiative": 0,
+          "damage": 0,
           "strike": 0,
           "parry": 0,
           "dodge": 0,
+          "disarm": 0,
+          "entangle": 0,
+          "pullPunch": 0,
           "roll": 0,
-          "initiative": 0,
+          "critical": 0,
+          "knockout": 0,
           "tear": "",
           "restrPunch": "",
           "punch": "",
@@ -923,7 +1011,8 @@
       "skillBonuses": [],
       "weaponProficiencies": {
         "selected": {},
-        "custom": []
+        "custom": [],
+        "choices": []
       },
       "combatBonuses": {
         "attacks": 0,
@@ -958,6 +1047,7 @@
       "category": "",
       "isRCC": false,
       "skills": [],
+      "skillChoices": [],
       "bonuses": "",
       "equipment": "",
       "money": "",
@@ -981,7 +1071,8 @@
       "skillBonuses": [],
       "weaponProficiencies": {
         "selected": {},
-        "custom": []
+        "custom": [],
+        "choices": []
       },
       "combatBonuses": {
         "attacks": 0,

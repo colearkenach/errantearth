@@ -99,6 +99,28 @@
 </table>
 <button type="button" class="ee-add" data-action="add-cc-wp-custom">+ Add Custom W.P.</button>
 
+<h4 class="ee-section-h">Selectable W.P. Grants</h4>
+<table class="ee-table ee-cc-wp-choices">
+  <thead><tr><th>Prompt</th><th>Count</th><th>Pool</th><th></th></tr></thead>
+  <tbody>
+    {{#each system.weaponProficiencies.choices}}
+    <tr>
+      <td><input type="text" name="system.weaponProficiencies.choices.{{_index}}.label" value="{{label}}" placeholder="W.P. of choice"/></td>
+      <td><input type="number" name="system.weaponProficiencies.choices.{{_index}}.count" value="{{count}}" min="1"/></td>
+      <td>
+        <select name="system.weaponProficiencies.choices.{{_index}}.pool">
+          <option value="any" {{#if (eq pool "any")}}selected{{/if}}>Any W.P.</option>
+          <option value="ancient" {{#if (eq pool "ancient")}}selected{{/if}}>Ancient W.P.</option>
+          <option value="modern" {{#if (eq pool "modern")}}selected{{/if}}>Modern W.P.</option>
+        </select>
+      </td>
+      <td><a data-action="delete-cc-wp-choice" data-index="{{_index}}"><i class="fas fa-times"></i></a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button type="button" class="ee-add" data-action="add-cc-wp-choice">+ Add W.P. Choice</button>
+
 <h4 class="ee-section-h">Combat Bonuses</h4>
 <div class="ee-cc-bonus-grid">
   <label>Attacks/Melee <input type="number" name="system.combatBonuses.attacks" value="{{system.combatBonuses.attacks}}"/></label>

@@ -1,0 +1,104 @@
+<section class="ee-legacy-tools-app">
+  <header class="ee-legacy-tools-header">
+    <label>
+      Actor
+      <select data-action="select-legacy-actor">
+        {{#each actors}}
+        <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+        {{/each}}
+      </select>
+    </label>
+    <div class="ee-legacy-tools-actions">
+      <button type="button" data-action="refresh-legacy-tools" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+      <button type="button" data-action="open-legacy-sheet" title="Open Sheet" {{#unless hasActor}}disabled{{/unless}}><i class="fas fa-address-card"></i></button>
+    </div>
+  </header>
+
+  {{#unless hasActor}}
+  <p class="ee-hint">No character actors are available.</p>
+  {{else}}
+  <div class="ee-legacy-tools-summary">
+    <span><strong>{{modeLabel}}</strong></span>
+    <span>Level {{summary.level}}</span>
+    <span>{{summary.handToHand}}</span>
+    <span>Attacks {{summary.attacks}}</span>
+    <span>HP {{summary.hp}}</span>
+    <span>SDC {{summary.sdc}}</span>
+    <span>MDC {{summary.mdc}}</span>
+    <span>PPE {{summary.ppe}}</span>
+    <span>ISP {{summary.isp}}</span>
+  </div>
+
+  {{#if warnings.length}}
+  <ul class="ee-warnings ee-legacy-tools-warnings">
+    {{#each warnings}}<li>{{this}}</li>{{/each}}
+  </ul>
+  {{/if}}
+
+  <section class="ee-legacy-tools-panel">
+    <h3>Combat</h3>
+    <div class="ee-legacy-tools-grid">
+      {{#each combatRolls}}
+      <button type="button" data-action="legacy-roll" data-roll-type="{{rollType}}" data-bonus="{{bonus}}" data-label="{{rollLabel}}" title="{{label}} {{display}}">
+        <i class="fas {{icon}}"></i>
+        <span>{{label}}</span>
+        <strong>{{display}}</strong>
+      </button>
+      {{/each}}
+    </div>
+  </section>
+
+  <section class="ee-legacy-tools-panel">
+    <h3>Saves</h3>
+    <div class="ee-legacy-tools-list">
+      {{#each saves}}
+      <button type="button" data-action="legacy-roll" data-roll-type="save" data-base="{{base}}" data-bonus="{{bonus}}" data-label="Save vs {{label}}">
+        <span>{{label}}</span>
+        <strong>{{display}}</strong>
+      </button>
+      {{/each}}
+    </div>
+  </section>
+
+  <section class="ee-legacy-tools-panel">
+    <h3>Skills</h3>
+    {{#if skills.length}}
+    <div class="ee-legacy-tools-list ee-legacy-tools-list--skills">
+      {{#each skills}}
+      <button type="button" data-action="legacy-roll" data-roll-type="skill" data-target="{{target}}" data-label="{{name}}">
+        <span>{{name}}</span>
+        <strong>{{target}}%</strong>
+      </button>
+      {{/each}}
+    </div>
+    {{else}}
+    <p class="ee-hint">No EE Legacy skills are on this actor.</p>
+    {{/if}}
+  </section>
+
+  <section class="ee-legacy-tools-panel">
+    <h3>Weapons</h3>
+    {{#if weapons.length}}
+    <div class="ee-legacy-tools-list">
+      {{#each weapons}}
+      <div class="ee-legacy-tools-weapon">
+        <div>
+          <strong>{{name}}</strong>
+          <span>{{group}}</span>
+        </div>
+        <button type="button" data-action="legacy-roll" data-roll-type="d20" data-bonus="{{strike}}" data-label="{{name}} Strike" title="Roll Strike">
+          <i class="fas fa-crosshairs"></i>
+          <span>{{strikeDisplay}}</span>
+        </button>
+        <button type="button" data-action="legacy-roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage" {{#unless hasDamage}}disabled{{/unless}}>
+          <i class="fas fa-burst"></i>
+        </button>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <p class="ee-hint">No EE Legacy weapons are on this actor.</p>
+    {{/if}}
+  </section>
+  {{/unless}}
+</section>
