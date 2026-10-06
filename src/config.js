@@ -38,6 +38,53 @@ EE.POWER_SOURCES = {
   supernatural: "Supernatural"
 };
 
+EE.SPELL_CATEGORIES = {
+  africanCeremonialMagic: "African Ceremonial Magic",
+  africanWitchSpells: "African Witch Spells",
+  biomancy: "Biomancy",
+  bioWizardry: "Bio-Wizardry",
+  blueFlameMagic: "Blue Flame Magic",
+  boneMagic: "Bone Magic",
+  cloudMagic: "Cloud Magic",
+  conjuring: "Conjuring",
+  dolphinMagic: "Dolphin Magic",
+  dreamshipMagic: "Dreamship Magic",
+  druidism: "Druidism",
+  elementalMagic: "Elemental Magic",
+  herbalism: "Herbalism",
+  hontneMagic: "Hontne Magic",
+  invocations: "Invocations",
+  korallyteShaping: "Korallyte Shaping",
+  leyLineMagic: "Ley Line Magic",
+  livingFireMagic: "Living Fire Magic",
+  millenniumTreeMagicCreations: "Millennium Tree Magic Creations",
+  mysticism: "Mysticism",
+  mysticKuznya: "Mystic Kuznya",
+  natureMagic: "Nature Magic",
+  nazcanLineMagic: "Nazcan Line Magic",
+  necromancyNecroMagic: "Necromancy/Necro-Magic",
+  oceanMagic: "Ocean Magic",
+  riftLeyLineMagic: "Rift & Ley Line Magic",
+  runeMagic: "Rune Magic",
+  shamanisticMagic: "Shamanistic Magic",
+  shiftingSummoning: "Shifting & Summoning",
+  spoilingMagic: "Spoiling Magic",
+  stoneMagic: "Stone Magic",
+  tattooMagic: "Tattoo Magic",
+  technoWizardMagic: "Techno-Wizard Magic",
+  temporalMagic: "Temporal Magic",
+  warlockMagic: "Warlock Magic",
+  witcheryWitchcraft: "Witchery/Witchcraft",
+  whaleSingerSpells: "Whale Singer Spells"
+};
+
+EE.PSIONIC_TYPES = {
+  healing: "Healing",
+  physical: "Physical",
+  sensitive: "Sensitive",
+  superPsionics: "Super-Psionics"
+};
+
 EE.HTH_TYPES = {
   none:        "None",
   basic:       "Basic",
@@ -618,6 +665,89 @@ EE.OCC_SUGGESTIONS = [
   "Cyber-Doc", "Headhunter", "Mercenary", "Vagabond", "Rogue Scholar"
 ];
 
+// Rifts Ultimate Edition O.C.C. experience tracks (printed p.295).
+// `thresholds` stores the minimum XP for levels 1-15. The first fourteen
+// maxima are derived from the following threshold; `level15Max` preserves
+// the published upper end of the final range. O.C.C.s from other books can
+// use the custom track editor on the item sheet.
+EE.RIFTS_XP_TRACKS = {
+  csGruntDogBoys: {
+    label: "CS Grunt / Dog Boys",
+    thresholds: [0, 1951, 3901, 8801, 17601, 25601, 35601, 50601, 70601, 95601, 125601, 175601, 225601, 275601, 325601],
+    level15Max: 375600
+  },
+  bursterPsiStalkerMystic: {
+    label: "Burster / Psi-Stalker / Mystic",
+    thresholds: [0, 2051, 4101, 8251, 16501, 24601, 34701, 49801, 69901, 95001, 130101, 180201, 230301, 280401, 340501],
+    level15Max: 400600
+  },
+  cityRatVagabond: {
+    label: "City Rat / Vagabond",
+    thresholds: [0, 1876, 3751, 7251, 14101, 21201, 31201, 41201, 51201, 71201, 101501, 136501, 186501, 236501, 286501],
+    level15Max: 326500
+  },
+  cyberDocRogueScholarScientist: {
+    label: "Cyber-Doc / Rogue Scholar / Rogue Scientist",
+    thresholds: [0, 2001, 4001, 8201, 16401, 24501, 34601, 49701, 69801, 94901, 129101, 179101, 229201, 279301, 329401],
+    level15Max: 389500
+  },
+  glitterBoyPilot: {
+    label: "Glitter Boy Pilot",
+    thresholds: [0, 2151, 4301, 8401, 17501, 25601, 35701, 52801, 72901, 98501, 132501, 183501, 235001, 285001, 345001],
+    level15Max: 410000
+  },
+  csSamasPilotBodyFixer: {
+    label: "CS SAMAS Pilot / Body Fixer",
+    thresholds: [0, 1926, 3851, 7451, 14901, 21001, 31001, 41601, 53001, 73001, 103501, 139001, 189001, 239001, 289001],
+    level15Max: 339000
+  },
+  csTechnicalMilitaryShifter: {
+    label: "CS Technical Officer / CS Military Specialist / Shifter",
+    thresholds: [0, 2121, 4241, 8481, 16961, 24961, 34961, 49961, 69961, 94961, 129961, 179961, 229961, 279961, 329961],
+    level15Max: 389961
+  },
+  mindMelterLeyLine: {
+    label: "Mind Melter / Ley Line Walker / Ley Line Rifter",
+    thresholds: [0, 2241, 4481, 8961, 17421, 25921, 35921, 50921, 70921, 95921, 135921, 185921, 225921, 275921, 335921],
+    level15Max: 395920
+  },
+  technoWizard: {
+    label: "Techno-Wizard",
+    thresholds: [0, 2301, 4601, 9201, 18401, 26501, 36601, 51701, 71801, 96901, 137001, 188001, 229201, 279301, 340401],
+    level15Max: 400000
+  },
+  operatorWildernessScout: {
+    label: "Operator / Wilderness Scout",
+    thresholds: [0, 1901, 3801, 7301, 14301, 21001, 30001, 40001, 53001, 73001, 103001, 138001, 188001, 238001, 288001],
+    level15Max: 328000
+  },
+  mercSoldier: {
+    label: "Merc Soldier",
+    thresholds: [0, 1931, 3861, 7721, 15201, 21301, 31301, 41601, 53301, 73601, 103301, 140001, 190001, 240001, 290001],
+    level15Max: 340000
+  },
+  elementalFusionist: {
+    label: "Elemental Fusionist",
+    thresholds: [0, 2241, 4481, 8961, 17921, 25921, 35921, 50921, 70921, 95921, 135921, 185921, 225921, 275921, 335921],
+    level15Max: 400920
+  },
+  cyberKnightCrazyJuicer: {
+    label: "Cyber-Knight / Crazy / Juicer",
+    thresholds: [0, 2141, 4281, 8561, 17521, 25521, 35521, 50521, 71001, 96101, 131201, 181301, 231401, 281501, 341601],
+    level15Max: 401700
+  },
+  combatCyborgHeadhunterRobotPilot: {
+    label: "Combat Cyborg / Headhunter / Robot Pilot",
+    thresholds: [0, 2101, 4201, 8401, 17201, 25401, 35801, 51001, 71201, 96401, 131601, 181801, 232001, 282201, 342401],
+    level15Max: 402600
+  },
+  dragon: {
+    label: "Dragon Hatchling / Adult Dragon",
+    thresholds: [0, 3001, 5001, 10001, 20001, 30001, 50001, 80001, 120001, 170001, 230001, 300001, 380001, 470001, 600001],
+    level15Max: 800000
+  }
+};
+
 EE.RACE_SUGGESTIONS = [
   "Human", "D-Bee", "Dragon Hatchling", "Psi-Stalker", "True Atlantean",
   "Wolfen", "Dog Boy", "Crazy", "Mutant"
@@ -645,8 +775,8 @@ EE.SKILL_LIST = [
   { key: "cryptography",           name: "Cryptography",                        group: "Communication", base: 25, perLvl: 5 },
   { key: "electronicCountermeasures", name: "Electronic Countermeasures",       group: "Communication", base: 30, perLvl: 5 },
   { key: "languageNative",         name: "Language: Native Tongue",             group: "Communication", base: 88, perLvl: 1 },
-  { key: "languageOther",          name: "Language: Other",                     group: "Communication", base: 50, perLvl: 5 },
-  { key: "laserCommunications",    name: "Laser",                               group: "Communication", base: 30, perLvl: 5 },
+  { key: "languageOther",          name: "Language: Other",                     group: "Communication", base: 50, perLvl: 3 },
+  { key: "laserCommunications",    name: "Laser Communications",                group: "Communication", base: 30, perLvl: 5 },
   { key: "literacyNative",         name: "Literacy: Native Tongue",             group: "Communication", base: 40, perLvl: 5 },
   { key: "literacyOther",          name: "Literacy: Other",                     group: "Communication", base: 30, perLvl: 5 },
   { key: "opticSystems",           name: "Optic Systems",                       group: "Communication", base: 30, perLvl: 5 },
@@ -934,6 +1064,38 @@ for (const key of [
 ]) {
   const skill = EE.SKILL_LIST.find(s => s.key === key);
   if (skill) skill.secondary = false;
+}
+
+// Ultimate Edition Secondary Skill availability (printed p.300). Some
+// categories allow only a small subset; others are open with named
+// exceptions. This metadata drives both actor and O.C.C. choice pickers.
+const secondaryOnly = {
+  Cowboy: new Set(),
+  Electrical: new Set(["basicElectronics", "computerRepair"]),
+  Espionage: new Set(),
+  Horsemanship: new Set(["horsemanshipGeneral", "horsemanshipExoticAnimals"]),
+  Mechanical: new Set(["automotiveMechanics", "basicMechanics"]),
+  Medical: new Set(["animalHusbandry", "firstAid"]),
+  Military: new Set(["camouflage", "recognizeWeaponQuality"]),
+  Physical: new Set(["aerobicAthletics", "athleticsGeneral", "bodyBuildingWeightLifting", "climbing", "running", "swimming"]),
+  "Physical Space": new Set(),
+  Pilot: new Set(["pilotAutomobile", "pilotBicycling", "pilotBoatMotor", "pilotBoatPaddle", "pilotBoatSail", "hoverCraftGround", "hovercyclesSkycyclesRocketBikes", "motorcyclesSnowmobiles"]),
+  "Pilot Related": new Set(),
+  Rogue: new Set(["gamblingStandard", "gamblingDirtyTricks"]),
+  Science: new Set(["astronomyNavigation", "mathematicsBasic", "mathematicsAdvanced"])
+};
+
+const secondaryExceptions = {
+  Communication: new Set(["cryptography", "laserCommunications", "surveillance", "tvVideo"]),
+  Wilderness: new Set(["boatBuilding", "spelunking"])
+};
+
+for (const skill of EE.SKILL_LIST) {
+  if (Object.prototype.hasOwnProperty.call(secondaryOnly, skill.group)) {
+    skill.secondary = secondaryOnly[skill.group].has(skill.key);
+  } else if (secondaryExceptions[skill.group]?.has(skill.key)) {
+    skill.secondary = false;
+  }
 }
 
 for (const key of ["languageNative", "languageOther", "literacyNative", "literacyOther"]) {

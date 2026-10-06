@@ -20,7 +20,109 @@
   "styles": [
     "styles/errantearth.css"
   ],
-  "packs": [],
+  "packFolders": [
+    {
+      "name": "Rifts Ultimate Edition",
+      "sorting": "a",
+      "color": "#8f2d2d",
+      "packs": [
+        "rifts-occs",
+        "rifts-rccs",
+        "rifts-races",
+        "rifts-weapons",
+        "rifts-armor",
+        "rifts-spells",
+        "rifts-psionics"
+      ],
+      "folders": []
+    }
+  ],
+  "packs": [
+    {
+      "name": "rifts-occs",
+      "label": "Rifts Ultimate Edition - O.C.C.s",
+      "system": "errantearth",
+      "path": "packs/rifts-occs",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "rifts-rccs",
+      "label": "Rifts Ultimate Edition - R.C.C.s",
+      "system": "errantearth",
+      "path": "packs/rifts-rccs",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "rifts-races",
+      "label": "Rifts Ultimate Edition - Races",
+      "system": "errantearth",
+      "path": "packs/rifts-races",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "rifts-weapons",
+      "label": "Rifts Ultimate Edition - Weapons",
+      "system": "errantearth",
+      "path": "packs/rifts-weapons",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "rifts-armor",
+      "label": "Rifts Ultimate Edition - Armor",
+      "system": "errantearth",
+      "path": "packs/rifts-armor",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "rifts-spells",
+      "label": "Rifts Ultimate Edition - Spells",
+      "system": "errantearth",
+      "path": "packs/rifts-spells",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "rifts-psionics",
+      "label": "Rifts Ultimate Edition - Psionics",
+      "system": "errantearth",
+      "path": "packs/rifts-psionics",
+      "type": "Item",
+      "flags": {},
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    }
+  ],
   "languages": [
     {
       "lang": "en",
@@ -32,7 +134,7 @@
     "distance": 5,
     "units": "ft"
   },
-  "primaryTokenAttribute": "hp",
-  "secondaryTokenAttribute": "ppe",
+  "primaryTokenAttribute": "tokenBars.hp",
+  "secondaryTokenAttribute": "tokenBars.sdc",
   "license": "LICENSE"
 }

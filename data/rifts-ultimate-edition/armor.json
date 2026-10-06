@@ -1,0 +1,636 @@
+[
+  {
+    "name": "Bushman Full Composite Environmental Body Armor",
+    "type": "armor",
+    "img": "icons/svg/shield.svg",
+    "source": {
+      "printedPage": 268
+    },
+    "system": {
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 60,
+          "max": 60
+        },
+        "head": {
+          "current": 50,
+          "max": 50
+        },
+        "leftArm": {
+          "current": 30,
+          "max": 30
+        },
+        "rightArm": {
+          "current": 30,
+          "max": 30
+        },
+        "leftLeg": {
+          "current": 55,
+          "max": 55
+        },
+        "rightLeg": {
+          "current": 55,
+          "max": 55
+        }
+      },
+      "weight": "17 pounds (7.6 kg); fair mobility, -10% movement penalty.",
+      "cost": "32,000 credits. Huntsman Note: Also available is the Bushman Trooper. The only differences being it is a bit bulkier, has a main body of 90 M.D.C. (All other armor location are same as above), has -15% movement penalty and costs 46,000 credits. VVeapons ------------------------ E-Clip costs are pretty standard. Generally, a new, fully charged, standard E-Clip (short) will cost 5,000-6,000 credits. Recharging an E-Clip costs about 1,200 to 1,500 credits. Some rifles can use what is called a \"Long\" E-Clip which usually holds 30 shots. A Long E-Clip will cost 8,000 credits new and 2,000-2,500 to recharge. An Energy Clip can be recharged hundreds of times before the storage cell bums out. Conventional S.D.C. Rounds: Prices listed are the average Black Market prices. Costs may fluctuate 10% to 30%, up or down, depend ing on the seller and the usual market factors. Conventional S.D.C. am munition on average costs 30-60 credits per box of 100 rounds, but prices will vary greatly from place to place based on the level of tech",
+      "notes": "Bushman -Full Composite Environmental Body Armor A lightweight padding, Kevlar, and plate composite armor. Comes in green, tan, white, black, grey and camouflage. M.D.C. by Location: Main body: 60, Helmet: 50, Arms: 30 each, and Legs: 55 each. Weight: 17 pounds (7.6 kg); fair mobility, -10% movement penalty. Black Market Cost: 32,000 credits. Huntsman Note: Also available is the Bushman Trooper. The only differences being it is a bit bulkier, has a main body of 90 M.D.C. (All other armor location are same as above), has -15% movement penalty and costs 46,000 credits. VVeapons ------------------------ E-Clip costs are pretty standard. Generally, a new, fully charged, standard E-Clip (short) will cost 5,000-6,000 credits. Recharging an E-Clip costs about 1,200 to 1,500 credits. Some rifles can use what is called a \"Long\" E-Clip which usually holds 30 shots. A Long E-Clip will cost 8,000 credits new and 2,000-2,500 to recharge. An Energy Clip can be recharged hundreds of times before the storage cell bums out. Conventional S.D.C. Rounds: Prices listed are the average Black Market prices. Costs may fluctuate 10% to 30%, up or down, depend ing on the seller and the usual market factors. Conventional S.D.C. am munition on average costs 30-60 credits per box of 100 rounds, but prices will vary greatly from place to place based on the level of tech",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "prowlPenalty": -10
+    }
+  },
+  {
+    "name": "CA-1 Heavy Dead Boy Body Armor",
+    "type": "armor",
+    "img": "icons/svg/shield.svg",
+    "source": {
+      "printedPage": 261
+    },
+    "system": {
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 80,
+          "max": 80
+        },
+        "head": {
+          "current": 50,
+          "max": 50
+        },
+        "leftArm": {
+          "current": 35,
+          "max": 35
+        },
+        "rightArm": {
+          "current": 35,
+          "max": 35
+        },
+        "leftLeg": {
+          "current": 50,
+          "max": 50
+        },
+        "rightLeg": {
+          "current": 50,
+          "max": 50
+        }
+      },
+      "weight": "",
+      "cost": "",
+      "notes": "CA-l Heavy Body Armor (Old Style Armor): Weight 18 pounds (8.1 kg). Worn by the infantry. M.D.C. by Location: Helmet: 50. Arms: 35 each, Legs: 50 each, Main Body: 80. -10% penalty on skills like Acrobatics, Climbing, Prowl, Swimming and other skills that require high mobility.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "prowlPenalty": 0
+    }
+  },
+  {
+    "name": "CA-2 Light Dead Boy Body Armor",
+    "type": "armor",
+    "img": "icons/svg/shield.svg",
+    "source": {
+      "printedPage": 261
+    },
+    "system": {
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 50,
+          "max": 50
+        },
+        "head": {
+          "current": 35,
+          "max": 35
+        },
+        "leftArm": {
+          "current": 15,
+          "max": 15
+        },
+        "rightArm": {
+          "current": 15,
+          "max": 15
+        },
+        "leftLeg": {
+          "current": 24,
+          "max": 24
+        },
+        "rightLeg": {
+          "current": 24,
+          "max": 24
+        }
+      },
+      "weight": "",
+      "cost": "",
+      "notes": "CA-2 Light Body Armor (Old Style Armor): Weight 9 pounds (4 kg). Worn by pilots and city police forces, as well as for espionage type operations. M.D.C. by Location: Helmet: 35. Arms: 15 each, Legs: 24 each, Main Body: 50. No mobility penalties. -5% penalty on skills like Acrobatics, Climbing, Prowl, Swimming and other skills that require high mobility. Features Common to All \"Dead Boy\" Armor: • Complete environmental battle armor suitable for use in all hostile environments, including space. • Computer controlled life support system. • Internal cooling and temperature control. • Artificial air circulation systems, gas filtration, humidifier. • Computer controlled, independent oxygen supply and purge system that automatically engages in low oxygen or contaminated air envi ronments. Five hour oxygen supply. • Insulated, high temperature resistant shielding for up to 300 degrees centigrade. Normal fires do no damage. Nuclear, plasma, and magic fires do full damage. • Radiation shielded. • Polarized and light sensitive/adjusting tinted visor. • Built-in loudspeaker; 80 decibels. • Directional, short-range radio built into the helmet. Range is 5 miles (8 km). • Helmet face plate is removable. • Wrist Mini-Comp: A multi-purpose miniature computer and display that will indicate system errors within the armor, damage levels, and oxygen supply, as well as direction (compass), time, and date. • Ammo and supply waist belt, shoulder belts, and shoulder holster. Pilots and officers have their choice of shoulder or hip holster. • Boot survival knife or Vibro-Blade for officers and military special ists. Black Market Price: 35,000 to 45,000 with a custom paint job. Fair to poor availability even with the introduction of the new model. Note: See Rifts® World Book 11: Coalition War Campaign™ for the new models of body armor, SAMAS, power armor, Skull Walkers, 'bots, weapons, and other CS Military gear, but even the old CS gear is superior to most other manufacturers of military goods.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "prowlPenalty": 0
+    }
+  },
+  {
+    "name": "Coalition SAMAS Power Armor",
+    "type": "powerArmor",
+    "img": "icons/svg/upgrade.svg",
+    "source": {
+      "printedPage": 240
+    },
+    "system": {
+      "description": "Coalition SAMAS Power Armor The SAMAS is a complete environmental power armor with en hanced robotics and flight/air to ground capabilities. The SAMAS, like all power armor, is basically a robot exoskeleton with M.D.C. plating, superhuman strength, and weapon systems. The pilot fits inside the exoskeleton. The SAMAS is a significant element of the Coalition's armored troops. The suit was designed for assault and defense, its small size making it ideal for urban and wilderness environments. This fast and maneuverable power armor quickly came to represent Coalition mili tary supremacy in the air and on the ground. Next to the Glitter Boy it is the most famous power armor in the Americas. Note: In 105 P.A. the original SAMAS design was replaced by a pair of heavier, faster ver sions, the Smiling Jack and Super SAMAS. However, the original SAMAS is still used by CS police, Special Forces, Commandos and CS officers. Model Type: PA-06A Class: Strategic Armor Military Assault Suit (SAMAS). Crew: One. M.D.C. by Location: Shoulder Wings (2) -30 each Main Rear Jets (2) -60 each Lower Maneuvering Jets -25 each Ammo Drum (rear) -25 Rail Gun -50 Forearm Mini-Missile Launcher (1, left) -50 *Head -70 **Main Body -250 * Destroying the head of the power armor will eliminate all forms of optical enhancement and sensory systems. The pilot must now rely on his own human vision and senses. No power armor combat bonuses to strike, parry, and dodge! Note: The head is a small and difficult target to hit (shielded by exhaust tubes and weapon drum). Thus, it can only be hit when a character makes a Called Shot and even then the attacker is -3 to strike. ** Depleting the M.D.C. of the main body will shut the armor down completely, making it useless. Note: Destroying a wing will make flight impossible. However, even with no wing(s) the SAMAS can make jet powered leaps and hover stationary above the ground. Speed: Running: 60 mph (96 km) maximum. Note that the act of running does tire out its operator, but at 10% of the usual fatigue rate thanks to the robot exoskeleton. Leaping: The powerful robot legs can leap up to 15 feet (4.6 m) high or across unassisted by the thrusters. A jet thruster assisted leap can propel the unit up to 100 feet (30.5 m) high and 200 feet (61 m) across without actually attaining flight. Flying: The rocket propulsion system enables the SAMAS to hover sta tionary up to 200 feet (61 m) or fly. Maximum flying speed is 300 mph (480 km), but cruising speed is considered to be 150 mph (240 km). Maximum altitude is limited to about 500 feet (152 m). Flying Range: The nuclear power system gives the SAMAS decades of life, but the jet rockets get hot and need to cool after a maximum of ten hours of flight when traveling at speeds above cruising, and twenty hours of cruising speed, can fly indefinitely with rest stops. Statistical Data: Height: 8 feet (2.4 m). Width: Wings down: 3.5 feet (1.06 m) Wings extended: 10 feet (3 m). Length: 4 feet, 6 inches (1.4 m). Weight: 340 Ibs (153 kg) without rail gun. Physical Strength: Robotic P.S. of 30. Cargo: None. Power System: Nuclear; average SAMAS energy life is 20 years. Black Market Cost: 1.6 to 2 million credits. Rare. Weapon Systems: 1. C-40R SAMAS Rail Gun (1): This is standard equipment for the SAMAS and is considered to be the most versatile, accurate, and lightweight rail gun in the world. Other heavier rail guns can be substituted in an emergency or for special missions. There is no sep arate power pack. The unit is hooked directly to the armor's nuclear power supply. Primary Purpose: Assault & Defense. Weight: Gun: 92 Ibs (41.4 kg), One SAMAS Ammo-Drum: 190 Ibs (85.5 kg). Mega-Damage: A Burst is 40 rounds and inflicts 1D4x10 M.D., one round does 1D4 M.D. Rate of Fire: Each burst counts as one melee attack. Range: 4000 feet (1219 m). Payload: 2000 round drum, that's 50 bursts. A second drum can be hooked to the undercarriage of the rocket jets, but must be manually re moved by another SAMAS or a character with a strength of 26 or higher to replace the used drum. Reloading a drum will take about 5 minutes for those not trained, but a mere one minute by somebody trained in the use of SAMAS power armor.",
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 250,
+          "max": 250
+        },
+        "head": {
+          "current": 70,
+          "max": 70
+        },
+        "leftArm": {
+          "current": 0,
+          "max": 0
+        },
+        "rightArm": {
+          "current": 0,
+          "max": 0
+        },
+        "leftLeg": {
+          "current": 0,
+          "max": 0
+        },
+        "rightLeg": {
+          "current": 0,
+          "max": 0
+        }
+      },
+      "weight": "340 Ibs (153 kg) without rail gun. Physical Strength: Robotic P.S. of 30. Cargo: None. Power System: Nuclear; average SAMAS energy life is 20 years.",
+      "cost": "1.6 to 2 million credits. Rare. Weapon Systems: 1. C-40R SAMAS Rail Gun (1): This is standard equipment for the SAMAS and is considered to be the most versatile, accurate, and lightweight rail gun in the world. Other heavier rail guns can be substituted in an emergency or for special missions. There is no sep arate power pack. The unit is hooked directly to the armor's nuclear power supply. Primary Purpose: Assault & Defense.",
+      "notes": "Coalition SAMAS Power Armor The SAMAS is a complete environmental power armor with en hanced robotics and flight/air to ground capabilities. The SAMAS, like all power armor, is basically a robot exoskeleton with M.D.C. plating, superhuman strength, and weapon systems. The pilot fits inside the exoskeleton. The SAMAS is a significant element of the Coalition's armored troops. The suit was designed for assault and defense, its small size making it ideal for urban and wilderness environments. This fast and maneuverable power armor quickly came to represent Coalition mili tary supremacy in the air and on the ground. Next to the Glitter Boy it is the most famous power armor in the Americas. Note: In 105 P.A. the original SAMAS design was replaced by a pair of heavier, faster ver sions, the Smiling Jack and Super SAMAS. However, the original SAMAS is still used by CS police, Special Forces, Commandos and CS officers. Model Type: PA-06A Class: Strategic Armor Military Assault Suit (SAMAS). Crew: One. M.D.C. by Location: Shoulder Wings (2) -30 each Main Rear Jets (2) -60 each Lower Maneuvering Jets -25 each Ammo Drum (rear) -25 Rail Gun -50 Forearm Mini-Missile Launcher (1, left) -50 *Head -70 **Main Body -250 * Destroying the head of the power armor will eliminate all forms of optical enhancement and sensory systems. The pilot must now rely on his own human vision and senses. No power armor combat bonuses to strike, parry, and dodge! Note: The head is a small and difficult target to hit (shielded by exhaust tubes and weapon drum). Thus, it can only be hit when a character makes a Called Shot and even then the attacker is -3 to strike. ** Depleting the M.D.C. of the main body will shut the armor down completely, making it useless. Note: Destroying a wing will make flight impossible. However, even with no wing(s) the SAMAS can make jet powered leaps and hover stationary above the ground. Speed: Running: 60 mph (96 km) maximum. Note that the act of running does tire out its operator, but at 10% of the usual fatigue rate thanks to the robot exoskeleton. Leaping: The powerful robot legs can leap up to 15 feet (4.6 m) high or across unassisted by the thrusters. A jet thruster assisted leap can propel the unit up to 100 feet (30.5 m) high and 200 feet (61 m) across without actually attaining flight. Flying: The rocket propulsion system enables the SAMAS to hover sta tionary up to 200 feet (61 m) or fly. Maximum flying speed is 300 mph (480 km), but cruising speed is considered to be 150 mph (240 km). Maximum altitude is limited to about 500 feet (152 m). Flying Range: The nuclear power system gives the SAMAS decades of life, but the jet rockets get hot and need to cool after a maximum of ten hours of flight when traveling at speeds above cruising, and twenty hours of cruising speed, can fly indefinitely with rest stops. Statistical Data: Height: 8 feet (2.4 m). Width: Wings down: 3.5 feet (1.06 m) Wings extended: 10 feet (3 m). Length: 4 feet, 6 inches (1.4 m). Weight: 340 Ibs (153 kg) without rail gun. Physical Strength: Robotic P.S. of 30. Cargo: None. Power System: Nuclear; average SAMAS energy life is 20 years. Black Market Cost: 1.6 to 2 million credits. Rare. Weapon Systems: 1. C-40R SAMAS Rail Gun (1): This is standard equipment for the SAMAS and is considered to be the most versatile, accurate, and lightweight rail gun in the world. Other heavier rail guns can be substituted in an emergency or for special missions. There is no sep arate power pack. The unit is hooked directly to the armor's nuclear power supply. Primary Purpose: Assault & Defense. Weight: Gun: 92 Ibs (41.4 kg), One SAMAS Ammo-Drum: 190 Ibs (85.5 kg). Mega-Damage: A Burst is 40 rounds and inflicts 1D4x10 M.D., one round does 1D4 M.D. Rate of Fire: Each burst counts as one melee attack. Range: 4000 feet (1219 m). Payload: 2000 round drum, that's 50 bursts. A second drum can be hooked to the undercarriage of the rocket jets, but must be manually re moved by another SAMAS or a character with a strength of 26 or higher to replace the used drum. Reloading a drum will take about 5 minutes for those not trained, but a mere one minute by somebody trained in the use of SAMAS power armor.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "speed": "Running: 60 mph (96 km) maximum. Note that the act of running does tire out its operator, but at 10% of the usual fatigue rate thanks to the robot exoskeleton. Leaping: The powerful robot legs can leap up to 15 feet (4.6 m) high or across unassisted by the thrusters. A jet thruster assisted leap can propel the unit up to 100 feet (30.5 m) high and 200 feet (61 m) across without actually attaining flight. Flying: The rocket propulsion system enables the SAMAS to hover sta tionary up to 200 feet (61 m) or fly. Maximum flying speed is 300 mph (480 km), but cruising speed is considered to be 150 mph (240 km). Maximum altitude is limited to about 500 feet (152 m). Flying"
+    }
+  },
+  {
+    "name": "Crusader Full Environmental Body Armor",
+    "type": "armor",
+    "img": "icons/svg/shield.svg",
+    "source": {
+      "printedPage": 267
+    },
+    "system": {
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 95,
+          "max": 95
+        },
+        "head": {
+          "current": 50,
+          "max": 50
+        },
+        "leftArm": {
+          "current": 30,
+          "max": 30
+        },
+        "rightArm": {
+          "current": 30,
+          "max": 30
+        },
+        "leftLeg": {
+          "current": 50,
+          "max": 50
+        },
+        "rightLeg": {
+          "current": 50,
+          "max": 50
+        }
+      },
+      "weight": "24 pounds (10.8 kg); fair mobility, -15% movement penalty.",
+      "cost": "55,000 credits.",
+      "notes": "Crusader -Full Environmental Body Armor As the name implies, this full suit of body armor resembles the knights of the ancient Crusades, because of the styling of the armor plates and use of chain mail-like M.D.C. materials and knee length skirt. Recent fashion has provided a traditional knight's surcoat and even the helmet is often designed to resemble the European knights of old. M.D.C. by Location: Main body: 95, Helmet: 50, Arms: 30 each, and Legs: 50 each. Weight: 24 pounds (10.8 kg); fair mobility, -15% movement penalty. Black Market Cost: 55,000 credits.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "prowlPenalty": -15
+    }
+  },
+  {
+    "name": "Dog Pack DPM 101 Light Riot Armor",
+    "type": "armor",
+    "img": "icons/svg/shield.svg",
+    "source": {
+      "printedPage": 261
+    },
+    "system": {
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 30,
+          "max": 30
+        },
+        "head": {
+          "current": 0,
+          "max": 0
+        },
+        "leftArm": {
+          "current": 10,
+          "max": 10
+        },
+        "rightArm": {
+          "current": 10,
+          "max": 10
+        },
+        "leftLeg": {
+          "current": 20,
+          "max": 20
+        },
+        "rightLeg": {
+          "current": 20,
+          "max": 20
+        }
+      },
+      "weight": "",
+      "cost": "",
+      "notes": "Dog Pack DPM 101 Light Riot Armor The DPM 101 armor offers none of the environmental systems of the full Dead Boy suits and serves mostly as protection against gunfire. Many Dog Packs (about 40%) assigned to wilderness and recon naissance operations are given CA-2 light body armor. Note: Only Dog Boy officers with a proven military record and their Psi-Stalker Squad Leaders get the Heavy CA-l environmental \"Dead Boy\" armor (the helmet modified for the shape of the canine's head). • M.D.C. 30 main body, 10 to arms, and 20 to legs. • Weight 8 pounds (3.6 kg); not full environmental armor. • Full mobility, no Prowl or movement penalty. Standard Issue: Prior to 105 P.A., fist and wrist spikes, a pair of Vibro-Blades or a blade and Neural Mace. A laser pistol may be issued in some situations. Infantry forces in the field are issued a Neural Mace or Vibro-Blade of choice and a C-12 Laser Rifle. Other weapons and gear may be issued as needed. Dog Boys in the field often add/purchase other non-official, non-Coalition weapons to add to their personal equipment. Coalition Weapons & Armor - Circa 105 P.A. to present See Rifts® World Book 11: Coalition War Campaign™ for the latest innovations in weapons, power armor, robots, and combat vehi cles as well as additional and specialized Military O.C.C.s (CS Cyborg Strike Trooper, CS Juicer, CS Commando, Ranger, etc.), ISS and NET SET Police, more on the 'Burbs, and the Emperor's Campaign of Unity (the first step to the Coalition Wars and Siege on Tolkeen).",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "prowlPenalty": 0
+    }
+  },
+  {
+    "name": "Flying Titan Power Armor",
+    "type": "powerArmor",
+    "img": "icons/svg/upgrade.svg",
+    "source": {
+      "printedPage": 272
+    },
+    "system": {
+      "description": "Flying Titan Power Armor The Flying Titan is a light suit of man-sized power armor manufac tured by the mysterious Titan Industries. It is an extremely light, fast, and maneuverable flyer with air to land capabilities, which makes it ideal for reconnaissance, rescue, and infantry support. Note: The Titan does not usually utilize a rail gun. The pilot is usually armed with en ergy rifles and wing mini-missiles. Model Type: FT- 005 Class: Strategic Armor Military Exoskeleton. Crew: One. M.D.C. by Location: Shoulder Wings (2) -30 each Rear Jet Pack (2) -50 each Lower Maneuvering Jets -25 each *HeadlHelmet -70 * \"'Main Body - 180 * Destroying the head/helmet has a 1-70% chance of knocking the pilot unconscious. If conscious, the pilot has two problems: one, no power armor combat bonuses to strike, parry, and dodge, and two, the human head is now vulnerable to attack. Note: The head is a small and difficult target to hit. Thus, it can only be hit when a character makes a Called Shot and even then the attacker is -3 to strike. \"Depleting the M.D.C. of the main body will shut the armor down completely, making it useless. Note: Destroying a wing will make flight impossible. However, even with no wing(s), the armor can make jet powered leaps and hover stationary above the ground. Speed: Running: 50 mph (80 km) maximum. The act of running does tire out its operator, but at 20% of the usual fatigue rate. Leaping: The powerful robot legs can leap up to 15 feet (4.6 m) high or across unassisted by the thrusters. A jet thruster assisted leap can propel the unit up to 100 feet (30.5 m) high and 200 feet (61 m) across without actually attaining flight. Flying: The rocket propulsion system and wings enable the Flying Ti tan to hover stationary up to 200 feet (61 m) or fly. Maximum flying speed is 400 mph (640 km), but cruising speed is considered to be 150 mph (240 km). Maximum altitude is limited to about 4000 feet (1219 m). Flying Range: The nuclear power system gives the armor decades of life. However, the jet rockets get hot and need to cool after a maximum of ten hours of continuous high-speed flight (going faster than cruising speed), and afer twenty hours of cruising speed. Can go indefinitely with periodic rest stops. Statistical Data: Height: 7 feet (2.4 m). Width: Wings down: 2.5 feet (0.76 m). Wings extended: 11 feet (3.3 m) Length: About 3 feet (0.9 m). Weight: 160 lbs (72 kg) without missiles. Physical Strength: Augmented P.S. 24 (same as a Juicer). Cargo: None. Power System: Nuclear; average life is 20 years. Black Market Cost: One million credits for a new, undamaged, fully powered suit complete with missiles. Good availability. Weapon Systems: 1. Wing Lasers (2): A tiny laser turret is mounted on the underside of each wing. Both can rotate 360 degrees and have a firing arc of 90 degrees (up and down). The turrets are hooked directly to the ar mor's nuclear power supply. Primary Pumose: Assault & Defense. Mega-Damage: 2D6 M.D. per blast. Rate of Fire: Each shot counts as one melee attack. Fired by voice com mand or by pressing a concealed firing stud on the forearm. Maximum Effective Range: 4000 feet (1219 m). Payload: Effectively unlimited. 2. Wing Rockets: Six mini-missiles or three of the larger short-range missiles can be mounted on each wing (12 or 6 total). Like the la sers, the missiles are launched by voice command or by hidden fir ing studs in the forearm. Primary Purpose: Anti-Aircraft/Armored Vehicle. Mega-Damage: Varies with missile type. The short-range missiles are generally more powerful. See missile stats. Maximum Effective Range: Varies with missile type; 1-5 miles (1.6 to 8 km). Rate of Fire: May be fired one missile at a time or in volleys of two, three, or four. A volley counts as one melee attack regardless of the number of missiles in the volley. Payload: Total of 12 mini-missiles ill: 6 short-range missiles. 3. Energy Rifles and other normal weapons may also be used by the pilot of a Flying Titan. The less bulky armor allows for sidearm, ri fle and the usual supply belts, harness, and pouches. The only limi tation is that a belt and especially containers are subject to flying off when traveling at speeds beyond 100 mph (160 km). 4. Hand to Hand Combat: Rather than use a weapon, the pilot can en gage in Mega-Damage hand to hand combat.",
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 180,
+          "max": 180
+        },
+        "head": {
+          "current": 70,
+          "max": 70
+        },
+        "leftArm": {
+          "current": 0,
+          "max": 0
+        },
+        "rightArm": {
+          "current": 0,
+          "max": 0
+        },
+        "leftLeg": {
+          "current": 0,
+          "max": 0
+        },
+        "rightLeg": {
+          "current": 0,
+          "max": 0
+        }
+      },
+      "weight": "160 lbs (72 kg) without missiles. Physical Strength: Augmented P.S. 24 (same as a Juicer). Cargo: None. Power System: Nuclear; average life is 20 years.",
+      "cost": "One million credits for a new, undamaged, fully powered suit complete with missiles. Good availability. Weapon Systems: 1. Wing Lasers (2): A tiny laser turret is mounted on the underside of each wing. Both can rotate 360 degrees and have a firing arc of 90 degrees (up and down). The turrets are hooked directly to the ar mor's nuclear power supply. Primary Pumose: Assault & Defense.",
+      "notes": "Flying Titan Power Armor The Flying Titan is a light suit of man-sized power armor manufac tured by the mysterious Titan Industries. It is an extremely light, fast, and maneuverable flyer with air to land capabilities, which makes it ideal for reconnaissance, rescue, and infantry support. Note: The Titan does not usually utilize a rail gun. The pilot is usually armed with en ergy rifles and wing mini-missiles. Model Type: FT- 005 Class: Strategic Armor Military Exoskeleton. Crew: One. M.D.C. by Location: Shoulder Wings (2) -30 each Rear Jet Pack (2) -50 each Lower Maneuvering Jets -25 each *HeadlHelmet -70 * \"'Main Body - 180 * Destroying the head/helmet has a 1-70% chance of knocking the pilot unconscious. If conscious, the pilot has two problems: one, no power armor combat bonuses to strike, parry, and dodge, and two, the human head is now vulnerable to attack. Note: The head is a small and difficult target to hit. Thus, it can only be hit when a character makes a Called Shot and even then the attacker is -3 to strike. \"Depleting the M.D.C. of the main body will shut the armor down completely, making it useless. Note: Destroying a wing will make flight impossible. However, even with no wing(s), the armor can make jet powered leaps and hover stationary above the ground. Speed: Running: 50 mph (80 km) maximum. The act of running does tire out its operator, but at 20% of the usual fatigue rate. Leaping: The powerful robot legs can leap up to 15 feet (4.6 m) high or across unassisted by the thrusters. A jet thruster assisted leap can propel the unit up to 100 feet (30.5 m) high and 200 feet (61 m) across without actually attaining flight. Flying: The rocket propulsion system and wings enable the Flying Ti tan to hover stationary up to 200 feet (61 m) or fly. Maximum flying speed is 400 mph (640 km), but cruising speed is considered to be 150 mph (240 km). Maximum altitude is limited to about 4000 feet (1219 m). Flying Range: The nuclear power system gives the armor decades of life. However, the jet rockets get hot and need to cool after a maximum of ten hours of continuous high-speed flight (going faster than cruising speed), and afer twenty hours of cruising speed. Can go indefinitely with periodic rest stops. Statistical Data: Height: 7 feet (2.4 m). Width: Wings down: 2.5 feet (0.76 m). Wings extended: 11 feet (3.3 m) Length: About 3 feet (0.9 m). Weight: 160 lbs (72 kg) without missiles. Physical Strength: Augmented P.S. 24 (same as a Juicer). Cargo: None. Power System: Nuclear; average life is 20 years. Black Market Cost: One million credits for a new, undamaged, fully powered suit complete with missiles. Good availability. Weapon Systems: 1. Wing Lasers (2): A tiny laser turret is mounted on the underside of each wing. Both can rotate 360 degrees and have a firing arc of 90 degrees (up and down). The turrets are hooked directly to the ar mor's nuclear power supply. Primary Pumose: Assault & Defense. Mega-Damage: 2D6 M.D. per blast. Rate of Fire: Each shot counts as one melee attack. Fired by voice com mand or by pressing a concealed firing stud on the forearm. Maximum Effective Range: 4000 feet (1219 m). Payload: Effectively unlimited. 2. Wing Rockets: Six mini-missiles or three of the larger short-range missiles can be mounted on each wing (12 or 6 total). Like the la sers, the missiles are launched by voice command or by hidden fir ing studs in the forearm. Primary Purpose: Anti-Aircraft/Armored Vehicle. Mega-Damage: Varies with missile type. The short-range missiles are generally more powerful. See missile stats. Maximum Effective Range: Varies with missile type; 1-5 miles (1.6 to 8 km). Rate of Fire: May be fired one missile at a time or in volleys of two, three, or four. A volley counts as one melee attack regardless of the number of missiles in the volley. Payload: Total of 12 mini-missiles ill: 6 short-range missiles. 3. Energy Rifles and other normal weapons may also be used by the pilot of a Flying Titan. The less bulky armor allows for sidearm, ri fle and the usual supply belts, harness, and pouches. The only limi tation is that a belt and especially containers are subject to flying off when traveling at speeds beyond 100 mph (160 km). 4. Hand to Hand Combat: Rather than use a weapon, the pilot can en gage in Mega-Damage hand to hand combat.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "speed": "Running: 50 mph (80 km) maximum. The act of running does tire out its operator, but at 20% of the usual fatigue rate. Leaping: The powerful robot legs can leap up to 15 feet (4.6 m) high or across unassisted by the thrusters. A jet thruster assisted leap can propel the unit up to 100 feet (30.5 m) high and 200 feet (61 m) across without actually attaining flight. Flying: The rocket propulsion system and wings enable the Flying Ti tan to hover stationary up to 200 feet (61 m) or fly. Maximum flying speed is 400 mph (640 km), but cruising speed is considered to be 150 mph (240 km). Maximum altitude is limited to about 4000 feet (1219 m). Flying"
+    }
+  },
+  {
+    "name": "Gladiator Full Environmental Body Armor",
+    "type": "armor",
+    "img": "icons/svg/shield.svg",
+    "source": {
+      "printedPage": 267
+    },
+    "system": {
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 70,
+          "max": 70
+        },
+        "head": {
+          "current": 45,
+          "max": 45
+        },
+        "leftArm": {
+          "current": 25,
+          "max": 25
+        },
+        "rightArm": {
+          "current": 25,
+          "max": 25
+        },
+        "leftLeg": {
+          "current": 45,
+          "max": 45
+        },
+        "rightLeg": {
+          "current": 45,
+          "max": 45
+        }
+      },
+      "weight": "21 pounds (9.5 kg); fair mobility, -10% movement penalty.",
+      "cost": "38,000 credits.",
+      "notes": "Gladiator - Full Environmental Body Armor One of the most popular medium-weight full environmental suits on the market. The body utilizes a new super lightweight fiber armor that resembles chain mail and light plates of armor. The suit offers excellent mobility and equally excellent physical protection. The fiber skirt is standard for both the male and female suit and offers one of the best forms of protection to the groin area. Comes in white, tan, silver, light grey, dark grey, and black. M.D.C. by Location: Main body: 70, Helmet: 45, Arms: 25 each, and Legs: 45 each. Weight: 21 pounds (9.5 kg); fair mobility, -10% movement penalty. Black Market Cost: 38,000 credits.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "prowlPenalty": -10
+    }
+  },
+  {
+    "name": "Glitter Boy Power Armor",
+    "type": "powerArmor",
+    "img": "icons/svg/upgrade.svg",
+    "source": {
+      "printedPage": 71
+    },
+    "system": {
+      "description": "Glitter Boy Power Armor Unknown to the heroes of Rifts Earth, the Glitter Boy environmen tal suit was the first fully field operational power annor to be deployed by the US military and was a key unit in the multi-national peacekeep ing organization known as NEMA (short for Northern Eagle Military Alliance and misidentified by Dark Age legend as the Neemans). NEMA's member nations: the USA, Canada and Mexico. The annor's original name was the Chromium Guardsman, but that name is long forgotten, and remembered by the snappier nickname, Glitter Boy. Note: See the Rifts® Chaos Earth™ RPG series which traces the days of the Great Cataclysm as it unfolds, for adventures in that time period and infonnation about NEMA and its heroes. Glitter Boy power annor is an amazingly small and mobile, one person, annored robot vehicle. The robot suit stands approximately 10 feet tall (3 m) and offers fully articulated hands and the mobility of the human body. As such, it is considered an all terrain vehicle. The super dense chrome annor is constructed on a molecular level and can with stand more Mega-Damage than any other power annor created since. The robotic frame is nearly indestructible, resilient, and virtually maintenance free. The annor-shielded joints and padded pilot's com partment enable the machine to absorb impacts and cushion its pilot. It is also one of the few robots or power annors designed to comfortably accommodate a pilot for days or even weeks at a time. A refrigeration unit holds 10 gallons of drinking water, while another contains a high protein, multi-vitamin nutrient paste (about a four week supply), as well as a few other storage compartments where additional food or per sonal items can be contained. However, it is not recommended that the pilot remain inside the cushioned and air-conditioned unit for more than 24 hours at a time. The operator must exercise or his muscles will begin to cramp and stiffen, especially the legs, which are the most re stricted. Prolonged inactivity enclosed in the Glitter Boy, or any annor (3+ weeks), will also reduce muscle mass and strength. (Note: Tempo rarily reduce P.S., P.P., and Spd attributes by 1D4+ I points until seri ous measures have been taken to restore strength by long hours of exercise and physical activity; at least four hours a day for 1D4 weeks. Periodic walks, exercise, and activity outside the body annor prevent loss of muscle tone and strength.) The fonner Coalition State of Free Quebec is the only kingdom in North America that manufactures and deploys Glitter Boys as a part of its anny and national defenses. In fact, Free Quebec deploys and main tains the largest contingent of Glitter Boys in the world. A scheme that helped put a quick end to the Coalition's plans to invade and conquer Free Quebec when it proclaimed its independence and seceded from the Coalition States. Other than the secret factories at Free Quebec, there are no known manufacturers of Glitter Boy power annor in North America. However, there has been a sudden proliferation of new look ing suits over the last few years, spawning a rumor that a pre-Rifts cache of Glitter Boy annor was recently excavated from an old Ameri can military installation in the western US or Canada and sold by high tech bandits. However, the Coalition suspects there may be a manufac turing facility in production in the West, and if so, intends to find it and destroy it. Bandito Anns is a top suspect, but so is Free Quebec, though few talk about that possibility. ������i!��\\\\�L�,,:;,= �r�!!I!!!!!��t:VJ�;j� __ Glitter Boy Power Armor Model Type: USA-G 10 Class: Laser Resistant Infantry Personnel Assault Unit. Crew: One pilot. M.D.C. by Location: Rail Gun (a.k.a. Boom Gun) - 175 * Head-290 * Hands (2) - 100 each Anns (2) -270 each Legs (2) -450 each Reinforced Pilot's Compartment - 150 ** Main Body -770 * A single asterisk indicates a small and difficult target to strike, re quiring the attacker to make a \"Called Shot,\" and even then the assail ant is -4 to strike. ** Depleting the M.D.C. of the main body will shut the power ar mor down completely, rendering it useless. Note: Laser weapons do half damage to the Glitter Boy! Speed: Running: 60 mph (96 km) maximum. Note that the act of running does tire its operator, but only at 10% of the usual fatigue rate. Leaping: The robot legs can leap up to 12 feet (3.6 m) high or across. Add 10 feet (3 m) with a running start. Jet thruster assisted leaps can hurl the power annor 80 feet (24 m) up or across. If necessary, the thrusters can momentarily hold the G 10 aloft as high as 12 feet (3.6 m) off the ground, but only for 1D6xlO seconds. The thrusters are not made for flying. Underwater Capabilities: Swimming: The thruster system provides good mobility and control underwater but at a sluggish speed of 15 mph (24 km or 13 knots); same speed on the surface of water. The GB can also walk along the bottom of the sea or lake bed at about 25% of its normal walking/running speed. To fire its Boom Gun underwater it must be able to engage its pylon system into the sea floor, rocky out cropping or other means of firm support. (Note: Sinking the pylons into the hull of an M.D.C. ship or submarine takes several tries, using up I D4+ I melee actions and signaling those inside that something is ham mering its hull. Each pylon attack inflicts 1D4 M.D. and punches a pair of holes into the hull of the vessel.) Without suitable support, the force of the shock wave from the gun will propel the Glitter Boy backwards in a spiral for 1D4xlO0 yards/meters and cause it to lose initiative and its next 1D4+3 melee actions/attacks. Half this distance and 1D4 lost actions if sunken into the typical soft underwater flooring. Maximum Ocean Depth: One mile (1.6 km). Statistical Data: Height: 10 feet, 5 inches (3.1 m). Width: 4 feet, 4 inches (1.3 m). Length: 4 feet (1.2 m). Weight: 1.2 tons fully loaded. Physical Strength: Equal to Robot P.S. of 30. Cargo: Minimal storage space; a one foot (0.3 m) compartment and storage for a rifle, handgun, survival knife and first-aid kit. Power System: Nuclear; average energy life is 25 years. Black Market Cost: 25 million credits and more for a new, undamaged, fully powered Glitter Boy complete with Boom Gun and ammunition. 15-20 million for a rebuilt GB or without the gun. Rare; poor availabil ity. Weapon Systems: 1. RG-14 Rapid Acceleration Electromagnetic Rail Gun (I): The fa mous \"Boom Gun\" is a unique rail gun that can accelerate its flechette style rounds to a speed of Mach 5 and actually creates a sonic boom when fired. The gun is the most powerful personal or vehicular weapon to survive the Great Cataclysm. The weapon is at tached to the back and right shoulder of the power armor (it may be reversed for those who are left-handed). When not in use, the gun is flipped back and stored in an upward position. When needed for combat, the Glitter Boy's operator simply reaches back, grasps the handle and pulls forward. The blast is so powerful that without the automatic stabilization system, the Glitter Boy would be thrown to the ground and knocked back 30 feet (9.1 m). The automatic stabilization system is a syn chronous system of jet thrusters in the back and retractable rein forcement pylons in the lower legs that hold the armor steady and in place. The pylons and the jets fly into action the moment the Boom Gun is fired. Primary Pumose: Assault, anti-armor and anti-aircraft. Weight: Rail Gun: 8671bs (390 kg). Mega-Damage: One Boom Gun flechette round holds 200 slugs that in flict a massive 3D6xlO M.D. to its target! Effects of the Sonic Boom: The power armor suit is specially insulated from the shock waves of its own Boom Gun, however, everyone within 200 feet (61 m) will be temporarily deafened (triple that range under water). Characters without any type of sound/ear protection will be temporarily deafened for 2D4 minutes and are -8 on initiative and -3 to parry and dodge. Characters who are inside environmental body armor, a light M.D. vehicle or power armor will have some protection, but are still temporarily deafened for 1D4 minutes; same penalties apply but for a shorter duration. Each sonic boom adds to the duration of the deafness. Heavy robot vehicles, tanks and most CS military vehicles are sufficiently protected so that the crew and passengers inside hear (and feel) the boom, but do not suffer any penalties. Likewise, Greater Demons, Demon Lords, Elementals and gods are impervious to the deafening blast; their ears ring but they are not deafened. Dragons and similarly powerful beings are affected the same as those inside a light M.D. vehicle (penalties last for 1D4 minutes). Remember, one must be within 200 feet (61 m) to be deafened by the sonic boom. The sonic boom also affects the physical surroundings by shaking buildings and shattering S.D.C. windows within a 300 foot radius (91 m) of the boom. Rate of Fire: Each booming blast counts as one melee attack/action. Bursts and sprays are not possible! Maximum Effective Range: 11,000 feet (about 2 miles/3.2 km). Payload: 1000 round (shots) auto-feed ammo canister. The Boom Gun can be reloaded by hand, one round at a time by the pilot as necessary, but it takes 15 minutes to reload 40 rounds. A small, extra ammo-drum of 400 rounds may be attached to the hip of the Glitter Boy (it has 30 M.D.C. and requires a Called Shot to be targeted; the attacker is -4 to hit it). The full size ammo-drum can be replaced by a team of Operators with the proper equipment in 1D6+2 minutes. Free Quebec has special equipment and trained Reload Teams who can reload an ammo-drum in 45 seconds (or six minutes by hand with a 2-3 man team). 2. Alternative Weapons: Not a viable option 30 years ago, the wealth of new robots and large, robot-sized weapons means the Glitter Boy may, in a pinch, pick up and use any weapon it can get its hands around. This may include large, heavy weapons like rail guns modi fied to have the trigger guard removed and the trigger enlarged. Each of the Glitter Boy's fingers is roughly the equivalent of three human fingers in thickness, preventing the armored unit from using \"man-sized\" weapons. Oversized weapons are another story, but they are also uncommon and expensive. Furthermore, most tradi tional GB pilots would never consider a permanent replacement of the Boom Gun. 3. Hand to Hand Combat Elite: Glitter Boy. Available only to those who take Power Armor Combat Elite: Glitter Boy (automatic to the Glitter Boy O.C.C.). Those not skilled in \"Elite GB Combat\" use the Power Armor Basic stats. Note: All bonuses are in addition to the pilot's own hand to hand combat training and attribute bonuses. They do not apply to the pilot's physical abilities when the character is outside his power armor. +2 extra attacks/actions per melee round, in addition to those of the pilot at level one; + 1 additional attack at levels 3, 7, and 11. Critical Strike is the same as the pilot's. +2 on initiative. +2 to strike when shooting the Boom Gun and other rail guns and cannons, in addition to any W.P. Heavy Energy Weapons skill bonuses. +2 to strike in hand to hand combat. +2 to parry in hand to hand combat. +2 to dodge. + I to disarm. +4 to pull punch. +3 to roll with impact. Punch Damage: 1D4 M.D. on a restrained punch, 1D6 M.D. on a full strength punch. Power Punch: 2D6 M.D., but counts as two melee attacks. Kick Damage: 2D4 M.D., Power Kick is not possible. Running Leap Kick: 4D6 M.D., but counts as three attacks. Tear or Pry with Hands (Special): 1D6 M.D. Body BlocklRam: 2D4 M.D. Full Speed Running Ram: 3D6 M.D., but this attack uses up three melee actions. Stomp: 1D6 M.D.; effective only against objects smaller than three feet (0.9 m) tall. Pylon Impalement: 1D6 M.D., not very useful in most combat situa tions. 4. Special Sensory Systems of Note: I. Optical Systems: Full optical systems, including laser targeting, tele scopic, passive nightvision (light amplification), thermal-imaging, in frared, ultraviolet, and polarization. 2. Advanced Laser Targeting: As well as the usual power armor stan dard features for laser targeting, the Boom Gun is +2 to strike. 3. Self-Destruct Mechanism: Self-destruct mechanism to prevent the armor and its technology from falling into enemy hands. 4. Laser Resistant Armor: All Glitter Boys are made from special alloys with a chrome-looking surface that is resistant to laser attacks (half damage). 5. Other Features: All standard environmental power armor features, plus built-in language translator and depth gauge. See the section on Power Armor in the equipment section of this book. Designer's Note to Game Masters: At some point, someone, somewhere in game-design-Iand must have decreed, \"All characters must be equal\" and a bunch of game companies jumped on the band wagon to even out the power level of every character. How tragic. That's like expecting every opponent in a videogame to offer the same level of difficulty. Talk about boring. Of course there has to be game balance, but complete equality for all characters, never. Every character in Rifts is deliberately designed to have unique abilities, strengths and weaknesses. Those unique abilities may be awesome and powerful under one set of circumstances or envi ronment, and a liability under another. That emulates real life and, in game terms, is deliberately designed to encourage creativity, ingenuity and role-playing. The Rifts® game has been carefully play tested and there is most definitely balance between the vast array of characters. HOWEVER, the G.M. (and, depending on the circumstances, the players) must ex ploit those strengths and weaknesses for the balance to work. The Glit ter Boy is a great example of this. I can't tell you how many times I've heard a Rifts® gamer say, \"Glitter Boys are too powerful, I've banned them from my game\" - or - \"Glitter Boys rock, they destroy every thing.\" Yet, I've heard other players say an almost equal number of times, \"Glitter Boys are too slow and vulnerable. They die too easy. I don't see why anybody thinks they're so tough.\" At first glance, you might think, one of these comments must be wrong, they can't both be correct, but they are both correct. Depending on the circumstance, the type of combat, the cleverness of the players and the sophistication of the G.M., Glitter Boys can be devastatingly powerful or pathetically vulnerable. Yes, they are a powerhouse char acter. They're supposed to be, but they also have their weaknesses. The obvious strengths include massive M.D.C., great firepower and a killer reputation (think intimidation factor). The weaknesses include slow speed and limited mobility. Glitter Boys are walking tanks, and like a tank, they can hammer through fortifications, mow down lightly armored opponents with a sin gle blast (if they are stupid enough to face down a GB in open combat), and take down a tank or a dragon with a few well placed blasts. Also like a tank, the Glitter Boy is slow and has trouble with soft ground, mud and fast moving opponents who can dodge and weave and fly or drive circles around it. The Glitter Boy is also limited in confined spaces, can be overrun by superior numbers, and, like a tank, the Glitter Boy cannot give hot pursuit. The armor is no match for a pair of",
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 770,
+          "max": 770
+        },
+        "head": {
+          "current": 290,
+          "max": 290
+        },
+        "leftArm": {
+          "current": 270,
+          "max": 270
+        },
+        "rightArm": {
+          "current": 270,
+          "max": 270
+        },
+        "leftLeg": {
+          "current": 450,
+          "max": 450
+        },
+        "rightLeg": {
+          "current": 450,
+          "max": 450
+        }
+      },
+      "weight": "1.2 tons fully loaded. Physical Strength: Equal to Robot P.S. of 30. Cargo: Minimal storage space; a one foot (0.3 m) compartment and storage for a rifle, handgun, survival knife and first-aid kit. Power System: Nuclear; average energy life is 25 years.",
+      "cost": "25 million credits and more for a new, undamaged, fully powered Glitter Boy complete with Boom Gun and ammunition. 15-20 million for a rebuilt GB or without the gun. Rare; poor availabil ity. Weapon Systems: 1. RG-14 Rapid Acceleration Electromagnetic Rail Gun (I): The fa mous \"Boom Gun\" is a unique rail gun that can accelerate its flechette style rounds to a speed of Mach 5 and actually creates a sonic boom when fired. The gun is the most powerful personal or vehicular weapon to survive the Great Cataclysm. The weapon is at tached to the back and right shoulder of the power armor (it may be reversed for those who are left-handed). When not in use, the gun is flipped back and stored in an upward position. When needed for combat, the Glitter Boy's operator simply reaches back, grasps the handle and pulls forward. The blast is so powerful that without the automatic stabilization system, the Glitter Boy would be thrown to the ground and knocked back 30 feet (9.1 m). The automatic stabilization system is a syn chronous system of jet thrusters in the back and retractable rein forcement pylons in the lower legs that hold the armor steady and in place. The pylons and the jets fly into action the moment the Boom Gun is fired. Primary Pumose: Assault, anti-armor and anti-aircraft.",
+      "notes": "Glitter Boy Power Armor Unknown to the heroes of Rifts Earth, the Glitter Boy environmen tal suit was the first fully field operational power annor to be deployed by the US military and was a key unit in the multi-national peacekeep ing organization known as NEMA (short for Northern Eagle Military Alliance and misidentified by Dark Age legend as the Neemans). NEMA's member nations: the USA, Canada and Mexico. The annor's original name was the Chromium Guardsman, but that name is long forgotten, and remembered by the snappier nickname, Glitter Boy. Note: See the Rifts® Chaos Earth™ RPG series which traces the days of the Great Cataclysm as it unfolds, for adventures in that time period and infonnation about NEMA and its heroes. Glitter Boy power annor is an amazingly small and mobile, one person, annored robot vehicle. The robot suit stands approximately 10 feet tall (3 m) and offers fully articulated hands and the mobility of the human body. As such, it is considered an all terrain vehicle. The super dense chrome annor is constructed on a molecular level and can with stand more Mega-Damage than any other power annor created since. The robotic frame is nearly indestructible, resilient, and virtually maintenance free. The annor-shielded joints and padded pilot's com partment enable the machine to absorb impacts and cushion its pilot. It is also one of the few robots or power annors designed to comfortably accommodate a pilot for days or even weeks at a time. A refrigeration unit holds 10 gallons of drinking water, while another contains a high protein, multi-vitamin nutrient paste (about a four week supply), as well as a few other storage compartments where additional food or per sonal items can be contained. However, it is not recommended that the pilot remain inside the cushioned and air-conditioned unit for more than 24 hours at a time. The operator must exercise or his muscles will begin to cramp and stiffen, especially the legs, which are the most re stricted. Prolonged inactivity enclosed in the Glitter Boy, or any annor (3+ weeks), will also reduce muscle mass and strength. (Note: Tempo rarily reduce P.S., P.P., and Spd attributes by 1D4+ I points until seri ous measures have been taken to restore strength by long hours of exercise and physical activity; at least four hours a day for 1D4 weeks. Periodic walks, exercise, and activity outside the body annor prevent loss of muscle tone and strength.) The fonner Coalition State of Free Quebec is the only kingdom in North America that manufactures and deploys Glitter Boys as a part of its anny and national defenses. In fact, Free Quebec deploys and main tains the largest contingent of Glitter Boys in the world. A scheme that helped put a quick end to the Coalition's plans to invade and conquer Free Quebec when it proclaimed its independence and seceded from the Coalition States. Other than the secret factories at Free Quebec, there are no known manufacturers of Glitter Boy power annor in North America. However, there has been a sudden proliferation of new look ing suits over the last few years, spawning a rumor that a pre-Rifts cache of Glitter Boy annor was recently excavated from an old Ameri can military installation in the western US or Canada and sold by high tech bandits. However, the Coalition suspects there may be a manufac turing facility in production in the West, and if so, intends to find it and destroy it. Bandito Anns is a top suspect, but so is Free Quebec, though few talk about that possibility. ������i!��\\\\�L�,,:;,= �r�!!I!!!!!��t:VJ�;j� __ Glitter Boy Power Armor Model Type: USA-G 10 Class: Laser Resistant Infantry Personnel Assault Unit. Crew: One pilot. M.D.C. by Location: Rail Gun (a.k.a. Boom Gun) - 175 * Head-290 * Hands (2) - 100 each Anns (2) -270 each Legs (2) -450 each Reinforced Pilot's Compartment - 150 ** Main Body -770 * A single asterisk indicates a small and difficult target to strike, re quiring the attacker to make a \"Called Shot,\" and even then the assail ant is -4 to strike. ** Depleting the M.D.C. of the main body will shut the power ar mor down completely, rendering it useless. Note: Laser weapons do half damage to the Glitter Boy! Speed: Running: 60 mph (96 km) maximum. Note that the act of running does tire its operator, but only at 10% of the usual fatigue rate. Leaping: The robot legs can leap up to 12 feet (3.6 m) high or across. Add 10 feet (3 m) with a running start. Jet thruster assisted leaps can hurl the power annor 80 feet (24 m) up or across. If necessary, the thrusters can momentarily hold the G 10 aloft as high as 12 feet (3.6 m) off the ground, but only for 1D6xlO seconds. The thrusters are not made for flying. Underwater Capabilities: Swimming: The thruster system provides good mobility and control underwater but at a sluggish speed of 15 mph (24 km or 13 knots); same speed on the surface of water. The GB can also walk along the bottom of the sea or lake bed at about 25% of its normal walking/running speed. To fire its Boom Gun underwater it must be able to engage its pylon system into the sea floor, rocky out cropping or other means of firm support. (Note: Sinking the pylons into the hull of an M.D.C. ship or submarine takes several tries, using up I D4+ I melee actions and signaling those inside that something is ham mering its hull. Each pylon attack inflicts 1D4 M.D. and punches a pair of holes into the hull of the vessel.) Without suitable support, the force of the shock wave from the gun will propel the Glitter Boy backwards in a spiral for 1D4xlO0 yards/meters and cause it to lose initiative and its next 1D4+3 melee actions/attacks. Half this distance and 1D4 lost actions if sunken into the typical soft underwater flooring. Maximum Ocean Depth: One mile (1.6 km). Statistical Data: Height: 10 feet, 5 inches (3.1 m). Width: 4 feet, 4 inches (1.3 m). Length: 4 feet (1.2 m). Weight: 1.2 tons fully loaded. Physical Strength: Equal to Robot P.S. of 30. Cargo: Minimal storage space; a one foot (0.3 m) compartment and storage for a rifle, handgun, survival knife and first-aid kit. Power System: Nuclear; average energy life is 25 years. Black Market Cost: 25 million credits and more for a new, undamaged, fully powered Glitter Boy complete with Boom Gun and ammunition. 15-20 million for a rebuilt GB or without the gun. Rare; poor availabil ity. Weapon Systems: 1. RG-14 Rapid Acceleration Electromagnetic Rail Gun (I): The fa mous \"Boom Gun\" is a unique rail gun that can accelerate its flechette style rounds to a speed of Mach 5 and actually creates a sonic boom when fired. The gun is the most powerful personal or vehicular weapon to survive the Great Cataclysm. The weapon is at tached to the back and right shoulder of the power armor (it may be reversed for those who are left-handed). When not in use, the gun is flipped back and stored in an upward position. When needed for combat, the Glitter Boy's operator simply reaches back, grasps the handle and pulls forward. The blast is so powerful that without the automatic stabilization system, the Glitter Boy would be thrown to the ground and knocked back 30 feet (9.1 m). The automatic stabilization system is a syn chronous system of jet thrusters in the back and retractable rein forcement pylons in the lower legs that hold the armor steady and in place. The pylons and the jets fly into action the moment the Boom Gun is fired. Primary Pumose: Assault, anti-armor and anti-aircraft. Weight: Rail Gun: 8671bs (390 kg). Mega-Damage: One Boom Gun flechette round holds 200 slugs that in flict a massive 3D6xlO M.D. to its target! Effects of the Sonic Boom: The power armor suit is specially insulated from the shock waves of its own Boom Gun, however, everyone within 200 feet (61 m) will be temporarily deafened (triple that range under water). Characters without any type of sound/ear protection will be temporarily deafened for 2D4 minutes and are -8 on initiative and -3 to parry and dodge. Characters who are inside environmental body armor, a light M.D. vehicle or power armor will have some protection, but are still temporarily deafened for 1D4 minutes; same penalties apply but for a shorter duration. Each sonic boom adds to the duration of the deafness. Heavy robot vehicles, tanks and most CS military vehicles are sufficiently protected so that the crew and passengers inside hear (and feel) the boom, but do not suffer any penalties. Likewise, Greater Demons, Demon Lords, Elementals and gods are impervious to the deafening blast; their ears ring but they are not deafened. Dragons and similarly powerful beings are affected the same as those inside a light M.D. vehicle (penalties last for 1D4 minutes). Remember, one must be within 200 feet (61 m) to be deafened by the sonic boom. The sonic boom also affects the physical surroundings by shaking buildings and shattering S.D.C. windows within a 300 foot radius (91 m) of the boom. Rate of Fire: Each booming blast counts as one melee attack/action. Bursts and sprays are not possible! Maximum Effective Range: 11,000 feet (about 2 miles/3.2 km). Payload: 1000 round (shots) auto-feed ammo canister. The Boom Gun can be reloaded by hand, one round at a time by the pilot as necessary, but it takes 15 minutes to reload 40 rounds. A small, extra ammo-drum of 400 rounds may be attached to the hip of the Glitter Boy (it has 30 M.D.C. and requires a Called Shot to be targeted; the attacker is -4 to hit it). The full size ammo-drum can be replaced by a team of Operators with the proper equipment in 1D6+2 minutes. Free Quebec has special equipment and trained Reload Teams who can reload an ammo-drum in 45 seconds (or six minutes by hand with a 2-3 man team). 2. Alternative Weapons: Not a viable option 30 years ago, the wealth of new robots and large, robot-sized weapons means the Glitter Boy may, in a pinch, pick up and use any weapon it can get its hands around. This may include large, heavy weapons like rail guns modi fied to have the trigger guard removed and the trigger enlarged. Each of the Glitter Boy's fingers is roughly the equivalent of three human fingers in thickness, preventing the armored unit from using \"man-sized\" weapons. Oversized weapons are another story, but they are also uncommon and expensive. Furthermore, most tradi tional GB pilots would never consider a permanent replacement of the Boom Gun. 3. Hand to Hand Combat Elite: Glitter Boy. Available only to those who take Power Armor Combat Elite: Glitter Boy (automatic to the Glitter Boy O.C.C.). Those not skilled in \"Elite GB Combat\" use the Power Armor Basic stats. Note: All bonuses are in addition to the pilot's own hand to hand combat training and attribute bonuses. They do not apply to the pilot's physical abilities when the character is outside his power armor. +2 extra attacks/actions per melee round, in addition to those of the pilot at level one; + 1 additional attack at levels 3, 7, and 11. Critical Strike is the same as the pilot's. +2 on initiative. +2 to strike when shooting the Boom Gun and other rail guns and cannons, in addition to any W.P. Heavy Energy Weapons skill bonuses. +2 to strike in hand to hand combat. +2 to parry in hand to hand combat. +2 to dodge. + I to disarm. +4 to pull punch. +3 to roll with impact. Punch Damage: 1D4 M.D. on a restrained punch, 1D6 M.D. on a full strength punch. Power Punch: 2D6 M.D., but counts as two melee attacks. Kick Damage: 2D4 M.D., Power Kick is not possible. Running Leap Kick: 4D6 M.D., but counts as three attacks. Tear or Pry with Hands (Special): 1D6 M.D. Body BlocklRam: 2D4 M.D. Full Speed Running Ram: 3D6 M.D., but this attack uses up three melee actions. Stomp: 1D6 M.D.; effective only against objects smaller than three feet (0.9 m) tall. Pylon Impalement: 1D6 M.D., not very useful in most combat situa tions. 4. Special Sensory Systems of Note: I. Optical Systems: Full optical systems, including laser targeting, tele scopic, passive nightvision (light amplification), thermal-imaging, in frared, ultraviolet, and polarization. 2. Advanced Laser Targeting: As well as the usual power armor stan dard features for laser targeting, the Boom Gun is +2 to strike. 3. Self-Destruct Mechanism: Self-destruct mechanism to prevent the armor and its technology from falling into enemy hands. 4. Laser Resistant Armor: All Glitter Boys are made from special alloys with a chrome-looking surface that is resistant to laser attacks (half damage). 5. Other Features: All standard environmental power armor features, plus built-in language translator and depth gauge. See the section on Power Armor in the equipment section of this book. Designer's Note to Game Masters: At some point, someone, somewhere in game-design-Iand must have decreed, \"All characters must be equal\" and a bunch of game companies jumped on the band wagon to even out the power level of every character. How tragic. That's like expecting every opponent in a videogame to offer the same level of difficulty. Talk about boring. Of course there has to be game balance, but complete equality for all characters, never. Every character in Rifts is deliberately designed to have unique abilities, strengths and weaknesses. Those unique abilities may be awesome and powerful under one set of circumstances or envi ronment, and a liability under another. That emulates real life and, in game terms, is deliberately designed to encourage creativity, ingenuity and role-playing. The Rifts® game has been carefully play tested and there is most definitely balance between the vast array of characters. HOWEVER, the G.M. (and, depending on the circumstances, the players) must ex ploit those strengths and weaknesses for the balance to work. The Glit ter Boy is a great example of this. I can't tell you how many times I've heard a Rifts® gamer say, \"Glitter Boys are too powerful, I've banned them from my game\" - or - \"Glitter Boys rock, they destroy every thing.\" Yet, I've heard other players say an almost equal number of times, \"Glitter Boys are too slow and vulnerable. They die too easy. I don't see why anybody thinks they're so tough.\" At first glance, you might think, one of these comments must be wrong, they can't both be correct, but they are both correct. Depending on the circumstance, the type of combat, the cleverness of the players and the sophistication of the G.M., Glitter Boys can be devastatingly powerful or pathetically vulnerable. Yes, they are a powerhouse char acter. They're supposed to be, but they also have their weaknesses. The obvious strengths include massive M.D.C., great firepower and a killer reputation (think intimidation factor). The weaknesses include slow speed and limited mobility. Glitter Boys are walking tanks, and like a tank, they can hammer through fortifications, mow down lightly armored opponents with a sin gle blast (if they are stupid enough to face down a GB in open combat), and take down a tank or a dragon with a few well placed blasts. Also like a tank, the Glitter Boy is slow and has trouble with soft ground, mud and fast moving opponents who can dodge and weave and fly or drive circles around it. The Glitter Boy is also limited in confined spaces, can be overrun by superior numbers, and, like a tank, the Glitter Boy cannot give hot pursuit. The armor is no match for a pair of",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "speed": "Running: 60 mph (96 km) maximum. Note that the act of running does tire its operator, but only at 10% of the usual fatigue rate. Leaping: The robot legs can leap up to 12 feet (3.6 m) high or across. Add 10 feet (3 m) with a running start. Jet thruster assisted leaps can hurl the power annor 80 feet (24 m) up or across. If necessary, the thrusters can momentarily hold the G 10 aloft as high as 12 feet (3.6 m) off the ground, but only for 1D6xlO seconds. The thrusters are not made for flying. Underwater Capabilities: Swimming: The thruster system provides good mobility and control underwater but at a sluggish speed of 15 mph (24 km or 13 knots); same speed on the surface of water. The GB can also walk along the bottom of the sea or lake bed at about 25% of its normal walking/running speed. To fire its Boom Gun underwater it must be able to engage its pylon system into the sea floor, rocky out cropping or other means of firm support. (Note: Sinking the pylons into the hull of an M.D.C. ship or submarine takes several tries, using up I D4+ I melee actions and signaling those inside that something is ham mering its hull. Each pylon attack inflicts 1D4 M.D. and punches a pair of holes into the hull of the vessel.) Without suitable support, the force of the shock wave from the gun will propel the Glitter Boy backwards in a spiral for 1D4xlO0 yards/meters and cause it to lose initiative and its next 1D4+3 melee actions/attacks. Half this distance and 1D4 lost actions if sunken into the typical soft underwater flooring. Maximum Ocean Depth: One mile (1.6 km). Statistical Data: Height: 10 feet, 5 inches (3.1 m). Width: 4 feet, 4 inches (1.3 m). Length: 4 feet (1.2 m)."
+    }
+  },
+  {
+    "name": "Huntsman Plate & Padded Armor",
+    "type": "armor",
+    "img": "icons/svg/shield.svg",
+    "source": {
+      "printedPage": 268
+    },
+    "system": {
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 45,
+          "max": 45
+        },
+        "head": {
+          "current": 35,
+          "max": 35
+        },
+        "leftArm": {
+          "current": 15,
+          "max": 15
+        },
+        "rightArm": {
+          "current": 15,
+          "max": 15
+        },
+        "leftLeg": {
+          "current": 25,
+          "max": 25
+        },
+        "rightLeg": {
+          "current": 25,
+          "max": 25
+        }
+      },
+      "weight": "16 pounds (7.2 kg); fair mobility, -10% movement penalty.",
+      "cost": "24,000 credits.",
+      "notes": "Huntsman -Plate & Padded Armor (non-environmental) A lightweight body with a heavy plate and padded vest and padded armor with leg and arm plates. Much more macho and stylish than the Plastic-Man armor. M.D.C. by Location: Main body: 45, Helmet: 35, Arms: 15 each, and Legs: 25 each. Weight: 16 pounds (7.2 kg); fair mobility, -10% movement penalty. Black Market Cost: 24,000 credits.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "prowlPenalty": -10
+    }
+  },
+  {
+    "name": "Juicer Assassin Plate Armor",
+    "type": "armor",
+    "img": "icons/svg/shield.svg",
+    "source": {
+      "printedPage": 267
+    },
+    "system": {
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 45,
+          "max": 45
+        },
+        "head": {
+          "current": 30,
+          "max": 30
+        },
+        "leftArm": {
+          "current": 12,
+          "max": 12
+        },
+        "rightArm": {
+          "current": 12,
+          "max": 12
+        },
+        "leftLeg": {
+          "current": 24,
+          "max": 24
+        },
+        "rightLeg": {
+          "current": 24,
+          "max": 24
+        }
+      },
+      "weight": "14 Ibs (6.3 kg or 18 Ibs/8 kg for heavy); good mobility (for Juicer), -5% movement penalty (-10% for anyone NOT a Juicer or Crazy).",
+      "cost": "28,000 credits for the medium-weight and 32,000 credits for the heavier model.",
+      "notes": "Juicer -Assassin Plate Armor (non-environmental) This is the famous, traditional medium-weight armor worn by the chemically augmented Juicer. M.D.C. by Location: Main body: 45 (60 for heavier versions), Helmet: 30 (or 50), Arms: 12 (or 20) each, and Legs: 24 (or 35) each. Weight: 14 Ibs (6.3 kg or 18 Ibs/8 kg for heavy); good mobility (for Juicer), -5% movement penalty (-10% for anyone NOT a Juicer or Crazy). Black Market Cost: 28,000 credits for the medium-weight and 32,000 credits for the heavier model.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "prowlPenalty": -5
+    }
+  },
+  {
+    "name": "Northern Gun Samson Power Armor",
+    "type": "powerArmor",
+    "img": "icons/svg/upgrade.svg",
+    "source": {
+      "printedPage": 271
+    },
+    "system": {
+      "description": "Northern Gun Samson Power Armor An all-purpose combat and exploration power armor from Northern Gun. Although it cannot fly, it is capable of jet thruster assisted leaps and handles well in hand to hand combat. Fast, smooth and efficient. Model Type: NG-X9 Samson Class: Armored Infantry Assault Suit. Crew: One. M.D.e. by Location: Rear Booster Jets (2) -50 each Ammo-Drum (rear) -30 Rail Gun -50 Forearm Mini-Missile Launchers (2) -50 each *Head -70 \"Main Body -240 * Destroying the head of the power armor will eliminate all forms of optical enhancement and sensory systems. The pilot must now rely on his own human vision and senses. No power armor combat bonuses to strike, parry, and dodge! Note: The head is a small and difficult target to hit (shielded by exhaust tubes and weapon drum). Thus, it can only be hit when an attacker makes a Called Shot and even then the attacker is -3 to strike. ** Depleting the M.D.C. of the main body will shut the armor down completely, making it useless. Speed: Running: 150 mph (240 km) maximum. The act of running does tire out its operator, but at 10% of the usual fatigue rate. Leaping: The powerful robot legs can leap up to 25 feet (7.6 m) high or across unassisted by the jet boosters. A jet booster assisted leap can propel the unit up to 100 feet (30.5 m) high and 200 feet (61 m) across. This is not flight. Statistical Data: Height: II feet (3.3 m). Width: 5 feet (1.5 m). Length: 4 feet, 6 inches (1.4 m). Weight: 460 Ibs (207 kg) without rail gun and drum, 1000 pounds (450 kg) fully loaded. Physical Strength: Robotic P.S. of 30. Cargo: Small storage area for extra supplies and personal weapons. Power System: Nuclear; average life is 15 years. Black Market Cost: 850,000-950,000 credits for a new, undamaged, fully powered suit complete with rail gun and one full ammo-drum. Good availability; excellent in and around Michigan. Weapon Systems: 1. NG-202 Super Rail Gun (1): This is standard equipment for the Samson and is a powerful weapon; the unit is hooked directly to the armor's nuclear power supply. Primary Purpose: Assault & Defense. Weight: Gun: 210 Ibs (94.5 kg), One Super Ammo-Drum: 300 Ibs (135 kg). Mega-Damage: A Burst is 60 rounds and inflicts 1D6xlO M.D., one round does 1D6 M.D. Rate of Fire: Each burst counts as one melee attack. Effective Range: 4000 feet (1219 m). Payload: 6000 round drum, that's 100 bursts. A second drum can be hooked to the undercarriage of the rocket jets, but must be manually re moved by another Samson or a character with a strength of 26 or higher can replace the used drum. Reloading a drum will take about 5 minutes for those not trained, but a mere one minute by somebody trained in the use of Samson power armor. 2. Forearm Rocket Launcher: Mini-missile rocket launchers are built into each forearm. Primary Purnose: Anti-Aircraft & Defense. Missile Type: Any mini-missile can be used, but standard issue is ar mor piercing (1D4x10 M.D.) or plasma (1D6x10). Fragmentation (5D6 M.D.) will be used for anti-personnel operations. Mega-Damage: Varies with missile type. Effective Range: Usually about one mile. Rate of Fire: One or two at a time; both count as one melee attack. Payload: Four total, two per arm. 3. Knuckle Blades: Three vicious looking blades extend from the hand and are used in hand to hand combat. Add 1D6 M.D. to punch at tacks. 4. Energy Rifles and other normal weapons can be stored in a compart ment about the size of a footlocker. S. Hand to Hand Combat: Rather than use a weapon, the pilot can en gage in Mega-Damage combat. Skills and bonuses depends on whether the character has Robot Combat Basic or Elite. Double damage from Leap Kick attacks. Note: The Samson is depicted on page 84.",
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 240,
+          "max": 240
+        },
+        "head": {
+          "current": 70,
+          "max": 70
+        },
+        "leftArm": {
+          "current": 0,
+          "max": 0
+        },
+        "rightArm": {
+          "current": 0,
+          "max": 0
+        },
+        "leftLeg": {
+          "current": 0,
+          "max": 0
+        },
+        "rightLeg": {
+          "current": 0,
+          "max": 0
+        }
+      },
+      "weight": "460 Ibs (207 kg) without rail gun and drum, 1000 pounds (450 kg) fully loaded. Physical Strength: Robotic P.S. of 30. Cargo: Small storage area for extra supplies and personal weapons. Power System: Nuclear; average life is 15 years.",
+      "cost": "850,000-950,000 credits for a new, undamaged, fully powered suit complete with rail gun and one full ammo-drum. Good availability; excellent in and around Michigan. Weapon Systems: 1. NG-202 Super Rail Gun (1): This is standard equipment for the Samson and is a powerful weapon; the unit is hooked directly to the armor's nuclear power supply. Primary Purpose: Assault & Defense.",
+      "notes": "Northern Gun Samson Power Armor An all-purpose combat and exploration power armor from Northern Gun. Although it cannot fly, it is capable of jet thruster assisted leaps and handles well in hand to hand combat. Fast, smooth and efficient. Model Type: NG-X9 Samson Class: Armored Infantry Assault Suit. Crew: One. M.D.e. by Location: Rear Booster Jets (2) -50 each Ammo-Drum (rear) -30 Rail Gun -50 Forearm Mini-Missile Launchers (2) -50 each *Head -70 \"Main Body -240 * Destroying the head of the power armor will eliminate all forms of optical enhancement and sensory systems. The pilot must now rely on his own human vision and senses. No power armor combat bonuses to strike, parry, and dodge! Note: The head is a small and difficult target to hit (shielded by exhaust tubes and weapon drum). Thus, it can only be hit when an attacker makes a Called Shot and even then the attacker is -3 to strike. ** Depleting the M.D.C. of the main body will shut the armor down completely, making it useless. Speed: Running: 150 mph (240 km) maximum. The act of running does tire out its operator, but at 10% of the usual fatigue rate. Leaping: The powerful robot legs can leap up to 25 feet (7.6 m) high or across unassisted by the jet boosters. A jet booster assisted leap can propel the unit up to 100 feet (30.5 m) high and 200 feet (61 m) across. This is not flight. Statistical Data: Height: II feet (3.3 m). Width: 5 feet (1.5 m). Length: 4 feet, 6 inches (1.4 m). Weight: 460 Ibs (207 kg) without rail gun and drum, 1000 pounds (450 kg) fully loaded. Physical Strength: Robotic P.S. of 30. Cargo: Small storage area for extra supplies and personal weapons. Power System: Nuclear; average life is 15 years. Black Market Cost: 850,000-950,000 credits for a new, undamaged, fully powered suit complete with rail gun and one full ammo-drum. Good availability; excellent in and around Michigan. Weapon Systems: 1. NG-202 Super Rail Gun (1): This is standard equipment for the Samson and is a powerful weapon; the unit is hooked directly to the armor's nuclear power supply. Primary Purpose: Assault & Defense. Weight: Gun: 210 Ibs (94.5 kg), One Super Ammo-Drum: 300 Ibs (135 kg). Mega-Damage: A Burst is 60 rounds and inflicts 1D6xlO M.D., one round does 1D6 M.D. Rate of Fire: Each burst counts as one melee attack. Effective Range: 4000 feet (1219 m). Payload: 6000 round drum, that's 100 bursts. A second drum can be hooked to the undercarriage of the rocket jets, but must be manually re moved by another Samson or a character with a strength of 26 or higher can replace the used drum. Reloading a drum will take about 5 minutes for those not trained, but a mere one minute by somebody trained in the use of Samson power armor. 2. Forearm Rocket Launcher: Mini-missile rocket launchers are built into each forearm. Primary Purnose: Anti-Aircraft & Defense. Missile Type: Any mini-missile can be used, but standard issue is ar mor piercing (1D4x10 M.D.) or plasma (1D6x10). Fragmentation (5D6 M.D.) will be used for anti-personnel operations. Mega-Damage: Varies with missile type. Effective Range: Usually about one mile. Rate of Fire: One or two at a time; both count as one melee attack. Payload: Four total, two per arm. 3. Knuckle Blades: Three vicious looking blades extend from the hand and are used in hand to hand combat. Add 1D6 M.D. to punch at tacks. 4. Energy Rifles and other normal weapons can be stored in a compart ment about the size of a footlocker. S. Hand to Hand Combat: Rather than use a weapon, the pilot can en gage in Mega-Damage combat. Skills and bonuses depends on whether the character has Robot Combat Basic or Elite. Double damage from Leap Kick attacks. Note: The Samson is depicted on page 84.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "speed": "Running: 150 mph (240 km) maximum. The act of running does tire out its operator, but at 10% of the usual fatigue rate. Leaping: The powerful robot legs can leap up to 25 feet (7.6 m) high or across unassisted by the jet boosters. A jet booster assisted leap can propel the unit up to 100 feet (30.5 m) high and 200 feet (61 m) across. This is not flight. Statistical Data: Height: II feet (3.3 m). Width: 5 feet (1.5 m). Length: 4 feet, 6 inches (1.4 m)."
+    }
+  },
+  {
+    "name": "Plastic-Man Full Environmental Body Armor",
+    "type": "armor",
+    "img": "icons/svg/shield.svg",
+    "source": {
+      "printedPage": 268
+    },
+    "system": {
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 35,
+          "max": 35
+        },
+        "head": {
+          "current": 30,
+          "max": 30
+        },
+        "leftArm": {
+          "current": 15,
+          "max": 15
+        },
+        "rightArm": {
+          "current": 15,
+          "max": 15
+        },
+        "leftLeg": {
+          "current": 22,
+          "max": 22
+        },
+        "rightLeg": {
+          "current": 22,
+          "max": 22
+        }
+      },
+      "weight": "13 pounds (5.8 kg); fair mobility, -10% movement penalty.",
+      "cost": "18,000 credits.",
+      "notes": "Plastic-Man -Full Environmental Body Armor An inexpensive armor made of lightweight M.D.C. polycarbonate plate. M.D.C. by Location: Main body: 35, Helmet: 30, Arms: 15 each, and Legs: 22 each. Weight: 13 pounds (5.8 kg); fair mobility, -10% movement penalty. Black Market Cost: 18,000 credits.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "prowlPenalty": -10
+    }
+  },
+  {
+    "name": "Urban Warrior Padded Environmental Body Armor",
+    "type": "armor",
+    "img": "icons/svg/shield.svg",
+    "source": {
+      "printedPage": 268
+    },
+    "system": {
+      "ar": 0,
+      "isMDC": true,
+      "locations": {
+        "mainBody": {
+          "current": 50,
+          "max": 50
+        },
+        "head": {
+          "current": 35,
+          "max": 35
+        },
+        "leftArm": {
+          "current": 16,
+          "max": 16
+        },
+        "rightArm": {
+          "current": 16,
+          "max": 16
+        },
+        "leftLeg": {
+          "current": 30,
+          "max": 30
+        },
+        "rightLeg": {
+          "current": 30,
+          "max": 30
+        }
+      },
+      "weight": "11 pounds (5 kg); excellent mobility, -5% movement penalty.",
+      "cost": "35,000 credits.",
+      "notes": "Urban Warrior Urban Warrior- Padded Environmental Body Armor A lightweight body armor that has been popular with adventurers and many city law enforcement officers for over a decade. This armor is a full body suit with special flexible padding and strategic placement of light metal plates. Usually comes in white, light grey, light green, and tan colors. M.D.C. by Location: Main body: 50, Helmet: 35, Arms: 16 each, and Legs: 30 each. Weight: 11 pounds (5 kg); excellent mobility, -5% movement penalty. Black Market Cost: 35,000 credits.",
+      "soak": 0,
+      "resistance": 0,
+      "damageScale": "M",
+      "prowlPenalty": -5
+    }
+  }
+]

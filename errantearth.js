@@ -3,6 +3,8 @@ import { ErrantEarthItemSheet } from "./src/item/item-sheet.js";
 import { ErrantEarthLegacyImporter } from "./src/importer/legacy-importer.js";
 import { ErrantEarthLegacyTools } from "./src/apps/legacy-tools.js";
 import { EE } from "./src/config.js";
+import { registerErrantEarthTokenTools } from "./src/token/token-tools.js";
+import { registerErrantEarthTokenActionHud } from "./src/token/token-action-hud.js";
 
 Hooks.once("init", async () => {
   CONFIG.Actor.types = ["character"];
@@ -106,7 +108,16 @@ Hooks.once("init", async () => {
 
   await loadTemplates({
     "ee-actor-sheet": "systems/errantearth/templates/actor/character-sheet.html",
+    "eeActorDerived": "systems/errantearth/templates/actor/partials/derived.html",
+    "eeActorSkills": "systems/errantearth/templates/actor/partials/skills.html",
+    "eeActorCombat": "systems/errantearth/templates/actor/partials/combat.html",
+    "eeActorPowers": "systems/errantearth/templates/actor/partials/powers.html",
+    "eeActorVehicle": "systems/errantearth/templates/actor/partials/vehicle.html",
+    "eeActorItems": "systems/errantearth/templates/actor/partials/items.html",
+    "eeActorMisc": "systems/errantearth/templates/actor/partials/misc.html",
+    "legacySkillSection": "systems/errantearth/templates/actor/partials/legacy-skill-section.html",
     "ee-roll-card":   "systems/errantearth/templates/chat/roll-card.html",
+    "ee-weapon-roll-card": "systems/errantearth/templates/chat/weapon-roll-card.html",
     "ee-item-sheet":  "systems/errantearth/templates/item/item-sheet.html",
     "ee-legacy-tools": "systems/errantearth/templates/apps/legacy-tools.html",
     "ccBonusBlocks":  "systems/errantearth/templates/item/partials/cc-bonus-blocks.html"
@@ -138,6 +149,8 @@ Hooks.once("init", async () => {
 
   ErrantEarthLegacyImporter.registerHooks();
   ErrantEarthLegacyTools.registerHooks();
+  registerErrantEarthTokenTools();
+  registerErrantEarthTokenActionHud();
 });
 
 Hooks.once("ready", async () => {

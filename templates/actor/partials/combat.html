@@ -1,0 +1,769 @@
+{{!-- ===== COMBAT TAB ===== --}}
+        <div class="tab" data-group="primary" data-tab="combat">
+            <h2 class="ee-bar">COMBAT</h2>
+
+            {{#if isEE}}
+            <section class="ee-ee-combat-layout">
+    <div class="ee-combat-top">
+                    <div class="ee-panel">
+                        <h3>Initiative & Actions</h3>
+                        <div class="ee-kv">
+                            <label>Initiative:</label><output>{{eeDerived.combat.initiative.total}}</output>
+                            <a data-action="roll" data-roll-type="eeInitiative" data-bonus="{{eeDerived.combat.initiative.total}}" data-label="Errant Earth Initiative" title="Roll Errant Earth Initiative"><i class="fas fa-dice-d20"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.initiative" data-label="Initiative" title="Edit Initiative"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Actions:</label><output>{{eeDerived.combat.actions.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.actions" data-label="Actions" title="Edit Actions"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Reactions:</label><output>{{eeDerived.combat.reactions.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.reactions" data-label="Reactions" title="Edit Reactions"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Momentum:</label><output>{{eeDerived.combat.momentum.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.momentum" data-label="Momentum" title="Edit Momentum"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv">
+                            <label>Melee To-Hit:</label><output>{{eeDerived.combat.meleeToHit.total}}</output>
+                            <a data-action="roll" data-roll-type="eeAttack" data-bonus="{{eeDerived.combat.meleeToHit.total}}" data-label="Errant Earth Melee Attack" title="Roll Errant Earth melee attack"><i class="fas fa-crosshairs"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.meleeToHit" data-label="Melee To-Hit" title="Edit Melee To-Hit"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv">
+                            <label>Ranged To-Hit:</label><output>{{eeDerived.combat.rangedToHit.total}}</output>
+                            <a data-action="roll" data-roll-type="eeAttack" data-bonus="{{eeDerived.combat.rangedToHit.total}}" data-label="Errant Earth Ranged Attack" title="Roll Errant Earth ranged attack"><i class="fas fa-crosshairs"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.rangedToHit" data-label="Ranged To-Hit" title="Edit Ranged To-Hit"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Damage Bonus:</label><output>{{eeDerived.combat.damageBonus.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="combat.damageBonus" data-label="Damage Bonus" title="Edit Damage Bonus"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Damage Scale:</label><input type="text" name="system.eeCombat.damageScale" value="{{eeDerived.combat.damageScale}}" /></div>
+                    </div>
+
+                    <div class="ee-panel">
+                        <h3>Defenses</h3>
+                        <div class="ee-kv"><label>Size:</label><output>{{eeDerived.defense.size}}</output></div>
+                        <div class="ee-kv">
+                            <label>Natural Survival Rating:</label><output>{{eeDerived.defense.nsr.total}}</output>
+                            <a data-action="roll" data-roll-type="eeDefense" data-target="{{eeDerived.defense.nsr.total}}" data-label="Natural Survival Rating" title="Roll NSR"><i class="fas fa-shield-halved"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="defense.nsr" data-label="Natural Survival Rating" title="Edit NSR"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv">
+                            <label>Mechanized Survival Rating:</label><output>{{eeDerived.defense.msr.total}}</output>
+                            <a data-action="roll" data-roll-type="eeDefense" data-target="{{eeDerived.defense.msr.total}}" data-label="Mechanized Survival Rating" title="Roll MSR"><i class="fas fa-shield-halved"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="defense.msr" data-label="Mechanized Survival Rating" title="Edit MSR"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv">
+                            <label>Armor Rating:</label><output>{{eeDerived.defense.armorRating.total}}</output>
+                            <a data-action="roll" data-roll-type="eeDefense" data-target="{{eeDerived.defense.armorRating.total}}" data-label="Armor Rating" title="Roll Armor Rating"><i class="fas fa-shield"></i></a>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="defense.armorRating" data-base-path="eeCombat.armor.rating" data-label="Armor Rating" title="Edit Armor Rating"><i class="fas fa-pencil"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="ee-panel">
+                        <h3>Health & Thresholds</h3>
+                        <div class="ee-kv"><label>Endurance:</label><output>{{eePools.endurance.value}}</output> / <output>{{eePools.endurance.max}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="health.endurance" data-label="Endurance" title="Edit Endurance"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Health:</label><output>{{eePools.health.value}}</output> / <output>{{eePools.health.max}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="health.health" data-label="Health" title="Edit Health"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Scars:</label><output>{{eeDerived.health.scars.value}}</output> / <output>{{eeDerived.health.scars.max}}</output></div>
+                        <div class="ee-kv"><label>Wounded:</label><input type="number" name="system.eeCombat.health.thresholds.wounded" value="{{eeDerived.health.thresholds.wounded}}" /></div>
+                        <div class="ee-kv"><label>Bloodied:</label><input type="number" name="system.eeCombat.health.thresholds.bloodied" value="{{eeDerived.health.thresholds.bloodied}}" /></div>
+                        <div class="ee-kv"><label>Critical:</label><input type="number" name="system.eeCombat.health.thresholds.critical" value="{{eeDerived.health.thresholds.critical}}" /></div>
+                        <div class="ee-kv"><label>Death:</label><input type="number" name="system.eeCombat.health.thresholds.death" value="{{eeDerived.health.thresholds.death}}" /></div>
+                    </div>
+                </div>
+            
+
+                    <div class="ee-panel">
+                        <h3>Movement</h3>
+                        <div class="ee-kv"><label>Reaction Rating:</label><output>{{eeDerived.movement.reaction.rating}}</output></div>
+                        <div class="ee-kv"><label>Pace:</label><output>{{eeDerived.movement.pace.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="movement.pace" data-label="Pace" title="Edit Pace"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Run:</label><output>{{eeDerived.movement.run.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="movement.run" data-label="Run" title="Edit Run"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Sprint:</label><output>{{eeDerived.movement.sprint.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="movement.sprint" data-label="Sprint" title="Edit Sprint"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Climb:</label><output>{{eeDerived.movement.climb.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="movement.climb" data-label="Climb" title="Edit Climb"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Swim:</label><output>{{eeDerived.movement.swim.total}}</output>
+                            <a class="ee-edit" data-action="edit-adjustable" data-path="movement.swim" data-label="Swim" title="Edit Swim"><i class="fas fa-pencil"></i></a>
+                        </div>
+                        <div class="ee-kv"><label>Jump Vert. Stand/Run:</label><output>{{eeDerived.movement.liftCarryJump.verticalStand}} / {{eeDerived.movement.liftCarryJump.verticalRun}}</output></div>
+                        <div class="ee-kv"><label>Jump Horiz. Stand/Run:</label><output>{{eeDerived.movement.liftCarryJump.horizontalStand}} / {{eeDerived.movement.liftCarryJump.horizontalRun}}</output></div>
+                    </div>
+
+                    <div class="ee-panel ee-ee-armor">
+                        <h3>Armor</h3>
+                        <div class="ee-ee-armor-summary">
+                            <div class="ee-kv"><label>Durability (worn):</label><output>{{eeDerived.armorSummary.durability.value}} / {{eeDerived.armorSummary.durability.max}}</output></div>
+                            <div class="ee-kv"><label>Armor Rating:</label><output>{{eeDerived.armorSummary.ar.total}}</output> <span class="ee-muted">(best {{eeDerived.armorSummary.ar.best}} + {{eeDerived.armorSummary.ar.bonus}} bonus)</span></div>
+                            <div class="ee-kv"><label>Maneuverability:</label><output>{{eeDerived.armorSummary.maneuver.flat}} / {{eeDerived.armorSummary.maneuver.percent}}%</output></div>
+                            <div class="ee-kv"><label>Simmer Rating (SR):</label><output>{{eeDerived.armorSummary.sr}}</output></div>
+                            <div class="ee-kv"><label>Formality:</label><output>{{eeDerived.armorSummary.formality}}</output></div>
+                            <div class="ee-kv"><label>Resist (Heat/Cold/Rad/Earthblood):</label><output>{{eeDerived.armorSummary.resist.heat}} / {{eeDerived.armorSummary.resist.cold}} / {{eeDerived.armorSummary.resist.radiation}} / {{eeDerived.armorSummary.resist.earthblood}}</output></div>
+                        </div>
+                        <table class="ee-table ee-ee-armor-table">
+                            <thead><tr>
+                                <th title="Worn">Eq</th><th>Name</th><th>Layer</th><th>Weight</th><th>Variant</th>
+                                <th title="Current / Max">Durability</th><th title="Base AR">AR</th><th title="AR Bonus">+AR</th>
+                                <th title="Maneuverability flat / %">Maneuver</th><th title="Simmer Rating">SR</th><th>Form.</th>
+                                <th title="Heat">Ht</th><th title="Cold">Cd</th><th title="Radiation">Rd</th><th title="Earthblood">EB</th><th></th>
+                            </tr></thead>
+                            <tbody>
+                                {{#each system.eeCombat.armorPieces}}
+                                <tr>
+                                    <td><input type="checkbox" data-action="armor-equip" data-index="{{@index}}" {{#if equipped}}checked{{/if}} title="Worn (one per layer)" /></td>
+                                    <td><input type="text" name="system.eeCombat.armorPieces.{{@index}}.name" value="{{name}}" /></td>
+                                    <td><select name="system.eeCombat.armorPieces.{{@index}}.layer">
+                                        <option value="UA" {{#if (eq layer "UA")}}selected{{/if}}>UA</option>
+                                        <option value="OA" {{#if (eq layer "OA")}}selected{{/if}}>OA</option>
+                                        <option value="PLATE" {{#if (eq layer "PLATE")}}selected{{/if}}>PLATE</option>
+                                    </select></td>
+                                    <td><input type="text" name="system.eeCombat.armorPieces.{{@index}}.weight" value="{{weight}}" placeholder="Light…" /></td>
+                                    <td><input type="text" name="system.eeCombat.armorPieces.{{@index}}.variant" value="{{variant}}" placeholder="HEV…" /></td>
+                                    <td class="ee-ee-armor-pair"><input type="number" name="system.eeCombat.armorPieces.{{@index}}.durability.value" value="{{durability.value}}" /> / <input type="number" name="system.eeCombat.armorPieces.{{@index}}.durability.max" value="{{durability.max}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.ar.base" value="{{ar.base}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.ar.bonus" value="{{ar.bonus}}" /></td>
+                                    <td class="ee-ee-armor-pair"><input type="number" name="system.eeCombat.armorPieces.{{@index}}.maneuver.flat" value="{{maneuver.flat}}" /> / <input type="number" name="system.eeCombat.armorPieces.{{@index}}.maneuver.percent" value="{{maneuver.percent}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.sr" value="{{sr}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.formality" value="{{formality}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.resist.heat" value="{{resist.heat}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.resist.cold" value="{{resist.cold}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.resist.radiation" value="{{resist.radiation}}" /></td>
+                                    <td><input type="number" name="system.eeCombat.armorPieces.{{@index}}.resist.earthblood" value="{{resist.earthblood}}" /></td>
+                                    <td><a data-action="delete-row" data-path="eeCombat.armorPieces" data-index="{{@index}}" title="Remove"><i class="fas fa-times"></i></a></td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <button type="button" class="ee-add" data-action="add-row" data-path="eeCombat.armorPieces" data-kind="eeArmor">+ Add Armor</button>
+                        <p class="ee-muted">Tick <strong>Eq</strong> for each worn piece (one Under, one Over, one Plating). Worn pieces combine: Durability adds, best Base AR plus every AR bonus, and Maneuverability / SR / Formality / resistances add together.</p>
+                    </div>
+
+                    <div class="ee-panel ee-weapons">
+                        <h3>Errant Earth Weapons</h3>
+                        <table class="ee-table">
+                            <thead><tr><th>Name</th><th>Scale</th><th>Damage</th><th>To-Hit</th><th>Range</th><th>Special</th><th title="Token Action HUD">TAH</th><th>Roll</th><th></th></tr></thead>
+                            <tbody>
+                                {{#each system.weapons.modern}}
+                                <tr>
+                                    <td><input type="text" name="system.weapons.modern.{{@index}}.name" value="{{name}}" /></td>
+                                    <td><input type="hidden" name="system.weapons.modern.{{@index}}.damageType" value="{{damageType}}" /><select name="system.weapons.modern.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale false}}</select></td>
+                                    <td><input type="text" name="system.weapons.modern.{{@index}}.damage" value="{{damage}}" /></td>
+                                    <td><input type="text" name="system.weapons.modern.{{@index}}.strike" value="{{strike}}" /></td>
+                                    <td><input type="text" name="system.weapons.modern.{{@index}}.range" value="{{range}}" /></td>
+                                    <td><input type="text" name="system.weapons.modern.{{@index}}.special" value="{{special}}" /></td>
+                                    <td class="ee-token-quick-cell"><input type="hidden" name="system.weapons.modern.{{@index}}.quickRoll" value="false" /><input type="checkbox" name="system.weapons.modern.{{@index}}.quickRoll" {{eeChecked quickRoll}} title="Show in Token Action HUD" /></td>
+                                    <td class="ee-actions"><a data-action="roll" data-roll-type="eeAttack" data-bonus="{{strike}}" data-label="{{name}} Attack"><i class="fas fa-crosshairs"></i></a> <a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}} Damage"><i class="fas fa-burst"></i></a></td>
+                                    <td><a data-action="delete-row" data-path="weapons.modern" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <button type="button" class="ee-add" data-action="add-row" data-path="weapons.modern" data-kind="modernWeapon">+ Add Weapon</button>
+                    </div>
+
+                <div class="ee-panel ee-weapon-proficiencies">
+                    <h3>Weapon Proficiencies</h3>
+                    <p class="ee-muted">Archaic Projectile/Melee Weapons and Archaic Firearms cover all Standard-damage variants; the rest are Mega-damage proficiencies.</p>
+                    <div class="ee-wp-flat">
+                        {{#each eeWp}}
+                        <label class="ee-wp-check">
+                            <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} {{#if sourceOnly}}disabled{{/if}} />
+                            {{name}}
+                        </label>
+                        {{/each}}
+                    </div>
+                    <h4>Custom W.P.</h4>
+                    <table class="ee-table">
+                        <tbody>
+                            {{#each system.weaponProficiencies.custom}}
+                            <tr>
+                                <td><input type="text" name="system.weaponProficiencies.custom.{{@index}}.name" value="{{name}}" placeholder="Custom W.P." /></td>
+                                <td class="ee-actions"><a data-action="delete-row" data-path="weaponProficiencies.custom" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies.custom" data-kind="wpCustom">+ Add Custom W.P.</button>
+                </div>
+
+                <div class="ee-panel">
+                    <h3>Combat Notes</h3>
+                    <textarea name="system.eeCombat.notes">{{system.eeCombat.notes}}</textarea>
+                </div>
+            </section>
+            {{/if}}
+
+            {{#unless isEE}}
+            <div class="ee-combat-actions" aria-label="Combat quick actions">
+  <div class="ee-combat-stat"><span>Attacks / melee</span><strong>{{riftsDerived.handToHand.attacks.total}}</strong></div>
+<button type="button" data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.initiative.total}}" data-label="Initiative"><span>Initiative</span><strong>{{riftsDerived.handToHand.initiative.total}}</strong> <i class="fas fa-dice-d20"></i></button>
+<button type="button" data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.parry.total}}" data-label="Parry"><span>Parry</span><strong>{{riftsDerived.handToHand.parry.total}}</strong> <i class="fas fa-dice-d20"></i></button>
+<button type="button" data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.dodge.total}}" data-label="Dodge"><span>Dodge</span><strong>{{riftsDerived.handToHand.dodge.total}}</strong> <i class="fas fa-dice-d20"></i></button>
+<button type="button" data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.roll.total}}" data-label="Roll with impact"><span>Roll with impact</span><strong>{{riftsDerived.handToHand.roll.total}}</strong> <i class="fas fa-dice-d20"></i></button>
+</div>
+<details class="ee-disclosure ee-save-quick" data-disclosure-key="save-rolls" open>
+<summary>Saving Throws</summary>
+<div class="ee-save-actions">
+{{#each legacySaveRows}}
+<button type="button" data-action="roll" data-roll-type="{{rollType}}" data-base="{{base}}" data-bonus="{{total}}" data-target="{{total}}" data-label="Save vs {{label}}" title="{{hint}}"><span>{{label}}</span><strong>{{display}}</strong> <i class="fas fa-dice-d20"></i></button>
+{{/each}}
+</div>
+</details>
+
+            
+
+            <section class="ee-panel ee-combat-equipment">
+                <div class="ee-combat-equipment-header">
+                    <h3>Weapons</h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon Item"><i class="fas fa-plus"></i> Weapon Item</a>
+                </div>
+                {{#if weaponItems.length}}
+                <div class="ee-table-scroll">
+                    <table class="ee-table ee-compact-weapon-items">
+                        <thead><tr><th>Name</th><th>Type</th><th>Damage</th><th>Strike</th><th>Parry</th><th>Range / Ammo</th><th title="Token Action HUD">TAH</th><th>Roll</th><th></th></tr></thead>
+                        <tbody>
+                            {{#each weaponItems}}
+                            <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                                <td><a data-action="edit-item" data-item-id="{{id}}">{{name}}</a></td>
+                                <td>{{categoryLabel}}</td>
+                                <td>{{system.effectiveDamage}} <small>{{lookup ../config.EE_DAMAGE_SCALES system.damageScale}}</small></td>
+                                <td>{{system.effectiveStrikeDisplay}}</td>
+                                <td>{{#if (eq system.category "ancient")}}{{system.effectiveParryDisplay}}{{else}}—{{/if}}</td>
+                                <td>{{system.range}}{{#if system.ammo}} · {{system.ammo}}{{/if}}</td>
+                                <td class="ee-token-quick-cell"><input type="checkbox" data-action="toggle-item-quick-roll" data-item-id="{{id}}" {{eeChecked system.quickRoll}} title="Show in Token Action HUD" /></td>
+                                <td class="ee-actions">
+                                    <a data-action="roll" data-roll-type="d20" data-bonus="{{system.effectiveStrike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                                    {{#if (eq system.category "ancient")}}<a data-action="roll" data-roll-type="d20" data-bonus="{{system.effectiveParry}}" data-label="{{name}} Parry" title="Roll Parry"><i class="fas fa-shield-alt"></i></a>{{/if}}
+                                    {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{system.effectiveDamage}}" data-scale="{{system.damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}} Damage" title="Roll Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{system.effectiveDamage}}" data-label="{{name}} Damage" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
+                                </td>
+                                <td><a data-action="delete-item" data-item-id="{{id}}" title="Delete Weapon"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                {{else}}
+                <p class="ee-hint">No weapon items yet. Add one here or from the Items tab.</p>
+                {{/if}}
+            </section>
+
+            <section class="ee-panel ee-combat-equipment">
+                <div class="ee-combat-equipment-header">
+                    <h3>Armor</h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="armor" title="Create Armor Item"><i class="fas fa-plus"></i> Armor Item</a>
+                </div>
+                {{#if itemsByType.armor.length}}
+                <div class="ee-armor-item-list">
+                    {{#each itemsByType.armor}}
+                    <article class="ee-armor-item-card ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <header>
+                            <a data-action="edit-item" data-item-id="{{id}}"><strong>{{name}}</strong></a>
+                            <span class="ee-chip">{{#if system.isMDC}}MDC{{else}}SDC{{/if}}</span>
+                            <span>AR {{system.ar}}</span>
+                            {{#if system.prowlPenalty}}<span>Prowl {{system.prowlPenalty}}</span>{{/if}}
+                            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}" title="Delete Armor"><i class="fas fa-times"></i></a></span>
+                        </header>
+                        <div class="ee-armor-location-grid">
+                            <label>Main Body <span><input type="number" min="0" max="{{system.locations.mainBody.max}}" value="{{system.locations.mainBody.current}}" data-action="update-armor-location" data-item-id="{{id}}" data-location="mainBody" /> / {{system.locations.mainBody.max}}</span></label>
+                            <label>Head <span><input type="number" min="0" max="{{system.locations.head.max}}" value="{{system.locations.head.current}}" data-action="update-armor-location" data-item-id="{{id}}" data-location="head" /> / {{system.locations.head.max}}</span></label>
+                            <label>Left Arm <span><input type="number" min="0" max="{{system.locations.leftArm.max}}" value="{{system.locations.leftArm.current}}" data-action="update-armor-location" data-item-id="{{id}}" data-location="leftArm" /> / {{system.locations.leftArm.max}}</span></label>
+                            <label>Right Arm <span><input type="number" min="0" max="{{system.locations.rightArm.max}}" value="{{system.locations.rightArm.current}}" data-action="update-armor-location" data-item-id="{{id}}" data-location="rightArm" /> / {{system.locations.rightArm.max}}</span></label>
+                            <label>Left Leg <span><input type="number" min="0" max="{{system.locations.leftLeg.max}}" value="{{system.locations.leftLeg.current}}" data-action="update-armor-location" data-item-id="{{id}}" data-location="leftLeg" /> / {{system.locations.leftLeg.max}}</span></label>
+                            <label>Right Leg <span><input type="number" min="0" max="{{system.locations.rightLeg.max}}" value="{{system.locations.rightLeg.current}}" data-action="update-armor-location" data-item-id="{{id}}" data-location="rightLeg" /> / {{system.locations.rightLeg.max}}</span></label>
+                        </div>
+                    </article>
+                    {{/each}}
+                </div>
+                {{else}}
+                <p class="ee-hint">No armor items yet. Add one here or from the Items tab.</p>
+                {{/if}}
+            </section>
+
+
+<details class="ee-panel ee-disclosure" data-disclosure-key="combat-modifiers">
+<summary>Combat bonuses &amp; saving throw setup</summary>
+<div class="ee-combat-top">
+                {{!-- Hand to Hand --}}
+                <div class="ee-panel">
+                    <h3>Hand to Hand</h3>
+                    <div class="ee-kv">
+                        <label>Type:</label>
+                        <select name="system.handToHand.type">{{eeSelectOptions config.HTH_TYPES system.handToHand.type false}}</select>
+                    </div>
+                    {{#unless isEE}}
+                    <div class="ee-kv">
+                        <label>Strength Type:</label>
+                        <select name="system.handToHand.strengthType">{{eeSelectOptions config.LEGACY_PHYSICAL_TYPES system.handToHand.strengthType}}</select>
+                    </div>
+                    <div class="ee-kv">
+                        <label>Endurance Type:</label>
+                        <select name="system.handToHand.enduranceType">{{eeSelectOptions config.LEGACY_PHYSICAL_TYPES system.handToHand.enduranceType}}</select>
+                    </div>
+                    <p class="ee-hth-summary">Using {{riftsDerived.handToHand.label}} base bonuses through level {{riftsDerived.handToHand.level}}. Manual values below are misc adjustments added to the table and attribute bonuses.</p>
+                    <table class="ee-table">
+                        <thead><tr><th>Combat Bonus</th><th>Base</th><th>Attribute</th><th>Manual / Misc</th><th>Total</th><th>Roll</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>Attacks per Melee:</td>
+                                <td>{{riftsDerived.handToHand.attacks.base}}</td>
+                                <td>{{riftsDerived.handToHand.attacks.attribute}}</td>
+                                <td><input type="number" name="system.handToHand.attacks" value="{{riftsDerived.handToHand.attacks.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.attacks.total}}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Initiative:</td>
+                                <td>{{riftsDerived.handToHand.initiative.base}}</td>
+                                <td>{{riftsDerived.handToHand.initiative.attribute}}</td>
+                                <td><input type="number" name="system.handToHand.initiative" value="{{riftsDerived.handToHand.initiative.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.initiative.total}}</td>
+                                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.initiative.total}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Damage:</td>
+                                <td>{{riftsDerived.handToHand.damage.base}}</td>
+                                <td>{{riftsDerived.handToHand.damage.attribute}}</td>
+                                <td><input type="number" name="system.handToHand.damage" value="{{riftsDerived.handToHand.damage.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.damage.total}}</td>
+                                <td><a data-action="roll" data-roll-type="damage" data-formula="0 + {{riftsDerived.handToHand.damage.total}}" data-label="HtH Damage Bonus" title="Roll Damage Bonus"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Strike:</td>
+                                <td>{{riftsDerived.handToHand.strike.base}}</td>
+                                <td>{{riftsDerived.handToHand.strike.attribute}}</td>
+                                <td><input type="number" name="system.handToHand.strike" value="{{riftsDerived.handToHand.strike.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.strike.total}}</td>
+                                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.strike.total}}" data-label="HtH Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Parry:</td>
+                                <td>{{riftsDerived.handToHand.parry.base}}</td>
+                                <td>{{riftsDerived.handToHand.parry.attribute}}</td>
+                                <td><input type="number" name="system.handToHand.parry" value="{{riftsDerived.handToHand.parry.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.parry.total}}</td>
+                                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.parry.total}}" data-label="HtH Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Dodge:</td>
+                                <td>{{riftsDerived.handToHand.dodge.base}}</td>
+                                <td>{{riftsDerived.handToHand.dodge.attribute}}</td>
+                                <td><input type="number" name="system.handToHand.dodge" value="{{riftsDerived.handToHand.dodge.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.dodge.total}}</td>
+                                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.dodge.total}}" data-label="HtH Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Disarm:</td>
+                                <td>{{riftsDerived.handToHand.disarm.base}}</td>
+                                <td>{{riftsDerived.handToHand.disarm.attribute}}</td>
+                                <td><input type="number" name="system.handToHand.disarm" value="{{riftsDerived.handToHand.disarm.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.disarm.total}}</td>
+                                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.disarm.total}}" data-label="Disarm" title="Roll Disarm"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Entangle:</td>
+                                <td>{{riftsDerived.handToHand.entangle.base}}</td>
+                                <td>{{riftsDerived.handToHand.entangle.attribute}}</td>
+                                <td><input type="number" name="system.handToHand.entangle" value="{{riftsDerived.handToHand.entangle.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.entangle.total}}</td>
+                                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.entangle.total}}" data-label="Entangle" title="Roll Entangle"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Pull Punch:</td>
+                                <td>{{riftsDerived.handToHand.pullPunch.base}}</td>
+                                <td>{{riftsDerived.handToHand.pullPunch.attribute}}</td>
+                                <td><input type="number" name="system.handToHand.pullPunch" value="{{riftsDerived.handToHand.pullPunch.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.pullPunch.total}}</td>
+                                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.pullPunch.total}}" data-label="Pull Punch" title="Roll Pull Punch"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Roll w/ Punch/Fall:</td>
+                                <td>{{riftsDerived.handToHand.roll.base}}</td>
+                                <td>{{riftsDerived.handToHand.roll.attribute}}</td>
+                                <td><input type="number" name="system.handToHand.roll" value="{{riftsDerived.handToHand.roll.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.roll.total}}</td>
+                                <td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.roll.total}}" data-label="Roll w/ Punch/Fall" title="Roll w/ Punch/Fall"><i class="fas fa-dice-d20"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td>Critical:</td>
+                                <td>{{riftsDerived.handToHand.critical.base}}</td>
+                                <td>{{riftsDerived.handToHand.critical.attribute}}</td>
+                                <td><input type="text" name="system.handToHand.critical" value="{{riftsDerived.handToHand.critical.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.critical.total}}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Knockout/Stun:</td>
+                                <td>{{riftsDerived.handToHand.knockout.base}}</td>
+                                <td>{{riftsDerived.handToHand.knockout.attribute}}</td>
+                                <td><input type="text" name="system.handToHand.knockout" value="{{riftsDerived.handToHand.knockout.manual}}" /></td>
+                                <td>{{riftsDerived.handToHand.knockout.total}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {{else}}
+                    <div class="ee-kv">
+                        <label>Initiative:</label><input type="number" name="system.handToHand.initiative" value="{{system.handToHand.initiative}}" />
+                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.initiative}}" data-label="Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a>
+                    </div>
+                    {{/unless}}
+                    {{#if isEE}}
+                    <div class="ee-kv">
+                        <label>Perception:</label><input type="number" name="system.handToHand.perception" value="{{system.handToHand.perception}}" />
+                        <a data-action="roll" data-roll-type="d20" data-bonus="{{system.handToHand.perception}}" data-label="Perception" title="Roll Perception"><i class="fas fa-dice-d20"></i></a>
+                    </div>
+                    {{else}}
+                    <div class="ee-kv">
+                        <label>Perception:</label><input type="number" name="system.handToHand.perception" value="{{riftsDerived.handToHand.perception.manual}}" title="Manual / misc bonus" />
+                        <output title="Includes {{riftsDerived.handToHand.perception.source}} from equipped OCC/RCC/Race">Total {{riftsDerived.handToHand.perception.total}}</output>
+                        <a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.handToHand.perception.total}}" data-label="Perception" title="Roll Perception"><i class="fas fa-dice-d20"></i></a>
+                    </div>
+                    {{/if}}
+                    {{#if riftsDerived.handToHand.notes.length}}
+                    {{#unless isEE}}
+                    <div class="ee-kv">
+                        <label>HtH Special Abilities:</label>
+                        <ul>
+                            {{#each riftsDerived.handToHand.notes}}
+                            <li>Level {{level}}: {{text}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    {{/unless}}
+                    {{/if}}
+                    {{#each system.handToHand.extras}}
+                    <div class="ee-kv">
+                        <input type="text" name="system.handToHand.extras.{{@index}}.name" value="{{name}}" placeholder="Bonus name" />
+                        <input type="number" name="system.handToHand.extras.{{@index}}.value" value="{{value}}" />
+                        <a data-action="delete-row" data-path="handToHand.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
+                    </div>
+                    {{/each}}
+                    <button type="button" class="ee-add" data-action="add-row" data-path="handToHand.extras" data-kind="h2hExtra">+ Add</button>
+                </div>
+
+                {{!-- Saving Throws --}}
+                <div class="ee-panel">
+                    <h3>Saving Throws</h3>
+                    <table class="ee-table">
+                        <thead><tr><th></th><th>Base</th><th>Manual Bonus</th><th>Attribute Bonus</th><th>Source</th><th>Total</th><th>Roll</th></tr></thead>
+                        <tbody>
+                            <tr><td>Spell:</td>        <td><input type="text" name="system.savingThrows.spell.base" value="{{system.savingThrows.spell.base}}" /></td>        <td><input type="number" name="system.savingThrows.spell.bonus" value="{{system.savingThrows.spell.bonus}}" /></td>        <td>{{riftsDerived.saves.spell.attribute}}</td><td>{{riftsDerived.saves.spell.source}}</td><td>{{riftsDerived.saves.spell.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.spell.base}}" data-bonus="{{riftsDerived.saves.spell.total}}" data-label="Save vs Spell"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Ritual:</td>       <td><input type="text" name="system.savingThrows.ritual.base" value="{{system.savingThrows.ritual.base}}" /></td>       <td><input type="number" name="system.savingThrows.ritual.bonus" value="{{system.savingThrows.ritual.bonus}}" /></td>       <td>{{riftsDerived.saves.ritual.attribute}}</td><td>{{riftsDerived.saves.ritual.source}}</td><td>{{riftsDerived.saves.ritual.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.ritual.base}}" data-bonus="{{riftsDerived.saves.ritual.total}}" data-label="Save vs Ritual"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Psionics:</td>     <td><input type="text" name="system.savingThrows.psionics.base" value="{{system.savingThrows.psionics.base}}" /></td>     <td><input type="number" name="system.savingThrows.psionics.bonus" value="{{system.savingThrows.psionics.bonus}}" /></td>     <td>{{riftsDerived.saves.psionics.attribute}}</td><td>{{riftsDerived.saves.psionics.source}}</td><td>{{riftsDerived.saves.psionics.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.psionics.base}}" data-bonus="{{riftsDerived.saves.psionics.total}}" data-label="Save vs Psionics"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Toxins/Poisons:</td><td><input type="text" name="system.savingThrows.drugPoison.base" value="{{system.savingThrows.drugPoison.base}}" /></td>   <td><input type="number" name="system.savingThrows.drugPoison.bonus" value="{{system.savingThrows.drugPoison.bonus}}" /></td>   <td>{{riftsDerived.saves.drugPoison.attribute}}</td><td>{{riftsDerived.saves.drugPoison.source}}</td><td>{{riftsDerived.saves.drugPoison.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.drugPoison.base}}" data-bonus="{{riftsDerived.saves.drugPoison.total}}" data-label="Save vs Toxins/Poisons"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Harmful Drugs:</td> <td><input type="text" name="system.savingThrows.harmfulDrugs.base" value="{{system.savingThrows.harmfulDrugs.base}}" /></td> <td><input type="number" name="system.savingThrows.harmfulDrugs.bonus" value="{{system.savingThrows.harmfulDrugs.bonus}}" /></td> <td>{{riftsDerived.saves.harmfulDrugs.attribute}}</td><td>{{riftsDerived.saves.harmfulDrugs.source}}</td><td>{{riftsDerived.saves.harmfulDrugs.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.harmfulDrugs.base}}" data-bonus="{{riftsDerived.saves.harmfulDrugs.total}}" data-label="Save vs Harmful Drugs"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Insanity:</td>      <td><input type="text" name="system.savingThrows.insanity.base" value="{{system.savingThrows.insanity.base}}" /></td>     <td><input type="number" name="system.savingThrows.insanity.bonus" value="{{system.savingThrows.insanity.bonus}}" /></td>     <td>{{riftsDerived.saves.insanity.attribute}}</td><td>{{riftsDerived.saves.insanity.source}}</td><td>{{riftsDerived.saves.insanity.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.insanity.base}}" data-bonus="{{riftsDerived.saves.insanity.total}}" data-label="Save vs Insanity"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Possession:</td>    <td><input type="text" name="system.savingThrows.possession.base" value="{{system.savingThrows.possession.base}}" /></td>   <td><input type="number" name="system.savingThrows.possession.bonus" value="{{system.savingThrows.possession.bonus}}" /></td>   <td>{{riftsDerived.saves.possession.attribute}}</td><td>{{riftsDerived.saves.possession.source}}</td><td>{{riftsDerived.saves.possession.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.possession.base}}" data-bonus="{{riftsDerived.saves.possession.total}}" data-label="Save vs Possession"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Horror Factor:</td> <td><input type="text" name="system.savingThrows.horrorFactor.base" value="{{system.savingThrows.horrorFactor.base}}" /></td> <td><input type="number" name="system.savingThrows.horrorFactor.bonus" value="{{system.savingThrows.horrorFactor.bonus}}" /></td> <td>{{riftsDerived.saves.horrorFactor.attribute}}</td><td>{{riftsDerived.saves.horrorFactor.source}}</td><td>{{riftsDerived.saves.horrorFactor.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.horrorFactor.base}}" data-bonus="{{riftsDerived.saves.horrorFactor.total}}" data-label="Save vs Horror Factor"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Coma/Death:</td>    <td><input type="text" name="system.savingThrows.death.base" value="{{system.savingThrows.death.base}}" /></td>        <td><input type="number" name="system.savingThrows.death.bonus" value="{{system.savingThrows.death.bonus}}" /></td>        <td>{{riftsDerived.saves.death.attribute}}%</td><td>{{riftsDerived.saves.death.source}}</td><td>{{riftsDerived.saves.death.display}}</td><td><a data-action="roll" data-roll-type="percentSave" data-target="{{riftsDerived.saves.death.total}}" data-label="Save vs Coma/Death"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            <tr><td>Pain:</td>          <td><input type="text" name="system.savingThrows.pain.base" value="{{system.savingThrows.pain.base}}" /></td>         <td><input type="number" name="system.savingThrows.pain.bonus" value="{{system.savingThrows.pain.bonus}}" /></td>         <td>0</td><td>{{riftsDerived.saves.pain.source}}</td><td>{{riftsDerived.saves.pain.total}}</td><td><a data-action="roll" data-roll-type="save" data-base="{{system.savingThrows.pain.base}}" data-bonus="{{riftsDerived.saves.pain.total}}" data-label="Save vs Pain"><i class="fas fa-dice-d20"></i></a></td></tr>
+                            {{#each system.savingThrows.extras}}
+                            <tr>
+                                <td><input type="text" name="system.savingThrows.extras.{{@index}}.name" value="{{name}}" placeholder="Save" /></td>
+                                <td><input type="text" name="system.savingThrows.extras.{{@index}}.base" value="{{base}}" /></td>
+                                <td><input type="number" name="system.savingThrows.extras.{{@index}}.bonus" value="{{bonus}}" /></td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>{{bonus}}</td>
+                                <td>
+                                    <a data-action="roll" data-roll-type="save" data-base="{{base}}" data-bonus="{{bonus}}" data-label="Save vs {{name}}"><i class="fas fa-dice-d20"></i></a>
+                                    <a data-action="delete-row" data-path="savingThrows.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <button type="button" class="ee-add" data-action="add-row" data-path="savingThrows.extras" data-kind="saveExtra">+ Add</button>
+                </div>
+
+                
+            </div>
+</details>
+{{#if hasLegacyWeapons}}
+<details class="ee-disclosure" data-disclosure-key="saved-weapons">
+<summary>Saved weapon rows</summary>
+<div class="ee-panel ee-weapons">
+                    <h3>Modern Weapons</h3>
+                    <div class="ee-weapon-list">
+                        {{#each system.weapons.modern}}
+                        <div class="ee-weapon-row ee-weapon-row-modern">
+                            <label class="ee-weapon-field ee-weapon-name"><span>Name</span><input type="text" name="system.weapons.modern.{{@index}}.name" value="{{name}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-wp"><span>W.P.</span><select name="system.weapons.modern.{{@index}}.wpKey">{{eeSelectOptions ../wpModernOptions wpKey}}</select>{{#if wpKey}}<em>{{#if wpSelected}}Strike {{wpBonus.strike}}{{else}}Not selected{{/if}}</em>{{/if}}</label>
+                            <label class="ee-weapon-field"><span>Dmg Type</span><select name="system.weapons.modern.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></label>
+                            <label class="ee-weapon-field"><span>Damage</span><input type="text" name="system.weapons.modern.{{@index}}.damage" value="{{damage}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-small"><span>Scale</span><select name="system.weapons.modern.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></label>
+                            <label class="ee-weapon-field"><span>Ammo</span><input type="text" name="system.weapons.modern.{{@index}}.ammo" value="{{ammo}}" /></label>
+                            <label class="ee-weapon-field"><span>Payload</span><input type="text" name="system.weapons.modern.{{@index}}.payload" value="{{payload}}" /></label>
+                            <label class="ee-weapon-field"><span>Strike</span><input type="text" name="system.weapons.modern.{{@index}}.strike" value="{{strike}}" /><em>Total {{effectiveStrikeDisplay}}</em></label>
+                            <label class="ee-weapon-field"><span>Range</span><input type="text" name="system.weapons.modern.{{@index}}.range" value="{{range}}" /></label>
+                            <label class="ee-weapon-field"><span>Rate</span><input type="text" name="system.weapons.modern.{{@index}}.rate" value="{{rate}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-special"><span>Special</span><input type="text" name="system.weapons.modern.{{@index}}.special" value="{{special}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-quick"><span>TAH</span><input type="hidden" name="system.weapons.modern.{{@index}}.quickRoll" value="false" /><input type="checkbox" name="system.weapons.modern.{{@index}}.quickRoll" {{eeChecked quickRoll}} title="Show in Token Action HUD" /></label>
+                            <div class="ee-weapon-rolls">
+                                <a data-action="roll" data-roll-type="d20" data-bonus="{{effectiveStrike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                                {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
+                                <a data-action="delete-row" data-path="weapons.modern" data-index="{{@index}}" title="Delete Weapon"><i class="fas fa-times"></i></a>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div class="ee-weapon-toolbar">
+                        <button type="button" class="ee-add" data-action="add-row" data-path="weapons.modern" data-kind="modernWeapon">+ Modern Weapon</button>
+                        <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon Item"><i class="fas fa-plus"></i> Weapon Item</a>
+                    </div>
+
+                    
+                    <h3>Ancient Weapons</h3>
+                    <div class="ee-weapon-list">
+                        {{#each system.weapons.ancient}}
+                        <div class="ee-weapon-row ee-weapon-row-ancient">
+                            <label class="ee-weapon-field ee-weapon-name"><span>Name</span><input type="text" name="system.weapons.ancient.{{@index}}.name" value="{{name}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-wp"><span>W.P.</span><select name="system.weapons.ancient.{{@index}}.wpKey">{{eeSelectOptions ../wpAncientOptions wpKey}}</select>{{#if wpKey}}<em>{{#if wpSelected}}Strike {{wpBonus.strike}}, Parry {{wpBonus.parry}}{{else}}Not selected{{/if}}</em>{{/if}}</label>
+                            <label class="ee-weapon-field"><span>Dmg Type</span><select name="system.weapons.ancient.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></label>
+                            <label class="ee-weapon-field"><span>Damage</span><input type="text" name="system.weapons.ancient.{{@index}}.damage" value="{{damage}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-small"><span>Scale</span><select name="system.weapons.ancient.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></label>
+                            <label class="ee-weapon-field"><span>Ammo</span><input type="text" name="system.weapons.ancient.{{@index}}.ammo" value="{{ammo}}" /></label>
+                            <label class="ee-weapon-field"><span>Strike</span><input type="text" name="system.weapons.ancient.{{@index}}.strike" value="{{strike}}" /><em>Total {{effectiveStrikeDisplay}}</em></label>
+                            <label class="ee-weapon-field"><span>Parry</span><input type="text" name="system.weapons.ancient.{{@index}}.parry" value="{{parry}}" /><em>Total {{effectiveParryDisplay}}</em></label>
+                            <label class="ee-weapon-field ee-weapon-special"><span>Special</span><input type="text" name="system.weapons.ancient.{{@index}}.special" value="{{special}}" /></label>
+                            <label class="ee-weapon-field ee-weapon-quick"><span>TAH</span><input type="hidden" name="system.weapons.ancient.{{@index}}.quickRoll" value="false" /><input type="checkbox" name="system.weapons.ancient.{{@index}}.quickRoll" {{eeChecked quickRoll}} title="Show in Token Action HUD" /></label>
+                            <div class="ee-weapon-rolls">
+                                <a data-action="roll" data-roll-type="d20" data-bonus="{{effectiveStrike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                                <a data-action="roll" data-roll-type="d20" data-bonus="{{effectiveParry}}" data-label="{{name}} Parry" title="Roll Parry"><i class="fas fa-shield-alt"></i></a>
+                                {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
+                                <a data-action="delete-row" data-path="weapons.ancient" data-index="{{@index}}" title="Delete Weapon"><i class="fas fa-times"></i></a>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div class="ee-weapon-toolbar">
+                        <button type="button" class="ee-add" data-action="add-row" data-path="weapons.ancient" data-kind="ancientWeapon">+ Ancient Weapon</button>
+                    </div>
+
+                    
+
+                    </div>
+</details>
+{{/if}}
+{{#if hasLegacyArmor}}
+<details class="ee-disclosure" data-disclosure-key="saved-armor">
+<summary>Saved armor blocks</summary>
+<div class="ee-armor-grid">
+                <div class="ee-panel">
+                    <h3>Armor</h3>
+                    <div class="ee-kv"><label>Name:</label><input type="text" name="system.armor.primary.name" value="{{system.armor.primary.name}}" /></div>
+                    <div class="ee-kv"><label>A.R.:</label><input type="number" name="system.armor.primary.ar" value="{{system.armor.primary.ar}}" /></div>
+                    <div class="ee-kv"><label>Weight:</label><input type="text" name="system.armor.primary.weight" value="{{system.armor.primary.weight}}" /></div>
+                    <div class="ee-kv"><label>Cost:</label><input type="text" name="system.armor.primary.cost" value="{{system.armor.primary.cost}}" /></div>
+                    <div class="ee-kv"><label>Prowl Penalty (%):</label><input type="number" name="system.armor.primary.prowlPenalty" value="{{system.armor.primary.prowlPenalty}}" /></div>
+                    <table class="ee-table">
+                        <thead><tr><th></th><th>Current</th><th>Max</th></tr></thead>
+                        <tbody>
+                            <tr><td>MainBody:</td> <td><input type="number" name="system.armor.primary.locations.mainBody.current" value="{{system.armor.primary.locations.mainBody.current}}" /></td><td><input type="number" name="system.armor.primary.locations.mainBody.max" value="{{system.armor.primary.locations.mainBody.max}}" /></td></tr>
+                            <tr><td>Head:</td>     <td><input type="number" name="system.armor.primary.locations.head.current" value="{{system.armor.primary.locations.head.current}}" /></td>    <td><input type="number" name="system.armor.primary.locations.head.max" value="{{system.armor.primary.locations.head.max}}" /></td></tr>
+                            <tr><td>Left Arm:</td> <td><input type="number" name="system.armor.primary.locations.leftArm.current" value="{{system.armor.primary.locations.leftArm.current}}" /></td> <td><input type="number" name="system.armor.primary.locations.leftArm.max" value="{{system.armor.primary.locations.leftArm.max}}" /></td></tr>
+                            <tr><td>Right Arm:</td><td><input type="number" name="system.armor.primary.locations.rightArm.current" value="{{system.armor.primary.locations.rightArm.current}}" /></td><td><input type="number" name="system.armor.primary.locations.rightArm.max" value="{{system.armor.primary.locations.rightArm.max}}" /></td></tr>
+                            <tr><td>Left Leg:</td> <td><input type="number" name="system.armor.primary.locations.leftLeg.current" value="{{system.armor.primary.locations.leftLeg.current}}" /></td> <td><input type="number" name="system.armor.primary.locations.leftLeg.max" value="{{system.armor.primary.locations.leftLeg.max}}" /></td></tr>
+                            <tr><td>Right Leg:</td><td><input type="number" name="system.armor.primary.locations.rightLeg.current" value="{{system.armor.primary.locations.rightLeg.current}}" /></td><td><input type="number" name="system.armor.primary.locations.rightLeg.max" value="{{system.armor.primary.locations.rightLeg.max}}" /></td></tr>
+                            {{#each system.armor.primary.extras}}
+                            <tr>
+                                <td><input type="text" name="system.armor.primary.extras.{{@index}}.name" value="{{name}}" placeholder="Location" /></td>
+                                <td><input type="number" name="system.armor.primary.extras.{{@index}}.current" value="{{current}}" /></td>
+                                <td>
+                                    <input type="number" name="system.armor.primary.extras.{{@index}}.max" value="{{max}}" />
+                                    <a data-action="delete-row" data-path="armor.primary.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <button type="button" class="ee-add" data-action="add-row" data-path="armor.primary.extras" data-kind="armorExtra">+ Add</button>
+                </div>
+
+                <div class="ee-panel">
+                    <h3>Armor</h3>
+                    <div class="ee-kv"><label>Name:</label><input type="text" name="system.armor.secondary.name" value="{{system.armor.secondary.name}}" /></div>
+                    <div class="ee-kv"><label>A.R.:</label><input type="number" name="system.armor.secondary.ar" value="{{system.armor.secondary.ar}}" /></div>
+                    <div class="ee-kv"><label>Weight:</label><input type="text" name="system.armor.secondary.weight" value="{{system.armor.secondary.weight}}" /></div>
+                    <div class="ee-kv"><label>Cost:</label><input type="text" name="system.armor.secondary.cost" value="{{system.armor.secondary.cost}}" /></div>
+                    <div class="ee-kv"><label>Prowl Penalty (%):</label><input type="number" name="system.armor.secondary.prowlPenalty" value="{{system.armor.secondary.prowlPenalty}}" /></div>
+                    <table class="ee-table">
+                        <thead><tr><th></th><th>Current</th><th>Max</th></tr></thead>
+                        <tbody>
+                            <tr><td>MainBody:</td> <td><input type="number" name="system.armor.secondary.locations.mainBody.current" value="{{system.armor.secondary.locations.mainBody.current}}" /></td><td><input type="number" name="system.armor.secondary.locations.mainBody.max" value="{{system.armor.secondary.locations.mainBody.max}}" /></td></tr>
+                            <tr><td>Head:</td>     <td><input type="number" name="system.armor.secondary.locations.head.current" value="{{system.armor.secondary.locations.head.current}}" /></td>    <td><input type="number" name="system.armor.secondary.locations.head.max" value="{{system.armor.secondary.locations.head.max}}" /></td></tr>
+                            <tr><td>Left Arm:</td> <td><input type="number" name="system.armor.secondary.locations.leftArm.current" value="{{system.armor.secondary.locations.leftArm.current}}" /></td> <td><input type="number" name="system.armor.secondary.locations.leftArm.max" value="{{system.armor.secondary.locations.leftArm.max}}" /></td></tr>
+                            <tr><td>Right Arm:</td><td><input type="number" name="system.armor.secondary.locations.rightArm.current" value="{{system.armor.secondary.locations.rightArm.current}}" /></td><td><input type="number" name="system.armor.secondary.locations.rightArm.max" value="{{system.armor.secondary.locations.rightArm.max}}" /></td></tr>
+                            <tr><td>Left Leg:</td> <td><input type="number" name="system.armor.secondary.locations.leftLeg.current" value="{{system.armor.secondary.locations.leftLeg.current}}" /></td> <td><input type="number" name="system.armor.secondary.locations.leftLeg.max" value="{{system.armor.secondary.locations.leftLeg.max}}" /></td></tr>
+                            <tr><td>Right Leg:</td><td><input type="number" name="system.armor.secondary.locations.rightLeg.current" value="{{system.armor.secondary.locations.rightLeg.current}}" /></td><td><input type="number" name="system.armor.secondary.locations.rightLeg.max" value="{{system.armor.secondary.locations.rightLeg.max}}" /></td></tr>
+                            {{#each system.armor.secondary.extras}}
+                            <tr>
+                                <td><input type="text" name="system.armor.secondary.extras.{{@index}}.name" value="{{name}}" placeholder="Location" /></td>
+                                <td><input type="number" name="system.armor.secondary.extras.{{@index}}.current" value="{{current}}" /></td>
+                                <td>
+                                    <input type="number" name="system.armor.secondary.extras.{{@index}}.max" value="{{max}}" />
+                                    <a data-action="delete-row" data-path="armor.secondary.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <button type="button" class="ee-add" data-action="add-row" data-path="armor.secondary.extras" data-kind="armorExtra">+ Add</button>
+                </div>
+            </div>
+
+            </details>
+{{/if}}
+            <details class="ee-panel ee-disclosure" data-disclosure-key="physical-capabilities">
+                <summary>Physical Capabilities &amp; Creation Reference</summary>
+                <p class="ee-hint">Auto-calculated from the attribute rules. Enter an override only when a race, OCC, skill, power, or house rule changes the result.</p>
+                <div class="ee-row">
+                    <label>Carry (lbs):</label> <input type="text" name="system.physical.carry" value="{{system.physical.carry}}" placeholder="{{riftsDerived.physical.carry}}" />
+                    <label>Lift (lbs):</label>  <input type="text" name="system.physical.lift" value="{{system.physical.lift}}" placeholder="{{riftsDerived.physical.lift}}" />
+                    <label>Throw Max (lbs):</label><input type="text" name="system.physical.throwMax" value="{{system.physical.throwMax}}" placeholder="{{riftsDerived.physical.throwMax}}" />
+                    <label>Throw (ft):</label>  <input type="text" name="system.physical.throwFt" value="{{system.physical.throwFt}}" placeholder="{{riftsDerived.physical.throwFt}}" />
+                </div>
+                <div class="ee-row">
+                    <label>Run (mph):</label>   <input type="text" name="system.physical.runMph" value="{{system.physical.runMph}}" placeholder="{{riftsDerived.physical.runMph}}" />
+                    <label>Run (yd/min):</label><output>{{riftsDerived.physical.runYardsPerMinute}}</output>
+                    <label>Run (yd/melee):</label><output>{{riftsDerived.physical.runYardsPerMelee}}</output>
+                    <label>Run (ft/attack):</label><output>{{riftsDerived.physical.runFeetPerAttack}}</output>
+                </div>
+                <div class="ee-row">
+                    <label>Starting HP:</label><output>{{riftsDerived.physical.startingHp}}</output>
+                    <label>Starting SDC:</label><output>{{riftsDerived.physical.startingSdc}}</output>
+                    <label>Coma/Death:</label><output>{{riftsDerived.saves.death.display}}</output>
+                    <label>Speed KPH:</label><output>{{riftsDerived.physical.runKph}}</output>
+                </div>
+            </details>
+
+            <details class="ee-panel ee-disclosure ee-weapon-proficiencies" data-disclosure-key="rifts-weapon-proficiencies">
+                <summary>
+                    Weapon Proficiencies
+                    <span class="ee-summary-chips">
+                        {{#each riftsDerived.weaponProficiencies.ancient}}<span>{{name}}</span>{{/each}}
+                        {{#each riftsDerived.weaponProficiencies.modern}}<span>{{name}}</span>{{/each}}
+                        {{#unless (or riftsDerived.weaponProficiencies.ancient.length riftsDerived.weaponProficiencies.modern.length)}}<span>None selected</span>{{/unless}}
+                    </span>
+                </summary>
+                <div class="ee-wp-notes">
+                    {{#each riftsWpNotes}}<div>{{this}}</div>{{/each}}
+                </div>
+                <div class="ee-wp-grid">
+                    <div class="ee-wp-col">
+                        <h4>Ancient</h4>
+                        {{#each wpAncient}}
+                        <label class="ee-wp-check">
+                            <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} {{#if sourceOnly}}disabled{{/if}} />
+                            <span>
+                                <span class="ee-wp-name">{{name}}</span>
+                                <span class="ee-wp-rule">{{summary}}</span>
+                                {{#if damage}}<span class="ee-wp-rule">{{damage}}</span>{{/if}}
+                                {{#if range}}<span class="ee-wp-rule">{{range}}</span>{{/if}}
+                                {{#if note}}<span class="ee-wp-rule">{{note}}</span>{{/if}}
+                            </span>
+                        </label>
+                        {{/each}}
+                    </div>
+                    <div class="ee-wp-col">
+                        <h4>Modern</h4>
+                        {{#each wpModern}}
+                        <label class="ee-wp-check">
+                            <input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" />
+                            <input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}} {{#if sourceOnly}}disabled{{/if}} />
+                            <span>
+                                <span class="ee-wp-name">{{name}}</span>
+                                <span class="ee-wp-rule">{{summary}}</span>
+                                {{#if damage}}<span class="ee-wp-rule">{{damage}}</span>{{/if}}
+                                {{#if range}}<span class="ee-wp-rule">{{range}}</span>{{/if}}
+                                {{#if note}}<span class="ee-wp-rule">{{note}}</span>{{/if}}
+                            </span>
+                        </label>
+                        {{/each}}
+                    </div>
+                </div>
+                <h4>Custom W.P.</h4>
+                <table class="ee-table">
+                    <tbody>
+                        {{#each system.weaponProficiencies.custom}}
+                        <tr>
+                            <td><input type="text" name="system.weaponProficiencies.custom.{{@index}}.name" value="{{name}}" placeholder="Custom W.P." /></td>
+                            <td class="ee-actions"><a data-action="delete-row" data-path="weaponProficiencies.custom" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <button type="button" class="ee-add" data-action="add-row" data-path="weaponProficiencies.custom" data-kind="wpCustom">+ Add Custom W.P.</button>
+            </details>
+
+            <details class="ee-panel ee-disclosure ee-combat-reference" data-disclosure-key="combat-reference">
+                <summary>Combat Reference</summary>
+                <div class="ee-combat-reference-body">
+                    <details class="ee-disclosure ee-combat-ref-section" data-disclosure-key="combat-reference-unarmed" open>
+                        <summary>Unarmed &amp; Natural Strikes</summary>
+                        <div class="ee-table-scroll">
+                            <table class="ee-table ee-unarmed-reference-table">
+                                <thead><tr><th>Move</th><th>Damage</th><th>Strike Adj. / Total</th><th>Parry Adj. / Total</th><th>Actions</th><th>Special</th><th title="Token Action HUD">TAH</th><th>Roll</th><th></th></tr></thead>
+                                <tbody>
+                                    {{#each system.weapons.unarmed}}
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="system.weapons.unarmed.{{@index}}.damageType" value="{{damageType}}" />
+                                            <input type="hidden" name="system.weapons.unarmed.{{@index}}.damageScale" value="{{damageScale}}" />
+                                            <input type="text" name="system.weapons.unarmed.{{@index}}.name" value="{{name}}" />
+                                            {{#if referenceSource}}<a href="{{referenceSource}}" target="_blank" rel="nofollow noopener" title="{{referenceTarget}} — {{referenceNote}}"><i class="fas fa-info-circle"></i></a>{{/if}}
+                                        </td>
+                                        <td><input type="text" name="system.weapons.unarmed.{{@index}}.damage" value="{{damage}}" /><small>{{effectiveDamageDisplay}}</small></td>
+                                        <td><input type="text" name="system.weapons.unarmed.{{@index}}.strike" value="{{strike}}" /><small>{{effectiveStrikeDisplay}}</small></td>
+                                        <td><input type="text" name="system.weapons.unarmed.{{@index}}.parry" value="{{parry}}" /><small>{{effectiveParryDisplay}}</small></td>
+                                        <td><input type="text" name="system.weapons.unarmed.{{@index}}.actions" value="{{actions}}" /></td>
+                                        <td><input type="text" name="system.weapons.unarmed.{{@index}}.special" value="{{special}}" title="{{referenceNote}}" /></td>
+                                        <td class="ee-token-quick-cell"><input type="hidden" name="system.weapons.unarmed.{{@index}}.quickRoll" value="false" /><input type="checkbox" name="system.weapons.unarmed.{{@index}}.quickRoll" {{eeChecked quickRoll}} title="Show in Token Action HUD" /></td>
+                                        <td class="ee-actions">
+                                            <a data-action="roll" data-roll-type="d20" data-bonus="{{effectiveStrike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                                            <a data-action="roll" data-roll-type="d20" data-bonus="{{effectiveParry}}" data-label="{{name}} Parry" title="Roll Parry"><i class="fas fa-shield-alt"></i></a>
+                                            <a data-action="roll" data-roll-type="damage" data-formula="{{effectiveDamage}}" data-label="{{name}} Damage" title="Roll Damage"><i class="fas fa-burst"></i></a>
+                                        </td>
+                                        <td><a data-action="delete-row" data-path="weapons.unarmed" data-index="{{@index}}" title="Delete Strike"><i class="fas fa-times"></i></a></td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="ee-add" data-action="add-row" data-path="weapons.unarmed" data-kind="unarmedStrike">+ Unarmed / Natural Strike</button>
+                    </details>
+
+                    {{#each riftsDerived.combatReferences}}
+                    {{#unless (eq section "Unarmed Attacks")}}
+                    <details class="ee-disclosure ee-combat-ref-section" data-disclosure-key="combat-reference-{{@index}}">
+                        <summary>{{section}}</summary>
+                        <div class="ee-table-scroll">
+                            <table class="ee-table ee-combat-ref-table">
+                                <thead><tr><th>Move</th><th>Roll</th><th>Target</th><th>Actions</th><th>Damage</th><th>Note</th><th>Roll</th></tr></thead>
+                                <tbody>
+                                    {{#each entries}}
+                                    <tr>
+                                        <td>{{#if source}}<a href="{{source}}" target="_blank" rel="nofollow noopener">{{name}}</a>{{else}}{{name}}{{/if}} {{#if bonusDisplay}}<span class="ee-combat-ref-bonus">{{bonusDisplay}}</span>{{/if}}</td>
+                                        <td>{{roll}}</td><td>{{target}}</td><td>{{actions}}</td><td>{{#if damageFormula}}{{damageFormula}}{{else}}{{damage}}{{/if}}</td><td>{{note}}</td>
+                                        <td class="ee-actions">{{#if bonusKey}}<a data-action="roll" data-roll-type="d20" data-bonus="{{bonus}}" data-label="{{name}}" title="Roll {{name}}"><i class="fas fa-dice-d20"></i></a>{{/if}}{{#if damageFormula}}<a data-action="roll" data-roll-type="damage" data-formula="{{damageFormula}}" data-label="{{name}} Damage" title="Roll {{name}} Damage"><i class="fas fa-burst"></i></a>{{/if}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                    {{/unless}}
+                    {{/each}}
+                </div>
+            </details>
+
+            {{/unless}}
+        </div>

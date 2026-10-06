@@ -1,0 +1,1027 @@
+[
+  {
+    "name": "C-10 Light Assault Laser Rifle",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 257
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "2D6 M.D., no variable settings.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "2000 feet (610 m).",
+      "ammo": "",
+      "payload": "20 blasts from standard E-Clip or 30 from a long E-Clip. Laser Targeting: Add +3 to strike on an Aimed shot, but only when the laser targeting system is functioning. No bonus when on the blink.",
+      "rate": "Each laser blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "ColO Light Assault Laser Rifle. The C-lO light laser rifle is an ear lier version of the C-12 and greatly resembles the heavy laser. The only difference in appearance is a longer barrel and there is a built-in com puter enhanced laser targeting system. It is a favorite sniper rifle known for its accuracy and durability in the field. While the rifle is excellent, there is a problem with the computer enhanced targeting system. It is not as reliable as the weapon itself and is known to fail after rugged ac tion in the field (01-23% chance every time it undergoes strenuous combat, 01-40% after a hard fall). The experimental targeting system was too touchy and has been scrapped from all later weapons. Weight: S ibs (2.3 kg). Mega-Damage: 2D6 M.D., no variable settings. Rate of Fire: Each laser blast counts as one melee attack. Effective Range: 2000 feet (610 m). Payload: 20 blasts from standard E-Clip or 30 from a long E-Clip. Laser Targeting: Add +3 to strike on an Aimed shot, but only when the laser targeting system is functioning. No bonus when on the blink. Black Market Cost: 16,000 credits for the rifle. Standard clip and re charge costs. An E-Clip canister cannot be used with this weapon.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "C-12 Heavy Assault Laser Rifle",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 257
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "2D6 M.D. or 4D6 M.D., or 6D6 S.D.C.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "2000 feet (610 m).",
+      "ammo": "",
+      "payload": "20 M.D. blasts from standard E-Clip or 30 from a long E-Clip, plus another 30 can be added with one E-Clip canister, a new Coalition invention. Note that six S.D.C. shots equals one Mega-Dam age blast. Laser Targeting: Add + I to strike on an Aimed shot.",
+      "rate": "Each laser blast or burst counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "C-12 Heavy Assault Laser Rifle. Until 105 P.A. this was the stan dard infantry weapon and is still a favorite of Commandos and Special Ops. It is a sturdy and reliable rifle that can survive a great amount of combat abuse and activity without mechanical failure. The rifle has three settings, one S.D.C. and two M.D.C. settings. The rifle can also be set to fire a single shot or a burst of three. Comes standard with a passive nightvision scope and laser targeting. Weight: 71bs (3.2 kg). Mega-Damage: 2D6 M.D. or 4D6 M.D., or 6D6 S.D.C. Rate of Fire: Each laser blast or burst counts as one melee attack. Effective Range: 2000 feet (610 m). Payload: 20 M.D. blasts from standard E-Clip or 30 from a long E-Clip, plus another 30 can be added with one E-Clip canister, a new Coalition invention. Note that six S.D.C. shots equals one Mega-Dam age blast. Laser Targeting: Add + I to strike on an Aimed shot. Black Market Cost: 20,000 credits for the rifle.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "C-14 Fire Breather Assault Laser and Grenade Launcher",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 258
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "Laser is 3D6 M.D., Grenades 2D6 M.D. to a blast area of 12 feet (3.6 m).",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "Laser is 2000 feet (610 m). Grenade launcher is 1200 feet (365 m).",
+      "ammo": "",
+      "payload": "Laser is 20 blasts per standard E-Clip. The Grenade launcher holds 12 grenades. Reloading the Launcher: Requires one full melee, 15 seconds, to manu ally reload the grenade launcher. As always, reloading an E-Clip takes about five seconds or equal to one melee action/attack.",
+      "rate": "Each laser blast or firing of a single grenade counts as one of the shooter's melee attacks for that round.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "C-14 \"Fire Breather\" Assault Laser and Grenade Launcher. New in 101 P.A., the C-14 remains a popular, over-and-under heavy in fantry weapon with high marks for durability and reliability in action. A laser comprises the top and a pump-action grenade launcher is fitted below. Standard issue includes a passive nightvision scope. Weight: 10 Ibs (4.5 kg). Mega-Damage: Laser is 3D6 M.D., Grenades 2D6 M.D. to a blast area of 12 feet (3.6 m). Rate of Fire: Each laser blast or firing of a single grenade counts as one of the shooter's melee attacks for that round. Effective Range: Laser is 2000 feet (610 m). Grenade launcher is 1200 feet (365 m). Payload: Laser is 20 blasts per standard E-Clip. The Grenade launcher holds 12 grenades. Reloading the Launcher: Requires one full melee, 15 seconds, to manu ally reload the grenade launcher. As always, reloading an E-Clip takes about five seconds or equal to one melee action/attack. Black Market Cost: 30,000 credits, and a hot commodity (not com monly available). Grenades cost 550 credits apiece or 4500 a dozen. An E-Clip Canister can not be added to this weapon.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "C-18 Laser Pistol",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 257
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "2D4 M.D.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "800 feet (244 m).",
+      "ammo": "",
+      "payload": "10 shots.",
+      "rate": "Each laser blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "C-tS Laser Pistol. In 101 P.A., this was the standard issue sidearm of the Coalition Army, but was replaced in 105 P.A. by the C-20 and C-30, both of which do greater damage and have bigger payloads. Weight: 4 Ibs (1.8 kg). Mega-Damage: 2D4 M.D. Rate of Fire: Each laser blast counts as one melee attack. Effective Range: 800 feet (244 m). Payload: 10 shots. Black Market Cost: 12,000 credits. Fair availability.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "C-27 Heavy Plasma Cannon",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 258
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "6D6 M.D. per shot.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "1600 feet (488 m).",
+      "ammo": "",
+      "payload": "10 blasts per E-Canister. Targeting Scope: Add a bonus of + 1 to strike on an Aimed shot.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "C-27 Heavy Plasma Cannon. The plasma cannon is a heavy sup port weapon of the infantry. It is coveted for its dependability and in credible damage. It comes standard issue with a telescopic and laser distancing scope. Weight: 12 Ibs (5.4 kg). Mega-Damage: 6D6 M.D. per shot. Rate of Fire: Each blast counts as one melee attack. Effective Range: 1600 feet (488 m). Payload: 10 blasts per E-Canister. Targeting Scope: Add a bonus of + 1 to strike on an Aimed shot. Black Market Cost: 32,000 for the rifle. Can only be used with an E-Clip Canister which costs 10,000 credits new and fully loaded; re charge is 2000-2500 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "CR-1 Rocket Launcher",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 258
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "Any mini-missile can be used, but is usually armor piercing or plasma (1D4xlO or 1D6xlO M.D.C.).",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "One mile (1.6 m).",
+      "ammo": "",
+      "payload": "The CR-l holds one mini-missile. A carrying side pack can hold six mini-missiles (weighs about ten pounds/4.5 kg), a backpack can hold 12 missiles and a portable carrying case (10 M.D.C.) can hold 24 mini-missiles (weighs about 40 Ibs/18 kg).",
+      "rate": "The weapon fires only one mini-missile, but a two-man team can load and fire three missiles per melee/IS seconds. A single operator can only fire one per melee.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "CR-l Rocket Launcher. The CR-l rocket launcher is a reusable mini-missile launcher with a multi-optic scope. The capabilities of the scope include telescopic (x20 magnification, 2 mile/3.2 km range), in frared (2000 footl61O m range), passive nightvision (2000 feetl610 m), and laser targeting. Weight: The launcher weighs 14 Ibs (6.3 kg), each missile weighs about one pound (0.45 kg). Mega-Damage: Any mini-missile can be used, but is usually armor piercing or plasma (1D4xlO or 1D6xlO M.D.C.). Rate of Fire: The weapon fires only one mini-missile, but a two-man team can load and fire three missiles per melee/IS seconds. A single operator can only fire one per melee. Effective Range: One mile (1.6 m). Payload: The CR-l holds one mini-missile. A carrying side pack can hold six mini-missiles (weighs about ten pounds/4.5 kg), a backpack can hold 12 missiles and a portable carrying case (10 M.D.C.) can hold 24 mini-missiles (weighs about 40 Ibs/18 kg). Black Market Cost: 18,000 for the launcher and 1000 credits for each light damage missile (5D6 M.D.) and 2200 for each plasma or armor piercing.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "CS Fusion Block",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 260
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "There are three types of fusion block bombs. Type One: 1D4xlO M.D. and costs 1,000 credits; weighs 8 Ibs (3.6 kg). Type Two: 2D6xl0 M.D. and costs 3,000 credits; weighs 12 Ibs (5.4 m). Type Three: 4D6xl0 M.D.C. and costs 8,000 credits; weighs 16 Ibs (7.1 kg). Blast radius: Contained to a 10 foot (3 m) diameter.",
+      "damageScale": "M",
+      "damageType": "ion",
+      "range": "Fusion blocks are made for placement, not throwing or shooting. However, one can try throwing the explosive; typical range is 1D6xlO feet (3-18 m); blocks are not aerodynamic.",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "CS Fusion Blocks. A fusion block is a little square case about the size of a hand-held computer. On top of the block is a small key pad for programming the time of detonation. An automatic 30 second delay is built into each fusion bomb as a safety feature to avoid instant detona tion. Mega-Damage: There are three types of fusion block bombs. Type One: 1D4xlO M.D. and costs 1,000 credits; weighs 8 Ibs (3.6 kg). Type Two: 2D6xl0 M.D. and costs 3,000 credits; weighs 12 Ibs (5.4 m). Type Three: 4D6xl0 M.D.C. and costs 8,000 credits; weighs 16 Ibs (7.1 kg). Blast radius: Contained to a 10 foot (3 m) diameter. Effective Range: Fusion blocks are made for placement, not throwing or shooting. However, one can try throwing the explosive; typical range is 1D6xlO feet (3-18 m); blocks are not aerodynamic. Black Market Cost: 1000, 3000, and 8000 credits respectively. Poor availability; rare outside the CS military.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "CS Hand Grenade",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 260
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "Fragmentation 2D6 M.D.; Light High Explosive 3D6 M.D.; Heavy High Explosive 4D6 M.D.; Plasma 6D6 M.D.",
+      "damageScale": "M",
+      "damageType": "plasma",
+      "range": "Thrown about 40 yards / 120 feet / 36 m.",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "CS Hand Grenades. Explosive canisters about the size of a peach, designed for throwing. Fragmentation: 2D6 M.D. to a 20 foot (6 m) area. Cost: 250 credits. Light High Explosive: 3D6 M.D. to a 6 foot (1.8 m) area. Cost: 200 credits. Heayy High Explosive: 4D6 M.D. to a 6 foot (1.8 m) area. Cost: 275 credits. Plasma: 6D6 M.D. to a 12 foot area (3.6 m) area. Cost: 350 credits. Effective Range Throwing a Grenade: About 40 yards/l20 feetl36 m. Black Market Cost: See above. Good availability.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "CS Rifle Grenade",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 260
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "2D6 M.D.",
+      "damageScale": "M",
+      "damageType": "energy",
+      "range": "1200 feet (365 m).",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "CS Rifle Grenades: Standard: 2D6 M.D. to a 12 foot (3.6 m) diam eter blast area. Range: 1200 feet (365 m). Cost: 500-550 credits; good availability .",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "CS Smoke Grenade",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 260
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "No direct damage; smoke obscures vision and impairs unprotected targets.",
+      "damageScale": "S",
+      "damageType": "ion",
+      "range": "Thrown; creates a 20-40 foot / 6-12 m radius cloud.",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "CS Smoke Grenades. This type of grenade releases a thick cloud of smoke that covers a 20 to 40 foot (6 to 12 m) radius. The smoke ob scures vision in and through the cloud from those on the outside of it. Infrared cannot penetrate a smoke cloud or be used inside one. Those inside the cloud will be blinded and have trouble breathing. Those who are not protected by environmental suits or a gas mask and goggles will be -5 to strike, parry and dodge and -I on initiative. Attackers firing into/through the cloud will be shooting wild. Note that passive night vision scopes will not work in a smoke cloud. Cost: 50 credits. Good availability .",
+      "isMDC": false,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "CS Tear Gas Grenade",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 260
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "No direct damage; tear gas incapacitates and penalizes unprotected targets.",
+      "damageScale": "S",
+      "damageType": "ion",
+      "range": "Thrown; creates a 25 foot / 7.6 m cloud.",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "CS Tear Gas Grenades. The gas will instantly affect all characters without protective masks or environmental body armor. The eyes burn, sting and water profusely, causing great discomfort and making seeing clearly impossible. The gas also makes breathing difficult and irritates exposed skin. The effects last for 3D4 minutes. The 25 foot (7.6 m) cloud dissipates in about five minutes unless blown away by wind (dis sipating more quickly in 1D4 minutes). The victims of tear gas are -10 to strike, parry and dodge, -3 on initiative, and lose one melee at tack/action for each of the next I D6+ I melee rounds. Those in environ mental armor are completely safe and not affected. Cost: 200 credits. Poor to fair availability.",
+      "isMDC": false,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "CS Vibro-Blade Vambraces",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "",
+      "damage": "M.D. varies by the Vibro-Blade fitted to the vambrace.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "CS Vibro-Blade Vambraces. Dog Boys have forearm vambraces available to them with a variety of Vibro-Blades, large and small. These vambraces can be part of the DPM Riot Control Armor (half suits) or the full environmental suit. Having armor or a vambrace with both forearm and hand-guard blades does not increase the overall dam age, because only one set of blades can be used at a time; hand or fore arm.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "CV-212 Variable Light Frequency Laser Rifle",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 258
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "Setting One: 2D6 M.D. single shot, Setting Two (Burst): 6D6 M.D. and a Setting Three (S.D.C.): 6D6 S.D.C.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "2000 feet (610 m).",
+      "ammo": "",
+      "payload": "20 M.D. blasts from standard E-Clip or 30 from a long E-Clip, or E-Clip canister. Note: Six S.D.C. shots equals one, light, Mega-Damage blast. Laser Targeting: Add + I to strike on an aimed shot.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "CV-212 Variable Light Frequency Laser Rifle. Introduced in 102 P.A. it remains a popular \"anti-Glitter Boy\" weapon, though mostly used by Military Specialists and other special forces. The CV-212 is designed to overcome laser resistant armor. A microchip in the weapon's computer will automatically analyze an opponents armor (if not already preprogrammed into its memory) and after one melee round (half damage) will adjust to the light frequency that will inflict full damage. It is a sturdy and reliable rifle that can survive a fair amount of combat abuse without jamming. However, M.D.C. damage is likely (80% chance) to disengage the computer analyzer and frequency ad justments must be made manually (takes 1D4 melee rounds to find the optimum frequency). The rifle can also be set to fire in a single shot or a burst of three. Comes standard with a passive nightvision scope and laser targeting. Weight: 8 Ibs (3.6 kg). Mega-Damage: Setting One: 2D6 M.D. single shot, Setting Two (Burst): 6D6 M.D. and a Setting Three (S.D.C.): 6D6 S.D.C. Rate of Fire: Each blast counts as one melee attack. Effective Range: 2000 feet (610 m). Payload: 20 M.D. blasts from standard E-Clip or 30 from a long E-Clip, or E-Clip canister. Note: Six S.D.C. shots equals one, light, Mega-Damage blast. Laser Targeting: Add + I to strike on an aimed shot. Black Market Cost: 42,000 credits for the rifle.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Dog Pack Spikes",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "",
+      "damage": "1D4 S.D.C.; weighted gloves add 1D6+1 S.D.C. to punches; knee pads add 1D6 S.D.C. to knee kicks.",
+      "damageScale": "S",
+      "damageType": "ion",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Dog Pack Spikes. One of the Dog Pack's patented images is spikes. This is largely a stylistic gimmick to evoke a feeling offe ar and power. Spiked collars, arm and wristbands, knee pads, gloves and vambraces are all available in a large variety of different styles. Damage for all spikes is S.D.C.lHit Point damage. The spiked gloves are weighted \"sap gloves\" and add 1D6+ 1 S.D.C. damage to punches. The knee pads have the weight and power of the leg behind it and add 1D6 S.D.C. to knee kicks. All others inflict 1D4 S.D.C. damage. The hand and arm spikes can also be used to parry normal S.D.C. attacks; + 1 bonus to parry with spiked armbands or glove only. Ideal in urban, civilian situa tions where Mega-Damage weapons are not appropriate. Cost: Varies; 50 to 200 credits.",
+      "isMDC": false,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Dual Long-Blade Hand-Guard",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "",
+      "damage": "2D6 M.D.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Dual Long-Blade Hand-Guard (2). A pair of long, sharp Vibro Blades that are partially retractable (half length), maximum length is 10 inches (0.29 m). Ideal for slashing, stabbing and parrying. Mega-Damage: 2D6 M.D. Cost: 11,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Giant-Sized Vibro-Sword",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "wpSword",
+      "damage": "3D6 M.D.; usually used by oversized power armor suits or by giant robot vehicles. Rarely used by the CS.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Giant-Sized Vibro-Sword. Mega-Damage: 3D6 M.D.; usually used by oversized power armor suits or by giant robot vehicles. Rarely used by the CS. Cost: 18,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Hooked Forearm Vibro-Blades",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "",
+      "damage": "2D6 M.D. and is +1 to parry and +2 to disarm.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Hooked Forearm Vibro-Blades (2). The vambrace or forearm plate has a pair of hooked Vibro-Blades that are partially retractable (half length), maximum length is 20-24 inches (0.58 to 0.6 m). Excel lent for slashing, parrying and hooking weapons and disarming oppo nents. They are also suitable for climbing (+5% to Climbing skill). Mega-Damage: 2D6 M.D. and is +1 to parry and +2 to disarm. Cost: 14,500 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "JA-11 Juicer Assassin's Energy Rifle",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 270
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "Laser has two settings: 2D6 M.D. and 4D6 M.D., both work on different light frequencies too (same as the CV-212 on pg. 258.). The ion beam does 3D6 M.D. It was probably meant as a heavy as sault or defensive weapon to be used against a large number of troops. S.D.C.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "Laser: 4000 feet (1219 m), Ion Beam: 1600 feet (488 m), S.D.C. 7.62mm round: 2000 feet (610 m).",
+      "ammo": "",
+      "payload": "Short clip 10 shots, Long clip 30 shots. Canister Cell: Adds 30 shots. 7.62mm round: One loaded in weapon, others to be added. Laser Targeting Bonus: +3 on an Aimed shot.",
+      "rate": "The laser is meant to be a precision sniper/assassin weapon and as such, can only be fired as an Aimed shot. Total shots are equal to the total number of hand to hand attacks per melee. It can not fire bursts. Ion beam: Each blast counts as one melee attack. The 7.62mm round can be loaded and fired once for every two hand to hand attacks per melee; one to load and one to aim and fire.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "JA-ll Juicer Assassin's Energy Rifle The Juicer Assassin's rifle is a pre-Rifts design of remarkable inge nuity. The weapon can fire a single, hand loaded 7.62 mm round for S.D.C. damage, fire a high intensity laser beam, or switch to an ion beam. The weapon also has a built-in laser targeting system and comes standard with a telescopic (2 mile/3.2 km) and infrared scope. The stan dard Juicer optics helmet offers passive nightvision and other optical enhancements. The JA-II is also has a canister energy cell similar to the new CS Canister E-Clips, and this is presumably where the Coalition got the idea to develop the device. The difference between the two is that the canister on the JA-II can not be physically removed from the rifle, but can be recharged. Other than this, the energy cells work identically, adding more power to the E-Clip's capacity. In the case of the JA-II, the E-clip is used up first. Apparently, the canister was considered to be an energy reserve system. Weight: 6.5 Ibs (2.9 kg). Mega-Damage: Laser has two settings: 2D6 M.D. and 4D6 M.D., both work on different light frequencies too (same as the CV-212 on pg. 258.). The ion beam does 3D6 M.D. It was probably meant as a heavy as sault or defensive weapon to be used against a large number of troops. S.D.C. Damage: Single, hand loaded 7.62mm shell. Available types in clude a standard 7.62mm round that inflicts 5D6 S.D.C., or armor piercing 6D6 S.D.C., or exploding 1D6xlO S.D.C. damage. Rate of Fire: The laser is meant to be a precision sniper/assassin weapon and as such, can only be fired as an Aimed shot. Total shots are equal to the total number of hand to hand attacks per melee. It can not fire bursts. Ion beam: Each blast counts as one melee attack. The 7.62mm round can be loaded and fired once for every two hand to hand attacks per melee; one to load and one to aim and fire. Effective Range: Laser: 4000 feet (1219 m), Ion Beam: 1600 feet (488 m), S.D.C. 7.62mm round: 2000 feet (610 m). Payload: Short clip 10 shots, Long clip 30 shots. Canister Cell: Adds 30 shots. 7.62mm round: One loaded in weapon, others to be added. Laser Targeting Bonus: +3 on an Aimed shot. Black Market Cost: 40,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "JA-9 Juicer Assassin Variable Laser Rifle",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 270
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "2D6 M.D.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "4000 feet (1219 m).",
+      "ammo": "",
+      "payload": "10 shot with a short E-Clip or 30 with a Long E-Clip. Laser Targeting Bonus: +3 to strike on an Aimed Shot.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "JA-9 Juicer Assassin Variable Laser Rifle Another German Pre-Rifts design for the Juicer. A variable light fre quency laser to overcome laser resistant armors, like that of the Glitter Boy. The Juicer can adjust the frequency of the laser to blast through a Glitter Boy's defenses (or anybody else; same as the CV-212, pg. 258). Greatly resembles the JA-II, complete with laser targeting and scope. Weight: 6 Ibs (2.7 kg). Mega-Damage: 2D6 M.D. Rate of Fire: Each blast counts as one melee attack. Effective Range: 4000 feet (1219 m). Payload: 10 shot with a short E-Clip or 30 with a Long E-Clip. Laser Targeting Bonus: +3 to strike on an Aimed Shot. Black Market Cost: 20,000 credits. Rail Guns A rail gun is an electro-magnetic system mass driver that fires metal spikes, balls, or rings at such a high velocity that the projectiles inflict massive amounts of damage. The projectiles need no gunpowder or ex plosive charges to inflict Mega-Damage, thus they are inexpensive to make and popular throughout the land. The famous \"Boom Gun\" of the Glitter Boys is a rail gun. The down side to the rail guns are their size, weight, kick, loudness, and expensive and potentially dangerous power source. Few humans other than those with bionic augmentation can op erate a rail gun as a handgun. Rail guns are most commonly used with power armor where they are perhaps their most formidable, mounted on vehicles and giant robots, or as heavy, tripod mounted machine-guns.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "L-20 Pulse Rifle",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 270
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "2D6 M.D. single shot, or 6D6 multiple pulse burst (three simultaneous shots).",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "1600 feet (488 m).",
+      "ammo": "",
+      "payload": "40 shots short E-Clip or 50 shots Long E-Clip.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "L-20 Pulse Rifle A common frontier weapon is the L-20 pulse laser rifle manufac tured by the Black Market and several kingdoms across the land. It is a dependable, lightweight weapon with the added feature of multiple la ser bursts. Weight: 7 Ibs (3 kg). Mega-Damage: 2D6 M.D. single shot, or 6D6 multiple pulse burst (three simultaneous shots). Rate of Fire: Each blast counts as one melee attack. Effective Range: 1600 feet (488 m). Payload: 40 shots short E-Clip or 50 shots Long E-Clip. Black Market Cost: 25,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Neural Mace",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "wpBlunt",
+      "damage": "Non-lethal; the victim who is stunned is -8 to strike, parry, and dodge plus reduce the character's speed and number of attacks per melee round by half. The accumulative effect on the nervous system of the body being repeatedly struck and stunned may knock the victim un conscious, even if he has previously saved. After being struck more than four times, the unprotected character may be stunned into uncon sciousness for 2D4 melee rounds. When he recovers, he will suffer the stun penalties for 1D4 minutes. Roll to save, a failed roll means there is a 01-42% chance of being rendered unconscious. Note that in this case, even if the individual remains conscious, the charge will impair his movement as per the penalties previously described. Physical damage from the mace is 2D6 S.D.C. plus P.S. attribute bonus when used as a club; 1D6 plus strength bonuses when used as a jabbing weapon. The mace is an M.D.C. structure and can be used to parry M.D. attacks from Vibro-Blades, 'Borgs, 'bots and power armor. Duration of Stun Effects: 2D4 melee rounds. The duration of the im pairment is increased 2D4 melee rounds for every hit by the mace for which the character does not save. Save vs Neural Mace: 16 or higher; the same as saving against non-le thal poison. The character must save each time he or she is struck. A successful save means the character loses initiative and one melee at tack/action that round but is otherwise okay. Note: The mace is ineffec tive against environmental, M.D.C. body and power armor, but is effective against Dog Pack armor and half suits, or body armor without a helmet (not fully environmental without the helmet attached). Also ineffective against supernatural opponents and creatures of magic.",
+      "damageScale": "M",
+      "damageType": "ion",
+      "range": "",
+      "ammo": "",
+      "payload": "100 charges; rechargable.",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Neural Mace A handheld stun weapon used most commonly by the CS Dog Packs and Police. It is a stun weapon that releases an energy charge that temporarily short-circuits the nervous system. Damage: Non-lethal; the victim who is stunned is -8 to strike, parry, and dodge plus reduce the character's speed and number of attacks per melee round by half. The accumulative effect on the nervous system of the body being repeatedly struck and stunned may knock the victim un conscious, even if he has previously saved. After being struck more than four times, the unprotected character may be stunned into uncon sciousness for 2D4 melee rounds. When he recovers, he will suffer the stun penalties for 1D4 minutes. Roll to save, a failed roll means there is a 01-42% chance of being rendered unconscious. Note that in this case, even if the individual remains conscious, the charge will impair his movement as per the penalties previously described. Physical damage from the mace is 2D6 S.D.C. plus P.S. attribute bonus when used as a club; 1D6 plus strength bonuses when used as a jabbing weapon. The mace is an M.D.C. structure and can be used to parry M.D. attacks from Vibro-Blades, 'Borgs, 'bots and power armor. Duration of Stun Effects: 2D4 melee rounds. The duration of the im pairment is increased 2D4 melee rounds for every hit by the mace for which the character does not save. Save vs Neural Mace: 16 or higher; the same as saving against non-le thal poison. The character must save each time he or she is struck. A successful save means the character loses initiative and one melee at tack/action that round but is otherwise okay. Note: The mace is ineffec tive against environmental, M.D.C. body and power armor, but is effective against Dog Pack armor and half suits, or body armor without a helmet (not fully environmental without the helmet attached). Also ineffective against supernatural opponents and creatures of magic. Payload: 100 charges; rechargable. Black Market Cost: 8,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "NG Super Laser Pistol and Grenade Launcher",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 269
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "Laser 2D4 M.D., grenade launcher 4D6 M.D. to a blast area of six feet (1.8 m).",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "Laser is 800 feet (24 m). Grenade Launcher is 500 feet (152 m).",
+      "ammo": "",
+      "payload": "Laser is 20 blasts, Grenade Launcher is a standard six hand loaded into the gun plus an additional eight in a top feeding grenade clip. Reloading the Launcher: Requires one full melee, 15 seconds, to manu ally reload the grenade launcher. As always, reloading an E-Clip takes about five seconds or equal to one melee action/attack.",
+      "rate": "Each laser blast or grenade fired counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "NG-Super Laser Pistol and Grenade Launcher A powerful short-range weapon with the dual functions of laser gun and grenade launcher. The weapon resembles a submachine-gun or a sawed-off shotgun more than a pistol. The kick from the grenade launcher is tremendous and the weapon's weight is a problem for the average adventurer. Characters with a strength of 19 or less are -3 to strike firing one handed, and -I to strike when bracing it with both hands or on something, whether firing it as a laser or a launcher. This is why the gun is not popular among most humans, but extremely popular among Combat Cyborgs, Headhunters, Juicers, and other exceptionally strong characters. Weight: 13 Ibs (5.8 kg). Mega-Damage: Laser 2D4 M.D., grenade launcher 4D6 M.D. to a blast area of six feet (1.8 m). Rate of Fire: Each laser blast or grenade fired counts as one melee attack. Effective Range: Laser is 800 feet (24 m). Grenade Launcher is 500 feet (152 m). Payload: Laser is 20 blasts, Grenade Launcher is a standard six hand loaded into the gun plus an additional eight in a top feeding grenade clip. Reloading the Launcher: Requires one full melee, 15 seconds, to manu ally reload the grenade launcher. As always, reloading an E-Clip takes about five seconds or equal to one melee action/attack. Black Market Cost: 21,000 credits. Grenades cost 400 credits apiece or 3800 a dozen.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "NG-101 Rail Gun",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 270
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "A Burst is 30 rounds and inflicts 6D6 M.D., one round does 1D4 M.D.",
+      "damageScale": "M",
+      "damageType": "energy",
+      "range": "4000 feet (1219 m).",
+      "ammo": "",
+      "payload": "300 or 1200 round belt.",
+      "rate": "Each burst counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "NG-lOl Rail Gun Weight: Gun: 128 Ibs (57.6 kg), Power Pack: 80 Ibs (36 kg), One Ammo-Belt: 25 Ibs (II kg), Case of six belts: 160 Ibs (72 kg). Mega-Damage: A Burst is 30 rounds and inflicts 6D6 M.D., one round does 1D4 M.D. Rate of Fire: Each burst counts as one melee attack. Effective Range: 4000 feet (1219 m). Payload: 300 or 1200 round belt. Black Market Cost: 55,000 credits. Good availability.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "NG-202 Rail Gun",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 271
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "A Burst is 40 rounds and inflicts 1D4xlO M.D. One round does 1D4 M.D.",
+      "damageScale": "M",
+      "damageType": "energy",
+      "range": "4000 feet (1219 m).",
+      "ammo": "",
+      "payload": "300 or 1200 round belt.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "NG-202 Rail Gun Weight: Gun: 198 Ibs (89 kg), Power Pack: 100 Ibs (45 kg), One Ammo-Belt: 35 1bs (16 kg), Case of six belts: 210 Ibs (94.5 kg). Mega-Damage: A Burst is 40 rounds and inflicts 1D4xlO M.D. One round does 1D4 M.D. Rate of Fire: Each blast counts as one melee attack. Effective Range: 4000 feet (1219 m). Payload: 300 or 1200 round belt. Black Market Cost: 70,000 credits. Good availability.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "NG-33 Laser Pistol",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 269
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "1D6 M.D.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "800 feet (244 m).",
+      "ammo": "",
+      "payload": "20 shots.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "NG-33 Northern Gun Laser Pistol Looks like a sleeker ion blaster with a pointed nose. Weight: 4 Ibs (1.8 kg). Mega-Damage: 1D6 M.D. Rate of Fire: Each blast counts as one melee attack. Effective Range: 800 feet (244 m). Payload: 20 shots. Black Market Cost: 6,500 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "NG-L5 Laser Rifle",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 270
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "3D6 M.D.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "1600 feet (488 m).",
+      "ammo": "",
+      "payload": "10 shots standard clip or 20 shots Long E-Clip.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "NG-L5 Northern Gun Laser Rifle A durable, heavy-duty laser rifle that suffers from the usual problem of weight, but can endure a massive amount of abuse and keep on working. Weight: 141bs (6.3 kg). Mega-Damage: 3D6 M.D. Rate of Fire: Each blast counts as one melee attack. Effective Range: 1600 feet (488 m). Payload: 10 shots standard clip or 20 shots Long E-Clip. Black Market Cost: 16,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "NG-P7 Particle Beam Rifle",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 270
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "1D4xl0 M.D.",
+      "damageScale": "M",
+      "damageType": "energy",
+      "range": "1200 feet (365 m).",
+      "ammo": "",
+      "payload": "8 shots.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "NG-P7 Northern Gun Particle Beam Rifle Another heavy-duty weapon that is a bit heavy and awkward, but sturdy and dependable in combat. Weight: 21 Ibs (9.45 kg). Mega-Damage: 1D4xl0 M.D. Rate of Fire: Each blast counts as one melee attack. Effective Range: 1200 feet (365 m). Payload: 8 shots. Black Market Cost: 22,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "NG-S7 Heavy-Duty Ion Blaster",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 269
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "Two settings, 2D4 or 3D6 M.D.",
+      "damageScale": "M",
+      "damageType": "ion",
+      "range": "500 feet (152 m).",
+      "ammo": "",
+      "payload": "10 shots.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "NG-S7 Northern Gun Heavy-Duty Ion Blaster Northern Gun, located in the northern peninsula of Michigan (see World Overview, page 29), is one of the largest manufacturers of non-Coalition arms on the continent. The NG-57 is a sturdy pistol that packs a wallop, but is comparatively heavy. A variety of scopes can be attached. The scope in the illustration is a standard telescopic sight for pistol or rifle. Weight: 5 Ibs (2.25 kg). Mega-Damage: Two settings, 2D4 or 3D6 M.D. Rate of Fire: Each blast counts as one melee attack. Effective Range: 500 feet (152 m). Payload: 10 shots. Black Market Cost: 8,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Saber Forearm Vibro-Blades",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "",
+      "damage": "2D6+2 M.D. and is + 1 to parry.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Saber Forearm Vibro-Blades. The vambrace or forearm plate has a pair of straight blades that are partially retractable (halflength), maxi mum length is 24 inches (0.6 m). Mega-Damage: 2D6+2 M.D. and is + 1 to parry. Black Market Cost: 16,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Short Blade Hand-Guard",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "",
+      "damage": "2D4 M.D.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Short Blade Hand-Guard. Two short Vibro-Blades with serrated edges. Ideal for slashing and stabbing as well as sawing/cutting or chip ping through light M.D.C. wire, plastic, and ceramics, or S.D.C. metal and concrete. Mega-Damage: 2D4 M.D. Cost: 9,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Triple Bladed Cat's Claw Hand-Guard",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "",
+      "damage": "3D4 M.D.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Triple Bladed \"Cat's Claw\" Hand-Guard. Three curved, claw like Vibro-Blades, sharp on one or both sides, serrated or not. Damage: 3D4 M.D. Cost: 11,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Vibro-Bayonet",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "wpKnife",
+      "damage": "1D6+1 M.D., designed for attach ment to a variety of rifles, but rarely used by the CS.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Vibro-Bayonet. Mega-Damage: 1D6+1 M.D., designed for attach ment to a variety of rifles, but rarely used by the CS. Cost: 7,500 cred its.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Vibro-Forearm Claws",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "",
+      "damage": "2D6 M.D.; usually three hooked blades attached to a forearm gauntlet or protective plate. Great for parrying (+ I bonus) and slashing.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Vibro-Forearm Claws. Mega-Damage: 2D6 M.D.; usually three hooked blades attached to a forearm gauntlet or protective plate. Great for parrying (+ I bonus) and slashing. Cost: 11,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Vibro-Knife",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "wpKnife",
+      "damage": "1D6 M.D.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Vibro-Knife. Mega-Damage: 1D6 M.D. Cost: 7000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Vibro-Saber",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "wpSword",
+      "damage": "2D4 M.D.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Vibro-Saber (short sword). Mega-Damage: 2D4 M.D. Cost: 9000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Vibro-Sword",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 259
+    },
+    "system": {
+      "category": "ancient",
+      "wpKey": "wpSword",
+      "damage": "2D6 M.D.",
+      "damageScale": "M",
+      "damageType": "kinetic",
+      "range": "",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Vibro-Sword (large, one-handed sword). Mega-Damage: 2D6 M.D. Cost: 11,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Wilk's 320 Laser Pistol",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 268
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "1D6 M.D.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "1000 feet (305 m).",
+      "ammo": "",
+      "payload": "20 shots.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "+2 bonus to strike on an Aimed shot because of the light weight and superior balance.",
+      "parry": "",
+      "special": "",
+      "notes": "Wilk's 320 Laser Pistol An excellent laser pistol known for its durability, range, accuracy and light weight. It is a sleek, black plastic and ceramic weapon popu lar among most mercenaries and adventurers; Headhunters and City Rats are especially fond of the Wilk's series oflaser weapons. Weight: 2 Ibs (0.9 kg). Mega-Damage: 1D6 M.D. Rate of Fire: Each blast counts as one melee attack. Effective Range: 1000 feet (305 m). Payload: 20 shots. Bonus to Strike: +2 bonus to strike on an Aimed shot because of the light weight and superior balance. Black Market Cost: 11,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Wilk's 447 Laser Rifle",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 269
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "3D6 M.D.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "2000 feet (610 m).",
+      "ammo": "",
+      "payload": "20 shots per standard clip, can not use a Long E-Clip.",
+      "rate": "Each blast counts as one melee attack.",
+      "strike": "+ I to strike on an Aimed shot.",
+      "parry": "",
+      "special": "",
+      "notes": "Wilk's 447 Laser Rifle A rifle version of the handgun that is a sleek, black plastic and ce ramic weapon with all the usual features ofa Wilk's product. Weight: 5 Ibs (2.25 kg). Mega-Damage: 3D6 M.D. Rate of Fire: Each blast counts as one melee attack. Effective Range: 2000 feet (610 m). Payload: 20 shots per standard clip, can not use a Long E-Clip. Bonus to Strike: + I to strike on an Aimed shot. Black Market Cost: 18,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Wilk's Laser Scalpel",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 269
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "Up to 1D6 S.D.C.",
+      "damageScale": "S",
+      "damageType": "laser",
+      "range": "6 inches / 15.2 cm.",
+      "ammo": "",
+      "payload": "",
+      "rate": "",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Wilk's Laser Scalpel This is a laser tool designed for delicate surgery. The scalpel has several settings for under one S.D.C. point of damage and can inflict as much as 1D6 S.D.C. points. It is not meant to be used as a weapon. Range is six inches (15.2 cm). Black Market Cost: 2,500 credits.",
+      "isMDC": false,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Wilk's Laser Wand",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 269
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "One M.D. point. S.D.C.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "10 feet (3 m).",
+      "ammo": "",
+      "payload": "50 shots.",
+      "rate": "Each cut or weld counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Wilk's Laser Wand (tool) A small pen or pocket flashlight size item, about 6 inches (15.2 cm) long. It is designed for detail laser work on electronics. The handy little device has one Mega-Damage setting and four S.D.C. settings. It is de signed for close work, 1-3 feet (0.3 to 0.9 m), and not meant to be a weapon. Weight: Two ounces (56.7 g). Mega-Damage: One M.D. point. S.D.C. Damage: 1D4, 1D6, 2D6, or 3D6 S.D.C. Rate of Fire: Each cut or weld counts as one melee attack. Effective Range: 10 feet (3 m). Payload: 50 shots. Black Market Cost: 2,000 credits. Mini-Energy Clip costs 200 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  },
+  {
+    "name": "Wilk's Portable Laser Torch",
+    "type": "weapon",
+    "img": "icons/svg/sword.svg",
+    "source": {
+      "printedPage": 269
+    },
+    "system": {
+      "category": "modern",
+      "wpKey": "",
+      "damage": "1D4, 1D6, 2D4, 3D6, and 4D6 M.D. S.D.C.",
+      "damageScale": "M",
+      "damageType": "laser",
+      "range": "10 feet (3 m).",
+      "ammo": "",
+      "payload": "100 shots or about two hours of continuous use per pair of E-Clips.",
+      "rate": "Each cut or weld counts as one melee attack.",
+      "strike": "",
+      "parry": "",
+      "special": "",
+      "notes": "Wilk's Portable Laser Torch (tool) A wonderful tool for cutting and welding. The laser welding gun is the familiar Wilk's black, lightweight plastic and ceramic construction. A power cord connects the gun to its portable power pack that can be hooked to a belt or fit in a backpack, tool case, or duffle bag. The power pack is charged by two standard weapon E-Clips. It is designed to be a tool, not a weapon. The torch can cut through an S.D.C. struc ture like butter. Remember, one M.D. point is about one hundred S.D.C., thus the torch can slice through 600 S.D.C. points of metal in 15 seconds on the 1D6 M.D. setting. Weight: I Ib (0.45 kg). Mega-Damage: 1D4, 1D6, 2D4, 3D6, and 4D6 M.D. S.D.C. Damage: 1D6, 3D6, 6D6, 1D6xl0 S.D.C. Rate of Fire: Each cut or weld counts as one melee attack. Effective Range: 10 feet (3 m). Payload: 100 shots or about two hours of continuous use per pair of E-Clips. Black Market Cost: 7,000 credits.",
+      "isMDC": true,
+      "quickRoll": false
+    }
+  }
+]

@@ -1,0 +1,974 @@
+[
+  {
+    "name": "Cat's-Eye Dragon",
+    "type": "race",
+    "img": "icons/svg/dna.svg",
+    "source": {
+      "printedPage": 159
+    },
+    "system": {
+      "lifespan": "",
+      "size": "",
+      "bonuses": "",
+      "languages": "",
+      "isMDC": false,
+      "attributeBonuses": {
+        "iq": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "me": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ma": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ps": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pp": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pe": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pb": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "spd": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        }
+      },
+      "poolBonuses": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "skillBonuses": [],
+      "skillChoices": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": [],
+        "choices": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "perception": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
+      "grantsMagic": true,
+      "grantsPsionics": true,
+      "abilities": [],
+      "description": "The Cat's-Eye Dragon has definite feline overtones, while remain ing a dragon in every way, with massive wings and powerful limbs. Yet the dragon has retractable claws and golden, almond-shaped eyes like those of a cat, even the muzzle of the dragon is more blunt and feline in shape with enormous canine teeth, as opposed to the more traditional reptilian dragon jaws. Its scales come in tones of tan, gold, tawny yel low, muted orange with red flecks, to deep crimson and blood red. Tufts of darker furlhair crown the end of the dragon's prehensile tail, and a mane of matching fur often surrounds its head and neck. The Cat's-Eye Dragon also behaves much like an enormous house cat, napping often during the day and full of vim and vigor at night. They are known for their games of cat and mouse with opponents (in cluding humans) and for their independent and snobbish attitude in re gard to other life forms. Attributes: I.Q. 3D6+5, M.E. 3D6+4, M.A. 3D6+6, P.S. 3D6+ 12 (Su pernatural), P.P. 3D6+5, P.E. 3D6+9, P.B. 3D6+6, Spd. 3D6+12 running, but 1D6xl0+55 flying. These attributes stay pretty constant until the dragon reaches full maturity at about 600 years old. At that time the physical attributes increase dramatically. P.P.E.: 2D6xlO, +2D6 per level of experience. Horror Factor: 12 M.D.C. Points: 1D4x 100+50 M.D.C. + 10 M.D.C. per level of experi ence. On Rifts Earth the Hatchling's skin is an M.D.C. substance that is impervious to normal weapons. (Hit Points: 1D4xlO0+50 on most S.D.C. worlds, S.D.C: 5D6xl0 S.D.C. +3D6 S.D.C. per level of experience. Armor Rating: II, but is a Mega-Damage creature on Rifts Earth.) Note: Magic, psionics, and Mega-Damage weapons all have full effect. Natural Abilities: Incredible cat-like (its eyes glow in reflected light) nightvision 6,000 feet (1830 m), see the invisible, turn invisible at will, resistant to fire and cold (does half damage, including M.D. fire and magic cold), prehensile tail and can bio-regenerate IDIO per melee round (1D4xlO M.D.C. per minute). Metamorphosis: A natural ability common to most dragons en abling the character to completely alter his physical shape, trans forming himself to look like any living animal, from human being to cat. There are some limitations. The dragon cannot metamorphosize into inanimate objects or insects. The minimum size is about the size of a cat and the maximum size cannot exceed the dragon's own. The transformation can last two hours per level of experience. If on or near a ley line or nexus point (within two miles/3.2 km), the time is tripled. Note: Regardless of his shape, a dragon is a dragon, with all its natural powers and abilities. So a Hatchling metamorphed to look like a bunny rabbit can still talk, cast spells, and kick with the strength of a dragon. The metamorphosis does not instill any of the abilities of the animal, only its appearance. Teleport: 28% +2% per level of experience. Teleportation is a special power common to most dragons. The character can teleport, at will, up to five miles (8 km) away. At the Hatchling stage, he can only teleport himself. The percentage number indicates the likeli hood of being able to activate the teleportation. A failed roll means the teleport did not happen. The Hatchling can attempt a teleport once every other melee round. Only a mature dragon can perform a dimensional teleport without using a ley line nexus. Hatchlings can attempt a dimensional teleport at a ley line or nexus at half its usual percentage number. Cat Eye Gaze: Those caught in the transfixing gaze of the Cat's-Eye Dragon are likely to fall under the beast's mystic charm. A charm that allows the dragon to influence, command and control his enthralled victim(s). The victim must look directly in the eye, or eyes of the dragon for this power to take effect. This power does not affect characters piloting robot vehicles and seeing through the eyes of a video monitor. However, most types of power armor and all body armor offer no protection at all; gaze into the dragon's eyes and you may be under his control if that is what the dragon desires. The victim may make a save vs mind control (needing 14 or higher) to resist the dragon's influence. The Cat's-Eye's Gaze enables the dragon to control any individ ual as long as the command is not morally out of character or repug nant. The Cat's-Eye may issue any commands he feels appropriate to his charmed victim and instinctively knows the charm's limits and its best applications. For example: The dragon might control an opponent and tell him to, \"Close your eyes and stand in a comer,\" or \"You are very tired, go to sleep,\" or, \"Those people need your help, go to them and help them\", or \"That building'S on fire, you must go and rescue anybody trapped inside.\" The closer the com mand is to the nature and alignment of the victim, the more likely the charmed person is to comply without hesitation. A command like, \"Prevent your friends from entering this room,\" can also be effective, especially if a statement like, \"Great danger lies beyond this room, don't let anybody enter,\" is added to it. The command is an effective one, because it is not abhorrent, nor morally wrong. In fact, it may save lives. The charmed character has not been told to hurt anybody, only to try to prevent them from en tering the room. The individual can use whatever methods or degree of force that would be natural for his alignment and based on his re lationship with the character he's restraining. On the other hand, a command to \"kill\" a friend, family member or teammate would in stantly break the mind control. Finally, the limit to the number of people the Cat's-Eye Dragon can control is three per level of experience (xlO when an adult). Note that it is difficult (if not impossible) to charm someone in the middle of combat or any intense activity, because the person is too preoccupied and busy fighting and distracted to look the dragon in the eye. The best use of this ability is for subterfuge and covert in fluence of others. The other limitation is that the charm's effects wear off in just two minutes (8 melee rounds) per level of experi ence, or when the victim leaves the dragon's range of influence. Range: Eye contact to make the initial mind control (50 feetll5.2 m) and then the range of influence is 1000 feet (305 m, triple for an adult). Fire Breath: 3D6 M.D. to a six foot wide (1.8 m) area. The width of the blast enables the dragon to strike several opponents (2-6) simultaneously, if they are huddled closely together. Range: 60 feet (18 m). The fire breath may be used as often as three times per melee round (15 seconds), but each blast counts as one of the dragon's melee attacks. Bonuses (in addition to attribute bonuses): + 1 attack/action per me lee round, +3 on initiative, +2 on Perception Rolls, +2 to strike, + 1 to parry and dodge, +2 to pull punch, + 1 to roll with impact, +4 to save vs Horror Factor, +2 to save vs psionics, mind control and pos session, and + 1 on all other saving throws. Damage: Varies with Supernatural P.S., but their retractable claws in flict an additional +2D6 M.D. The Cat's-Eye Hatchling's bite does 2D6 M.D. (no bonus for Supernatural P.S.). The prehensile tail can be used to strike at its enemies like a whip. The tail does the same Mega-Damage as a punch + 1D6 additional M.D. Or the dragon may use its fire breath, magic, psionics or a handheld weapon. Magic: None to start. See Player Notes, above. Psionics: Minor Psychic: Select a total of six psychic powers from one of the following categories: Sensitive, Physical, or Healing. Super Psionic powers are not available. Select an additional two at fifth level and another two at tenth level. I.S.P.: 2D4xl0, +2D4 per level of experience."
+    }
+  },
+  {
+    "name": "Flame Wind Dragon",
+    "type": "race",
+    "img": "icons/svg/dna.svg",
+    "source": {
+      "printedPage": 160
+    },
+    "system": {
+      "lifespan": "",
+      "size": "",
+      "bonuses": "",
+      "languages": "",
+      "isMDC": false,
+      "attributeBonuses": {
+        "iq": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "me": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ma": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ps": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pp": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pe": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pb": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "spd": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        }
+      },
+      "poolBonuses": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "skillBonuses": [],
+      "skillChoices": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": [],
+        "choices": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "perception": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
+      "grantsMagic": true,
+      "grantsPsionics": true,
+      "abilities": [],
+      "description": "Flame Wind Dragons can appear in various shades of red, from scarlet to alizarin, and have long, slinky bodies, thin but powerful limbs and massive wings. Their name is derived from their innate ability to cause their own scales to burst into flames. The spectacle created when the dragon flames on while soaring through the air is amazing, and has caused many opponents (and spectators) to flee at such a display of power. They can be found living anywhere, but prefer warm climates, jungles and mountain valleys. It should also be noted that the Flame Wind Dragon loves the taste of burnt flesh and evil Flame Winds have been known to bum down entire towns just to feast on the burnt flesh and ash of the dead. This has led many to believe that all Flame Winds are wicked killers, which is just not true. Attributes: I.Q. 3D6+5, M.E. 3D6+5, M.A. 3D6+5, P.S. 3D6+5 (Su pernatural), P.P. 3D6+ 10, P.E. 3D6+ 10, P.B. 3D6+5, Spd. 3D6+ 10 running, but 3D6x1O flying. These attributes stay pretty constant until the dragon reaches full maturity at about 600 years old. At that time the physical attributes increase dramatically. P.P.E.: 2D4xlO+lO, +3D6 per level of experience. Horror Factor: 12 (14 when the Hatchling bursts into flame). M.D.C. Points: 1D4x100 M.D.C. +10 M.D.C. per level of experience, on Rifts Earth. (Hit Points: 1D4xl00 on most S.D.C. worlds, S.D.C.: 3D6x1O S.D.C. +3D6 S.D.C. per level of experience, Ar mor Rating: 11, but a Mega-Damage creature on Rifts Earth.) Note: Magic, psionics, and Mega-Damage weapons all have full effect. Natural Abilities: Nightvision 100 feet (30.5 m), thermal vision (al lowing it to see the heat within an object and gauge the object's temperature: 45% +5% per level of experience) 300 feet (91.5 m), tum invisible at will, impervious to fire (not even Mega-Damage hurts it), prehensile tail and can bio-regenerate IDIO M.D.C. per melee round (1D4xlO M.D.C. per minute). Metamorphosis: May transform for one hour per level of expe rience. Same as the Cat's-Eye Dragon. Teleport: 22% +2% per level of experience. Same as the Cat's Eye Dragon. Flaming Scales: The Flame Wind Dragon can seemingly cause himself to burst into flames in a manner similar to the psychic Burster or Elemental Fusionist. Unlike them, the Dragon Hatch ling's own scales are actually burning, even though this does no damage to the Flame Wind (this is just a natural part of the dragon's metabolism). Because the Flame Wind is actually on fire, anything he is carrying is damaged by his own raging flames and he will ig nite anything he touches, such as carpeting, drapes, paper, wood, dry grass, etc. In combat, the dragon's fiery punch or tail swipe does an extra 2D6 M.D. per strike plus its usual P.S. damage. Leaping on its back or trying to wrestle or entangle the flaming dragon will in flict 4D6 M.D. every 4 seconds (or 2D4xlO+10 M.D. per melee round). The flames can be maintained for one minute (4 melee rounds) per level of experience, before the dragon Hatchling must rest for at least ten minutes to regenerate his flaming scales (dura tion is lOx longer for adults). Fire Breath: 4D6 M.D. (increases to 6D6 M.D. as an adult) to a six foot wide (1.8 m) area. The width of the blast enables the dragon to strike several opponents (2-6) simultaneously, if they are huddled closely together. Range: 100 feet (30.5 m). The Flame Wind Dragon may also fire small gouts of fire from its mouth reminiscent of a flamethrower, with each doing 2D6 M.D. a range of 300 feet (91.5 m). The fire breath may be used as often as desired but each blast counts as one melee attack/action. Bonuses (in addition to attribute bonuses): +1 attack/action per me lee round, +2 on initiative, +2 to strike, +2 to parry and dodge, +4 to pull punch, +2 to roll with impact, +4 to save vs Horror Factor, +2 to save vs magic and illusions, and + 1 on all other saving throws. Damage: Varies with Supernatural P.S., but their claws inflict +8 M.D. in addition to their usual Supernatural P.S. damage. The Flame Wind's bite does 2D4 M.D. (no bonus for Supernatural P.S.). The prehensile tail can be used to strike at its enemies like a whip. The tail does the same Mega-Damage as a punch, + 1D6 additional M.D. Or the dragon may use its fire breath, magic, psionics or a weapon. Magic: None to start. See Player Notes, above. Psionics: Minor Psychic; player can select a total of six psychic powers from one of the following categories: Sensitive or Healing. Super Psionic powers are not available. Select one additional power at lev els 5, 10, 15 and 20. I.S.P.: 1D6xlO, +1D8 per level of experience."
+    }
+  },
+  {
+    "name": "Forest Runner Dragon",
+    "type": "race",
+    "img": "icons/svg/dna.svg",
+    "source": {
+      "printedPage": 161
+    },
+    "system": {
+      "lifespan": "",
+      "size": "",
+      "bonuses": "",
+      "languages": "",
+      "isMDC": false,
+      "attributeBonuses": {
+        "iq": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "me": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ma": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ps": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pp": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pe": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pb": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "spd": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        }
+      },
+      "poolBonuses": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "skillBonuses": [],
+      "skillChoices": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": [],
+        "choices": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "perception": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
+      "grantsMagic": true,
+      "grantsPsionics": true,
+      "abilities": [],
+      "description": "The Forest Runner is among the smallest of the true dragons, stand ing just half as tall as the other Hatchlings and only one quarter their weight, with attractive frilled wings. The wings are perfect for gliding on the wind and fluttering around like a giant butterfly, but not for great speed. This has led the Forest Runner to take to the forest, woods and jungles of the world for shelter and safety. When the dragon needs speed, it folds its wings close to its body and runs. As a species they have even developed a chameleon skin!scales that shift color, pattern and texture to allow them to better blend into their forest home, making hiding from other creatures far easier. Still they are preyed upon by other larger dragons both for their meat and P.P.E., and slavers such as the Horune Pirates and Minions of Splugorth who find they can get a good price for an attractive dragon at such a manageable size. Attributes: I.Q. 3D6+11, M.E. 3D6+9, M.A. 3D6+7, P.S. 3D6+6 (Supernatural), P.P. 3D6+6, P.E. 3D6+6, P.B. 3D6+11, Spd. 2D6xlO+33 running, but only 4D6+ 12 flying. These attributes stay pretty constant until the dragon reaches full maturity at about 600 years old. At that time the physical attributes increase dramatically. P.P.E.: 2D4xlO, +2D6 per level of experience. Horror Factor: 10 M.D.C. Points: 104xlO0 M.D.C. +10 M.D.C. per level of experience, on Rifts Earth. (Hit Points: 1D4xlO0 on most S.D.C. worlds, S.D.C.: 4D6xlO S.D.C. +2D6 S.D.C. per level of experience. Ar mor Rating: 12, but on Rifts Earth the Hatchling's skin is M.D.C.) Note: Magic, psionics, and Mega-Damage weapons all have full effect. Natural Abilities: Nightvision 600 feet (183 m), hawk-like vision (can see a rabbit clearly or read a sign at up to two miles/3.2 km away), see the invisible, able to hear a whisper at up to 300 feet (91.5 m) away, resistant to fire and cold (does half damage, including M.D. magic fire and plasma energy), can bio-regenerate 3D6 M.D.C. per melee round (1D6xlO+ 10 per minute), and are rather weak fliers. Metamorphosis: May transform for three hours per level of ex perience. Same as the Cat's-Eye Dragon. Teleport: 26% +2% per level of experience. Same as the Cat's Eye Dragon. Chameleon Scales: The color, pattern and texture of the skin! scales can be changed to adapt to any situation, so that the Hatch ling's skin can look like rippling water, moving or stationary leaves, green grass and scrub, sand, dirt and rocks, brick wall/concrete, tree bark, and similar \"natural earth\" colors, shading, and environments with exactly the right shades and reflections. This ability is so light ning fast that the dragon's skin can take on the appearance of a brick wall, and the lines of the bricks will move across the body as fast as the character can run (01-80% chance of remaining unseen!). The fact that the dragon's texture also changes means that those casually bumping into him while the dragon remains motionless are likely not to notice. Unfortunately, the dragon cannot do bright colors (red, pink, bright blue, iridescent, or neon), only earth colors. Note: Any clothing or jewelry that is worn remains unchanged and stands out on the otherwise concealed dragon, as do any weapons or gear that may be carried by the dragon. Thus, most Forest Runners do not wear any type of ornamentation and use little if any equipment or weapons. Poison Breath: The Forest Runner can emit a gaseous vapor from his mouth that has toxic properties. Unless the intended vic tim(s) is using an independent oxygen supply and goggles, or a gas mask, or wearing environmental armor and complete eye protection, the vapor will function like tear gas, causing the victim to choke and experience temporary blindness for 1D4+1 minutes unless they make a successful save vs non-lethal poison (16 or higher). A suc cessful save means no effect. All who are blind are -10 to strike, parry, dodge, etc. Range: 40 feet (12.2 m); affects a 10 foot (3 m) area, vapors dissipate within five seconds. The poison breath may be used as often as two times per melee round (15 seconds). Bonuses (in addition to attribute bonuses): +2 attacks/actions per melee round, +4 on initiative, +3 on Perception Rolls, + 1 to strike, +2 to parry and dodge, +5 to dodge while running, +4 to pull punch, +2 to roll with impact, +5 to save vs Horror Factor and +2 on all other saving throws. Damage: Varies with Supernatural P.S., but their claws inflict an addi tional + 1D6 M.D. (designed for running, not fighting). The Forest Runner's large bite does 3D6 M.D. (no bonus for Supernatural P.S.). Or the dragon may use its poison breath, magic, psionics or a weapon. Magic: None to start. See Player Notes, above. Psionics: Major Psychic; player can select a total of 10 psychic powers from any of these categories: Sensitive, Physical, or Healing. Super Psionic powers are not available. Select an additional two powers at levels 3, 6, 9, 12, 15 and 18. I.S.P.: 204xlO, +1D6+3 per level of experience."
+    }
+  },
+  {
+    "name": "Human",
+    "type": "race",
+    "img": "icons/svg/dna.svg",
+    "source": {
+      "printedPage": 42
+    },
+    "system": {
+      "lifespan": "",
+      "size": "",
+      "bonuses": "",
+      "languages": "",
+      "isMDC": false,
+      "attributeBonuses": {
+        "iq": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "me": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ma": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ps": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pp": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pe": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pb": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "spd": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        }
+      },
+      "poolBonuses": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "skillBonuses": [],
+      "skillChoices": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": [],
+        "choices": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "perception": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
+      "grantsMagic": false,
+      "grantsPsionics": false,
+      "abilities": [],
+      "description": "Baseline human; use the selected O.C.C. for occupational abilities, skills, equipment, and advancement."
+    }
+  },
+  {
+    "name": "Mutant Canine (Dog Boy)",
+    "type": "race",
+    "img": "icons/svg/dna.svg",
+    "source": {
+      "printedPage": 142
+    },
+    "system": {
+      "lifespan": "",
+      "size": "",
+      "bonuses": "",
+      "languages": "",
+      "isMDC": false,
+      "attributeBonuses": {
+        "iq": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "me": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ma": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ps": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pp": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pe": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pb": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "spd": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        }
+      },
+      "poolBonuses": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "skillBonuses": [],
+      "skillChoices": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": [],
+        "choices": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "perception": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
+      "grantsMagic": false,
+      "grantsPsionics": true,
+      "abilities": [],
+      "description": "Dog Boy O.C.C. Also known as \"Dog Pack\" and \"Psi-Hound\" The so-called \"Dog Boy\" is the Coalition States genetic engineering laboratories' most successful creation. All Dog Boys have their origin with the CS, although an increasing number (perhaps as many as 5%) are \"free born\" (or what the CS calls \"feral\"), the natural born offspring of lab created Dog Boys who have gone AWOL from the Coalition Army. The number of free born Dog Boys is small even though Dog Packs have been part of the Coalition Army and police force and city defense force for nearly 40 years, because most of the canines are fero ciously loyal to their human creators. Coalition Dog Boys and psy chics have come to play an increasingly important role in the CS defenses and military operations against hostile forces because they can literally \"sniff out,\" sense and (sometimes) see users of magic and the supernatural even when they are invisible or disguised. By comparison, the predominantly human troops must trust their own judgement, gut feelings, hunches and experience, and hope they can react fast enough to survive a surprise magic attack. Consequently, one or two Dog Boys are assigned to most every squad of soldiers operating outside of CS held territory and at least one third of the ones in CS territory. In addi tion, the bond of friendship and camaraderie between the human troops and the mutant Dog Boys is almost akin to that of a boy and his dog. Closeness between CS soldiers and Psi-Stalkers, and psychics in gen eral, is also stronger than ever before as they prove their loyalty and worth in confrontations with demons, sorcerers and evil psychics. No where was their loyalty, bravery and value more evident than in the Tolkeen Campaign. The feeling is mutual, with Dog Boys enjoying the close camarade rie of human troops. Like real, domesticated canines, Dog Boys love the company of humans and instinctively regard them as both part of their \"pack\" and their superiors. Consequently, with rare exception, Dog Boys do not question, defy or challenge orders, and are incredibly loyal, helpful and obedient. Most don't see any inequity between how they are treated and the rights and privileges enjoyed by humans. They accept that humans are superior and more important, so the loyal ca nines cheerfully live and die to serve them. Most Dog Boys will not hesitate to help a comrade or to leap in front of a human to take a laser blast for him. This loyalty and self-sacrifice have made Dog Boys be loved by the troops and civilians alike. Surprisingly, Dog Boys are rarely abused or mistreated by their hu man masters, especially by the soldiers who have come to rely on them so heavily. In fact, the submissive, loyal and trusting disposition of Dog Boys is immediately evident to anyone who works closely with them. The Dog Boys' courage and willingness to face creatures of magic as well as their willingness to sacrifice themselves to protect their human allies win over even the most hard-nosed human supremacist at the front. This has a lot to do with the fact that the mutants represent the unit's edge against magic and the supernatural, but that same level of security and confidence is not seen with groups where Psi-Stalkers or human psychics replace Dog Boys entirely. There is just something about the mutant canines and their selflessness and loyalty that has a tremendously positive and unifying influence on the rest of the troops. On the Tolkeen Front, Dog Boys have become the glue that binds the CS army. The bonding between human soldiers and canine mutants is an un expected, but understandable (and helpful) turn of events, but the Co alition Military High Command is not particularly thrilled with it. Despite the benefits this camaraderie creates, they do not want humans to become emotionally attached or close to any nonhuman, not even Dog Boys or human mutants like the Psi-Stalkers. However, circum stance has dictated otherwise, and Dog Boys and Psi-Stalkers are part of every squad, platoon, company and division at the Tolkeen Front and many other locations. A standard CS reconnaissance or patrol squad at Tolkeen or the Magic Zone consists of four human soldiers, a Dog Pack (four Dog Boys) and one Psi-Stalker, plus a squad leader who can be human, a human psychic or a Psi-Stalker. The Origins of the Dog Boys Before the Time of the Rifts, the quest for human augmentation nat urally led to genetic manipulation. North America, France and a few other countries were by far the leaders in the area of genetic research. They had enjoyed some spectacular results working on laboratory ani mals. However, genetic manipulation of human beings proved to be much more unpredictable and deadlier than the alteration of animal genes. Ultimately, this led to more extensive animal experimentation. Only the Chinese continued experimentation on human subjects. Even tually, American geneticists could endow animals with human (or at least humanoid) intelligence, speech, and physiology. The great controversy that arose from the creation of intelligent mu tant animals was the fear that humans were establishing a new prece dent for slavery. The outcry against slavery was well taken, because the American government had high hopes for, literally, creating super-sol diers from animal mutants. Soldiers with the predatory instincts, animal abilities, strength, and endurance, complemented by the intelligence of a human. Social outrage stopped the creation of a race of mutant sol diers and laborers before it had begun. Still, the US government contin ued secret research in this area for decades, funneling trillions of dollars into a top secret, military genetic engineering complex in Texas. A facility rumored to include a vast factory-like complex capable of creating hundreds of mutant animals a month. As fate would have it, the Coalition States would discover the Tex-Am Complex, or what they call the Lone Star Complex, and find the secrets of creating the geneti cally engineered canines known as Dog Boys. While society may have had the presence of mind to stop the rees tablishment of slavery in the 21 st Century, the world of Rifts is much more cruel and savage. The Coalition States has been creating mutant canines for labor and soldiering, as well as conducting secret genetic experimentation at the Lone Star Complex for years. It is at Lone Star that the majority of the Dog Boys (and other secret, experimental muta tions) are created and trained. Somehow, the Tex-Am Complex, sur vived the Great Cataclysm unscathed. A sprawling 20 mile (32 km) military research and manufacturing complex that is practically a city within its own rights. The Lone Star Compound is completely self-suf ficient, with both fusion and fossil fuel energy capabilities, state of the art science and genetics laboratories dating to pre-Rifts Earth, and high tech manufacturing plants of all kinds. Coalition Dog Pack The Coalition's obsession with maintaining the purity of the \"true\" human race is the motivation for both the creation and enslavement of mutant animals. It is also the one thing that curbs them from even greater exploitation of genetically engineered creations. This purist mentality also means that the genetic manipulation of human beings is strictly forbidden. (Not that it has stopped the man in charge of Lone Star operations, Doctor Desmond Bradford. See World Book 13: Lone Star for complete details on the Lone Star Complex, Dog Boys, Feral Dog Boys, and other genetic mutants.) Genetic manipulation of animals is regarded as something completely different and acceptable. They are, after all, animals, not people. And as animals they are expendable. Ini tially they were dispatched to areas where the threat to human life was deemed the greatest risk. The logic being, why endanger human life when an \"animal\" can pave the way? From the Coalition Army's point of view, Dog Boys save human lives by replacing human troops as well as fighting along side of them. Although this attitude has softened con siderably over the years, Dog Boys are still used as advance scouts and front-line infantry troops. Indeed, tens of thousands have died in com bat in the recent military operation at the Tolkeen Front. Of all the animal genetic experiments, the dog has proven to be the most desirable and reliable of all animals for several reasons. First, canines have a long history of cohabitation with human be ings. Whether there is any real scientific reason for this special relation ship between man and canine is doubtful. However, psychologically, humans quickly accept, trust, and like dogs, even two-legged mutants. This leads to an immediate bonding or friendship between man and beast. Not a surprise, really, when you consider that dogs have been \"man's best friend\" for eons. This acceptance and warm response by humans only serves to make the mutant animals feel loved, cherished, needed, and dedicated to the protection of their masters. Second, dogs are instinctive pack animals, and Dog Boys see them selves as part of the \"human pack,\" so they accept their social position as subservient members within the pack society without question or anxiety about it. Consequently, they are submissive and loyal to hu mans, whom they perceive as the pack leaders or dominant pack mem bers. Third, the animals generally love to work with, and be around hu mans. This social cooperativeness, combined with the canines' loyalty to the pack and desire to please, makes their training and indoctrination very easy and thorough. Unlike humans, Dog Boys don't question their orders or balk at danger, the mutant canines leap into the jaws of death with little hesitation, especially to save a human or fellow pack mem ber. Fourth, as a soldier, the dog offers several advantages. Besides the obvious superiority in physical strength and endurance, Dog Boys pos sess several additional abilities. In general, the dog's sense of smell is a million times more sensitive than a human's and they possess a much more sensitive range of hearing. This makes them much more alert and ideal for tracking. Fifth, dogs are natural hunters who instinctively chase anything that moves, making them more observant than humans. An ideal trait for a man-hunter, monster fighter and guard against magic and supernatural enemies. Last, and in some ways, most important to the Coalition, dogs are among the few creatures who are sensitive to the supernatural. The mu tant Dog Boys are similar to Psi-Stalkers in that regard, and automati cally sense the presence of magic and the supernatural. An ability the geneticists have been able to maintain and enhance in the intelligent mutant canines. Coalition Dog Packs are a formal part of the CS Armed Forces and receive the same basic training as the Coalition Grunt. However, the Dog Pack also receive special training in honing their tracking abilities and psychic powers. Their purpose: Special Forces operatives and watch dogs against assaults by psychics, practitioners of magic, the supernatu ral and creatures of magic, like dragons and other shape shifters. A pack of four or more Dog Boys is always led by a Civilized Psi-Stalker; a typical squad or \"Dog Pack\" being 6-10 Dog Boys of various breeds and their Psi-Stalker team leader/handler. The Pack patrols CS cities, the 'Burbs and military bases, makes perimeter patrols and engages in all sorts of reconnaissance, rescue and wilderness operations. The original and official name for these canine soldiers was Psi Hounds, but the nickname \"Dog Boy\" quickly cropped up and has stuck no matter what the military leadership tries to do about it. For one thing, \"Dog Boy\" goes nicely with the \"Dead Boy\" moniker of the reg ular army soldiers. (\"Oh look, there goes a squad of Dead Boys and a couple of Dog Boys.\") The Dog Pack is also used to track criminals, especially demonic, sorcerous and psionic criminals, city intruders, spies and supernatural menaces, as well as being used as a general police force. Most CS city dwellers are comforted by the presence of the loyal and courteous Dog Boys, and cooperate with them to the fullest. To rebuke the inquiries of a Dog Boy will mean a full Dog Pack, led by a Psi-Stalker (or worse, an ISS Investigator/CS special police) arriving moments later to en force a full and unpleasant investigation. A Dog Pack and Psi-Stalker have the authority to enter any civilian establishment or home if they have reasonable cause, and for a Dog Boy that's smelling of sensing the presence of magic or the paranormal. Dog Boys partnered up with CS police, soldiers, or as a pack roam the streets of the 'Burbs, the city and military bases with an eye out for trouble, and may investigate any suspicious activity, individual or home. In the wilderness, troops of Dog Boys (as well as experimental mu tant animals) may be dispatched into areas of conflict. Like the US Marines of old, the Dog Pack is often the first to be sent into a trouble zone for reconnaissance, surgical strike or initial assault. They are also sent out on regular reconnaissance, intelligence, and seek-and-destroy missions. In the 'Burbs and certain wilderness missions, Dog Boys are sent to sniff out \"traitors to humanity\" (Rogue Scholars, Body Fixers, and Rogue Scientists), enemies of the States (practitioners of magic and D-Bees) and supernatural terrors (demons and other monsters, includ ing dragons). Contraband (ancient books, films, artwork, and artifacts, as well as banned books) and those who traffic in contraband are sec ondary targets. Dog Boys may be members of a completely mutant animal squad, completely canine squad (Dog Pack), a member of a human team, or operate as a partner, pair or an individual on a solo assignment. Individ ual Dog Boys are frequently sent into the wilderness to pretend to be feral runaways or mercenaries. This subterfuge enables them to observe the activities of real mercs, adventurers and D-Bees, firsthand. This may be to gather intelligence or to get in good with a group to use and misdirect them or set them up for a military raid. Of course, some Dog Boys really do forsake the Coalition when they discover the freedom that other societies and groups offer, or are simply enticed to wander the world and enjoy its marvels. This too, is anticipated by the Coali tion and is part of an exercise to see how many Dog Pack soldiers re main loyal when placed under varying conditions of freedom, stress, or danger (about 89% to 95% remain loyal). Generally, Dog Pack mutants are treated well and with kindness. They are especially loved by their Psi-Stalker Dog Pack leaders, CS po lice and CS Grunts. However, the Coalition and most people in the CS see the mutant animals not as intelligent life forms, and never as equals, but as trained animals. They love and care for the mutants just as they might a favorite pet dog. As such, the Dog Boys are treated like sim ple-minded children and those who don't work with them on a regular basis often refer to them in the third person or talk about them as if they are not present. In reality, Dog Boys are very smart, intuitive and per ceptive. Since Dog Boys are trained animals specially bred and prepared for duty as guard \"animals,\" they are generally looked upon by the military brass as an expendable commodity. The mutant soldiers are just big doggies that walk on two legs, sport arms and hands, and talk instead of bark. A human might feel a bit of a loss over the death of a favorite hunting dog killed by a wild animal, but one simply discards the dead body and goes out to purchase a new dog. This is the attitude of the Co alition military High Command and other military leaders who don't work directly with the canine soldiers. If a job is too dangerous for a human, a Dog Boy is sent in to do it. If it dies, a new one can always be purchased or bred to replace it. An attitude that is not shared by the Psi-Stalkers or police partnered with Dog Boys or who lead Dog Packs. In fact, the Coalition's heartless abuse of their animal creations is the one element that might, someday, turn the Psi-Stalkers away from them. As noted earlier, however, most Dog Boys don't see anything wrong with how they are treated and tend to concur that they are ex pendable, rather than jeopardize a valuable human life. This also means that they rarely feel cheated or abused, and are happy just to be part of the human pack for however long that may be. Special Dog Boy O.C.c. Abilities Note: The following are typical of the average Dog Boy. Some things will vary according to the breed of the dog and there are a couple of sub-divisions of mutant dogs with special abilities and/or heightened senses. Only the typical Dog Boy is presented in these pages. For more details and different types of Dog Boys and other mutants, see Rifts® World Book 13: Lone Star. 1. Sense Psychic and Magic Energy: Basically identical to the Psi-Stalker, although not quite as developed. Like a bloodhound smell ing a familiar scent, the Psi-Hound can detect the presence of psychic energy; specifically fellow psychics (I.S.P.) and magic energy (P.P.E. used in spell casting, in magic devices and the large energy reserves in practitioners and creatures of magic; 80 or more points). The ability is constant and automatic, just like the ability to see and smell. Dog Boys can sense whenever a psionic ability is used within the range of sensitivity. If the energy is being continually expended, like a series of magic or psionic attacks, or is of a duration/effect longer than one melee round (15 seconds), the Dog Boy can trace it to the source (i.e. the character or creature using the psionics or magic) with relative ease. Several psionic or magic characters using their powers in the same general area will also lead the canine to that location, but he will not be able to discern and remember (recognize) any of their psychic scents at a later time. Several psionic or magic characters using their powers over a large, scattered area of the Dog Boy's sensing range will confuse the senses. The mutant canine will be able to tell that there are several emanations and have a fair idea of which direction most are lo cated, but will only be able to accurately follow the most powerful em anations of psychic energy. Base Skill: 40% +5% per level of experience (roll once every melee round). Reduce by half when multi ple sources are scattered throughout the sensing range. Range: Sensi tivity to psionic and magic powers in use is 400 feet (122 m) +50 feet (15 m) per level of experience. Roll percentile dice every 1000 feet (305 m) to see if the hunter is still on the trail. A failed roll means the scent is lost. Sensitivity to a fellow psychic or magic practitioner not using his powers is 50 feet (15.2 m) +5 feet (1.5 m) per level of experi ence. I.S.P.: None, automatic ability. 2. Recognize Psychic Scent: A psychic scent is the particular sig nature that emanates from a specific psychic, mage or monster every time he/it uses one of its psionic powers or casts magic. The emanation from each individual is unique and distinct, like a psychic fingerprint. Unfortunately, the Dog Boy's ability to sense and recognize these psy chic signatures is less developed than the Psi-Stalker's. Still, the mutant canines may recognize the general type of creature (human, Burster, Simvan, Psi-Stalker, etc.), and even the psi-scent of specific individuals that the Dog Boy has encountered on numerous occasions and knows well. Base Skill: 10% +4% per level of experience to recognize the general psychic scent of a particular race or species of mortal monster, animal (familiar) or D-Bee. (Also see #3, Sense Supernatural Beings, below.) 8% +2% per level of experience to recognize a specific indi vidual; + 10% bonus if the mutant has a bit of hair, skin, blood, or an ar ticle of recently worn clothing (4 hours or less) and + 10% if it is somebody or something the Dog Boy has encountered in the past and knows well. Bonuses are accumulative. Range: 50 feet (15.2 m) +5 feet (1.5 m) per level of experience. Duration: Automatic and constant. I.S.P.: None, an automatic ability like our own sense of smell. 3. Sense Supernatural Beings: Identical in basic function and prin ciple to the ability Sense Psychic and Magic Energy, described in num ber one, above, except the mutant dog is much more sensitive to the very distinctive psychic scent of the supernatural. Base Skill: 62% +2% per level of experience to identify the specific type/race of super natural beings, such as alien intelligences, gods, demigods, demons, and vampires, as well as creatures of magic such as Faeries and drag ons. Dog Boys can feel - almost taste - magic in the air. This means they can recognize practitioners and creatures of magic by the large amount of P.P.E. they possess, regardless of how the enemy may disguise himself. Likewise, they can sense the magical power supply or energy reserve in many magic items, including amulets, talismans and Techno-Wizard items. Dog Boys can also sense the location of invisi ble wizards or creatures of magic, as well as tell if they are approaching a ley line. This ability can also detect whether a mortal is possessed by a supernatural being. Base Skill at Tracking by Scent: 35% +5% per level of experience when the creature is not using magic or psionic powers or the creature has little or no magic powers or psionics like a Brodkil or Gargoyle and most sub-demons. A whopping 70% +3% per level of experience when a supernatural being is using psionic powers or magic, and when the being is a Demon Lord, Alien Intelligence, god or dragon, because they possess so much magic energy (hundreds or thousands of P.P.E. points) that the Dog Boy can track them with ease even when they are not casting magic. Range: 100 feet (30.5 m) per level of experience; increase to 1000 feet (305 m) + 100 feet per level of experience to track when magic is in use/being cast. The range is a tre mendous 1000 feet (305 m) per level of experience to sense and track Demon Lords, gods and other inhuman beings powerful with magic and/or psionics whether they are using magic or not. Duration: Auto matic and constant. I.S.P.: None, automatic. Note: Close proximity to ley lines (within a mile/1.6 km) disrupts and blurs the psychic senses (reduce range and skill performance by halt) and completely obliterates them when on/within a ley line. 4. Other Psionic Powers: Dog Bogs automatically get the Psychic Sensitive powers of Sense Evil (2), Sense Magic (3), Sixth Sense (2), and Empathy (4; receiver only, not transmission), plus the choice of one additional Sensitive power. 5. Psionic Bonuses: Dog Boys are considered Master Psychics with special psionic sensitivity as described above and below. This means they roll a 10 or higher to save vs psionic attack. +5 on Perception Rolls, +2 to save vs psionic attack and all forms of mind control, +2 to save vs illusions, and +2 to save vs possession and curses. I.S.P. Base: 1D6xlO +M.E. attribute number, +10 I.S.P. for each additional level of experience. I.S.P. Recovery: Two I.S.P. per hour of activity or 12 per hour of meditation or sleep! 6. Physical Bonuses (regardless of breed): + 1D4 to P.E., + 1D4 to P.S., and +2D6 to Spd attributes; +4D6 to S.D.C., +2 on initiative roll, + 1 to strike, parry, and dodge, +2 to disarm or pull punch, and +2 to save vs disease. Some different breeds may get additional bonuses, add all bonuses together. The physical endurance of the Dog Boys is twice that of the average human when it comes to resisting fatigue and lifting weight. Mutant ca nines with a P.S. under 17 can carry 20 times their P.S. in pounds. Those with a P.S. of 17 or higher can carry 40 times their P.S. in pounds. In all cases, characters can lift twice as much as they can carry. The typical Dog Boy can work or play at an intense but even pace for two hours before he even starts to feel the serious effects offatigue (hu mans tire in an hour). Extremely exhausting tasks such as running full tilt without pause or fierce hand to hand combat can be done for a full 40 minutes before the mutant canine becomes tired and needs to rest or suffer from exhaustion. Exhaustion penalties are the same as humans (-2 on Spd, -2 on initiative, -2 to damage and -1 to strike, parry and dodge; double the penalties for each additional 15 minutes without ap propriate rest). However, Dog Boys and most mutant animals recover in about 15 minutes of rest or light work (half the time a human needs). 7. Superior Sense of Smell: The olfactory ability of mutant dogs is superior to humans -roughly one million times better than a normal hu man. The Dog Boy can follow a scent trail that is four days old (pro vided it hasn't been washed away) and recognize an odor from smelling only a few molecules! This is possible because the canine olfactory center is constructed differently from humans and is 40 times larger and more sensitive. For example, a human has roughly five million sen sory cells in the olfactory membrane, while a Dachshund has 125 mil lion, most Terriers around 150 million and a German Shepherd 220 million! The average Dog Boy can smell odors (that aren't sealed in airtight containers) up to 12 inches (0.3 m) underground and up to two feet (0.6 m) under snow. Those bred from \"hounds,\" especially blood hounds, are particularly expert in recognizing and following scent trails. A trained tracker can identify and follow the \"scent image\" of spe cific individuals from their sweat (every individual human and most D-Bees sweat, and everybody's sweat is unique to him). The canine's olfactory senses are so great and they have become so expert in track ing by scent that the canine mutant (and ordinary hounds) can deduce from the evaporation of the sweat and various other ingredients of the smell which scents are freshest, what direction they are leading, and even let the Dog Boy guess which way the person may have gone when the trail breaks or runs cold. The wet nose actually helps in smelling by dissolving molecules floating in the air, bringing them into contact with the olfactory membrane and cleaning old smells away. Common and strong scents: Recognize and accurately identify general/common/known smells, including gases, food, animals, and the path used by a group of humans, mutant animals, D-Bees or monsters, as well as other strong and/or distinctive odors. Base Skill: 70% +3% per level of experience. Range: 100 feet (30.5 m) per level of experi ence. Identify specific odors: Including the scent of specific individuals (specific characters), poisons or drugs mixed into food or drink, unique and unusual scents. The Dog Boy must be familiar with the target sub ject and/or have a piece of clothing, hair, blood, etc., that the tracker can use as a reference. Base Skill: 54% +2% per level of experience. Range: 25 feet (7.6 m) per level of experience. Track by smell alone! This means the mutant canine relies entirely on his sense of smell (if blinded, he cannot follow physical tracks/foot prints or any other visible trail, but can follow a scent). This also means that a Dog Boy can sniff his way through total darkness if there is a scent (like fresh air, the trail in, etc.) that can be followed, and the char acter suffers only half (that would -5 to strike, parry, and dodge) the normal penalties when blinded or in total darkness (normal penalty is -10). When combined with the Dog Boy's superior sense of hearing and ability to sense magic and psychic energy and the supernatural, this formidable hunter/tracker can usually put together an incredibly accu rate picture of who or what he is tracking and just how near or far it may be. Base Skill: 40% +4% per level of experience. A few notes about tracking by scent: In most cases, the Dog Boy character should roll once for every 1000 feet (305 m) to see if he or she stays on the trial (half that distance if the scent is unusually light or if the trail is covered in light rain or snow). A failed roll means the trail has been temporarily lost. Two successful rolls out of three tries means the trail has been rediscovered. Two failures means the trail is lost. Cannot track through water or in the rain, cannot smell Astral Beings, Ghosts or energy beings, although he can probably \"sense\" their pres ence and general locale, if nearby. Also, despite what many people may think, a dog can NOT see any better in the dark than humans. However, their exceptional sense of smell and keen hearing helps compensate for their lack of nightvision. 8. Keen Sense of Hearing: Dogs and Dog Boys alike, have excep tional hearing compared to humans and even cats and many other ani mals. The mutant canines can hear into a higher range of sound and can register sounds of 35,000 vibrations per second compared to 20,000 in humans and 25,000 in cats. Their large ears work like external sound receivers that can prick up and swivel to focus in on the sound of the noise (thanks to 17 ear muscles). They can also shut off their inner ear to filter the general din of noise to zero-in on the sound they want to concentrate on. 9. Good Sight: The field of vision in short-nosed canines (like box ers and terriers) is 200 degrees, in long-nosed breeds (like the German Shepherd and hounds) 270 degrees; compared to the human's 100 de grees. Dog Boys see color in a similar range as humans, but the colors are a bit dulled. Farsightedness and other eye problems common to hu mans are a rarity in Dog Boys. 10. Sense of Taste and Biting: Dog Boys have only a fair to good sense of taste. This is probably a blessing of evolution for true dogs be cause they are both carnivores who eat what they catch (usually on the run) and scavengers who eat old and decaying food of all kinds. The bite of a Dog Boy will vary with the breed (see specific bonuses in the section about various breeds). A typical nipping or warning bite from most breeds (including German Shepherds and most setters and pointers) typically inflicts 1D6 S.D.C. damage, while a full strength bite does 2D6 S.D.C. damage - more from some of the larger or more powerful breeds, including wolf, coyote, Wolfhound, Rottweiler and Pit Bulls. Note: Dog Boys are discouraged from using biting attacks because the CS is nervous about encouraging such savage and primal action, and because such attacks open the mutant warriors to serious in jury to the mouth, throat and head. 11. Sensitivity to Ley Line Energy: Ley lines are a problem for Dog Packs because the steady stream of magic energy completely oblit erates their abilities to sense magic, psionics and the supernatural. Thus, any psychic, demon, or practitioner or creature of magic on a ley line is completely undetectable by the mutants. When on a ley line, Dog Boys must rely on their wits and conventional senses of sight, sound and smell. A Dog Boy's physical senses, especially smell, how ever, are not affected. Still, the mutant canines are leery around places of magic and often show uncharacteristic signs of being nervous and on edge. They are afraid (some are terrified) during Ley Line Storms which actually cause physical discomfort to Dog Boys - headaches, crackling sounds in the ears, and static electrical build-up/shocks, plus they are two times more likely than others to be struck by ley line en ergy and lightning."
+    }
+  },
+  {
+    "name": "Psi-Stalker",
+    "type": "race",
+    "img": "icons/svg/dna.svg",
+    "source": {
+      "printedPage": 152
+    },
+    "system": {
+      "lifespan": "",
+      "size": "",
+      "bonuses": "",
+      "languages": "",
+      "isMDC": false,
+      "attributeBonuses": {
+        "iq": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "me": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ma": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ps": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pp": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pe": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pb": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "spd": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        }
+      },
+      "poolBonuses": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "skillBonuses": [],
+      "skillChoices": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": [],
+        "choices": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "perception": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
+      "grantsMagic": false,
+      "grantsPsionics": true,
+      "abilities": [],
+      "description": "Psi-Stalker O.C.C. Like the Dog Boys, the human mutants known as Psi-Stalkers have also won the growing respect and friendship of the human troops they work with. Humans tend to regard Psi-Stalkers as savages and primi tives compared to the \"civilized\" people of Chi-Town and the Coalition States. Consequently, they are often looked down upon and treated as second-class citizens. However, on the Tolkeen Front they have proven themselves to be cunning, wily and courageous warriors who look into the face of the enemy with a smile or snarl. Recognized as skilled Wil derness Scouts and fearless warriors, Psi-Stalkers have been elevated to the ranks offellow soldier and equal (or close to it), at least when it co mes to fighting. However, Psi-Stalkers are not nearly as appreciated nor loved as the Dog Boys. Psi-Stalkers are clearly hairless, human-looking mutants who often paint or tattoo patterns and insignias on their face and body, sometimes file their teeth to points, and who possess an innate supernatural ability similar to the Dog Pack, only with them, somehow it seems \"spooky.\" This spookiness or uneasiness probably arises from the fact that Psi Stalkers were once human, but over the centuries have mutated and evolved into humans with unusual powers that have helped them sur vive in the wilderness and battle supernatural forces. In addition, they are at home in the wilderness in ways that ordinary humans can never be. Psi-Stalkers also exhibit a primordial glee in combat and a sort of natural instinct to oppose and battle all things magical and supernatural. This forever removes them, if only by a step or two, from being \"truly human,\" at least to the Coalition's way of thinking. Thus, while they are respected, admired and trusted, Psi-Stalkers can never truly be con sidered one of them. Psi-Stalkers are humans transformed by the magic and dimensional energies from the ley lines. Their mutation took place during the early decades of the Two Hundred Years Dark Age. They instinctively sense magic and the supernatural and regard it as a potential threat. In fact, they have survived the last few hundred years by attacking beings with high levels of P.P.E., and feeding on their life-giving energies. Psi Stalkers are P.P.E. vampires who sustain themselves on magic energy rather than solid foods. As members of the invading Coalition Army, Psi-Stalkers can cut loose, kill and gorge themselves on the P.P.E. of their magical and monstrous opponents. (Note: For in-depth informa tion on these unique mutants, including some notable tribes in the Min nesota and Manitoba area (Xiticix Territory), see Rifts® World Book 23: Xiticix Invasion, pages 100-113.) Fallen to barbarism, most Psi Stalkers have survived for over two centuries as hunters of supernatural monsters and practitioners of magic. Unlike normal humans, the Psi Stalker is a natural predator who can follow the distinctive energy trail of P.P.E. like a bloodhound. Even though all creatures have a certain level of Potential Psychic Energy (P.P.E.), the Psi-Stalker can tell the subtle differences between normal energies and psychic and magic en ergies. Some innate instinct draws the Psi-Stalker to those creatures who are psionic or magical. This same instinct makes the mutant want to kill his prey and drink its P.P.E., which, for a brief instant, doubles when the victim dies. Fortunately, Psi-Stalkers can resist their bloodlust and train themselves not to kill. However, even these \"restrained\" and \"civilized\" Psi-Stalkers love the thrill of the hunt and would prefer to kill when they feed. If nothing else, it makes life easier to kill the prey, and the amount of P.P.E. released at the moment of death is a bigger rush and much more satisfying. The Coalition States have trained a number of these mutant humans to become an elite military police force, specializing in hunting down psychic and magic criminals, supernatural beings, and paranormal in terlopers. In addition to the Psi-Stalkers' natural abilities, the warriors are trained in basic military procedure and combat skills. They are also trained to control their urge to kill. The Coalition Psi-Stalkers will not kill unless the soldier is given authorization to use deadly force, which is automatic when stalking a demon or other supernatural monster, and frequently when tracking any D-Bee or dangerous fugitive. The Coalition's prejudice against nonhumans means that although Psi-Stalkers are accepted in human society as soldiers and enforcers, they can never achieve the same rank as true humans or find acceptance in polite society. That's okay by most Psi-Stalkers as they are natural hunters who don't seek any other position in society. They can be dis tinguished from other Coalition soldiers by their spiked helmets and the letters \"PSI\" emblazoned on the chest of their armor and uniforms. ALL Coalition Psi-Stalkers are registered psychics with the IC and bear the IC bar code and implant. Psi-Stalkers generally lead Dog Packs, or are part of Special Forces teams and other special operations, namely those involving practitioners of magic, psychics, monsters and the su pernatural. A full IS% of the Coalition Army is composed of Psi Stalkers. Although most are obedient and loyal to the CS, many are bolder, more unruly and disrespectful of officers they don't like. This is due, in part, to their \"Second-Class Citizen\" stature within Coalition so ciety (many normal citizens fear them) and their more aggressive, pred atory nature. Psi-Stalkers are different from true humans. In addition to their fa mous psychic powers and the fact that they live on psychic energy rather than solid food, they are strikingly different in physically appear ance. Average height is more consistent at 6 feet to 6 feet, S inches (1.8 to 2 m) tall, half are ambidextrous, neither male or female has any body hair (not on their heads, arms, legs, or anywhere), and their skin is a pale, powder white with faint hints of pink around their lips and eyes. Their eyes are typically a piercing blue or a smoldering gray. Most Psi-Stalkers suffer from a certain amount of hypertension and like to be physically active. Wild Psi-Stalkers (and some CS) often adorn their bodies with tattoos and/or war paint to make themselves look even more menacing. Psi-Stalker O.c.c. Powers & Abilities: Note: The following powers are different or more powerful than some of the common psionic powers which these abilities may resem ble, and are exclusive to the Psi-Stalker O.C.C. All Psi-Stalkers, CS, civilized or wild, have the same natural abilities, only their level of self-control, availability of skills and equipment vary. 1. Sense Psychic and Magic Energy: Like a bloodhound smelling a familiar scent, the Psi-Stalker can detect the presence of psychic en ergy; specifically fellow psionics (I.S.P.) and magic and the supernatu ral (both with high P.P.E.). This is a natural ability, like a human's sense of smell. The moment a psychic \"scent\" is within the character's range, he recognizes it and responds accordingly. For example: If a hu man psychic (Minor, Major, or Master) enters the room, the Psi-Stalker will instantly sense it, as well as be able to trace it to the specific indi vidual. Furthermore, the Stalker has a chance of recognizing that specific person's psychic scent again. This ability also enables him to stalk! track a specific psychic scent. Base Skill: 20% +S% per additional level of experience. If the Psi-Stalker has a bit of hair, skin, blood, or an article of clothing recently worn by the subject (4 hours or less), the ability to follow the trail enjoys a bonus of +20%. If psionic powers or magic are being used within the Psi-Stalker's range of sensitivity, he will sense that too. The psychic impression will indicate whether the energy source is far or near, up or down, and whether it is a small or great amount of energy. If the energy is being continually expended, like a series of magic spells or psionic attacks, or a long duration effect, the Psi-Stalker can track it to the source with ease. Base Skill: 60% +S% per level of experience (roll once every me lee). It is also likely that the character will recognize the scent again if encountered at some other time: 20% +S% per level of experience. The presence of other P.P.E. sources may confuse the scent and in flicts a -10% skill penalty (-20% if numerous sources). Close proximity to a ley line (2 miles/3.2 km) will reduce the ability to track a specific psychic scent by half. Close proximity to a nexus point (4 miles/6.4 km) will completely obliterate the scent, making it impossible to find or pick up later. This is one reason why Psi-Stalkers are rarely found near a ley line unless a large number of prey inhabit the area. Of course, this also means that a Psi-Stalker can sense ley lines or a nexus point from up to 10 miles (16 km) away, plus one mile (1.6 km) per level of expe rience. Ranges: Sensitivity to a psychic or magic practitioner not using his powers is SO feet (IS m) +20 feet (6 m) per each additional level of experience. Sensitivity to psionic and magic powers being used is 600 feet (182 m) + 100 feet (30.S m) per level of experience. When tracking a psychic scent, roll percentile dice every 1000 feet (30S m) to see if the hunter is still on the trail. Duration: Automatic and constant. I.S.P.: None. 2. Sense Supernatural Beings: Identical in function to the previous ability, except the Psi-Stalker is attuned to the distinctive psychic scent of the supernatural (demons, Elementals, Godlings, etc.). Base Skill: 40% +S% per level of experience, and includes demons, vampires, and Entities. Tracking by psychic scent alone is a Base Skill: 30% +S% per level of experience when in disguise and not using its abilities, 70% +3% per level of experience if the supernatural being is expending psionic or magic energy or if it is a Greater Demon, god, Alien Intelli gence, or similar powerful being with hundreds or thousands of P.P.E. points. Ranges: Sensitivity to the presence of a supernatural being not using its powers is SO feet (IS m) per level of experience. Sensitivity to powerful supernatural beings or magic or psionic powers being ex pended through spell weaving or psi-attacks, is 1000 feet (30S m) +100 feet (30.S m) per additional level of experience. Duration: Automatic and constant. I.S.P.: None, automatic. Note: Close proximity to ley lines and nexus points always has the exact same adverse effects. 3. Psi-Bonuses: Psi-Stalkers only need a roll of 6 or higher to save vs psionic attack! +4 on Perception Rolls, +S to save vs mind control and mind altering drugs, +3 to save vs possession, and +6 to save vs Horror Factor. 4. Magic Bonuses: Natural magic resistance provides a bonus of + I D4 to save versus magic attacks of any kind. 5. Physical Attributes & Bonuses: + 1D6+ I to Hit Points, + I 0 to physical S.D.C., + I attack per melee round, ambidextrous, and Paired Weapons. Can leap six feet (1.8 m) high or 10 feet (3 m) long (add 20% to length with running start), and has excellent balance (80% +2% per level of experience). Remember, needs little solid food and water to live, subsists on P.P.E. 6. Nourishment: The Psi-Stalker must feed on a minimum of SO P.P.E. or I.S.P. a week, preferably 80 to 100. To feed without killing, the predator must hunt down a psychic, practitioner of magic, creature of magic or supernatural monster and physically capture the prey, cut it, and drain all its available P.P.E. points. Other than the cut (1D6 S.D.C. or 1D4 M.D.), minor magic beings and mages temporarily lose all P.P.E. as the Psi-Stalker gorges himself on as much as 300 P.P.E. in a single sitting. Against creatures of great magic (hundreds or thou sands of P.P.E.) the Psi-Stalker feasts on 300 points and causes another 104xlO0 to dispel into the surrounding area where it can be fed upon by other Psi-Stalkers (it's completely gone in 2D6 seconds, and in stantly gone on a ley line). Losing P.P.E. is a potentially dangerous sit uation for any magic user, but hardly life threatening. Psychics temporarily lose half their I.S.P. from a Psi-Stalker energy drain and all their P.P.E. Once the Psi-Stalker begins to feed, he cannot stop until all the P.P.E. has been absorbed. The absorption process is instantaneous (about S seconds). P.P.E. and I.S.P. will recover naturally, but tempo rarily disrupts the victim's psychic essence and mages are left with no personal P.P.E. to draw upon to cast magic. Note: The Psi-Stalker can not feed on the P.P.E. of beings who are not practitioners of magic, creatures of magic, psychic or supernatural in nature. They can absorb mystic ley line energy in an emergency to stay alive, but it tastes bad, like sour milk, makes the Psi-Stalker feel nauseous (-I on all combat bonuses for 106xlO minutes), and the ley line disrupts the character's senses. The preferred form of nourishment, even among Civilized Psi Stalkers, is to hunt and kill one's victim. The victim can be a psychic, practitioner of magic, creature of magic (Faerie Folk, dragon, etc.) or supernatural being. At the moment of death, ALL the victim's P.P.E. is doubled and expelled. Other Psi-Stalkers (young, elderly, injured) can absorb the extra energy of the kill from as far as 300 yards/meters away. No need for normal food or water! As P.P.E. energy vampires, Psi-Stalkers have little need to consume solid food or water. The mu tant does not require more than one pound (0.45 kg) of meat and eight ounces (0.23 liters) of water a week to remain healthy and strong. Fur thermore, the character can go without solid food or water for up to three weeks without the slightest ill effect. However, being deprived of the proper P.P.E. energy will inflict physical damage and the character will die of starvation within a few weeks. P.P.E. Base: 2D6; needs to consume a minimum of 50 P.P.E. per week to function without fatigue, weakness or penalty. For every week with less than 50 P.P.E., the Psi-Stalker suffers 6D6 points of damage to both Hit Points and S.D.C. until down to a minimum of two points each, and reduce all bonuses and attacks per melee by half. After three weeks of starvation the character will be so weak that unless P.P.E. be comes available he will die within 1D6 days. 7. Other Psionic Powers: Choose six psi-powers from the Sensitive category only. I.S.P. Base: M.E. attribute number + 1D6xl0 plus an ad ditional 10 I.S.P. for each level of experience. Considered a Master Psychic. I.S.P. is regained at the rate of two points per hour of activity or 12 per hour of meditation or sleep. 8. Psionic Empathy with Animals. Psi-Stalkers automatically have an affinity with animals of all kinds. Domesticated animals will always take an immediate liking to them and will do their best to please them. This Empathy automatically gives the mutant the ability to ride any horse (wild or tame) or any other non-predatory animal at a + 15% bo nus to ride them and/or work with any domestic animals. Wild animals, with the exception of felines and mutant or alien predators, will react to the Psi-Stalker as if he was a fellow woodland creature and allow him to walk among them without fear. This ability enables Psi-Stalkers to operate in the wild without causing animals to react to their presence: birds do not fly away, animals do not run, and therefore, do not indicate the approach of an intruder. Even watchdogs will not sound a bark of alarm at their presence, and Dog Boys and mu tant bears usually get along with them famously. Note: The affinity with animals means that the character will hunt and eat meat only for food, never for pleasure, and feels sadness whenever he sees an animal in distress. Most feline, mutant and alien predators seem to see the Psi-Stalker as a fellow hunter and rival. Wild cats and mutant felines will fre quently select a Psi-Stalker as their first target in battle, and will not re spond to the character in a positive manner regardless of how nice the Psi-Stalker may be. Psi-Stalkers are the only creatures that the Xiticix Killer will attack, other than the Xiticix. 9. Mega-Damage Combat. Even Wild Psi-Stalkers wear M.D.C. armor, but what has been a closely guarded secret (even the CS is only now starting to suspect) is that whenever a Psi-Stalker engages in phys ical, hand to hand combat with an M.D.C. supernatural being or crea ture of magic, his Hit Points tum into M.D.C., temporarily making the mutant a minor Mega-Damage creature. This also occurs when on a ley line, giving the Psi-Stalker 50% more M.D.C. and his M.D.C. is dou bled at a nexus point. However, Psi-Stalkers still hate being on ley lines because of the disruption to the senses they rely upon so heavily. Note: Although their H.P. becomes M.D.C. they still inflict S.D.C. damage with their bare hands. Civilized Psi-Stalker O.C.C. Stats CS Soldiers, Mercenaries & Adventurers Alignment: Any, but lean toward good and selfish. Attribute Requirements: None. Attributes (Psi-Stalker): I.Q. 3D6, M.E. 3D6+5, M.A. 3D6, P.S. 3D6, P.P. 3D6, P.E. 4D6, P.B. 3D6, Spd. 4D6+6 running - 1D6 digging. Racial Requirement: Psi-Stalkers are mutant humans only. O.c.c. Skills: The Civilized Stalker has undergone some formal edu cation and basic military training. Also see natural abilities, above. Language: Native Tongue (American) at 96%. Language: Other: One of choice (+20%). Body Building Climbing (+5%) Pilot: Hovercraft (+10%) Pilot: Tanks & APCs (+ 10%) ill: Hovercycles (+ 15%) Prowl (+10%) Sensory Equipment (+10%) Radio: Basic (+10%) Running Weapon Systems (+10%) W.P. Energy Pistol W.P. Energy Rifle W.P. Ancient: Two of choice. Hand to Hand: Expert, can be changed to Martial Arts (or Assassin, if an evil alignment) for the cost of two O.C.C. Related Skills. O.C.C. Related Skills: Select four other skills at level one, + 1 addi tional skill at levels 2, 5, 9 and 13. Note: Even \"civilized\" Psi Stalkers rarely care much about learning to read or higher education. Communications: Any (+5%). Cowboy: Any (+5%). Domestic: Any (+5%). Electrical: Basic only (+5%). Espionage: Tracking and Wilderness Survival only. Horsemanship: General (+ 10%) and Exotic Animals (+ 10%) only. Mechanical: Basic and Automotive only. Medical: First Aid only (+5%). Military: Any (+5%). Physical: Any, except Acrobatics. Pilot: Any (+5%). Pilot Related: Any. Rogue: Any (+5%), except Computer Hacking. Science: Basic and Advanced Math only. Technical: Any (+5%), except a\\l Computer skills. W.P.:Any. Wilderness: Any (+10%). Secondary Skills: Select eight skills from the Secondary Skills List, plus two additional Secondary Skills at levels 3, 5 and 12. These are additional areas of knowledge that do not get any bonuses, other than any possible bonus for having a high I.Q. All Secondary Skills start at the base skill level. Standard Equipment: Coalition Psi-Stalker: Coalition \"Dead Boy\" armor, weapons, equipment, money, and cybernetics are all the same as the Coalition Grunt. Plus a few of the Dog Pack special hand to hand weapons such as the Neuro-Mace, Vibro-Knife, and fist spikes. Standard Equipment: Civilized Mercenary: Coalition \"Dead Boy\" armor if an ex-soldier, otherwise light or medium M.D.C. armor (probably the latter), signal mirror, a couple sets of clothing, sleeping bag, backpack, extra sack or pack for stowing equipment, util ity/ammo-belt, canteen, sunglasses or tinted goggles, air filter or gas mask, and personal items. One weapon for every W.P. plus 1D6+1 E-Clips, a Vibro-Knife or Sword, a wooden cross, a wood or bone knife (1D6 S.D.C. damage). No vehicle to start; tend to like small, fast vehicles, horses and exotic animals as mounts. Money: Mercs and independent Civilized Psi-Stalkers start out with 6D6x 100 in credits and 4D4x 1000 in sellable Black Market items. Note that Psi-Stalkers can often make big dollars as exterminators in areas plagued by supernatural beings, magic, or psychics. Coalition Psi-Stalkers get the same benefits and pay as the Coali tion Grunt, plus special hazardous duty pay and bonuses for jobs well done. Those assigned to the ISS (special police) make the same as an ISS Inspectors and CS Psi-Officers who lead a Dog Pack are treated and paid the same as a low ranking CS Military Specialist. Cybernetics: Starts with none. Tend to avoid implants in favor of natu ral powers. Related O.c.c.s: For more information on Psi-Stalkers, see Rifts® World Book 13: Lone Star™ and especially Rifts® World Books 23: Xiticix Invasion™. For data on Psi-Stalkers working with the ISS police, see Rifts® World Book 11: Coalition War Cam paign™. Wild Psi-Stalker O.C.C. Wild Psi-Stalkers are the nomadic tribal people of the wilderness. When civilization crashed after the Great Cataclysm, the ancestors of the Psi-Stalkers fell to barbarism. Over the centuries, they've advanced, but remain very much like Native American Indian tribes of the past, only a bit more wild and savage. Fifty percent are cannibals who eat part of their victims or tear them to shreds. The act of cannibalism, or unnecessary violence, is a manifestation of the predatory killing instinct and aggression, because Psi-Stalkers have minimal need for flesh and blood nourishment. The Coalition scientists hypothesize that the Psi Stalker is an evolutionary answer to the proliferation of psychic and magic creatures on Earth. No one really knows how these humans be came something more (or less, depending on how one looks at things) than human in such a short stretch of time. Most likely it is the magical influence of the ley lines. With rare exceptions, they never hunt or kill a fellow Psi-Stalker, but they do engage in friendly and not so friendly competitions, feuds and vendettas with rival tribes and clans. Furthermore, most Wild Psi-Stalkers consider their Coalition counterparts and any \"civilized\" Psi-Stalkers to be weaklings and sissies, even cowards. Wild ones love to chide and insult CS Stalkers whenever they encounter them, and consider the Civilized Psi-Stalkers to be an unlikable rival tribe, but not outright enemies. Part of this reaction is jealousy, because the CS Psi Stalkers have an easier life and fun toys like environmental body ar mor, Vibro-Blades and guns without having to steal or barter for them. Likewise, \"Civilized\" Psi-Stalkers tend to treat their wild kin as barbar ians and troublesome riffraff beneath their notice. Whether socialized or wild, Psi-Stalkers tend to be very primal beings who are aggressive, strong-willed, emotional and combat oriented. Consequently, encoun ters between Wild and Civilized Psi-Stalkers almost always result in contests of one-upmanship, threats, steely-eyed stares, brawls, fire fights and even bloodshed. Wild Psi-Stalkers have less formal education than most \"Civilized\" ones, having spent nearly all of their time surviving in a hostile wilder ness and learning to hunt humanoids and supernatural prey. The typical Wild Psi-Stalker is cunning, sneaky, selfish, and silent; often a solitary hunter (loner) who uses his powers and fighting abilities rather than skills and machines, other than weapons. The clans in the Pecos Empire are among the most savage and murderous on the continent, possibly a response to the high level of competition from bandits and other intelli gent life forms (in the Psi-Stalkers' minds, they have stepped up to the challenge), not to mention the presence of large monsters, mutants, the CS and other dangers. Psi-Stalkers are least common in the American Southwest (one tenth as many), but their numbers begin to increase dramatically in the Northwest, particularly in and around the old Canadian Province of Calgary (lots of Rift activity and supernatural beings to stalk), and are found throughout the Magic Zone and the East in general. Furthermore, Psi-Stalkers frequently join bandits and adventurer groups, especially if the group is predominantly human. They are also fascinated with Cyber Knights and often join or assist them on their crusades, although most Psi-Stalkers are too undisciplined to become one. Total numbers could be as high as 2-6 million scattered across the US and Canada. Wild Psi-Stalker O.C.C. Stats Special O.C.c. Abilities & Bonuses: Same as the Civilized Psi- Stalkers, except for a +5 bonus on Perception Rolls (instead of +4). Alignment: Any. Attribute Requirements: None. Attributes (Psi-Stalker): I.Q. 3D6, M.E. 3D6+5, M.A. 3D6, P.S. 3D6+2, P.P. 3D6+2, P.E. 4D6, P.B. 3D6, Spd. 4D6+6 running - 1D6 digging. Racial Requirement: Psi-Stalkers are mutant humans only. O.C.C. Skills of Wild Psi-Stalkers: Also see natural abilities. Language: Native Tongue (American) at 90%. Language: Other: One of choice (+25%). Detect Ambush (+5%) Escape Artist (+5%) Prowl (+ 10%) Climbing (+5%) Horsemanship: Cowboy (+10%) Horsemanship: Exotic Animals (+15%) Land Navigation (+ 1 0%) Tracking (Humanoids, not Animals, + 10%) Wilderness Survival (+30%) W.P. Ancient: Three of choice. W.P. Modem: Two of choice. Hand to Hand: Expert, can be changed to Martial Arts (or Assassin, if an evil alignment) for the cost of two O.C.C. Related Skills. O.C.C. Related Skills: At first level the character can select four \"other\" skills, plus one new skill at levels 5 and 10. Note: Most Wild Psi-Stalkers care nothing about learning to read or higher edu cation. Communications: Barter, Language Other, Performance, Sign Lan guage, and Radio: Basic only (+5%). Cowboy: None. Domestic: Any (+5%). Electrical: None. Espionage: Detect Ambush and Detect Concealment only. Horsemanship: None, other than O.C.C. skills, above. Mechanical: None. Medical: First Aid and Holistic Medicine only (+5%). Military: None. Physical: Any (+5% where applicable). Pilot: Any (+5%), except power armor, robots and military vehicles. Pilot Related: None. Rogue: Any (+5%), except Computer Hacking. Science: Astronomy & Navigation and Basic Math only. Technical: Any (+5%), except all Computer skills. W.P.:Any. Wilderness: Any (+10%)."
+    }
+  },
+  {
+    "name": "Royal Frilled Dragon",
+    "type": "race",
+    "img": "icons/svg/dna.svg",
+    "source": {
+      "printedPage": 161
+    },
+    "system": {
+      "lifespan": "",
+      "size": "",
+      "bonuses": "",
+      "languages": "",
+      "isMDC": false,
+      "attributeBonuses": {
+        "iq": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "me": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ma": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ps": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pp": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pe": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pb": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "spd": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        }
+      },
+      "poolBonuses": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "skillBonuses": [],
+      "skillChoices": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": [],
+        "choices": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "perception": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
+      "grantsMagic": true,
+      "grantsPsionics": true,
+      "abilities": [],
+      "description": "The Royal Frilled Dragon is among the most feared and powerful of all dragons, blessed with Master level psychic powers even at the Hatchling stage. Its coloration varies widely, from light blue or green to golden orange and red. Around the head/neck of the dragon and along the sides of the body and limbs are frills that can be extended when the dragon is angry or wishes to intimidate someone. The frills are generally royal blue, violet or purple in color, hence the name \"Royal\" Frilled Dragon. Its claws are also impressively large and hooked, able to slash and gut even other dragons with ease. They enjoy the company of humans and humanoids and commonly walk among them in human guise through metamorphosis, manipulat ing them with their psychic powers. To facilitate such behavior, the Frilled Dragon is able to maintain its metamorphosis for twice as long as most other dragons, even at the Hatchling stage. They also are known for their prolific study and use of the mystical arts. Attributes: I.Q. 3D6+6, M.E. 3D6+5, M.A. 3D6+12, P.S. 4D6+10 (Supernatural), P.P. 3D6+6, P.E. 3D6+10, P.B. 3D6+16, Spd. 2D6+ 10 running, but 2D6x 10 flying. These attributes stay pretty constant until the dragon reaches full maturity at about 600 years old. At that time the physical attributes increase dramatically. P.P.E.: 2D6xlO+l0, +3D6 per level of experience. Horror Factor: 11 (13 when the Hatchling displays his frills in a threatening manner). M.D.C. Points: 106x100 M.D.C. +10 M.D.C. per level of experience, on Rifts Earth. (Hit Points: 1D6x100 on most S.D.C. worlds, S.D.C.: 6D6x1O S.D.C. +2D6 S.D.C. per level of experience, Ar mor Rating: 13, but on Rifts Earth the Hatchling is a Mega-Dam age creaturee.) Note: Magic, psionics, and mega-damage weapons all have full effect. Natural Abilities: Nightvision 200 feet (61 m), see the invisible, Shadow Meld at will (as per the spell and for 20 minutes at a time), resistant to fire and cold (even M.D. fire and plasma do half dam age), impervious to all forms of paralysis and can bio-regenerate 1010 M.D.C. per melee round (104xlO per minute). Metamorphosis: May transform for four hours per level of ex perience. Same basics as the Cat's-Eye Dragon. Teleport: 34% +2% per level of experience. Same description as the Cat's-Eye Dragon. Poison Breath: The Royal Frilled Dragon can breathe out a pur ple mist that lingers and causes paralysis in all who breathe it in. Unless the intended victim(s) have an independent oxygen supply (air filters are not good enough), the vapor will paralyze them for 1D4+ I minutes unless they makes a successful save versus non-le thal poison (16 or higher). A successful save means no effect and once a character has saved, he is immune to the vapors for the next 24 hours. Range: 60 feet (18 m); affects a 12 foot (3.6 m) area, va pors dissipate within eight seconds. The poison breath may be used as often as once per melee round (15 seconds). Bonuses (in addition to attribute bonuses): +1 attack/action per me lee round, +2 on initiative, +I on Perception Rolls, +2 to strike, +3 to parry and dodge, +4 to pull punch, +3 to roll with impact, +6 to save vs Horror Factor, +3 to save vs psionics and mind control, and + 1 on all other saving throws. Damage: Varies with Supernatural P.S., but their large claws inflict an additional +3D6 Mega-Damage. The Royal Frilled Dragon Hatch ling's bite does 2D6 Mega-Damage (no bonus for Supernatural P.S.). Or the dragon may use its poison breath, magic, psionics or a weapon. Magic: See Player Notes, above, except the Royal Frilled Dragon starts with three spells of choice selected from levels 1 and 2 (six total) in addition to the spells acquired by all Dragon Hatchlings. Psionics: Master Psychic; player can select a total of 12 psychic pow ers from any of the following categories: Sensitive, Physical, and/or Healing. Also select two Super Psionic Powers at level one. Select an additional Super Psi-Power at levels 5, 9, 14, 18 and 22. Select an additional two psychic powers from any of the three previous categories, Sensitive, Physical and/or Healing, at levels 3, 6, 9, 12, 15, 18 and 21. I.S.P.: 2D6xlO, +1D6+10 per level of experience."
+    }
+  },
+  {
+    "name": "Snow Lizard Dragon",
+    "type": "race",
+    "img": "icons/svg/dna.svg",
+    "source": {
+      "printedPage": 162
+    },
+    "system": {
+      "lifespan": "",
+      "size": "",
+      "bonuses": "",
+      "languages": "",
+      "isMDC": false,
+      "attributeBonuses": {
+        "iq": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "me": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ma": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ps": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pp": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pe": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pb": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "spd": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        }
+      },
+      "poolBonuses": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "skillBonuses": [],
+      "skillChoices": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": [],
+        "choices": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "perception": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
+      "grantsMagic": true,
+      "grantsPsionics": true,
+      "abilities": [],
+      "description": "In the deep snows of the far north is a new type of wingless dragon, the Snow Lizard. The dragon appears to be made for the chilly climate; totally immune to cold, this great serpent stalks the ice flows and snowy wilds of Canada and Alaska. The Snow Lizard delights in its winter wonderland, a creature in its own element. Snow Lizards are nearly always pure white in coloration, with a small percentage (12%) being light grey, icy blue or snowy white with black highlights. The dragon's powers and instincts complement its chosen surroundings per fectly, as does the serpent's size, endurance and ability to move over snow and ice unimpeded. Snow Lizards dislike warm climates and avoid deserts like the plague. Attributes: I.Q. 3D6+10, M.E. 3D6+10, M.A. 3D6+6, P.S. 3D6+8 (Supernatural), P.P. 3D6+6, P.E. 3D6+ 12, P.B. 3D6+12, Spd. 106xlO+26 running, but cannot fly. These attributes stay pretty constant until the dragon reaches full maturity at about 600 years old. At that time the physical attributes increase dramatically. Note: Even the deepest snow or slippery or thinnest ice will not slow down or hinder the Snow Lizard in any way. P.P.E.: 2D4xlO, +2D6 per level of experience. Horror Factor: 10 M.D.C. Points: 104x100+100 M.D.C. +10 M.D.C. per level of ex peri ence, on Rifts Earth. (Hit Points: 104x100+ 100 on most S.D.C. worlds, S.D.C.: 6D6x1O S.D.C. +3D6 S.D.C. per level of experi ence. Armor Rating: 11, but is a Mega-Damage creature on Rifts Earth.) Note: Magic, psionics, and Mega-Damage weapons all have full effect. Natural Abilities: Nightvision 200 feet (61 m), see the invisible, tum invisible at will, impervious to cold (even M.D. and magic cold does no damage), and can bio-regenerate IDIO M.D.C. per melee round (1D4xlO per minute). Does not have wings and cannot fly. Metamorphosis: May transform for two hours per level of ex perience. Same as the Cat's-Eye Dragon. Teleport: 20% +2% per level of experience. Same as the Cat's Eye Dragon. Snowstorm Transformation: In times of danger the Snow Liz ard has the ability to transform into a blizzard of blowing snow. In this form, no physical or energy attack can harm him; with the ex ception of fire, which does double damage. No locked door can bar his way and the dragon can slip through the tiniest crack or keyhole. Although the Snow Lizard Hatchling cannot physically attack, com municate, cast magic, manipulate anything around him or even use his psychic powers as a snowstorm, the dragon can hear and see events around him as if he was still in his normal form. Of course, the dragon can reform with a thought (each transformation requires only one melee action). As the blowing snow, the Hatchling moves at a maximum speed of just 20 mph (32 km) and the sound of the blowing snow makes prowling impossible unless out in a real storm. Using the Snowstorm as an attack, everyone caught in the storm (roughly a 20 footl6.1 m radius) feel cold and visibility is reduced by half and the victims in the mini-storm are -I on initiative, -2 on Perception Rolls and have to shout to be hear. The storm also re duces radio transmission by half its normal range. Damage is only 1D4 S.D.C. per melee round. Frost Breath: 3D6 M.D. (5D6 M.D. as an adult) to a four foot wide (1.2 m) area. The width of the blast enables the dragon to strike a few opponents (2-3) simultaneously, if they are huddled closely together. Range: 100 feet (30.5 m), each blast of frost breath counts as one of the dragon's melee attacks. Bonuses (in addition to attribute bonuses): + I attack/action per me lee round, +2 on initiative, +2 on Perception Rolls, +1 to strike, +1 to parry and dodge, +3 to pull punch, +3 to roll with impact, +3 to save vs Horror Factor, +4 to save vs mind control and possession, and +2 on all other saving throws. Damage: Varies with Supernatural P.S., but their claws inflict an addi tional +2D6 Mega-Damage. The Snow Lizard's bite does 3D6 M.D. (no bonus for Supernatural P.S.). Or the dragon may use its frost breath, magic, psionics or a weapon. Magic: None to start. See Player Notes, above. Psionics: Minor Psychic; select a total of six psychic powers from any these of categories: Sensitive, Physical, and/or Healing. Super Psionic powers are not available. Select an additional two at levels 5, 10, 15 and 20. I.S.P.: 1D6xlO, +1D6 per level of experience."
+    }
+  },
+  {
+    "name": "Whip-Tailed Dragon",
+    "type": "race",
+    "img": "icons/svg/dna.svg",
+    "source": {
+      "printedPage": 163
+    },
+    "system": {
+      "lifespan": "",
+      "size": "",
+      "bonuses": "",
+      "languages": "",
+      "isMDC": false,
+      "attributeBonuses": {
+        "iq": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "me": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ma": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "ps": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pp": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pe": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "pb": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        },
+        "spd": {
+          "bonus": 0,
+          "formula": "",
+          "value": 0,
+          "rolled": false
+        }
+      },
+      "poolBonuses": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "skillBonuses": [],
+      "skillChoices": [],
+      "weaponProficiencies": {
+        "selected": {},
+        "custom": [],
+        "choices": []
+      },
+      "combatBonuses": {
+        "attacks": 0,
+        "initiative": 0,
+        "perception": 0,
+        "damage": 0,
+        "strike": 0,
+        "parry": 0,
+        "dodge": 0,
+        "disarm": 0,
+        "entangle": 0,
+        "pullPunch": 0,
+        "roll": 0
+      },
+      "saveBonuses": {
+        "spell": 0,
+        "ritual": 0,
+        "psionics": 0,
+        "drugPoison": 0,
+        "harmfulDrugs": 0,
+        "insanity": 0,
+        "possession": 0,
+        "horrorFactor": 0,
+        "death": 0,
+        "pain": 0
+      },
+      "grantsMagic": true,
+      "grantsPsionics": true,
+      "abilities": [],
+      "description": "The Whip-Tailed Dragon resembles an enormous sea snake in its general appearance, but with three sets of small legs running down its length and fins running down its dorsal crest and along all six of its legs. The mouth of the Whip-Tail has only a set of large fangs for bit ing and the serpent has a formidable set of claws. The dragon Hatch ling's tail is something to behold, measuring over twice the length of the rest of the serpent's body. The tail is equipped with a huge, wicked, slashing saber blade on the tip of the tail for combat and a rudder of fins for swimming with. The scales of the Whip Tail can vary in color from aquamarine to light green, emerald, sea blue or a dark green-blue which is almost black in color. This unusual dragon is at home in just about any environment and can be found living in the deepest seas, shallow swamps, open grass lands, highest peaks, etc., provided there is a body of water (river, lake, sea, ocean) that is more than a stream, within 200 miles (320 km), where it sleeps and hides from humanoids. Attributes: LQ. 3D6+6, M.E. 3D6+4, M.A. 3D6+ II, P.S. 3D6+6 (Su pernatural), P.P. 3D6+8, P.E. 3D6+6, P.B. 2D6+12, Spd. 3D6+16 running, 2D6xlO swimming, 1D4xlO+40 flying. These attributes stay pretty constant until the dragon reaches full maturity at about 600 years old. At that time the physical attributes increase dramati cally. P.P.E.: 3D4xlO+lO, +3D6 per level of experience. Horror Factor: II M.D.C. Points: 1D4xlO0 M.D.C. +1D6+4 M.D.C. per level of ex peri ence, on Rifts Earth. (Hit Points: 1D4xlO0 on most S.D.C. worlds, S.D.C.: 4D6xlO S.D.C. +2D6 S.D.C. per level of experience, Ar mor Rating: 10, but a Mega-Damage creature on Rifts Earth.) Note: Magic, psionics, and Mega-Damage weapons all have full effect. Natural Abilities: Nightvision 500 feet (152 m), hawk-like vision (can see a rabbit clearly at up to two miles (3.2 km) away and can see in murky or dark water), see the invisible, tum invisible underwater or in the rain at will, resistant to fire and cold (does half damage, in cluding M.D. magic fire and plasma energy), prehensile tail, can bio-regenerate IDIO M.D.C. per melee round (1D4xlO per minute) and can regenerate severed limbs (tail, fins, arms, etc.) in 1D4 hours. Does not have wings, but can still fly through magical means. Natural born swimmers (98%; swims like an eel) able to breathe both air and water, and can live underwater or on dry land indefi nitely. Maximum depth tolerance is 2 miles (3.2 km). Knows the time of day and direction by scanning the heavens and tides at 50% +3% per level of experience. Sense the direction and speed of water currents and tides, changes in the currents and tides, weather pat terns and dramatic underwater disturbances within 10 miles (16 km) at 50% +3% per level. Metamorphosis: May transform for two hours per level of ex perience. Same as the Cat's-Eye Dragon. Teleport: 24% +2% per level of experience. Same as the Cat's Eye Dragon. Fire Breath: 2D6 M.D. to a three foot wide (0.9 m) area, but can only hit one opponent at a time. Fire breath even works under water but at half the range and comes out as a jet of boiling water. Range: 100 feet (30.5 m). Each fire blast counts as one of the dragon's attacks per melee. Bonuses (in addition to attribute bonuses): +2 attack/actions per me lee round (one is always with its prehensile tail), +3 on initiative, + I on Perception Rolls, +2 to strike, +4 to strike with the saber tail, +2 to parry and dodge, +2 to pull punch, +2 to roll with impact, +3 to save vs Horror Factor and + I on all other saving throws. Damage: Varies with Supernatural P.S., but their claws inflict an addi tional +6 M.D. The Hatchling's bite does 2D4 M.D. (no bonus for Supernatural P.S.). The prehensile tail can be used to strike at its en emies like a whip, but the Whip-Tailed Dragon's tail is armed with a huge, wicked, slashing saber blade. The saber tail does the same Mega-Damage as a punch +2D6 additional M.D. for the tail blade. Or the dragon may use its fire breath, magic, psionics or a weapon. Magic: None to start. See Player Notes, above. Psionics: Major Psychic; player can select a total of 10 psionic powers from any of these categories: Sensitive or Physical. Super Psionic powers are not available. Select an additional psionic power at lev els 3, 6, 9, 12, 15, and 18. I.S.P.: 2D4xlO +1D6+4 per level of ex perience."
+    }
+  }
+]

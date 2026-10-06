@@ -1,0 +1,91 @@
+{{!-- ===== SKILLS TAB ===== --}}
+        <div class="tab" data-group="primary" data-tab="skills">
+            <h2 class="ee-bar">SKILLS</h2>
+
+            {{#if isEE}}
+            <div class="ee-panel ee-ee-skills">
+                <h3>Errant Earth Skills</h3>
+                <p class="ee-muted">Totals are Rank + Proficiency × Level + Bonus. Tags can use comma-separated rule tags such as Aced, Assurance, Fated, Reliable, or Take 20.</p>
+                <table class="ee-table">
+                    <thead>
+                        <tr><th>Name</th><th>Category</th><th>Tags</th><th>Rank</th><th>Prof.</th><th>Bonus</th><th>Total</th><th>Notes</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        {{#each eeSkills.list}}
+                        <tr>
+                            <td>
+                                {{#if custom}}
+                                <input type="hidden" name="system.eeSkills.list.{{_index}}.key" value="" />
+                                <input type="hidden" name="system.eeSkills.list.{{_index}}.custom" value="true" />
+                                <input type="text" name="system.eeSkills.list.{{_index}}.name" value="{{name}}" placeholder="Custom skill" />
+                                {{else}}
+                                <input type="hidden" name="system.eeSkills.list.{{_index}}.key" value="{{key}}" />
+                                <input type="hidden" name="system.eeSkills.list.{{_index}}.name" value="{{name}}" />
+                                <input type="hidden" name="system.eeSkills.list.{{_index}}.custom" value="false" />
+                                <span class="ee-skill-name" title="{{name}}">{{name}}</span>
+                                {{/if}}
+                            </td>
+                            <td><select name="system.eeSkills.list.{{_index}}.category">{{eeSelectOptions ../config.EE_SKILL_CATEGORIES category}}</select></td>
+                            <td><input type="text" name="system.eeSkills.list.{{_index}}.tags" value="{{tags}}" list="ee-skill-tags" placeholder="Tags" /></td>
+                            <td><input type="number" name="system.eeSkills.list.{{_index}}.rank" value="{{rank}}" /></td>
+                            <td><input type="number" name="system.eeSkills.list.{{_index}}.proficiency" value="{{proficiency}}" /></td>
+                            <td><input type="number" name="system.eeSkills.list.{{_index}}.bonus" value="{{bonus}}" /></td>
+                            <td class="ee-total">{{total}}</td>
+                            <td><input type="text" name="system.eeSkills.list.{{_index}}.notes" value="{{notes}}" /></td>
+                            <td class="ee-actions">
+                                <a data-action="roll" data-roll-type="eeSkill" data-tags="{{tags}}" data-tier="{{../eeDerived.tier}}" data-target="{{total}}" data-label="{{name}}" title="Roll skill"><i class="fas fa-dice-d20"></i></a>
+                                <a data-action="delete-row" data-path="eeSkills.list" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <datalist id="ee-skill-tags">
+                    {{#each config.EE_SKILL_TAGS}}
+                    <option value="{{this}}"></option>
+                    {{/each}}
+                </datalist>
+                <div class="ee-skill-add-row">
+                    <select data-action="add-skill" data-ee="true">
+                        <option value="">+ Add Errant Earth skill…</option>
+                        {{#each eeSkillPicker}}
+                        <optgroup label="{{label}}">
+                            {{#each items}}
+                            <option value="{{key}}">{{name}}</option>
+                            {{/each}}
+                        </optgroup>
+                        {{/each}}
+                    </select>
+                    <button type="button" class="ee-add" data-action="add-row" data-path="eeSkills.list" data-kind="skill">+ Custom</button>
+                </div>
+            </div>
+            {{/if}}
+
+            {{#unless isEE}}
+
+            <div class="ee-row ee-skill-bonuses">
+                <label class="ee-tooltip" data-tooltip="Auto-computed from IQ. Uses the Legacy attribute chart: +2% at IQ 16, increasing to +16% at IQ 30; +2% per full five points beyond 30.">IQ Bonus to Skill:</label>
+                <input type="number" value="{{riftsDerived.iqSkillBonus}}" disabled />
+                <label class="ee-tooltip" data-tooltip="Auto-computed from MA. The percentage chance to inspire trust or intimidate others. Kicks in at MA 16+.">Trust/Intimidate:</label>
+                <input type="number" value="{{riftsDerived.trustIntimidate}}" disabled />
+                <label class="ee-tooltip" data-tooltip="Auto-computed from PB. The percentage chance to charm or impress others. Kicks in at PB 16+.">Charm/Impress:</label>
+                <input type="number" value="{{riftsDerived.charmImpress}}" disabled />
+            </div>
+
+            {{#if pendingOccSkillChoiceCount}}
+            <div class="ee-occ-choice-alert">
+                <span><i class="fas fa-graduation-cap"></i> {{pendingOccSkillChoiceCount}} O.C.C. skill choice rule{{#unless (eq pendingOccSkillChoiceCount 1)}}s{{/unless}} available at this level.</span>
+                <button type="button" data-action="apply-occ-skill-choices">Choose Skills</button>
+            </div>
+            {{/if}}
+
+<div class="ee-skill-grid">
+{{> legacySkillSection title="OCC Skills" category="occ" rows=skills.occ picker=skillPicker}}
+{{> legacySkillSection title="OCC Related Skills" category="occRelated" rows=skills.occRelated picker=skillPicker}}
+{{> legacySkillSection title="Secondary Skills" category="secondary" rows=skills.secondary picker=skillPickerSecondary}}
+{{#if skills.unassigned.length}}
+{{> legacySkillSection title="Unassigned Skills" category="" rows=skills.unassigned picker=skillPicker}}
+{{/if}}
+</div>
+            {{/unless}}
+        </div>

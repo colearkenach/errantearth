@@ -26,24 +26,31 @@ const LOCATION_FIELDS = {
 };
 const BOOK_HEADINGS = new Set([
   "name", "alignment", "alignments", "attributes", "hitpoints", "hp", "sdc", "mdc", "ppe", "isp",
+  "iq", "me", "ma", "ps", "pp", "pe", "pb", "spd", "truename", "race", "occ", "rcc", "gender",
   "weight", "height", "age", "horrorfactor", "experiencelevel", "level", "naturalarmorrating",
-  "psionicpowers", "magicknowledge", "combat", "attackspermelee", "bonuses",
+  "psioniclevel", "psionicpowers", "magicknowledge", "combat", "handtohand", "attackspermelee", "bonuses",
   "skillsofnote", "favoriteweapons", "specialweapon", "bodyarmor", "specialvehicle",
   "cybernetics", "cyberneticsbionics", "money", "alliancesallies", "allies",
-  "requirements", "occskills", "occrelatedskills", "secondaryskills", "occbonuses",
+  "requirements", "attributerequirements", "racerestrictions", "playernote",
+  "occskills", "occrelatedskills", "secondaryskills", "occbonuses",
   "standardequipment", "weapons", "armor", "powerarmor", "vehicle", "description",
   "notes", "type", "category", "damage", "megadamage", "damagetype", "range", "effectiverange", "duration",
   "savingthrow", "cost", "blackmarketcost", "ppecost", "ispcost", "payload", "ammo", "rate",
   "rateoffire", "ar", "armorrating", "prowlpenalty", "lifespan", "size",
   "averagelifespan", "naturalabilities", "psionics", "habitat", "enemies",
-  "languages", "equipment", "abilities", "skillbonuses", "weaponproficiencies",
-  "crew", "capacity", "speed", "maximumspeed", "maxspeed", "cruise", "engine", "running", "leaping",
-  "maximumrange", "maximummrange", "maximunrange", "cargo", "powers",
+  "languages", "skills", "spells", "equipment", "abilities", "skillbonuses", "weaponproficiencies",
+  "crew", "capacity", "speed", "maximumspeed", "maxspeed", "cruise", "engine", "running", "leaping", "vehicles",
+  "maximumrange", "maximumranger", "maximummrange", "maximunrange", "cargo", "powers",
   "vehicletype", "modeltype", "class", "statisticaldata", "weaponsystems",
   "physicalstrength", "powersystem", "primarypurpose", "primarypurnose", "missiletype",
   "mdcbylocation", "mdebylocation", "mdcbylocatio", "mdcbylocationmainbody"
 ]);
+const WEAPON_DETAIL_HEADINGS = new Set([
+  "damage", "megadamage", "damagetype", "range", "effectiverange", "rate", "rateoffire",
+  "payload", "ammo", "missiletype"
+]);
 const NUMBER_WORDS = {
+  zero: 0,
   one: 1, first: 1,
   two: 2, second: 2,
   three: 3, third: 3,
@@ -58,7 +65,19 @@ const NUMBER_WORDS = {
   twelve: 12, twelfth: 12,
   thirteen: 13, thirteenth: 13,
   fourteen: 14, fourteenth: 14,
-  fifteen: 15, fifteenth: 15
+  fifteen: 15, fifteenth: 15,
+  sixteen: 16, sixteenth: 16,
+  seventeen: 17, seventeenth: 17,
+  eighteen: 18, eighteenth: 18,
+  nineteen: 19, nineteenth: 19,
+  twenty: 20, twentieth: 20,
+  thirty: 30, thirtieth: 30,
+  forty: 40, fourty: 40, fortieth: 40,
+  fifty: 50, fiftieth: 50,
+  sixty: 60, sixtieth: 60,
+  seventy: 70, seventieth: 70,
+  eighty: 80, eightieth: 80,
+  ninety: 90, ninetieth: 90
 };
 
 export class ErrantEarthLegacyImporter {
@@ -119,13 +138,14 @@ export class ErrantEarthLegacyImporter {
     const openChecked = this._setting("legacyImporterOpenSheet", true) ? "checked" : "";
     const content = `
       <form class="ee-import-form">
-        <p class="ee-import-hint">Paste EE Legacy NPC text or Foundry-style JSON. Plain text accepts lines like <code>Name:</code>, <code>IQ:</code>, <code>HP:</code>, <code>Skills:</code>, <code>Weapons:</code>, and <code>Notes:</code>.</p>
+        <p class="ee-import-hint">Paste text copied from an EE Legacy PDF, key/value text, or Foundry-style JSON. Plain text accepts lines like <code>Name:</code>, <code>IQ:</code>, <code>HP:</code>, <code>Skills:</code>, <code>Weapons:</code>, and <code>Notes:</code>.</p>
         <label>Name Override
           <input type="text" name="name" placeholder="Optional; otherwise uses imported name" />
         </label>
         <label>Import Text / JSON
           <textarea name="source" placeholder="Name: Coalition Grunt&#10;Level: 2&#10;IQ: 10&#10;ME: 9&#10;HP: 18/18&#10;SDC: 35/35&#10;Weapons: C-18 Laser Pistol - 2D6 M.D., Range 800 ft&#10;Notes: Patrol soldier."></textarea>
         </label>
+        ${this._cleanupControls()}
         <label class="ee-import-check"><input type="checkbox" name="openSheet" ${openChecked} /> Open imported sheet</label>
       </form>`;
 
@@ -140,7 +160,8 @@ export class ErrantEarthLegacyImporter {
         },
         cancel: { label: "Cancel" }
       },
-      default: "import"
+      default: "import",
+      render: html => this._activateImportCleanup(html)
     }, { classes: ["errantearth", "dialog", "ee-import-dialog"], width: 560 }).render(true);
   }
 
@@ -151,7 +172,7 @@ export class ErrantEarthLegacyImporter {
       .join("");
     const content = `
       <form class="ee-import-form">
-        <p class="ee-import-hint">Imports create EE Legacy item records only. Use JSON for exact fields, or paste key/value text for quick drafts.</p>
+        <p class="ee-import-hint">Imports create EE Legacy item records only. Paste text copied from an EE Legacy PDF, key/value text, or JSON for exact fields.</p>
         <div class="ee-import-grid">
           <label>Importer
             <select name="type">${options}</select>
@@ -163,6 +184,7 @@ export class ErrantEarthLegacyImporter {
         <label>Import Text / JSON
           <textarea name="source" placeholder="Name: NG-L5 Laser Rifle&#10;Damage: 3D6 M.D.&#10;Range: 1600 ft&#10;Payload: 20 shots&#10;Rate: Single shot or burst&#10;Cost: 20,000 credits&#10;Notes: Common Northern Gun rifle."></textarea>
         </label>
+        ${this._cleanupControls()}
         <label class="ee-import-check"><input type="checkbox" name="openSheet" ${openChecked} /> Open imported sheet</label>
       </form>`;
 
@@ -177,7 +199,8 @@ export class ErrantEarthLegacyImporter {
         },
         cancel: { label: "Cancel" }
       },
-      default: "import"
+      default: "import",
+      render: html => this._activateImportCleanup(html)
     }, { classes: ["errantearth", "dialog", "ee-import-dialog"], width: 560 }).render(true);
   }
 
@@ -246,6 +269,51 @@ export class ErrantEarthLegacyImporter {
     return root?.querySelector("form") ?? null;
   }
 
+  static _cleanupControls() {
+    return `
+      <div class="ee-import-cleanup">
+        <button type="button" data-action="clean-import-text" title="Repair common spacing, punctuation, line-wrap, and number errors from copied PDF text">
+          <i class="fas fa-wand-magic-sparkles"></i> Clean Up PDF Text
+        </button>
+        <span class="ee-import-cleanup-status" data-cleanup-status aria-live="polite">Preview the result here before importing.</span>
+      </div>`;
+  }
+
+  static _activateImportCleanup(html) {
+    const root = this._htmlRoot(html);
+    const button = root?.querySelector("[data-action='clean-import-text']");
+    const source = root?.querySelector("textarea[name='source']");
+    const status = root?.querySelector("[data-cleanup-status]");
+    if (!button || !source) return;
+
+    button.addEventListener("click", () => {
+      const original = source.value;
+      if (!original.trim()) {
+        if (status) status.textContent = "Paste some PDF text first.";
+        source.focus();
+        return;
+      }
+
+      try {
+        JSON.parse(original.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim());
+        if (status) status.textContent = "Valid JSON detected; no text cleanup was applied.";
+        return;
+      } catch (err) {
+        // This tool is intentionally for unstructured PDF text, not JSON.
+      }
+
+      const cleaned = this._cleanLegacyImportText(original);
+      source.value = cleaned;
+      source.dispatchEvent(new Event("input", { bubbles: true }));
+      if (status) {
+        status.textContent = cleaned === original
+          ? "No common PDF-copy artifacts were found."
+          : "Text cleaned. Review it, then import when it looks right.";
+      }
+      source.focus();
+    });
+  }
+
   static _recordsFromInput(source) {
     const text = String(source ?? "").trim();
     if (!text) return [];
@@ -268,11 +336,34 @@ export class ErrantEarthLegacyImporter {
     const record = {};
     let currentKey = null;
     for (const rawLine of String(block ?? "").split(/\r?\n/)) {
+      // PDF page numbers are frequently extracted as spaced individual digits.
+      if (/^(?:\d\s+){1,3}\d$/.test(rawLine.trim())) continue;
       const line = this._tidyOcrText(rawLine.trim());
       if (!line) continue;
+
+      // A class's real title commonly appears after its special-powers text.
+      const className = this._classStatsName(line);
+      if (className) {
+        record.Name = className;
+        currentKey = null;
+        continue;
+      }
+
+      const specialPowers = line.match(/^Special\s+(.+?)\s+(?:O\.?\s*C\.?\s*C\.?|R\.?\s*C\.?\s*C\.?|D\.?\s*C\.?\s*C\.?)\s+Powers?\s*:?$/i);
+      if (specialPowers) {
+        if (!record.Name) record.Name = this._cleanName(specialPowers[1]);
+        currentKey = "Powers";
+        continue;
+      }
+
       const match = line.match(/^([^:]{1,60}):\s*(.*)$/);
-      if (match && this._isBookHeading(match[1])) {
-        currentKey = this._canonicalHeading(match[1]);
+      const heading = match?.[1]?.replace(/^\d+\s*[.)]\s*/, "").trim();
+      const inWeaponSection = ["weapons", "weaponsystems"].includes(this._norm(currentKey));
+      if (match && inWeaponSection && WEAPON_DETAIL_HEADINGS.has(this._norm(heading))) {
+        const detailHeading = this._canonicalHeading(heading);
+        record[currentKey] = this._appendBlock(record[currentKey], `${detailHeading}: ${match[2].trim()}`);
+      } else if (match && this._isBookHeading(heading)) {
+        currentKey = this._canonicalHeading(heading);
         record[currentKey] = this._appendBlock(record[currentKey], match[2].trim());
       } else if (match && !record.Name && !currentKey) {
         record.Name = this._cleanWhitespace(match[1]);
@@ -338,7 +429,11 @@ export class ErrantEarthLegacyImporter {
   }
 
   static _itemDataFromRecord(record, selectedType, overrideName, index = 0) {
-    const rawType = this._normalizeItemType(record.type || this._field(record, "type", "Type") || selectedType);
+    // A book's descriptive `Type:` field (for example "Hovercycle") is item
+    // data, not necessarily a Foundry document type. Only let a recognized
+    // document type override the importer selected by the user.
+    const recordType = this._normalizeItemType(record.type ?? this._field(record, "type", "Type"), "");
+    const rawType = recordType || this._normalizeItemType(selectedType);
     const type = rawType === "rcc" ? "occ" : rawType;
     const systemSource = this._systemSource(record);
     const hasSystem = !!record.system || !!record.data?.data;
@@ -446,7 +541,10 @@ export class ErrantEarthLegacyImporter {
     return {
       description: this._joinText(
         this._textField(source, "description", "Description", "Notes"),
-        this._prefixedText("Requirements", this._field(source, "Requirements"))
+        this._prefixedText("Player Note", this._field(source, "Player Note")),
+        this._prefixedText("Alignment", this._field(source, "Alignment")),
+        this._prefixedText("Attribute Requirements", this._field(source, "Attribute Requirements", "Requirements")),
+        this._prefixedText("Race Restrictions", this._field(source, "Race Restrictions"))
       ),
       category: this._textField(source, "category", "Category") || (isRCC ? "RCC" : ""),
       isRCC,
@@ -460,6 +558,7 @@ export class ErrantEarthLegacyImporter {
         this._textField(source, "equipment", "Equipment", "Standard Equipment"),
         this._prefixedText("Weapons", this._field(source, "Weapons")),
         this._prefixedText("Armor", this._field(source, "Armor")),
+        this._prefixedText("Vehicles", this._field(source, "Vehicles", "Vehicle")),
         this._prefixedText("Cybernetics & Bionics", this._field(source, "Cybernetics & Bionics", "Cybernetics"))
       ),
       money: this._textField(source, "money", "Money"),
@@ -467,10 +566,12 @@ export class ErrantEarthLegacyImporter {
       poolBonuses: this._poolBonuses(source),
       skillBonuses: this._skillBonusRows(this._field(source, "skillBonuses", "Skill Bonuses")),
       weaponProficiencies: { selected: this._weaponProficiencies(source), custom: [], choices: this._wpChoices(occSkills) },
-      combatBonuses: { ...this._numberMap(source, ["attacks", "initiative", "damage", "strike", "parry", "dodge", "disarm", "entangle", "pullPunch", "roll"], "bonus"), ...bonusMaps.combat },
+      combatBonuses: { ...this._numberMap(source, ["attacks", "initiative", "perception", "damage", "strike", "parry", "dodge", "disarm", "entangle", "pullPunch", "roll"], "bonus"), ...bonusMaps.combat },
       saveBonuses: { ...this._numberMap(source, ["spell", "ritual", "psionics", "drugPoison", "harmfulDrugs", "insanity", "possession", "horrorFactor", "death", "pain"], "save"), ...bonusMaps.saves },
       grantsMagic: this._bool(this._field(source, "grantsMagic", "Magic", "Grants Magic")),
-      grantsPsionics: this._bool(this._field(source, "grantsPsionics", "Psionics", "Grants Psionics")),
+      grantsPsionics: this._bool(this._field(source, "grantsPsionics", "Psionics", "Grants Psionics"))
+        || !!this._field(source, "Powers", "Psionic Powers")
+        || /\bI\.?\s*S\.?\s*P\.?\b/i.test(this._sourceText(source)),
       abilities: this._abilityRows(this._field(source, "abilities", "Abilities", "Powers"))
     };
   }
@@ -511,7 +612,7 @@ export class ErrantEarthLegacyImporter {
       poolBonuses: this._poolBonuses(source),
       skillBonuses: this._skillBonusRows(this._field(source, "skillBonuses", "Skill Bonuses")),
       weaponProficiencies: { selected: this._weaponProficiencies(source), custom: [], choices: this._wpChoices(skillsOfNote) },
-      combatBonuses: { ...this._numberMap(source, ["attacks", "initiative", "damage", "strike", "parry", "dodge", "disarm", "entangle", "pullPunch", "roll"], "bonus"), ...bonusMaps.combat },
+      combatBonuses: { ...this._numberMap(source, ["attacks", "initiative", "perception", "damage", "strike", "parry", "dodge", "disarm", "entangle", "pullPunch", "roll"], "bonus"), ...bonusMaps.combat },
       saveBonuses: { ...this._numberMap(source, ["spell", "ritual", "psionics", "drugPoison", "harmfulDrugs", "insanity", "possession", "horrorFactor", "death", "pain"], "save"), ...bonusMaps.saves },
       grantsMagic: this._bool(this._field(source, "grantsMagic", "Magic", "Grants Magic")),
       grantsPsionics: this._bool(this._field(source, "grantsPsionics", "Psionics", "Grants Psionics")),
@@ -521,7 +622,11 @@ export class ErrantEarthLegacyImporter {
 
   static _spellSystem(source) {
     const damage = this._field(source, "damage", "Damage") ?? "";
+    const rawCategory = this._textField(source, "category", "Category", "Spell Category", "Spell Type");
+    const category = this._choice(rawCategory, CONFIG.EE?.SPELL_CATEGORIES);
     return {
+      category: category || rawCategory,
+      categoryCustom: !!rawCategory && !category,
       description: this._joinText(
         this._textField(source, "description", "Description", "Notes"),
         this._fieldTail(source, "P.P.E.", "PPE", "Cost")
@@ -538,7 +643,11 @@ export class ErrantEarthLegacyImporter {
 
   static _psionicSystem(source) {
     const damage = this._field(source, "damage", "Damage") ?? "";
+    const rawType = this._textField(source, "psionicType", "Psionic Type", "Power Type", "Category");
+    const type = this._choice(rawType, CONFIG.EE?.PSIONIC_TYPES);
     return {
+      type: type || rawType,
+      typeCustom: !!rawType && !type,
       description: this._joinText(
         this._textField(source, "description", "Description", "Notes"),
         this._fieldTail(source, "I.S.P.", "ISP", "Cost")
@@ -562,7 +671,7 @@ export class ErrantEarthLegacyImporter {
     const armorLocations = this._locations({ ...source, Locations: locationText });
     return {
       description: this._textField(source, "description", "Description"),
-      vehicleType: this._choice(this._field(source, "vehicleType", "Vehicle Type", "Type"), CONFIG.EE?.VEHICLE_TYPES),
+      vehicleType: this._vehicleType(this._field(source, "vehicleType", "Vehicle Type", "Type", "Class")),
       isMDC: isMDC === undefined ? true : this._bool(isMDC),
       crew: this._textField(source, "crew", "Crew"),
       capacity: this._textField(source, "capacity", "Capacity", "Passengers"),
@@ -619,6 +728,9 @@ export class ErrantEarthLegacyImporter {
       occrelatedskills: "O.C.C. Related Skills",
       secondaryskills: "Secondary Skills",
       occbonuses: "O.C.C. Bonuses",
+      attributerequirements: "Attribute Requirements",
+      racerestrictions: "Race Restrictions",
+      playernote: "Player Note",
       cyberneticsbionics: "Cybernetics & Bionics",
       alliancesallies: "Alliances & Allies",
       skillsofnote: "Skills of Note",
@@ -639,6 +751,8 @@ export class ErrantEarthLegacyImporter {
       maxspeed: "Maximum Speed",
       maximumrange: "Maximum Range",
       maximumranger: "Maximum Range",
+      maximummrange: "Maximum Range",
+      maximunrange: "Maximum Range",
       running: "Running",
       leaping: "Leaping",
       weaponsystems: "Weapon Systems",
@@ -654,13 +768,109 @@ export class ErrantEarthLegacyImporter {
       naturalarmorrating: "Natural Armor Rating",
       naturalabilities: "Natural Abilities",
       averagelifespan: "Average Life Span",
-      standardequipment: "Standard Equipment"
+      standardequipment: "Standard Equipment",
+      vehicles: "Vehicles"
     };
     return map[normalized] ?? value.trim();
   }
 
+  static _cleanLegacyImportText(value) {
+    const lines = String(value ?? "")
+      .replace(/\r\n?/g, "\n")
+      .split("\n")
+      .map(rawLine => rawLine.trim())
+      // Standalone two-to-four digit lines in copied book text are page numbers.
+      .filter(line => !/^\d{2,4}$/.test(line.replace(/\s/g, "")))
+      .map(line => {
+        if (!line) return "";
+
+        let cleaned = line
+          // Repair dice before the general digit-space cleanup erases useful clues.
+          .replace(/\b([1-9])\s+0\s*([468])(?=\s|[.,;:%)]|$)/g, "$1D$2")
+          .replace(/\b[IiLl]\s+D\s*(\d(?:\s*\d){0,2})(?!\d)/g, (match, faces) => `1D${faces.replace(/\s/g, "")}`)
+          .replace(/\b(\d+)\s+D\s*(\d(?:\s*\d){0,2})(?!\d)/g, (match, dice, faces) => `${dice}D${faces.replace(/\s/g, "")}`)
+          .replace(/([xX])\s*[lI]\s*([O0](?:\s*[O0]){0,2})\b/g, (match, x, zeroes) => `${x}1${zeroes.replace(/\s/g, "").replace(/O/gi, "0")}`);
+
+        cleaned = this._tidyOcrText(cleaned)
+          .replace(/\bO\.C\.C\.(?:\s+s\b)?/gi, match => /\s+s$/i.test(match) ? "O.C.C.s" : "O.C.C.")
+          .replace(/\bR\.C\.C\.(?:\s+s\b)?/gi, match => /\s+s$/i.test(match) ? "R.C.C.s" : "R.C.C.")
+          .replace(/\b[lI]\s*\.\s*Q\s*\./gi, "I.Q.")
+          .replace(/\bQ!(?=\s|$)/g, "or")
+          .replace(/\binchesl(\d+)\b/gi, "inches/$1")
+          .replace(/\bModem\b(?=\s*:)/g, "Modern")
+          .replace(/\bAttrib\s+ute\b/gi, "Attribute")
+          .replace(/\bReq\s+u\s+i\s+rem\s+ents\b/gi, "Requirements")
+          .replace(/\bSeco\s+n\s+d\s+a\s+ry\b/gi, "Secondary")
+          .replace(/\bE\s+q\s+u\s+i\s+pment\b/gi, "Equipment")
+          .replace(/\bC\s+ross-Cou\s+ntry\b/gi, "Cross-Country")
+          .replace(/\bCartograp\s+h\s+y\b/gi, "Cartography")
+          .replace(/\bfol\s+lowed\b/gi, "followed")
+          .replace(/\bful\s+l\b/gi, "full")
+          .replace(/\bSki\s+l\s+l\b/gi, "Skill")
+          .replace(/\bskil\s+l\b/gi, "skill")
+          .replace(/\bSwam\s+p\b/gi, "Swamp")
+          // Join obvious sequences of individually spaced letters (T r a i l, M o n e y).
+          .replace(/\b(?:[A-Za-z]\s+){2,}[A-Za-z]\b/g, match => match.replace(/\s/g, ""))
+          // A capital consonant split from the rest of a word is a common PDF artifact.
+          .replace(/\b([B-HJ-Z])\s+(?=[a-z]{2,}\b)/g, "$1")
+          .replace(/\bi\s+f\b/g, "if")
+          .replace(/\bo\s+f\b/g, "of")
+          .replace(/\bm\s+(?=[a-z]{2,}\b)/g, "m")
+          .replace(/\bj\s+(?=[a-z]{2,}\b)/g, "j")
+          .replace(/\s+'\s+(?=[a-z])/gi, "'")
+          .replace(/\s+([,.;:!?%)\]])/g, "$1")
+          .replace(/([(\[])\s+/g, "$1")
+          .replace(/[ \t]{2,}/g, " ")
+          .trim();
+
+        return cleaned;
+      });
+
+    const dewrapped = [];
+    for (const line of lines) {
+      const previous = dewrapped.at(-1);
+      if (line && previous && (/^[a-z]/.test(line) || /^\)/.test(line)) && !/:\s*$/.test(previous)) {
+        const noSpace = /-\s*$/.test(previous) || /^\)/.test(line);
+        dewrapped[dewrapped.length - 1] = noSpace ? `${previous}${line}` : `${previous} ${line}`;
+      } else {
+        dewrapped.push(line);
+      }
+    }
+
+    return dewrapped.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  }
+
   static _tidyOcrText(value) {
     return String(value ?? "")
+      .normalize("NFKC")
+      .replace(/[\u00ad\u200b-\u200d\ufeff]/g, "")
+      .replace(/[“”]/g, '"')
+      .replace(/[‘’]/g, "'")
+      .replace(/\b([A-Z])\s*\.\s*(?=[A-Z]\s*\.)/gi, "$1.")
+      .replace(/\b([A-Z]\.)\s+(?=[A-Z]\.)/g, "$1")
+      .replace(/(\d)\s+(?=\d)/g, "$1")
+      .replace(/(\d)\s*[Oo]\b/g, (match, digit) => `${digit}0`)
+      .replace(/([+-])\s+(?=\d)/g, "$1")
+      .replace(/(\d)\s*\.\s*(\d)/g, "$1.$2")
+      .replace(/([/'])\s+s\b/gi, "$1s")
+      .replace(/\s+'s\b/gi, "'s")
+      .replace(/\bA\s+t\b/g, "At")
+      .replace(/\bfi\s+fih\b/gi, "fifth")
+      .replace(/\bPsion\s+ics?\b/gi, "Psionics")
+      .replace(/\bPs\s+ionic\b/gi, "Psionic")
+      .replace(/\bT\s+h\s*row\b/gi, "Throw")
+      .replace(/\bReq\s+uirements\b/gi, "Requirements")
+      .replace(/\bRestrictio\s+n\s+s\b/gi, "Restrictions")
+      .replace(/\bEqu\s+i\s*pm\s+ent\b/gi, "Equipment")
+      .replace(/\bSta\s+n\s+d\s+a\s+rd\b/gi, "Standard")
+      .replace(/\bWi\s+lderness\b/gi, "Wilderness")
+      .replace(/\babi\s+l\s*ities\b/gi, "abilities")
+      .replace(/\bski\s+ll\b/gi, "skill")
+      .replace(/\buti\s+lity\b/gi, "utility")
+      .replace(/\bfi\s+lter\b/gi, "filter")
+      .replace(/\bj\s+et\b/gi, "jet")
+      .replace(/\bl\s+ine\b/gi, "line")
+      .replace(/\bse\s+lf\b/gi, "self")
       .replace(/\bM\.D\.e\./gi, "M.D.C.")
       .replace(/\bM\.D\.e\b/gi, "M.D.C.")
       .replace(/\bLocati\s+o\s+n\b/gi, "Location")
@@ -673,6 +883,12 @@ export class ErrantEarthLegacyImporter {
       .replace(/\bobj\s+ect\b/gi, "object")
       .replace(/\brep\s+laced\b/gi, "replaced")
       .replace(/\bfuel\s+milage\b/gi, "fuel mileage");
+  }
+
+  static _classStatsName(value) {
+    const line = this._cleanWhitespace(value);
+    const match = line.match(/^(.+?)\s+(?:(?:Psychic|Magic)\s+)?(?:O\.?\s*C\.?\s*C\.?|R\.?\s*C\.?\s*C\.?)\s+Stats?\s*:?$/i);
+    return match ? this._cleanName(match[1]) : "";
   }
 
   static _appendBlock(existing, value) {
@@ -730,6 +946,18 @@ export class ErrantEarthLegacyImporter {
     return this._cleanWhitespace(String(text ?? "").match(/(?:credits?\.?\s*)([^.\n]*availability[^.\n]*)/i)?.[1] ?? "");
   }
 
+  static _vehicleType(value) {
+    const explicit = this._choice(value, CONFIG.EE?.VEHICLE_TYPES);
+    if (explicit) return explicit;
+    const text = String(value ?? "").toLowerCase();
+    if (/power\s*armou?r|robotic\s+suit/.test(text)) return "powerArmor";
+    if (/space|starship|orbital|interstellar/.test(text)) return "space";
+    if (/naval|boat|submarine|watercraft|sea\b|ocean/.test(text)) return "naval";
+    if (/\bair|aircraft|jet|helicopter|aerial|flying/.test(text)) return "air";
+    if (/ground|hover(?:cycle|craft|vehicle)|car|truck|motorcycle|tank|apc|wheeled|tracked/.test(text)) return "ground";
+    return "";
+  }
+
   static _mobilityPenalty(source) {
     const explicit = this._number(this._field(source, "prowlPenalty", "Prowl Penalty"), null);
     if (explicit !== null) return explicit;
@@ -766,7 +994,7 @@ export class ErrantEarthLegacyImporter {
       .replace(/\bS\.D\.C\.\.+/g, "S.D.C.");
   }
 
-  static _normalizeItemType(value) {
+  static _normalizeItemType(value, fallback = "weapon") {
     const key = this._norm(value);
     const aliases = {
       psionic: "psionicPower",
@@ -788,7 +1016,7 @@ export class ErrantEarthLegacyImporter {
       powerarmor: "powerArmor",
       powerarmour: "powerArmor"
     };
-    return aliases[key] ?? "weapon";
+    return aliases[key] ?? fallback;
   }
 
   static _defaultItemImage(type) {
@@ -809,6 +1037,10 @@ export class ErrantEarthLegacyImporter {
     if (!source || typeof source !== "object") return undefined;
     for (const name of names) {
       if (source[name] !== undefined) return source[name];
+      if (String(name).includes(".")) {
+        const nested = String(name).split(".").reduce((value, part) => value?.[part], source);
+        if (nested !== undefined) return nested;
+      }
       const wanted = this._norm(name);
       for (const [key, value] of Object.entries(source)) {
         if (this._norm(key) === wanted) return value;
@@ -839,8 +1071,36 @@ export class ErrantEarthLegacyImporter {
     if (value === undefined || value === null || value === "") return fallback;
     const match = String(value).replace(/,/g, "").replace(/(\d)\s+(?=\d)/g, "$1").match(/[-+]?\d+(?:\.\d+)?/);
     if (match) return Number(match[0]);
-    const word = String(value).toLowerCase().match(/\b([a-z]+)\b/)?.[1];
-    return NUMBER_WORDS[word] ?? fallback;
+    return this._numberFromWords(value) ?? fallback;
+  }
+
+  static _numberFromWords(value) {
+    const tokens = String(value ?? "")
+      .toLowerCase()
+      .replace(/-/g, " ")
+      .match(/[a-z]+/g) ?? [];
+    let total = 0;
+    let current = 0;
+    let seen = false;
+
+    for (const token of tokens) {
+      if (token === "and") continue;
+      if (Object.prototype.hasOwnProperty.call(NUMBER_WORDS, token)) {
+        current += NUMBER_WORDS[token];
+        seen = true;
+      } else if (token === "hundred") {
+        current = (current || 1) * 100;
+        seen = true;
+      } else if (token === "thousand") {
+        total += (current || 1) * 1000;
+        current = 0;
+        seen = true;
+      } else if (seen) {
+        break;
+      }
+    }
+
+    return seen ? total + current : null;
   }
 
   static _bool(value) {
@@ -871,13 +1131,17 @@ export class ErrantEarthLegacyImporter {
 
   static _actorAttributes(source) {
     const attrs = {};
-    const combined = [this._field(source, "attributes", "Attributes"), ...ATTRIBUTE_KEYS.map(k => this._field(source, k, ATTRIBUTE_LABELS[k]))]
+    const attributeBlock = this._field(source, "attributes", "Attributes");
+    const combined = [typeof attributeBlock === "string" ? attributeBlock : "", ...ATTRIBUTE_KEYS.map(k => this._field(source, k, ATTRIBUTE_LABELS[k]))]
       .filter(v => v !== undefined && v !== null)
       .join("\n");
 
     for (const key of ATTRIBUTE_KEYS) {
       const explicit = this._field(source, `attributes.${key}`, key, ATTRIBUTE_LABELS[key]);
-      const value = this._number(explicit, null);
+      const rawValue = explicit && typeof explicit === "object"
+        ? (explicit.value ?? explicit.current ?? explicit.base)
+        : explicit;
+      const value = this._number(rawValue, null);
       if (value !== null) attrs[key] = { value };
     }
 
@@ -909,6 +1173,12 @@ export class ErrantEarthLegacyImporter {
   static _applyPool(system, key, source, ...labels) {
     const value = this._field(source, key, ...labels);
     if (value === undefined || value === null || value === "") return;
+    if (typeof value === "object" && !Array.isArray(value)) {
+      const current = this._number(value.value ?? value.current, 0);
+      const max = this._number(value.max, current);
+      system[key] = { ...(system[key] ?? {}), value: current, max };
+      return;
+    }
     const parts = String(value).replace(/,/g, "").match(/[-+]?\d+(?:\.\d+)?/g) ?? [];
     const current = parts[0] ? Number(parts[0]) : 0;
     const max = parts[1] ? Number(parts[1]) : current;
@@ -1009,15 +1279,21 @@ export class ErrantEarthLegacyImporter {
     const used = new Set([
       "Name", "Alignment", "Attributes", "Hit Points", "HP", "SDC", "MDC", "PPE", "ISP",
       "P.P.E.", "I.S.P.", "Weight", "Height", "Age", "Combat", "Attacks Per Melee",
-      "Bonuses", "Skills of Note", "Favorite Weapons", "Body Armor", "Special Vehicle"
+      "Bonuses", "Skills", "Skills of Note", "Weapons", "Favorite Weapons", "Attacks", "Body Armor", "Armor", "Special Vehicle", "Vehicle",
+      "Notes", "Description", "Bio", "Level", "Experience Level", "XP", "Experience", "True Name", "Race", "OCC", "RCC", "Class", "Gender",
+      "Psionic Level", "Powers", "Spells", "Psionics", "Psionic Powers", "Hand to Hand",
+      ...Object.values(ATTRIBUTE_LABELS)
     ].map(k => this._norm(k)));
     const parts = [];
     for (const [key, value] of Object.entries(source ?? {})) {
       if (used.has(this._norm(key))) continue;
       if (value === undefined || value === null || value === "") continue;
+      if (typeof value === "object") continue;
       parts.push(`${key}: ${value}`);
     }
-    return this._joinText(this._field(source, "Notes", "Description", "Bio"), ...parts);
+    const authored = this._field(source, "Notes", "Description", "Bio");
+    const authoredText = typeof authored === "string" || typeof authored === "number" ? authored : "";
+    return this._joinText(authoredText, ...parts);
   }
 
   static _poolBonuses(source) {
@@ -1058,6 +1334,8 @@ export class ErrantEarthLegacyImporter {
     };
     const initiative = find(/([+-]\s*\d+)\s+(?:on\s+)?initiative/i);
     if (initiative !== null) combat.initiative = initiative;
+    const perception = find(/([+-]\s*\d+)\s+(?:to\s+)?perception/i, /perception\s*:?\s*([+-]\s*\d+)/i);
+    if (perception !== null) combat.perception = perception;
     const strike = find(/([+-]\s*\d+)\s+to\s+strike/i);
     if (strike !== null) combat.strike = strike;
     const parryDodge = find(/([+-]\s*\d+)\s+to\s+parry\s+and\s+dodge/i);
@@ -1116,7 +1394,9 @@ export class ErrantEarthLegacyImporter {
 
   static _choiceCount(value) {
     const text = String(value ?? "");
-    const direct = text.match(/select\s+([a-z]+|\d+)/i)?.[1] ?? text.match(/gets\s+to\s+select\s+([a-z]+|\d+)/i)?.[1];
+    const direct = text.match(/select\s+([a-z]+|\d+)/i)?.[1]
+      ?? text.match(/gets\s+to\s+select\s+([a-z]+|\d+)/i)?.[1]
+      ?? text.match(/^\s*([a-z]+|\d+)\s+(?:O\.?C\.?C\.?\s+Related|Secondary)\s+Skills?/i)?.[1];
     return direct ? this._number(direct, 0) : 0;
   }
 
@@ -1150,7 +1430,13 @@ export class ErrantEarthLegacyImporter {
   static _skillLineList(value) {
     if (Array.isArray(value)) return value;
     const text = String(value ?? "");
-    const lines = text.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+    const rawLines = text.split(/\r?\n|;/).map(s => s.trim()).filter(Boolean);
+    const lines = [];
+    for (const line of rawLines) {
+      // Lowercase starts are almost always a PDF-wrapped continuation, not a new skill.
+      if (lines.length && /^[a-z(]/.test(line)) lines[lines.length - 1] += ` ${line}`;
+      else lines.push(line);
+    }
     const out = [];
     for (const line of lines) {
       if (/^W\.?\s*P\.?\s*[:.]?/i.test(line) || /^Hand\s+to\s+Hand\s*:/i.test(line)) {
@@ -1173,6 +1459,9 @@ export class ErrantEarthLegacyImporter {
       const explicitPercent = this._number(withoutParens.match(/(\d+)\s*%/)?.[1], null);
       const name = withoutParens
         .replace(/\s*[-,]?\s*\d+\s*%?.*$/, "")
+        .replace(/\s+at$/i, "")
+        .replace(/^(Language\s*:\s*Other)\s*:\s*.*$/i, "$1")
+        .replace(/\s*:\s*/g, ": ")
         .replace(/\s+/g, " ")
         .trim();
       const known = this._findLegacySkill(name, master);
@@ -1208,14 +1497,19 @@ export class ErrantEarthLegacyImporter {
     const parentheticalRows = this._parentheticalWeaponRows(value);
     if (parentheticalRows.length) return parentheticalRows;
     return this._weaponLineList(value).map(line => {
-      const [namePart, rest = ""] = line.split(/\s[-–—]\s/, 2);
+      // PDF cleanup may collapse the whitespace after a separator (` - 2D6`
+      // becomes ` -2D6`). Requiring whitespace before the dash still avoids
+      // splitting hyphenated model names such as C-18.
+      const [namePart, rest = ""] = line.split(/\s[-–—]\s*/, 2);
       const source = rest || line;
       const damage = this._cleanDamage((source.match(/((?:\d+|[IDl])\s*D\s*\d+(?:\s*[xX]\s*(?:\d+|[IDl])\d*)?(?:\s*(?:M\.?D\.?C?\.?|S\.?D\.?C?\.?|M\.?D\.?|S\.D\.?))?)/i)?.[1] ?? "").trim());
       const range = source.match(/(?:range|ranges?)\s*[:=]?\s*([^,;)]+)/i)?.[1]?.trim() ?? source.match(/(\d[\d,]*\s*(?:ft|feet)\b[^,;)]*|\d[\d,]*\s*m(?!\.)\b[^,;)]*)/i)?.[1]?.trim() ?? "";
       const payload = rest.match(/payload|shots|ammo/i) ? rest.match(/(?:payload|shots|ammo)\s*[:=]?\s*([^,;]+)/i)?.[1]?.trim() ?? "" : "";
       const isMDC = /\bM\.?D/i.test(line);
+      const name = damage || range ? namePart.replace(/\([^)]*\)/g, "").trim() : "Weapon Notes";
       return {
-        name: damage || range ? namePart.replace(/\([^)]*\)/g, "").trim() : "Weapon Notes",
+        name,
+        type: name,
         damageType: "",
         damage,
         damageScale: isMDC ? "M" : "S",
@@ -1242,7 +1536,11 @@ export class ErrantEarthLegacyImporter {
         .replace(/^\d+\s*[.)]\s*/, "")
         .replace(/\([^)]*\)\s*:\s*$/, "")
         .replace(/\s*:\s*$/, ""));
-      const damage = this._cleanDamage(this._extractFieldFromText(section, "Mega-Damage") || this._extractFieldFromText(section, "Missile Type"));
+      const damage = this._cleanDamage(
+        this._extractFieldFromText(section, "Mega-Damage")
+        || this._extractFieldFromText(section, "Damage")
+        || this._extractFieldFromText(section, "Missile Type")
+      );
       const range = this._extractFieldFromText(section, "Effective Range");
       const rate = this._extractFieldFromText(section, "Rate of Fire");
       const payload = this._extractFieldFromText(section, "Payload");
@@ -1282,6 +1580,7 @@ export class ErrantEarthLegacyImporter {
       const isMDC = /\bM\.?\s*D/i.test(details);
       rows.push({
         name,
+        type: name,
         damageType: "",
         damage,
         damageScale: isMDC ? "M" : "S",
@@ -1303,6 +1602,12 @@ export class ErrantEarthLegacyImporter {
     if (/\n/.test(String(value)) || (/;/.test(String(value)) && /\b(?:M\.?\s*D|S\.?\s*D|range|payload|shots?|ammo|rate)\b/i.test(text))) {
       return this._lineList(value);
     }
+    // Commas following a damage profile normally delimit fields for one
+    // weapon, not additional weapons.
+    if (/\s[-–—]\s*(?:\d+|[IDl])\s*D\s*\d+/i.test(text)
+      || /,\s*(?:range|payload|shots?|ammo|rate|rof)\s*[:=]?/i.test(text)) {
+      return [text];
+    }
     return text
       .split(/,\s+(?=(?:[A-Z][\w'-]+|\d+D|a\s+|an\s+|the\s+))/)
       .map(s => s.trim().replace(/^(?:and\s+)/i, ""))
@@ -1322,7 +1627,8 @@ export class ErrantEarthLegacyImporter {
       dance: "dance",
       boxing: "boxing",
       radiobasic: "radiobasic",
-      pilothovervehicle: "hovercraftground"
+      pilothovervehicle: "hovercraftground",
+      athletics: "athleticsgeneral"
     };
     const target = aliases[wanted] ?? wanted;
     return master.find(s => this._norm(s.key) === target)
@@ -1338,6 +1644,21 @@ export class ErrantEarthLegacyImporter {
 
   static _abilityRows(value) {
     if (Array.isArray(value)) return value.map(v => typeof v === "string" ? { name: v, description: "" } : { ...v });
+    const text = String(value ?? "").replace(/\r/g, "").trim();
+    if (/^\s*\d+\s*[.)]/m.test(text)) {
+      return text
+        .split(/\n(?=\s*\d+\s*[.)]\s*)/g)
+        .map(section => {
+          const cleaned = section.replace(/^\s*\d+\s*[.)]\s*/, "").trim();
+          const separator = cleaned.includes(":") ? cleaned.indexOf(":") : cleaned.search(/\.\s/);
+          if (separator < 0) return { name: this._cleanWhitespace(cleaned), description: "" };
+          return {
+            name: this._cleanWhitespace(cleaned.slice(0, separator)),
+            description: this._cleanWhitespace(cleaned.slice(separator + 1))
+          };
+        })
+        .filter(row => row.name || row.description);
+    }
     return this._lineList(value).map(line => {
       const [name, description = ""] = line.split(/\s[-–—]\s/, 2);
       return { name: name.trim(), description: description.trim() };
@@ -1399,8 +1720,9 @@ export class ErrantEarthLegacyImporter {
       const normalized = locationBlock
         .replace(/[“”"]/g, "")
         .replace(/\*/g, "")
+        .replace(/\r?\n/g, "; ")
         .replace(/\s+/g, " ");
-      const rx = /([A-Za-z][A-Za-z\s/'-]*?(?:\([^)]*\))?)\s*(?::|-)\s*(\d[\d\s,]*)(?:\s*each)?/g;
+      const rx = /([A-Za-z][A-Za-z\s/'-]*?(?:\([^)]*\))?)(?:\s*(?::|[-–—])\s*|\s+)(\d[\d,]*)(?:\s*each)?(?=\s*(?:[;,]|$))/g;
       for (const match of normalized.matchAll(rx)) {
         const label = this._cleanWhitespace(match[1]);
         const field = LOCATION_FIELDS[this._norm(label.replace(/\([^)]*\)/g, ""))];

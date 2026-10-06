@@ -1,0 +1,1617 @@
+[
+  {
+    "name": "Alter Aura",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 166
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "According to psychics who can see such things, all living beings possess an aura - a colorful energy field that is invisible to the naked eye and most conventional forms of photography and sensors. This psychic ability does not allow the psychic to see auras, but to alter his own. The psychic can manipulate his physical energy field to appear different (stronger, weaker, sickly, lacking psionics, evil rather than good, etc.). The altered aura sends the wrong message to those human oids and supernatural beings who can see auras and use the information they glean from them to assess an opponent or find a kindred (evil or psychic) spirit. Alterations include: • The general level of experience can be made to seem lower (level 1 or 2) or much higher (1D4+3 levels higher) than it really is. • Conceal one's true alignment and cover it with a false one (any). • Conceal the presence of psychic ability (the aura appears to be nor mal for that race) or shows LS.P. levels to be much lower than they really are (but not higher). • Conceal the amount of base P.P.E.; seems to be only 1-2 points. • Conceal the presence of magic. • Conceal true physical attributes, making them appear to be half of what they really are, or 30% higher. • Alter Aura to appear weak and fatigued or sickly. • Alter Aura to appear emotionally or mentally agitated or unstable, or depressed (not aggressive or alert). • And for triple the usual LS.P. (6 points) the psychic can adjust the aura to appear as ifhe is possessed or terminally ill.",
+      "ispCost": 2,
+      "duration": "One hour per each level of experience.",
+      "range": "Self.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Astral Projection",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 171
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "Through intense concentration/meditation (4D4 minutes of prepara tion) the psychic can free his mind, or inner self, from his physical body. This psychic inner self is the Astral Body, a whitish, transparent, ghostly image of the character's physical form. A long silver thread or cord connects the Astral Body with its physical self. If the cord is sev ered the character is likely to die of sudden shock as body and soul are tom asunder. There is only a 30% chance the Astral Self can locate its physical body without the silver umbilical cord (roll best 2 out of 3). The physical body lapses into a coma-like trance when the Astral Self has left it. In this state the body is completely helpless. It cannot walk, move or think; completely catatonic. The hazards are threefold. First, if the physical body is killed, the Astral Body is forever lost and will die, fade away, within six hours. Second, if the Astral Body gets lost or captured while in the Astral Plane, the body will begin to waste away and die. (Note: One minute of our time is equal to one week in the Astral Plane.) Third, the Astral Body is vulnerable to psychic attacks and attacks from ghosts, entities and creatures of the Astral Plane. There are two levels of Astral Projection, coexistence (physical body and spirit form) in the material world and/or the Astral Plane (an other dimension). Astral Projection from the physical body into the material world creates a ghostly specter of the Astral Self which can be seen only by other psychics, young children under 13 years old, ani mals and most supernatural creatures. While in Astral Form the charac ter automatically gains the ability to float, fly (mach one/670 mph/IOn km maximum), see the invisible, pass through solid objects (including M.D.C. walls), impervious to physical harm (including cold, heat and energy), are invisible to sensor systems and cameras, and see and hear as usual. The Astral Body can not communicate with the physical world except through Telepathy or Empathy, nor speak to, smell or touch anything on the Material Plane. The Astral Self is little more than a mute, ghostly observer. Of course, this is a great way to locate invisi ble supernatural entities, as well as spy on other humans on the Mate rial Plane (although limited by short sprints. See duration). A character traveling the Material Plane via Astral Projection may use any psionic powers that do NOT require physical contact. They can generally only affect the physical world (or themselves be affected from physical be ings) by Sensitive psionic powers such as Telepathy, Clairvoyance, Empathy, etc.; Astral travelers communicate using Telepathy. Traveling in Astral Form has its own very special dangers. While the character can see the invisible and other Astral Travelers, they can also see him. This makes him susceptible to their psychic and Astral Form attacks, for two Astral Travelers can lock into hand to hand com bat as well. The most vulnerable target is the silver cord which is the Astral Traveler's lifeline to the physical world. Fortunately, the cord has an Astral S.D.C. which is two times that of the person's physical Hit Points and S.D.C. combined. The thread-like silver cord is a diffi cult target to hit; attackers are -6 to strike. The Astral Body also has an S.D.C. of two times the Hit Points and S.D.C. of the physical body combined. This means if the character has 18 Hit Points and 28 S.D.C. both the Astral Body and its silver cord have 92 Astral S.D.C. each (18 + 2846 x 292 each). Remember, magic and psychic influence have = = full effect on the Astral Body. This includes exorcism, which will force the Astral Traveler to leave the immediate area (400 footll22 m radius) and not return for 24 hours. The Astral Traveler has the same number of attacks per melee, bonuses, hand to hand, skills, knowledge and psy chic powers that he or she has in the Material Plane. Entering the Astral Plane is like entering the Twilight Zone. After a minute of concentration the Astral Gateway appears as a bright patch of shimmering, white light. Once the Astral Traveler passes through it, he will find himself in an endless expanse of white light, and rolling, white clouds. There is no up or down, no bottom or top; no north or south, no land or air or sea, just endless, slowly swirling white. Time, too, is a different or altered state, for what would seem to be a week in the Astral Plane is barely one minute in the physical world. That means a 2nd level Mind Melter could spend the equivalent of ten weeks in the Astral Plane and, when he returned to his physical body, he would find that only ten minutes of real time had elapsed. Although time may flow differently between the Astral Plane and the real world, the Astral Traveler is still subject to the laws of the real world when he returns. If he was low on I.S.P. when he entered the Astral Plane, even if he was there for several weeks of Astral Time, he would still be low on I.S.P. when he returns to the real world. Time and space twisted and dis torted, the Astral Traveler can travel from one end of our planet to the other, in the blink of an eye, by hopping through the Astral Plane. However, if he does not know where he is going, he could end up hope lessly lost in the Astral Plane somewhere. Furthermore, the Astral Plane has its dangers as well, from Astral Beings and monsters to be coming endlessly lost. Even if all goes well, the distortion of place and time makes it extremely difficult to find the material world and one's dormant, physical body. Even trying to follow the silver cord can lead to nowhere. To return from the Astral Plane to the physical body, roll on the following table: Each roll will determine the Astral Traveler's state of mind and sense of direction. The percentile dice can be rolled up to three times per melee (15 seconds). The player must roll \"definitely certain\" to successfully return. The player may keep trying until he suc ceeds or time elapses. Location of the Physical Body Roll Percentile Dice to Return from the Astral Plane: 01%-30%: Hopelessly Lost (roll again). 31%-50%: Uncertain, Confused (roll again). 51 %-76%: Fairly certain of location; on the right track (roll again). 77%-00%: Definitely certain of location. (Whew! Made it Back). Astral travel with a partner is a much safer way to travel, because if one can find his body, he can lead the other one out with him. Note: Traveling on the Material Plane in Astral Form is infinitely easier than the Astral Plane. To find the physical body the character need only return to where he left it. If it has been moved or hidden the Astral Self can sense its location with a 60% efficiency (roll once per melee). The other danger lies in being attacked by other beings in the Astral Plane. Entities and elemental creatures of magic live in the Astral Plane or travel through it. These beings are usually hostile, evil forces. While the Astral Body can not touch or communicate with the material world, the Astral Body is quite solid to other inhabitants of the Astral Plane. The Astral Body is also vulnerable to magic and psychic powers, as well as physical assault by Astral Entities. The energy which composes the Astral Plane is responsive to thoughts and desires. The strongest Astral Beings can mentally or mag ically control what a small area might look like. This means that the Astral Plane is made up of hundreds or perhaps thousands or even mil lions of tiny Astral \"Kingdoms\" adrift within the vast whiteness. Ex actly what these kingdoms look like is up to the entity that creates it. Some may look like a modem city, others like castles or forests, while still others, a frightening landscape. Perhaps this is where legends of visitations to Heaven and Hell originate? It is always wise to avoid an Astral Kingdom, because only the most powerful Entities and Astral Beings can create and maintain them.",
+      "ispCost": 8,
+      "duration": "5 minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Bio-Manipulation",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 177
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "tive attacks. The psychic is able to induce physical trauma to the nervous system of others by sheer force of will and conveyance of psychic energy. This psi-power is also known as the Evil Eye, especially in rural areas where magic and folklore rule the day. There are seven types of Bio-Manipulation effects, all of which are available to those with this power. Each affects only one person per at tack and can be used in any combination. Intended victims must be within line of vision or their exact location known to the psychic. Each costs 10 L S.P. to inflict. This psychic power enables the psychic to temporarily manipulate specific biological functions or conditions in human and animal life forms. The duration can be extended 4-16 (4D4) minutes per additional 6 LS.P. Blind: Temporarily knocks out the victim's optic nerves, rendering that person quite helpless. Victims are -10 to strike, parry and dodge. Deafness: Can be caused by manipulating the eardrum. Victims can not hear anything, and are -6 to parry or dodge attacks from behind. In addition, the shock of suddenly becoming deaf makes them -3 to strike, parry or dodge any other attacks, and they automatically lose the initia tive on all attacks while deaf. Mute: Impairs the victim's vocal cords, making speech impossible. Victims are likely to be shocked and panic, making them -2 to strike, parry and dodge for the first melee ONLY. Pain: By manipulating the nerve centers the psionic can induce ter rible pain, shooting throughout the body. Victims are -6 to strike, parry, and dodge, and take one point of damage off their Hit Points (not S.D.C.) per each minute affected. Paralysis: Immobilizes the motor part of the brain, causing legs and arms to stop functioning. Victims are completely incapacitated for the duration. Note: A paralyzed character can still use psionics but only if he has line of sight on his intended target. Spell casters need to speak, so they cannot cast spells while paralyzed. Stun: This attack disorients and confuses its victims. Victims forfeit one attack per melee, speed is cut by half, and the character is -4 to strike, parry, dodge, disarm, and all combat moves. Tissue Manipulation: Affects the tissue's connecting nerve fibers which can cause a variety of effects. By irritating the nerve fibers, a victim will suddenly feel itchy, as if breaking out in a severe rash. Through endothermic manipulation the victim can also be made to sud denly feel cold or hot while everyone around him feels fine. ALL three conditions are more annoying or frightening than physically impairing. In each case the victims are -I to strike, parry and dodge. Note: Bio-Manipulation will affect an opponent inside M.D.C. en vironmental body armor and light power armor (under 220 M.D.C.), but not heavy power armor, giant robots or armored, military vehicles.",
+      "ispCost": 10,
+      "duration": "4-16 minutes (ro1l4D4).",
+      "range": "160 feet (48.8 m).",
+      "savingThrow": "Standard; if a character successfully saves against the attack he is not affected at all. This applies to all seven bio-manipula",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Bio-Regeneration",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 164
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "The ability to will oneself free of disease or poison and back to health, and heal physical damage and injury. Unfortunately, this ability cannot be used to heal others. The process requires one full minute of concentration, which means the character cannot use any other psionic power during that time. Bio-Regeneration does not restore missing limbs, but it does restore 2D6 Hit Points or 3D6 physical S.D.C. points per melee round. In addition, when cuts and scrapes are healed through Bio-Regeneration there is no scarring. This power can be used as often as once every two minutes (every eight melee rounds). Note: Re covering more than half of one's Hit Points or S.D.C. this way in less than an hour takes a toll on the character, causing some weakness for 1D4+2 hours: reduce the P.S., P.E. and Spd attributes by 30%. Adjust attribute bonuses accordingly.",
+      "ispCost": 6,
+      "duration": "Permanent.",
+      "range": "Self.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Bio-Regeneration (Super)",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 178
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "Another bio-manipulation power that enables the psionic to direct his psychic energies to immediate self-healing. The character must con centrate for one full minute while his body instantly heals itself. 4D6 Hit Points and 4D6 S.D.C. points are simultaneously restored at the end of 60 seconds! As usual, there is no scarring.",
+      "ispCost": 20,
+      "duration": "Permanent.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Clairvoyance",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 172
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "Base Skill: 58% +2% per level of experience. This allows the psychic to see or feel glimpses of the possible fu ture. This is achieved through meditation or intense concentration in which the clairvoyant thinks about a particular person, event or place. Add +5% to the base skill if the person involved is a friend or loved one. Clairvoyance is unpredictable and can not be turned on and off like a Iightbulb. Sometimes it works (if the roll is under the base skiII) and sometimes it does not (when the roll is above the base skiII). A failed roll means the psychic received no insight to the future. A clairvoyant trance can be attempted as often as twice every day. The message can be a sudden feeling that somebody is in need ( ...s omething's wrong. It's. . .it's .. .Janet! I've got to see her!\") or, more \" often, a sudden flash of insight, a sudden image that races through the mind. The image is like a brief snippet of film from a movie or a dream. Often all the details are not clear, but the potential danger is. For example, \"The psychic character is in a trance or meditation, think ing about hislher friend Janet. Suddenly, the mind is flooded with an image of Janet rushing down a crowded street. It's dusky, like morning, twilight or evening. She seems very upset. The traffic light changes to amber. Janet races into the street, ignoring the light. It turns red. There's a car, squeal of tires, Janet screams. The image ends.\" Is Janet hurt? KiIIed? Unknown, but the danger is clear. There are also other hints of information: the time of day, Janet seeming upset, rushing, etc. The glimpse into the future could be twenty minutes, eight hours, 24 hours, or a week. The psychic has no way of knowing. Of course, he has the advantage of recognizing the potential danger as it begins to un fold and may be able to avoid it, stop it or change the outcome. The im age may last a few minutes or be a sudden flash lasting but a few seconds. The flash could be a peculiar noise, a face, or a specific image, like a particular door or object. It is important to note that sometimes a clairvoyant image will occur unintentionally, without the psychic trying to do so. These most often manifest themselves as dreams or nightmares during sleep. The clair voyant dream is exactly like the image from a meditative trance de scribed previously. The precognitive flash of the future may also occur un-beckoned while awake, but this is extremely rare. These brief glimpses of the possible future happen because the clairvoyant is acutely attuned to his world. Anything that might hurt or change that world (including people and places) wiII often be foretold in a flash of insight. Game Masters: Be careful of revealing too much. Use the exam ples provided as a guide. Remember, these are brief glimpses of the possible future, not a motion picture. The psychic can NOT engage in any actions, combat or otherwise, during a moment of clairvoyance or the image will instantly stop. It usually requires 2D4 melees of concen tration or meditation before the image occurs. Remember, a failed base skiII roll means absolutely nothing happens, but still bums up the 4 LS.P. and time.",
+      "ispCost": 4,
+      "duration": "6D6 melees.",
+      "range": "Self (although the image could pertain to people or places thousands of miles away.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Commune with Spirits",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 172
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "Using this power, a psychic can \"feel\" (not see) the presence ofspir its. The term \"spirit\" includes Entities (including ghosts and possessing ones), invisible Astral Travelers/Astral Beings the splintered life es sence of a god or Alien Intelligence, the mysterious Indian Spirits, a spirit or demon (or god) possessing a Familiar or Witch, and impris oned souls and life essences in rune weapons and similar magical pris ons. The psychic can ask the spirit questions by speaking aloud, although the creature often understands the question on an empathic or intuitive level. Only the psychic hears the answer (unless he's using a group trance) and the answer can be in words or powerful emotions (he sud denly feels its hate, fear, anger, sorrow, etc., instead of a verbal re sponse). It is important to note that the spirit is under no obligation to answer truthfully or to answer at all. An angry and uncooperative spirit may lie, pretend to be somebody else, lash out at the psychic with its own psi-abilities or cause mischief. Likewise, the psychic cannot \"feel\" or sense the creature's alignment, or magic energy, nor can he use any of his other psionic powers while he is in communion with the spirit. Furthermore, the spirit may break off communication at any time, al though the psychic can still \"feel\" if it is within the immediate area (30 feetl9 m radius). The psychic can also break contact at any time, but when he does so, he can no longer tell if the spirit is stiII hanging about.",
+      "ispCost": 6,
+      "duration": "Two minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "Standard.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Deaden Pain",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 165
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "The ability to deaden pain can be used as a painkiller which tempo rarily negates existing pain or as an anesthetic to be used for surgery.",
+      "ispCost": 4,
+      "duration": "One hour per level of experience. / Two minutes (8 melee rounds).",
+      "range": "Immediate proximity, touch or within 3 feet (0.9 m).",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Deaden Senses",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 167
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "A form of bio-manipulation that is so subtle that its victims seldom realize they have fallen under the influence of this psionic attack. The psychic is able to induce a physical influence on a single character to make him or her momentarily less alert and attentive to the things around him. Small sounds, odors, movements, and details go unnoticed (+ 1 0% to the psychic on the following skills when used against this be fuddled character: Camouflage, Prowl, Concealment, Palming, Pick Pockets, Cardsharp, Forgery, Seduction, Disguise and Impersonation). And the deadened character is also slow to react; reduce Spd by 10%, -I on initiative, and -5% on skill performance. This power is typically used on guards, sentries, and investigators to make them miss some thing in a search, not notice the psychic, etc.",
+      "ispCost": 4,
+      "duration": "2D6 minutes; roll for random determination of duration.",
+      "range": "160 feet (48.8 m); line of sight.",
+      "savingThrow": "-1 to save.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Death Trance",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 167
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "A state of mind over matter that slows the metabolism to such a de gree that it creates a temporary state of suspended animation, simulat ing death. Without hospital facilities, even a medical doctor is likely to believe the character is dead (1-89% likelihood). The effects of drugs, toxins and chemicals are slowed to a crawl, doing minimal damage or effect, but will take full effect the instant the death trance is stopped (unless treatment is administered first). While in the death-like state, the psychic can not be roused or respond to any type of stimulation, in cluding psychic probes. This means he is incapable of attacking or de fending himself in any way until the trance is broken.",
+      "ispCost": 1,
+      "duration": "As long as the psychic senses he must feign death, up to a maximum of four days.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Detect Psionics",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 165
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "This is a mental probe that will indicate the presence of psionic en ergy within the immediate area. The probe cannot be used to pinpoint the exact location of psychic energy, nor the level of power other than a vague sense of weak, medium, or powerful. Detect Psionics will indicate whether an individual is psychic when the probe is directed at a specific individual. However, while it will in dicate the character possesses psychic ability, it does not reveal the type or strength of the character's powers other than low, medium, or high. It will also indicate whether a Group Mind Block is in effect and if a person is psionically possessed.",
+      "ispCost": 6,
+      "duration": "One minute per level of experience.",
+      "range": "Self. Sensing range is 30 feet (9 m) per level of experience.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Ectoplasm",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 167
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "This mystifying ability enables the psychic to create a slightly lumi nous, vapor-like substance that is exuded from the pores. Ectoplasm has two forms: an invisible vapor and a luminous, solid state. The vapor is a sort of floating, probing finger that can snuff out can dles, open doors, knock over or pick up small objects (weighing under 9 ounces/255 grams), tap somebody on the shoulder, rustle leaves and knock on a door. The Ectoplasmic vapor can be seen only by its cre ator, psychics and supernatural beings who can see the invisible, or with infrared optic systems (including infrared camera lenses, infrared gun sights, binoculars, etc.). Ectoplasm, although an invisible vapor, has physical properties, which means it can not go through walls or solid objects. Thus, a person walking into an ectoplasm stream may feel a slight sensation, like walking into a spider's web or brushing against a cotton ball. Often a person will unwittingly walk into and snag the stream of floating ectoplasm, pulling or stretching it along without being aware of it. In such cases, the psychic must maneuver the snagged portion to loop around the human obstruction. The creator of the vapor can control the full length of the vaporous stream like a float ing tentacle. Although the vapor can not go through solid objects it can slip through keyholes, cracks under doors or loose seals around a win dow. If a breeze can blow through, so can ectoplasm. The only draw back is that the psychic must be able to see the ectoplasm to maneuver it. The solid state of ectoplasm can be a startling sight. In this form the ectoplasm can be shaped into an extra limb, such as an arm and hand, or just a hand or tentacle, or even a foot attached to a long stream spooling out of the psychic. The Ectoplasmic limb appears as a white, slightly luminous appendage connected to a trail of ectoplasm stretch ing back to its creator like a life-line of silly putty. The appendage and its connecting line can hover, float, levitate and fly (at a speed of 18). The solid ectoplasmic limb has much greater strength and is able to carry, lift or hold up to 40 lbs (18 kg), but cannot squeeze through the tiny openings that the vapor can. An opening must be at least the size of a quarter for solid ectoplasm to fit, and then the limb must be turned into a thin tentacle and reformed on the other side of the opening. Ecto plasm can also be used to create a face or even a full figure, although detailed features are impossible. Ectoplasmically created images may explain apparitions reported during some seances. Ecto-Combat: The ectoplasm vapor and solid form both have an au tomatic dodge against all attacks directed at any of its length. That means an attempt to hack the middle of the ectoplasmic stream will see that portion of the ectoplasm suddenly swerve, loop or bend with a life of its own to avoid the attack. The dodge by the mid-section (or any where else) does not count as a melee action by the ecto-appendage. Moreover, the ectoplasm's creator can direct the appendage to hit back or pick up and use a weapon. The solid ectoplasm appendage is not a great tool for combat, however. It limits its creator's attacks/actions per melee and has minimal strength; equal to about a P.S. attribute of 4. A punch or kick does a mere one point of Hit Point/S.D.C. damage. Dam age can be increased by the appendage using any type of hand-held weapon weighing under 40 lbs (18 kg) and less than five feet (1.5 m) long. Small modem weapons, such as an energy pistol or revolver, can be used, but are -10 to strike. Meanwhile, the vapor can not use any weapons weighing more than 9 ounces and can inflict no damage of its own. A vapor or solid appendage must be controlled by its creator at all times (except the automatic dodge); thus, it has a number of attacks/ac tions equal to its creator. So, if the psychic has four attacks per melee, the ectoplasm appendage also has four attacks. However, each attack! action by the ectoplasm counts as one of its creator's actions for that melee round. Ecto-Combat Statistics: • Vapor and solid get an automatic dodge against all attacks, includ ing multiple or simultaneous attacks. • +5 to dodge; applies to vapor and solid. • + 1 to parry; applies to vapor and solid. • + 1 to strike; applies to vapor and solid. • Vapor inflicts no physical damage, but can touch, tap or pick up and carry objects weighing 9 ounces or less. • Solid ectoplasm inflicts one point of damage in combat or by weapon. • Attacks or actions per melee are equal to its creator's. A pair of ectoplasmic limbs will divide the attack between the two equally. • Astral S.D.C. is 40 plus one Hit Point. Applies to vapor and solid. If the ectoplasm is destroyed the creator takes one Hit Point and 10 S.D.C. points ofp hysical damage. • Sunlight or bright artificial light (250 watts) reduces the range to half. • Maximum range possible for vapor and solid is 40 feet plus 5 feet per level of experience (12.2 m +1.5 m per level). • One full melee (15 seconds) is required to create an ectoplasm va por or solid appendage. Half a melee (7 seconds) is needed to with draw/return ectoplasm into its creator.",
+      "ispCost": 6,
+      "duration": "4 minutes (16 melees) per level of experience.",
+      "range": "40 feet +5 feet (12.2 + 1.5 m) per level of experience.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Ectoplasmic Disguise",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 168
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "This is an enhanced control over ectoplasm that gives the psychic the ability to cover and disguise his physical features. Ectoplasm is cre ated as normal, with the mysterious pseudo-substance rising from the pores of the skin. Instead of forming wispy tentacles, the ectoplasm covers the face. As it solidifies, it becomes a sort of putty-like material that can be mentally shaped and molded by the psychic. Once the de sired shapes and features are achieved, the psychic can make the ecto plasm look like real flesh. The best way to create an Ectoplasmic Disguise is for the psychic to look at a photograph or a frozen video image and concentrate on that image while the ectoplasm automatically molds into that shape/image, including skin color. Not only can the psychic create a mask to hide his facial features, but he can also change the shape and bulk of his body with ectoplasm, adding a pot belly, mlls cles, a tailor extra eye, etc. Level of Proficiency: 50% +3% per level of experience (add +16% if the character has the Disguise skill). This percentage applies primar ily when trying to accurately imitate a specific person's identity. In most other cases, the disguise is successful in that it obscures the psy chic's true identity. Problems & Limitations: An Ectoplasmic Disguise is especially effective from a distance, but does not hold up under close scrutiny. The ectoplasm always has a bit of a \"dull\" and \"pasty\" appearance, re gardless of skin color. If punched, cut, scraped, etc., the ectoplasmic covering will tear away and, in a matter of seconds, noticeably reform to cover the tear/damage. The psychic must also concentrate on maintaining his disguise, which means his attention is divided and concentration hampered. While the disguise is maintained, the psychic suffers the following pen alties: -4 on initiative and reduce all combat bonuses, attacks per melee, running speed and skill performance by half. To perform better, the character must relinquish some his control over the disguise, with nota ble results, like features obviously shifting, drooping or even melting. If the character is seriously injured, knocked unconscious or slain, the ectoplasm melts away, turns into floating globs and disappears into him in a matter of seconds.",
+      "ispCost": 12,
+      "duration": "10 minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Electrokinesis",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 178
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "Electrokinesis is a psychic power that allows the psychic to exert amazing physical control over electricity. 1. Electrical Resistance. The psychic can manipulate his body so to become resistant to electricity. Up to 60,000 volts will inflict no dam age or ill effect. Currents greater than 60,000 volts, including lightning and magic electricity, do half damage. Range: Self. Duration: 3 minutes per level of experience. LS.P.: 4. 2. Electrical Discharge. The character can cause static electricity within a six foot (1.8 m) area, as well as emit an electrical discharge by touch. The discharge can be a little jolt or inflict up to 1D6 S.D.C. dam age as often as once per melee. Range: Touch or 2 feet (0.6 m) dis tance. Duration: Instant. LS.P.: 2 per each discharge. 3. Electrical M.D. Attack. The psychic can fire a light M.D. elec trical blast. Range: Touch or 10 feet (0.3 m) per level of experience. I.S.P. to inflict 1D6 M.D., 12 LS.P. to inflict a 2D6 M.D. blast, 18 LS.P. to do a 3D6 M.D. blast. 4. Manipulate Electrical Devices. Through focused thought the psychic can enforce a limited control over electrical devices, such as tum off and on light switches, computers, televisions, radios, blenders, microwave ovens, flashlights, toys (battery and plug types), windshield wipers, and all types of electrically operated appliances, toys and de vices. He can also manipulate the controls of the device, such as vol ume, channel selection, tuners, speakers, change speed, dim lights, and so on. A dozen different electrical functions can be manipulated each melee. This can mean flicking the light off and on six times (12 func tions/6 off, 6 on) or tum on the T.V., tum its volume up to the max. and tum on 10 other appliances (12 functions in all). Range: 45 feet (13.7 m) +5 feet (1.5 m) per level of experience. Duration: 2 minutes per level of experience. I.S.P.: 4. Note: The character does not need to see the devices to manipulate them. He can feel their presence. 5. Sense Electricity. The psychic can sense or feel electricity and pinpoint its exact location with fair expertise. Range: 45 feet (13.7 m) +5 feet (1.5 m) per level of experience. Duration: 2 minutes of extreme sensitivity when he can pinpoint every source of electricity in the area. LS.P.: 2 per every two minutes. Base Skill: 55% +5% per each addi tional level of experience. A failed roll means only 1 D6x 1 0% of all the electrical devices/sources of electricity could be sensed.",
+      "ispCost": 0,
+      "duration": "Varies.",
+      "range": "Varies.",
+      "savingThrow": "",
+      "damage": "1D6 M.D. to 3D6 M.D. Duration: Instant. LS.P.: 6",
+      "isMDC": true
+    }
+  },
+  {
+    "name": "Empathic Transmission",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 178
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "Attacks Per Melee: Equal to the individual's psychic abilities. This incredible ability enables the psychic to instill a powerful emo tion into another living creature; person, animal or supernatural being. Each psychic attack/transmission can only affect one creature at a time. Several supernatural creatures have this ability or some aspect of it. Despair or Sorrow: Invokes great emotional upheaval, deep sorrow and a sense of loss. There is a 50% chance of the victim surrendering or leaving without a battle; furthermore, victims are -2 to parry and dodge. Confusion: Disorients the person so badly that he has no sense of direction, time, or of what is exactly going on. Victims are -3 to strike, parry and dodge, and lose initiative in any combat. Fear: Invokes unreasoning terror in all those affected. Victims are -3 to strike, parry and dodge, plus there is a 66% chance that those af fected will tum and run. Hate or Anger: Will prompt those affected to act rashly, charge, at tack, argue violently, etc. Victims are likely (60% chance) to attack, kill, harm, or betray those they dislike; + 1 (yes, that's plus) to strike, -I to parry and dodge. Love or Peacefulness: Will induce a deep feeling of serenity, dis pelling anger, hatred, sorrow, and so on. Hostile opponents are likely (60% chance) to reconsider their actions, deciding not to attack, show mercy, leave without being overtly cruel or destructive, halt a rampage, and so on. It does NOT make its victims docile sheep, but curbs hostil ity. Trust: Will make its victims believe everything the psionic tells them, but only while under the empathic influence. Life-threatening suggestions that go against deep-seated fears, morals or ideals provide an additional saving throw against the suggested action; with a bonus of +3 to save.",
+      "ispCost": 6,
+      "duration": "2D6 minutes.",
+      "range": "60 feet (18.3 m).",
+      "savingThrow": "Standard.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Empathy",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 172
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "vs Empathy the person must roll to save once each melee that the psy chic is using Empathy. Mind Block wiII prevent any empathic emana tions from the blocked person. Empathy is a psi-ability that makes the psychic aware of, or feel, the emotions of other people, animals and supernatural creatures. The strongest emotions are easiest to sense: hate, anger, terror, love. Feeling for emotions can often be used to establish that somebody or something is nearby, but can NOT be used to pinpoint an invisible or hiding per son! creature. Empathy can be especially helpful in recognizing and communicating with ghosts and other supernatural creatures. Questioning a person/being while using Empathy can be very handy in establishing how they are reacting to you. In a limited sense, Empa thy can be used like a lie detector to see if the emotions match the ver bal response. For Example: \"Did you know the deceased?\" The verbal answer is no, but there is a sudden flare of nervousness and fear (or hate). This doesn't mean the guy is the killer, but it might mean he is lying about knowing the dead man. Further questions might pull out a strong emotion such as anger or hate (or happiness), which may con firm the psychic's suspicions that this man might be involved in the murder. However, remember that this is, at best, circumstantial evi dence and definitely inadmissible in court. Physical proof must be found, but the empathic readings may put characters on the right track. Also, remember that the empathic psychic is feeling the person's real emotions, but interpreting their significance. A very nervous person may always radiate fear or anxiety, while a cold-blooded, pathological killer may feel nothing at all and stay calm and cool as he lies through his teeth. The feeling of hate may mean that the person did know the murder victim, or knew of him, and hated him for any number of rea sons. That does not mean he killed him. As you can see, interpreting emotions can be a tricky thing. Haunting Ghosts and Entities rarely mask their emotions. Thus, the psychic can easily tell if one or more is nearby (within 100 feetl30.5 m) and what it is feeling. \"I sense great sorrow.\" or \"Do as it says! It is an gry, almost crazed. I think it will carry out its threat if you try to stop it.\"",
+      "ispCost": 4,
+      "duration": "Two minutes (8 melees) per level of experience.",
+      "range": "100 foot (30.5 m) area.",
+      "savingThrow": "Standard; a save vs Empathy means the psychic can not get a clear sense of the emotions of that particular person. To save",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Exorcism",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 165
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "The healer can perform a Rite of Exorcism that uses psychic energy to expel the loathsome being from its mortal, host body. A completely successful exorcism will free the victim of the supernatural force that controls him and send it back to its own non-earthly realm. A partially successful exorcism will drive the evil force out of the possessed per son or animal, but does not send the damnable thing back to its own di mension. Thus, it can try to possess the psychic healer or flee to wander the Earth in search of a new victim. An exorcism can only be used on living people and animals whose bodies are inhabited by a supernatural entity or other type of invasive spirit, not symbiotes or psychic posses sion. Roll to determine success for an exorcism at the end of the time pe riod. First, roll to see if the being has been expelled from its victim's body. Success Ratio: 28% +7% per each additional level of experience. Second, roll to see if the thing is forced back into its own dimen sion. Success Ratio: 21% +7% per each additional level of the psy chic's experience. A failed roll means the creature remains in our dimension, but it must leave the area and cannot possess the same indi vidual for at least six months. Note: The chance of a successful exor cism on a Nega-Psychic is reduced by half, as is the success ratio for sending the being back to its own dimension. The same is true of some of the more powerful supernatural beings capable of possession. (See Rifts® World Book 12: Psyscape™ for info on the Nega-Psychic and other psychic player characters.) During the exorcism the possessing force can use whatever powers it may have, as well as physical attacks or any special psychic abilities of its host body. Fortunately, the Rite of Exorcism weakens the crea ture, reducing its number of attacks per melee by half. It is wise to al ways have one or more assistants to help defend against the being's attacks and actions. Sedating the physical host body will immobilize it, but will not prevent psychic attacks or the creature's use of its own natural powers (if any). Too many assistants or spectators can be a liabil ity, for the creature may attempt to flee by possessing one of them. An exorcism can be attempted on the same individual as often as the healer desires.",
+      "ispCost": 10,
+      "duration": "Instant, if successful. / 30 minutes of preparation and 6D6 minutes with the possessed person or animal. Note: Can only exorcize the living.",
+      "range": "Immediate area, touch or within 8 feet (2.4 m).",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Group Mind Block",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 178
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "The Master Psionic can instantly erect a mental barrier or Mind Block to protect himself and those around him, with in a 120 foot (36.6 m) area. The Group Mind Block works just like the individual Mind Block power. It can be a means of protecting those around the psychic from psionic probes and mind attacks, but it can also be used to prevent outside forces (good or evil) from communicating via Telepathy or Em pathy. Thus, a villainous psychic can use the Group Mind Block for his own evil purposes. Everyone within the 120 foot (36.6 m) area of affect will be automatically blocked, but the effect is not detectable so they are not likely to know that they are being Mind Blocked (a Detect Psionics will indicate a Group Mind Block)!",
+      "ispCost": 22,
+      "duration": "10 minutes per level of experience.",
+      "range": "120 feet (36.6 m).",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Group Trance",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 179
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "There are a couple of different applications for this power. The non-combat use is a sort of shared communication. Everybody en tranced can share in the psionic experiences of the group leader, the character who is using the Group Trance power. First, the entire group of willing participants enters into a trance state. While entranced, the group is subtly linked to the character using the power. That psychic can then perform one or two other psychic communication abilities per melee round. These abilities are limited to a few forms of psionic com munication (not Healing, Physical or Super-Psionic powers), including Clairvoyance, Empathy, Telepathy, Object Read, Presence Sense, Commune with Spirits, Remote Viewing, and Sixth Sense. The thoughts, visions/images, communications received by the lead psychic are simultaneously transmitted via the trance-link to all participants. They see, know or feel everything he does. The other use of this ability is to willingly pool the I.S.P. of the trance group to make it available to the lead psychic (the one who is us ing the Group Trance ability). Once every melee round, the psychic to whom they are linked can draw upon three I.S.P. points from each psy chic in the trance group. I.S.P. cannot be drawn from characters who don't have any. These I.S.P. can be used by the lead psychic any way he desires. The others linked to him see, feel and experience whatever he does, including his rationale, motives and emotions. In both instances, only the psychic group leader has any melee ac tions, and he is limited to two psionic actions/attacks while entranced. All those in the group are simply passive observers and secondary par ticipants. All participants react calmly toward the events, emotions, and visions they experience while entranced. The moment the trance ends, they are back to normal and can respond as is appropriate. Only the lead psychic or the genuine fear of death can break the trance. All snap out of it even if only one person breaks the trance.",
+      "ispCost": 15,
+      "duration": "Two minutes per level of experience or until the trance is broken, whichever comes first.",
+      "range": "All willing subjects within 20 feet (6 m) of the psychic, + 10 feet (3 m) per level of experience.",
+      "savingThrow": "None for willing participants. Those unwilling to par ticipate cannot be entranced.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Healing Touch",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 165
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "The Healing Touch is a remarkable healing ability that can instantly heal cuts, bums, bruises and similar physical wounds. The touch re stores 2D4 Hit Points or 2D6 S.D.C. The Healing Touch can only be used on other living creatures, never on the psychic himself.",
+      "ispCost": 6,
+      "duration": "Instant, with lasting effects. / Two minutes (8 melee rounds).",
+      "range": "Touch.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Hydrokinesis",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 179
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "This ability enables the character to use psychic energy to sense and influence water. 1. Sense Chemical Impurities. The psychic can sense whether or not water is polluted or contains other substances. The exact nature of the additive or pollutant may be unknown, but he will know that it is not completely natural. When sensing water, first roll to determine: I) Pure or Drinkable (nonhazardous/tap water) 70% +5% per each addi tional level of experience. 2) Roll for general nature of the pollutant; this identifies whether it is a chemical/drug (not deadly, but will cause a reaction if drunk) or poison/toxin (deadly or harmful if swallowed). Success ratio in identifying the general nature of the pollutant is 35% +5% per each additional level of experience. Range: Self/six inches (0.15 m). Duration: One minute (4 melees). I.S.P.: 2 per minute. 2. Boil Water. The psychic can increase the temperature of water, raising it to boiling level within one minute (four melees). Up to one gallon (3.8 liters) can be affected. Once set a boiling, it will take the usual amount of time to cool. This power can not be made to boil the water or blood in a living creature. Range: 8 feet (2.4 m) +2 feet (0.6 m) per level of experience. Duration: One minute (4 melees). I.S.P.: 3 per gallon of water. 3. Water Spout. An ability that enables the psychic to control and hurl water. The effect can be used to make water bubble (but not heated), shoot straight up like a geyser or a water blast hurling across a room like a short, powerful spray from a garden hose. Up to one gallon of water per level of experience can be manipulated and hurled up to a distance of 20 feet (6 m). Note: The fluid must be 75% water to be con trolled, such as punch, hot coffee, chicken soup, tea, lemonade, etc. Forget about hurling ice (frozen does not count), paint, gasoline, or cake batter. Making water leap with a life of its own can be startling to others and can make a great distraction if handled right. Hurling normal water or a cool drink into somebody's face/eyes will momentarily blind and surprise the individual, causing him/her to lose initiative and one attack that melee. Hurling hot or boiling water on the body (especially the crotch) will have the same results. Hurling boiling water in the face is horribly painful, causing 2D4 damage, loss of initiative, loss of all attacks for 1D6 melees and temporary blindness for 3D6 melees (-10 to strike, parry and dodge). Characters of a good alignment will not hurl boiling water in the face unless under an absolutely life and death cir cumstance Hurling Range: 20 feet (0.6 m). Duration: Instant. I.S.P.: 5. Bonus: + 1 to strike. Making water bubble or rise up like a fountain can be maintained for up to 30 seconds (2 melees). Note: The psychic can in fluence up to one gallon (3.8 liters) of water per level of experience up to 20 feet (6 m) away, whether he can see it or only feel its presence. 4. Sense Water. The character can sense the presence of any water exposed to the open air automatically at no cost of I.S.P. Range: 20 feet (6 m). Duration: Permanent. I.S.P.: None. Note: Underground rivers, airtight containers, etc. cannot be sensed.",
+      "ispCost": 0,
+      "duration": "Varies.",
+      "range": "Varies.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Hypnotic Suggestion",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 179
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "The power of suggestion is a psychically boosted form of simple hypnosis. The power is limited to relaxing/calming somebody down, putting a person or animal in a light sleep, helping a person to relax and focus on a particular thought (good for helping someone to remember things) and implanting subtle ideas. The implanting or \"suggestion\" of an idea must be subtly worked into a verbal comment. The suggestion must be kept simple and clear, such as \"You know you can trust me.\" or \"You feel like you have a fever.\" or \"You don't want to go there.\" The power of suggestion can also be used to make the victim imagine sounds and images. \"Did you hear that? Listen! Footsteps. You hear the footsteps . . . y es, you do!\" Or, \"At midnight the specter appears. Ev erybody who is ever present sees the specter at midnight.\" The poor in dividual who fails his saving throw will indeed imagine he sees something at midnight or hears footsteps.",
+      "ispCost": 6,
+      "duration": "Varies with each circumstance and subject; rarely more than a few hours maximum.",
+      "range": "12 feet (3.6 m), with eye contact.",
+      "savingThrow": "Standard.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Impervious to Cold",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 168
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "A mind over matter discipline which enables the character to suffer absolutely no ill effects or discomfort from exposure to even extreme sub-zero freezing conditions.",
+      "ispCost": 2,
+      "duration": "20 minutes per level of experience. / 1D4 melees for preparatory meditation.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Impervious to Fire",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 168
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "Another mind over matter discipline enabling the psychic to endure intense heat, fire, boiling water, hot coals, and so on, without suffering pain, damage, injury or scarring. Magic fires inflict half damage.",
+      "ispCost": 4,
+      "duration": "3 minutes per level of experience. / 2D4 melees for preparatory meditation.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Impervious to Poison/Toxin",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 168
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "The character can negate the full effects of poisons and toxic chemi cals which he has ingested (eaten or drank) or introduced into the bloodstream, as long as he has advance knowledge of its deadly proper ties. A poison, toxin, or drug which has been unknowingly inflicted (and starting to take effect) can be negated too, but will do half damage or effect before it can be completely negated. Bonuses: Identify poi sons: 30% +4% per level of experience; +2 to save vs poisons and drugs whenever this power is in place.",
+      "ispCost": 4,
+      "duration": "2 minutes (8 melees).",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Increased Healing",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 165
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "The healer is able to stimulate another person's healing energies, dramatically increasing one's recuperative powers. Hit Points and S.D.C. recovery are double the normal professional treatment rate. That's recovery of 4 Hit Points a day for the first two days and 8 H.P. for each subsequent day until restored to full strength or the psionic en ergy fadea, whichever comes first. S.D.C. is healed at a whopping 12 points per day from the very beginning.",
+      "ispCost": 10,
+      "duration": "2D4 days. / 1D6 hours.",
+      "range": "Touch or within 3 feet (0.9 m).",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Induce Sleep",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 165
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "This is not an offensive ability, but is intended to be a recuperative power to induce sleep on those who are ill, exhausted, or an insomniac. The person will fall into a normal, restful sleep from which he can be easily roused. Unwilling victims of the Induce Sleep psi-power get a +5 bonus to save. A character must want rest (can not be involved in com bat or some other activity and be forced to fall asleep).",
+      "ispCost": 4,
+      "duration": "One hour per level of experience (or until awakened). / Two minute preparatory meditation.",
+      "range": "Touch or within 6 feet (1.8 m).",
+      "savingThrow": "Standard; unwilling victims are +5 to save vs psychic attack.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Intuitive Combat",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 173
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "This is a form of telepathy geared to give the psychic an advantage in melee combat. To put this ability in place, the psychic must concen trate for one melee round (15 seconds), putting himself in a Zen-like state of awareness. For the next two melee rounds, the Intuitive Combat sense makes the character one with his body and weapon, reacting quickly and efficiently with amazing reflex action, balance and grace. Note: The psychic is unable to use any other psionic power, including Mind Block, while this power is in use. He can cancel it with a thought. Bonuses: +3 on initiative, + 1 to strike, +1 to parry, +4 to dodge, +4 to pull punch, +2 to roll with punch, fall or impact, and +2 to disarm. • Cannot be caught by surprise, even by attacks from behind or from long-range, which means he can try to parry or dodge all attacks leveled at him. • + 10% to abilities (balance, etc.) provided by the Acrobatics and/or Gymnastic skills, as well as + 1 0% to Climb and Swim skills.",
+      "ispCost": 10,
+      "duration": "Two melee rounds per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Levitation",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 168
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "over 20 Ibs (9 kg). Levitation is a limited form of Telekinesis that can raise an object or a person straight up into the air and suspend it there, hovering in the air. Sideways movement is NOT possible. Small objects weighing two pounds (0.9 kg) or less are the easiest to levitate. Maximum height is 8 feet (2.4 m) plus one foot (0.3 m) per each level of experience. Medium-sized objects weighing 3 to 20 pounds (1.4 to 9 kg) are more difficult, requiring greater concentration. Maximum height is 6 feet (1.8 m) plus one foot (0.3 m) per level of ex perience. Large objects or people weighing over 20 Ibs (9 kg) cost 6 I.S.P. plus one I.S.P. for every 10 Ibs (4.5 kg) beyond 20 (9 kg). Thus, a 125 pound (56.2 kg) weight would require 17 I.S.P. to raise it into the air. Maximum height is 4 feet (1.2 m) plus one foot (0.3 m) per level of experience. Or the psychic can levitate himself 10 feet (3 m) +2 feet (0.6 m) per level of his experience.",
+      "ispCost": 2,
+      "duration": "2 minutes per level of experience.",
+      "range": "Up to 60 feet (18.3 m) away.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Machine Ghost",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 173
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "The psychic goes into a trance as he focuses his concentration on entering a computer or most any type of artificial intelligence (not ap plicable to sentient, self-aware machines like Archie-3). This power is limited to the acquisition or reading of information only. The psychic cannot input, program, or delete data on the machine. He can also ac cess information stored by most electronic means, including computer disks, video and audio disks, film or audio tape, and hard drives. Read ing electronically encoded disks and tapes is similar to Object Read, except in this case, he hears and sees the data as ifhe were playing it on a computer or disk player, only he perceives the information 10 times faster. Thus, the character can read (never input) information from disks or broken computers without a physical \"jack\" connection or an actual display device, i.e. computer and monitor, CD player, etc. As an actual Machine Ghost, the psychic mentally enters and travels the neural network of an active computer. He is actually inside the de vice. In many ways, this experience is similar to Astral Projection ex cept the psychic is \"projecting\" into the machine rather than into the Astral Plane. It also has the same pitfalls as Astral Projection, as in the character enters a strange, very seemingly real world that he must leam to navigate. Like Astral Projection, the electronic world of computers takes on a virtual world landscape. This means in the computer virtual world, its programs, viruses and defense mechanisms will take on vir tual manifestations that can interact, confront, impede, or attack the Machine Ghost. A password or special access code may appear as a metal door or iron gate, or locked filing cabinet that needs to be (seemingly) broken open to gain access to what is held inside. The more difficult the code, the bigger, stronger and more difficult the door and lock(s). Data is likely to appear as books, paper files, diagrams, film, holograms, and other common means of communication and documentation. The more sophisticated defense measures are likely to appear as one or more guards who must be defeated before the information is accessible. They can appear as sorcerers, Coalition troops, known enemies or ex otic aliens. Viruses and defenses designed to attack an intruder typi cally appear as demons or monsters. Combat in the virtual world seems real and is conducted the same as it would happen in the real world. Combat and damage are measured by the character's perception of his real body armor, weapons and natu ral powers. When the psychic has lost more than 70% of his armor, or S.D.C.IM.D.C., he will feel the urge to flee the virtual world. If he flees, a computer defender will not follow, however a virus will pursue and continue to fight. Although all such damage is only in the mind of the psychic (no physical damage occurs in the real world), if he dies in the virtual world, he can die in the real world as well! The shock to his psyche and body will momentarily stop his heart, and he slumps over dead! The character must roll to save vs coma and death. In this case, physical treatment is not necessary and the recovery process, if successful, takes less than a minute. The psychic must roll three times, and the best two out of three rolls determines life or death. Rolling between 01-75%, two out of three times, means the heart starts and the character is shaken but fine; feels woozy for 2D4 minutes (reduce Spd 25% and all combat bonuses by half). Failure to recover from the heart attack means immediate CPR medical treatment is required -Paramedic skill will suffice, provided any protective body armor can be removed so that treatment can be given; rescuers have 10 minutes. Roll to save vs coma and death again; must roll twice under 80% out of three rolls. The downside in the usage of this power is the psychic loses all sense of time and reality outside the data he is accessing. This means he is oblivious to what is happening around him, and unless protected by a companion, is vulnerable to attack without any means of defense. Pain or being struck or shaken will alert the psychic to trouble, but he has the choice of breaking contact and responding, or ignoring it and con tinuing to retrieve data. Only Telepathy can reach the character while in this state (can't hear spoken words or sounds outside the computer), and is a means of two-way communication. A character accessing a file on a disk can break contact at any time with a thought, although he will be disoriented for one melee round; re duce his number of attacks and combat bonuses by half. Breaking free of a computer virtual world is not so easy. Unfortunately, leaving the virtual world ofa computer is fundamen tally the same as the Astral Plane. The psychic can vaguely sense the way he came and must follow it back to the virtual access point. To do so, the player must roll on the following table and must roll \"definitely certain\" to have his character successfully escape. The player must keep trying until he succeeds or time elapses. If the character cannot es cape virtual space before the duration of this ability elapses, he is flung out with the same effect as \"virtual death\"; roll to save vs coma and death as described above. Note: The psychic will instinctively know when he's down to the last three minutes of the duration and when try ing to exit, can fly toward the way out (typically appears as a door or a dimensional Rift). 01% -30%: Hopelessly lost (roll again). 31% -45%: Uncertain (roll again). 46%-65%: Fairly certain on the right track (roll again). 66%-00%: Definitely certain! Whew! Made it back.",
+      "ispCost": 12,
+      "duration": "Three minutes per level of experience.",
+      "range": "Self; computer by touch.",
+      "savingThrow": "Not applicable.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Mask I.S.P. & Psionics",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 174
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "This is a psionic power that enables the character to completely mask all spiritual aspects of his psionic energy and powers. Even the aura is temporarily altered. As a result, other psychics, Dog Boys, Psi Stalkers, and creatures who can Detect Psionics or See Aura will not sense psionics in a character who is masked. However, the masked psy chic must \"block\" himself from the world, which means he cannot use any of his psionic senses or abilities, nor receive Empathic or Tele pathic impressions until he lets the mask go.",
+      "ispCost": 7,
+      "duration": "10 minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Mask P.P.E.",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 174
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "A psionic power that enables the character to completely mask all but 1D4 P.P.E. of his personal P.P.E. base. Characters who can sense magic energy or see aura will regard this character as having an insig nificant amount of P.P.E. This power is especially good as protection against Psi-Stalkers and other P.P.E. vampires. Mystics can easily hide their magical powers through this psionic concealment.",
+      "ispCost": 4,
+      "duration": "Ten minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Meditation",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 165
+    },
+    "system": {
+      "type": "healing / physical / sensitive",
+      "typeCustom": true,
+      "description": "Meditation is a trance state of consciousness in which the individual can calm his emotions and focus on relaxation of mind and body. In a meditative state, the psychic finds peace and harmony between mind, body and spirit, and it is in this state of being that he can regenerate his Inner Strength (I.S.P.). Recovers Base I.S.P. at a rate as indicated un der each psychic O.C.C., otherwise six I.S.P. per hour of meditation.",
+      "ispCost": 0,
+      "duration": "As needed; at least one hour of meditation is required.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Mentally Possess Others",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 179
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "tomatic (no save applicable). That is why the empty body must be pro tected and/or hidden during Astral Projection. The psychic can completely take over and controls another person. The psychic essence of the controlling mind is transferred into the body of another individual. While in the victim's body/mind, the psionic retains all his own knowledge and identity. He can not read the mind of the person he now possesses, nor access any knowledge from the vic tim's memory. Only the physical body can be controlled, like a living robot. During the period that the victim is possessed, the individual goes into a trance state and remembers nothing about the things that happen while he is possessed. Meanwhile, the psychic's natural body falls into a coma-like state and is vulnerable to attack unless protected by others. The possessing character can return to his own body at any time re gardless of distance. When his essence leaves the body of the pos sessed, the victim suddenly becomes conscious again, as if suddenly being woken up.",
+      "ispCost": 30,
+      "duration": "5 minutes per level of experience.",
+      "range": "Touch.",
+      "savingThrow": "Standard. Note that a body without its life essence/soul has NO defenses against any type of possession, and the takeover is au",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Mind Block",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 169
+    },
+    "system": {
+      "type": "physical / sensitive",
+      "typeCustom": true,
+      "description": "This is the ability to completely close or block oneself from all psy chic/mental emanations. When intentionally closed to supernatural or psychic forces the character can not sense anything, can not use psychic abilities, nor be influenced by others. A Mind Block will prevent pene tration of Telepathy, Empathy, Hypnotic Suggestion, Day Dream and Empathic Transmission. It can be an invaluable protective mask when dealing with malevolent psychic forces. Adds a bonus of + 1 to save vs all psychic and mental attacks. Note: Mind Block only blocks psionic attacks that affect the psychic's mind or emotional state (Le. Telepathy, Empathy, Hypnotic Suggestion, etc.). It offers not protection from magic.",
+      "ispCost": 4,
+      "duration": "10 minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Mind Block Auto-Defense",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 180
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "The moment the psychic is mind probed, a personal Mind Block au tomatically snaps into place. It also alerts the character to the fact that he or she is being probed or attacked by Empathy or Telepathy. The character must consciously and willingly lower the mind shield and open himself to the psi-probes in order to receive them. Otherwise, the automatic defense Mind Block will stay in effect until the probe/attack is over. Engages automatically. The I.S.P. cost is different in that the character must permanently give up 14 I.S.P. when this power is selected. However, the Mind Block will automatically take place whenever under Telepathic and Empathic probes or mind control attacks at no additional I.S.P. cost.",
+      "ispCost": 0,
+      "duration": "Special.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Mind Bolt",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 180
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "The psionic can focus his psionic energy into a powerful bolt of mental force and hurl it at a visible target with amazing accuracy. The amount of damage the bolt inflicts depends on the amount of energy expended. 6 I.S.P.: 1D6 S.D.C. damage. 12 I.S.P.: 3D6 S.D.C. damage. 20 I.S.P.: 6D6 S.D.C. damage. 40 I.S.P.: 2D4 Mega-Damage! Note: All Mind Bolts are +4 to strike, but adding an additional 10 I.S.P. increases the strike bonus to +8 to strike. Remember, ley lines and nexus points increase the range and damage. This is a physical at tack that inflicts physical damage. It does not effect the mind of its vic tim and will strike the armor of anybody wearing body armor.",
+      "ispCost": 0,
+      "duration": "Instant.",
+      "range": "100 feet (30.5 m) per level of experience.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Mind Bond",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 180
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "This creates an instant mind link between the psionic and the victim. When this happens, each will learn EVERYTHING there is to know about the other. This includes all skills, secret identities, phobias, etc. In both cases, the memory is complete for only 3-12 hours (roll 3D4). After that, the characters must roll under 15% to recall any particular item. A month later, all memories completely disappear. Players should bear in mind that only the psionic knows the memories are not perma nent, thus the other person would have no reason to make notes or act quickly before the memories fade. Note: Skills and skill bonuses are also temporarily absorbed, mean ing that the psychic possesses all of his victim's skills and skill bonuses (and vice versa). Physical attributes, such as S.D.C. and attribute bo nuses gained through physical training, are NOT acquired. Alien or extremely mentally and/or emotionally disturbed minds can permanently impair the psionic's own mind as a result of the bond. If bonded with an alien or extremely disturbed person, roll on the follow ing table for a permanent insanity: 01%-40%: No Insanity. 410/0-80%: Phobia. 810/0-90%: Affective Disorder. 910/0-00%: Neurosis.",
+      "ispCost": 10,
+      "duration": "Special.",
+      "range": "Touch.",
+      "savingThrow": "Standard.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Mind Wipe",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 180
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "To Mind Wipe an intelligent creature, the psionic must make physi cal contact, touching his victim's temples to erase whatever he desires. This is done by verbal suggestion and can erase any past event, knowl edge, skill, and so on. The process takes about three minutes to com plete. The loss of memory is temporary, lasting 1D4 days for every 10 I.S.P. expended. The memory can be permanently erased if the psychic exerts 50 I.S.P. at once. A psychic can also permanently wipe a mind completely blank by expending 50 I.S.P. and four Mental Endurance (M.E.) points. This is an extremely grueling process for the psychic, and the loss of the four M.E. points is permanent, even if the opponent successfully saves against the wipe and is not affected.",
+      "ispCost": 0,
+      "duration": "Special.",
+      "range": "Touch.",
+      "savingThrow": "Standard; a successful save means the person is unaf fected and still retains his memory.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Nightvision",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 169
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "The psionic can adjust his visual capabilities through a form of bio manipulation. The eyes are made to become much more light sensitive and basically work on the same principles of mechanical light amplifi cation. The eyes simply amplify existing light, such as candlelight or star and moonlight, to see clearly. There must be some source of light to see (can not see in total darkness). Note: If suddenly exposed to light brighter than a single candle, the psychic will be temporarily blinded for 3D4 melee rounds. The Night vision power can also be used to change one's vision to polarized sight, reducing glare as would a pair of polarized sunglasses.",
+      "ispCost": 4,
+      "duration": "10 minutes per level of experience.",
+      "range": "Self, visual range about 600 feet (183 m).",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Object Read",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 174
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "Base Skill: Impressions: 56% +2% per level of experience. Images: 48% +2% per level. Present: 38% +2% per level of experience. Also known as Psychometry, this uncanny ability enables the psy chic sensitive to receive impressions and images from an object regard ing its use, history and last owner. This is done by holding the object and concentrating on a specific line of thought or opening up to general impressions (the latter is always more vague and random). Just as a psychic must open himself to sense evil or magic, he must open himself to the object. If successful, he will receive impressions and/or images revealing bits of information. Impressions include: General alignment of its last owner (good, selfish, evil), general emotional state of mind (angry, happy, sad, hate filled, confused, etc.), the object's general purpose (what it is used for), whether or not the last owner is living or dead, and whether the item has been used with/by magic or supernatural forces. Object Read will also conclusively indicate whether the item is currently enchanted or contains a supernatural force/entity (as well as its alignment and emo tions). If the item is possessed, an Object Read makes the reader totally vulnerable to psychic attack (no bonuses to save). Images: The psychic can also see images of isolated events which have happened in the past. This will provide brief snippets of images and events that will offer glances of the previous owner and others close to him. Traumatic and emotion filled events/images are the easi est to see. Impressions will accompany the images, adding to the story as it unfolds. Information includes: approximate age, height, weight, build, race, sex, sometimes occupation, hair color and length; special facial or body features such as a scar or tattoo or beard (very often the exact facial features are out of focus, blurred or obscured); the object's use/purpose; and some special event, usually very traumatic, important or happy. Often the event image will be fragmented as if it was a piece of movie film edited by a crazy man. The event will always be one in which the object was involved in some way. The success or failure of an Object Read: Roll percentile dice once for impressions and once for images. The roll must fall under the character's base skill ability to succeed. A roll higher than the base skill means a failure and the psychic feels and/or sees nothing. Impressions and images are two different things, so roll for each. The psychic may get no impressions, but see images or vice versa. The present can not be seen unless the psychic was successful on at least one of the previ ous read impressions or images rolls. Once an object has been read it can not be read again by the same psychic, even ifhe did not see or feel a thing. Of course, the psychic can attempt to Object Read other items, but each attempt will cost 6 I.S.P. The present can also be glimpsed, but costs an additional 4 I.S.P., with no guarantee of success. Sometimes the psychic can focus in to see and feel the last owner as he or she is at that very moment. This will provide an idea of what is his current state of mind/emotion, ap pearance, dress, general location (that is to say, a bedroom, office, street, outdoors, etc.; no address or sense of close or far is provided), general features (shaved his beard, dyed hair, etc.) and so on. The psy chic may be able to identify a place or person by feature if he has seen it before or runs into him in the near future.",
+      "ispCost": 6,
+      "duration": "Varies; usually about 2D6 minutes.",
+      "range": "Touch.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "P.P.E. Shield",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 180
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "A psionic defense that can be used to prevent P.P.E. vampires, Psi Stalkers, and mages from siphoning off one's psychic energy. The shield works similarly to a Mind Block, only it prevents others from draining one's P.P.E.",
+      "ispCost": 10,
+      "duration": "6 minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Presence Sense",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 175
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "Presence Sense is a psionic probe and awareness that alerts the psy chic to the presence of supernatural beings, creatures of magic and other monstrous life forms. The ability cannot pinpoint the location of the presence, but will give the psychic the impression of whether it is near (within 50 feetll5.2 m) or far (beyond 90 feetl27.4 m). It will also give the character a vague idea of how many presences there are; one or two, a few (3 to 6), several (7 to 15), many (20-70) or an army or a swarm (100 or more). The psychic can also tell if one or more of the supernatural presences is small (something not too powerful), medium (Lesser Demon and most Supernatural Predators), big (Greater Demon and nasty monsters) or huge (Demon Lords, Dark Gods, Ancient Evil or Alien Intelligence). The psychic can also sense human!D-Bee presences, but with much less accuracy. It is more of a feeling of \"We are not alone.\" The per son's distance is undeterminable and the number of people is limited to a sense of one or two or many, and that is only right half of the time. The only exception is if a place has been deserted, cleared out of hu man and animal life, then, the psychic can sense that one or more hu mans are above, below, north, south, etc.",
+      "ispCost": 4,
+      "duration": "2 minutes (8 melees) per level of experience.",
+      "range": "120 feet (36.6 m) area.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Psi-Shield",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 180
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "A companion power to the Psi-Sword, in which the psionic can cre ate a Mega-Damage shield out of thin air. The shield can be used to parry all hand to hand combat attacks, including attacks from robots, power armor, and magic. The shield can not be use to parry energy blasts or projectiles. Shield M.D.C. is 80.",
+      "ispCost": 30,
+      "duration": "5 minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Psi-Sword",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 180
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "A Psi-Sword is a Mega-Damage energy weapon that the psychic can mentally will into existence! The sword appears out of thin air, as a shimmering blade of energy that resembles a glowing sword. The sword's actual appearance will generally reflect its creator. A character who is impressed by strength and power will create a huge Claymore sword-like weapon. A character who prides himself on speed and agil ity is likely to create a rapier or saber type blade, while a hero who en joys cunning and subterfuge may create a short sword. Each is equally powerful regardless of its form and size. The creation of the Psi-Sword is a very personal thing and requires years of mastery and great psionic power. Like the Cyber-Knight, the Mind Melter can change the shape and even the color of the sword to fit his current mood, but unlike the Knight, he can do so from day one. The Mind Melter can create the Psi-Sword after only a few mo ments of concentration (about 15 seconds/one melee) and maintain it for five minutes per level of experience. This means a fifth level Mind Melter can create and maintain a Psi-Sword for 25 minutes at the cost of 30 I.S.P., while a third level character must expend the same 30 I.S.P. but can maintain the weapon for 15 minutes. If the psychic is knocked unconscious, the weapon disappears. Likewise, the character can willingly dispel the weapon with a thought. Psi-Sword damage: 4D6 M.D. at level three (one can not select this power until level three). Add 2D6 at levels four, seven, nine, twelve, and fifteen. The Psi-Sword of the Mind Melter is incredibly powerful, but can be adjusted to inflict a minimum of 2D6 Mega-Damage (M.D.) or in creased by increments of 1D6 up to the character's current maximum. For Example: A fourth level Mind Melter can inflict a maximum of 6D6 M.D., but the character decides, for whatever reason, to decrease the power to the minimum of 2D6 M.D.; he can, at will, increase the damage capability of the sword by increments of 1D6 M.D. up to the maximum of 6D6 M.D. (3D6, 4D6, 5D6, and 6D6).",
+      "ispCost": 30,
+      "duration": "5 minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Psionic Invisibility",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 181
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "Psionic Invisibility is the ability to remain undetected when in plain sight. This is accomplished via a telepathic impulse that convinces by standers that the psychic is not a threat and insignificant -beneath their notice. Those affected by the impulse are unable to see the character, and subconsciously avoid colliding with him; they don't see him on a conscious level. Note: This invisibility works only if the character is \"passing through\" or hiding, and honestly has no intention of attacking or hurting anybody in the area. The slightest ill intent or act toward per petrating violence instantly cancels the psionic influence. Individuals watching through video monitors and other sensory equipment can be similarly tricked into ignoring the psychic, but only if within his radius of influence. Those out of range will react appropri ately, and once the psychic has been seen, that person is immune to his ability to seem invisible. Likewise, while a watch guard may not see or react to the psychic, he will be captured and recorded on film and by sensors. Video cameras, computers and similar devices are never fooled by this power; they are able to notice and record the character as nor mal (some may sound an alarm too).",
+      "ispCost": 10,
+      "duration": "One minute per level of experience.",
+      "range": "Line of sight or 100 foot (30.5 m) radius.",
+      "savingThrow": "Potential victims are -2 to save; area effect.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Psychic Body Field",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 181
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "With a thought, the psychic instantly surrounds himself with a telekinetic force field that conforms to the shape of his body and en ables him to physically move and fight. It is a Mega-Damage structure with 10 M.D.C. per level of experience. The field takes the shape of a dim, white, transparent aura that completely surrounds and encloses the body of the psychic. Items held in his hands, hung from his back, or worn on top of his head are not protected. On the downside, the field does not protect against disease, radia tion, or toxic fumes, nor magic or psionic attacks other than physical ones (energy blasts, fire, etc.). Worse, the TK-force field means the psychic loses his sense of touch, because the field is between him and all objects/materials outside the force field. This lack of touch sensation means the character cannot feel much of anything he picks up or touches after the field has been erected. This makes the use of skills that require a sense of touch and manual dexterity -30%, and delicate items may be accidentally dropped or crushed.",
+      "ispCost": 30,
+      "duration": "Two minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Psychic Diagnosis",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 166
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "The psychic healer can sense physical pain and damage, external and internal injury, disease and possession with absolute clarity. This pinpoint accuracy enables the character to suggest treatment or to con duct psychic surgery.",
+      "ispCost": 4,
+      "duration": "Immediate knowledge. / 2D4 melees of meditation/focus.",
+      "range": "Touch or within 3 feet (0.9 m).",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Psychic Omni-Sight",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 181
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "An advanced form of extrasensory perception that allows the psy chic to have a sort of controlled out of body experience. The psychic must spend one minute (four melee rounds) in meditation and enter into a trance state. While entranced, his spirit or essence seems to rise 10-20 feet (3-6 m) above his physical body (this is not visible to anybody but other psychic sensitives and those who can see the invisible, auras or spirits). From this vantage point, combined with heightened awareness, the psychic sees through his mind's eye, without having to use his normal vision or senses. Psychic Omni-Sight is incredible, enabling the psy chic to see in all directions at once, to see radiation, thermal patterns, the invisible, and to literally see any movement, even of the wind! This power enables the psychic to guard or survey a campsite for signs of wayward group members or approaching dangers (maximum range 500 feetll52 m; this psionic vision is stopped/contained by walls and other obstacles). It can also be used to survey an area for things that might otherwise escape normal sight or take much longer to locate and iden tify. Special Bonuses & Abilities: • Pinpoints the locations of electrical outlets, electronic \"bugs\" (spy and surveillance devices), electronic devices and other energy and heat sources, as well as bionic body parts and cybernetic implants close to the surface of the skin (not Bio-Systems or artificial internal organs). Such concealed or obscured items can be identified by their shape and heat pattern. Success Ratio: 40% +5% per level of experi ence. • This ability can also help the psychic to locate secret compartments and trap doors. Success Ratio: 25% +5% per level of experience. • See the infrared and ultraviolet spectrums of light. • See heat signatures: can tell if an engine has been recently used or a weapon recently fired (within the last 15 minutes), follow recent footprints or vapor trails (within the last five minutes), see heat sig nature in darkness and so on. • Hyper-sensitive to movement. The psychic can not be surprised by movement or attacks within the 500 foot (152 m) radius or confines of the area under psionic scrutiny (may be substantially smaller in doors; closed off by walls and doors). Limitations: Although keenly aware and alert while using Psychic Omni-Sight, the psychic cannot take physical action, not even to speak, nor use most psionic powers unless he cancels/ends the ability. He can awaken the instant the psi-ability ends and leap into action. While entranced by Omni-Sight, the character can only use the fol lowing psionic powers: Empathy, Telepathy, See Aura, Empathic Trans mission and Telekinesis. The number of psionic attacks/actions per me lee round are half those normally available when not entranced.",
+      "ispCost": 15,
+      "duration": "5 minutes per level of experience.",
+      "range": "500 foot (152 m) radius.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Psychic Purification",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 166
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "The healer can use his abilities to slow a person's metabolism and destroy chemicals, drugs, poisons, and toxins in the body. The effects of the drugs/impurities are immediately halted at the beginning of the meditation, and completely destroyed/negated by its end. Damage sus tained prior to the psychic's intervention still remains.",
+      "ispCost": 8,
+      "duration": "Immediate. / 6D6 minutes of meditation.",
+      "range": "Touch.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Psychic Surgery",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 166
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "medicine). Psychic Surgery is used to repair broken bones, and internal inju ries, and for the removal of foreign objects (bullets, arrows, etc.) using only one's bare hands; no tools or instruments. Can also be used to heal a character who has suffered so much damage that he or she has lapsed into a coma (zero Hit Points or less). Psychic Surgery is the equivalent of \"professional hospital\" treatment. The recovery from a coma (near death) is equal to treatment from a hospital, 1-66%. Note that there is minimal bleeding and pain, and absolutely no scarring from Psychic Surgery (no pain if the Deaden Pain ability is used). Note: A Psychic Diagnosis must be made before surgery is possible.",
+      "ispCost": 14,
+      "duration": "Varies with injury. / 2D6 minutes of preparatory meditation, plus the duration of the surgery (which is half the time of conventional modem",
+      "range": "Touch.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Psychosomatic Disease",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 182
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "This power employs the principle of mind-over-matter and mind control by inducing the victim to believe he suffers from a particular disease, although no actual physical cause can be found. It is all in the victim's mind. This is done in a similar way as Hypnotic Suggestion, requiring the psychic to \"suggest\" that the character looks ill or that a particular dis ease is in the area, as well as mention the name of a specific disease along with the most notable (and debilitating or frightening) symptoms. Within 2D6 minutes, the intended victim will begin to come down with those symptoms. He will suffer from the affliction with all its pain and penalties, until one of the following occurs: The psychic who caused the affliction removes it, the character is healed by a psychic healer, a successful magical or priestly Remove Curse spell or ritual is per formed, or the Psychosomatic Disease runs its course (see duration above). In the meantime, the character will suffer from physical trauma and symptoms (fever, vomiting, coughing, convulsions, skin rashes, hives, etc.) associated with that disease, as well as emotional anguish. In most cases, the disease is debilitating for days, but sometimes it can be deadly, causing the victim to die from dehydration, starvation, injury, etc., brought on by the symptoms and/or fear of the psionic illness.",
+      "ispCost": 30,
+      "duration": "1D4 days per level of the psychic.",
+      "range": "10 feet (3 m) and verbal suggestion.",
+      "savingThrow": "Standard.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Pyrokinesis",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 182
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "Pyrokinesis is a psychic power that gives a character the power to manipulate fire. 1. Fire Resistant: The psychic can endure great heat and fire with minimal ill effect. Damage is reduced by half. Magic fires do full dam age. Range: Self. Duration: 5 minutes per level of experience. I.S.P.: 2. 2. Spontaneous Combustion: The ability to create a spark that will ignite combustible material, such as paper, old rags, dry grass, gasoline, etc. Note: Human hair should not be considered a combustible mate rial. This is a slow fire, starting with a tiny spark and growing. Initially, it is not a roaring blaze. Range: Can be ignited up to 30 feet away (9 m). Duration: Instant; fire will last and spread until it is put out or there is nothing to burn. I.S.P.: 2. 3. Fuel Flame: The character can feed the fire with psychic energy, doubling it in size. Affects a 10 foot (3 m) area. Range: Up to 30 feet (9 m) +5 feet (1.5 m) for each additional level of experience. Duration: In stant. I.S.P.: 4. 4. Extinguish Flames: The power to instantly put out an area of fire. Affects a 15 foot (4.5 m) radius of fire. Range: Up to 30 feet (9 m) away +5 feet (1.5 m) per each additional level of experience. Duration: Permanent until set on fire again. I.S.P.: 4. 5. Create Flame: The incredible ability to create fire out of thin air. Can be an 8 foot (2.4 m) pillar of fire affecting a 4 foot (1.2 m) diame ter or a 6 foot (1.8 m) high wall of fire stretching six feet (1.8 m) long + 1 foot (0.3 m) per each additional level of experience. Damage: 4D6 M.D. from the pillar, 6D6 M.D. from the wall, plus both have a 72% likelihood of setting any combustibles they touch ablaze (including cloth, rugs, curtains, furniture, etc.). Range: Cast up to 30 feet (9 m) +2 feet (0.6 m) per additional level of experience. Duration: 2 minutes per level of experience; longer if it sets other things on fire. I.S.P.: 20. 6. Fire Ball: Another fire creation ability is the hurling of a fire ball. Damage: 1D6xl0 S.D.C. ill: 6D6 M.D., Range: 30 feet (9 m) +2 feet (0.6 m) per each additional level of experience. Duration: Instant. Bonus: +2 to strike. I.S.P.: 25. 7. Sense Fire: The psychic can sense or feel the presence of fire and pinpoint its exact location. Range: 100 feet (30.5 m) +5 feet (1.5 m) per level of experience. Duration: 2 minutes of extreme sensitivity when he/she can pinpoint the exact location of every fire in the area. Base Skill: 90% success ratio. A failed roll means only 2D4xlO% of the fires can be located by sensing. I.S.P.: 2 per every two minutes.",
+      "ispCost": 0,
+      "duration": "Varies.",
+      "range": "Varies.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Radiate Horror Factor",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 182
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "The psychic can channel his psionic powers, alignment and emo tions to radiate as an aura of power that is frightening. This aura is equal to a Horror Factor and perceived on a subconscious level by all who see the psychic or come within range. The usual H.F. reaction and penalties apply. See the combat section of this book for details on Hor ror Factor. The level of horror varies as follows: • Horror Factor 10 if the character is of a good or Unprincipled align ment. • Horror Factor 10 + 1 per every three levels of experience if the char acter is Anarchist. • Horror Factor 12 + I per every three levels of experience if the char acter is of an evil alignment. • Add one Horror Factor point to any of the above if the character is also insane or enraged beyond reason.",
+      "ispCost": 8,
+      "duration": "5 minutes per level of experience.",
+      "range": "Self; affects all who come within 100 feet (30.5 m) of the psy chic.",
+      "savingThrow": "-I to save vs Horror Factor.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Read Dimensional Portal",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 175
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "Limitations: Applicable only to active (open) dimensional portals and devices that can create a dimensional portal. This power allows the psychic to get impressions from the portal or dimension spanning device, which instills the character with the fol lowing information: Destination is relatively dangerous/hostile or safe to the psychic. This includes whether or not the environment can support human life. • Whether there is a strong (or numerous) presence of the supernatu ral (i.e. Alien Intelligence, gods, demons, etc.) and whether that presence is evil. • A psychic flash -a brief vision of who was the last person or per sons to use the portal, if any (may be none if it is a random Rift that hasn't been used by any living force). • Intuitively sense whether the portal or machine leads to any of the following dimensions: The Astral Plane, Xiticix home world, the Dreamstream, or to another location on Rifts Earth. • If a mechanical gateway or device capable of dimensional travel/ opening a dimensional portal, whether it is a creation of magic or science, the psychic will get a basic idea of how to operate it in or der to open or close a dimensional portal (similar to Object Read).",
+      "ispCost": 6,
+      "duration": "One melee round per level of experience.",
+      "range": "Touch or one foot (0.3 m) per level of experience.",
+      "savingThrow": "Not applicable.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Remote Viewing",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 175
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "(uses up one I.S.P.); standard save vs psionic attack (in this case, psionic intrusion). Failure means the psychic is seen via Remote Viewing. Success means the psychic trying to view is blocked, and he knows that the target has deliberately done so. Otherwise, the target of this power gets no impression from being viewed remotely and has no idea why he is being watched or by whom. To use this power, the psychic needs a photo or video image to fo cus on, even if he knows the person or place intimately. When focused on a particular person, the psychic can see in his mind what the person is doing at that moment for 2D6+6 seconds. The image appears as if the character were looking down through a skylight. He sees only a glimpse of things and may not remember all details. Likewise, he may not see other people outside his line of vision, because the focus is a particular person, not the entire room. If the target is moving, walking, or driving, the remote viewer will know this and follow along for a few seconds, although he may not have a clear idea of his surroundings, but enough of an impression to recognize it if he sees it personally. The character may also Remote View a specific place such as a small to medium room, a corner in a playground or field, a specific en trance to a building, a particular section of an alley, etc., but not an en tire house, office building, stadium, street, etc. As before, he must have a photograph, video or frame of film to focus upon. For 2D6+6 sec onds, the psychic will see whatever occurs in that small area of that particular place. In the alternative, the psychic can use Remote Viewing to catch glimpses/images that tell something about the subject of the viewing. In this instance, he must have 2-4 specific questions, such as, \"is so and so alive ...\" Then the image of the character smiling as he walks through the area appears, or flashes of a brutal attack, blood, and a falling body (indicating death), and so on, appear for an instant in answer to his query. In either case, the psychic cannot look at the same person or place via Remote Viewing again for another 24 hours.",
+      "ispCost": 10,
+      "duration": "2D6+6 second flash of insight or vision of current events.",
+      "range": "Self.",
+      "savingThrow": "Special. Other psychics can feel or sense when some body is trying to observe them and can try to resist it by concentrating",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Resist Fatigue",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 166
+    },
+    "system": {
+      "type": "healing / physical",
+      "typeCustom": true,
+      "description": "A mind over matter discipline which enables the character to engage in physical activity without suffering from exhaustion. However, fa tigue is only temporarily suspended, so the psychic feels extremely tired and may even collapse when the duration of this power elapses.",
+      "ispCost": 4,
+      "duration": "One hour plus 20 minutes per level of experience. / 1D6 melees of preparatory meditation.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Resist Hunger",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 169
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "Another mind over matter discipline that subdues any feeling of hunger, allowing the character to function at full effectiveness without nourishment. It is important to point out that while the psi-power main tains full operations, the body is still suffering from malnutrition and starvation. Loses 3 lbs (1.35 kg) of weight per day. Note: A psychic can survive up to 60 days, functioning as normal, without any food by continually using Resist Hunger. On day 61 the character will lapse into a coma. Under this extreme condition, 60 days of food deprivation while still fully active physically, the character is -20% to save vs coma death.",
+      "ispCost": 2,
+      "duration": "6 hours.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Resist Thirst",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 169
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "This ability is identical to the Resist Hunger psi-power except it ap plies to the consumption of water. It does not negate the long-range damage from dehydration.",
+      "ispCost": 6,
+      "duration": "6 hours.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Restore P.P.E.",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 166
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "This power allows the psychic to convert some of his I.S.P. into P.P.E. energy and transfer that energy to another person. Two I.S.P. counts as one P.P.E. point. In addition, the conversion and transfer costs four I.S.P. to initiate. For example, 10 I.S.P. converts into five P.P.E. and costs an additional four points to make the transferal and conversion. Total cost is 14 I.S.P. A Mind Block will prevent this en ergy transfer. Note: P.P.E. can not be turned into I.S.P.",
+      "ispCost": 4,
+      "duration": "Permanent.",
+      "range": "Touch.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "See Aura",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 175
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "force. All things, organic and inorganic, have an aura. The aura has many distinctions and indicates things to the psychic normally invisible to the ordinary eye. Seeing an aura will indicate the following: • Estimate the general level of experience. Low (1-3), medium (4-7), high (8th and up). • The presence of magic (no indication of what type or the power level). • The presence of psychic abilities (again though, not the type or power level). • High or low base P.P.E. • The presence of a Possessing Entity. • The presence of an unusual human aberration and/or indicates a se rious illness, insanity, or that the individual is not-human, could be mutant or supernatural, but does not specify which. Note: A psychic can not tell one's alignment by using this power.",
+      "ispCost": 6,
+      "duration": "2 melees (30 seconds).",
+      "range": "60 feet (18.3 m) and must be visible.",
+      "savingThrow": "None, but a Mind Block will hide the presence of psy chic abilities, the level of P.P.E., and possession by a supernatural",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "See the Invisible",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 176
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "The character can see entities, beings, forces, objects and creatures which can turn invisible or are naturally invisible. Even if the creature has no form per se, the psychic will be able to discern the vaporous im age or energy sphere which is the being. This includes ghosts, Entities, Elementals and Astral Beings.",
+      "ispCost": 4,
+      "duration": "1 minute per each level of experience.",
+      "range": "120 feet (36.6 m); double on a ley line.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Sense Dimensional Anomaly",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 176
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "This power detects the presence of a dimensional anomaly like an open/active dimensional portal or Rift, the random opening and closing of a Rift, Ley Line Storms, and dimensional triangles (e.g. the Devil's SealBermuda Triangle), as well as any disturbances caused by tele portation, the use of Temporal or Ley Line Magic or other powers that disrupt the fabric of reality. The psychic knows when it happens, when it ends/closes, the general direction, and whether it is far or near, but no exact knowledge of its location or what is happening because of it.",
+      "ispCost": 4,
+      "duration": "2 minutes per level of experience.",
+      "range": "100 feet (30.5 m) radius per level of experience.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Sense Evil",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 176
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "This psi-power is a much more refined ability to feel the presence of evil. All supernatural creatures radiate their alignment, good or evil. A psychic sensitive will automatically feel supernatural evil without spending a single I.S.P. point. However, to get a clearer picture of the evil force(s) the character must open himself and use the Sense Evil ability. Sense Evil will indicate the general number of supernatural evil: one, a few (2-6), several (7-14), or many (15 or more). It can also regis ter the intensity of the evil and pinpoint the general location of the source(s) to a particular room(s), possessed object, character, and dis tance; i.e. very near (within 15 feetl4.5 m), near (within 50 feetll5.2 m), or far (60 to 140 feetll8.2 to 42.7 m). The character can track the source of supernatural evil, like a bloodhound, by sensing how close it is to him. Evil emanations from human beings are much less distinct and can not be felt unless the source-person has an immediate evil intention and has psychic powers or is psychotic. The former can mask his evil inten tions with a Mind Block.",
+      "ispCost": 2,
+      "duration": "2 minutes (8 melees) per level of experience.",
+      "range": "140 feet (42.7 m) area.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Sense Magic",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 176
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "The ability to sense magic enables the psychic to feel magic energy, tell whether it is near (within 20 feetl6.1 m) or far (up to 120 feetl36.6 m away) and follow the emanations to pinpoint their source as a partic ular place, room, person or object. Note: Invisible, magical or supernat ural creatures or objects can only be traced to a general area, like a specific room or area. The psychic will also be able to sense whether or not an object has magic powers, if a person or item is enchanted/under a magic spell (this does not include psionic influences), when magic is being used within the area (120 feetl36.6 m) and when a person is cast ing a spell (human users of magic do not radiate magic energies until they call upon them).",
+      "ispCost": 3,
+      "duration": "2 minutes per level of experience.",
+      "range": "120 feet (36.6 m) area.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Sense Time",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 176
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "The psychic is able to accurately measure the passage of time, down to within 1D4 seconds. This can be useful when in an environment where the passage of time can be lost, and especially when the charac ter must meet with or do something at a precise moment in time, like gauging exactly when a bomb will detonate, when a switch must be turned on or off, and so on.",
+      "ispCost": 2,
+      "duration": "15 minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Sixth Sense",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 176
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "The Sixth Sense is a power that gives the psychic a precognitive flash of imminent danger to himself or somebody near him (within 90 feetl27.4 m). The character will not know what the danger is or where it will come from, nor who it will be directed at when in a group. All he knows is that something life threatening will happen within the next 60 seconds (4 melees)! The Sixth Sense is triggered automatically, without the consent of the psychic, whenever his life is in great peril or the life of somebody he greatly cares about (friend, partner, loved one, etc.). The Sixth Sense is only triggered by an unexpected, life threatening event (a trap or ambush is within 90 feetl27.4 m or a flash flood is rush ing his way) which is already set into motion and will happen any sec ond. The power can not be called upon at will to sense for traps or ambush. Instead, it works like an automatic reflex. If the character has used all his LS.P. the Sixth Sense is temporarily rendered inoperative. Bonuses: The sudden flash of insight provides the following bo nuses. All bonuses apply only to the first, initial melee (15 seconds) when the attack/danger occurs. Bonuses are lost in subsequent melee rounds after the danger is revealed. +6 on initiative roll, +2 to parry, +3 to dodge and the character can not be surprised by a sneak attack from behind.",
+      "ispCost": 2,
+      "duration": "Until the danger passes or happens. Bonuses apply only to the first melee round of the attack from the source of the sensed danger.",
+      "range": "90 feet (27.4 m).",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Speed Reading",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 177
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "This is the ability to read and comprehend the written word ex tremely quickly. Speed of reading is 30 pages per minute (4 melee rounds). The psychic will retain the information as he would normally. Highly technical texts will reduce the speed reading by half (15 pages per minute) and may require two readings to remember in detail.",
+      "ispCost": 2,
+      "duration": "3 minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Stop Bleeding",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 166
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "experience level of the psi-healer if the character uses this temporary tourniquet and leaves his patient to do other things. Another type ofbio-feedback, mind over matter power, in which the psychic stops bleeding from wounds and internal injury using the power of his mind. This means stopping additional damage from blood loss and being able to function relatively unimpaired. As impressive and potentially lifesaving as this ability may be, it is only a stopgap measure. The injury is NOT being healed and the character still needs medical attention or he will, eventually, die from his injuries. If ren dered unconscious, the bleeding and blood loss damage immediately begins. Note: Stops the bleeding from all sources, however, additional/ new Hit Point damage suffered after the Stop Bleeding requires addi tional concentration and another two I.S.P. to stop the bleeding from the new wound(s). Penalties: Furthermore, the psychic must continue to concentrate on stopping the bleeding, which means his number of attacks per melee round and all combat bonuses are reduced by half, but skill perfor mance and other abilities function at normal capacity (he can run, leap, climb, swim, drive, operate machinery, etc. at full tilt, for example).",
+      "ispCost": 2,
+      "duration": "Indefinitely, as long as the healer keeps his hand on or near the injury and concentrates on stopping the bleeding. Four minutes per",
+      "range": "Self or other by touch.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Summon Inner Strength",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 169
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "This psi-power enables the character to draw on his inner reserves of strength to ward off pain and fatigue. Every time the psychic calls upon his Inner Strength the following bonuses apply: • Add +10 S.D.C. • Add +2 to save vs poison or toxins. • Add +5% to save vs coma/death. • Fatigue is temporarily forgotten and the character can function as if he was fully rested for the full duration of the Summon Inner Strength power.",
+      "ispCost": 4,
+      "duration": "10 minutes per level of experience.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Suppress Fear",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 166
+    },
+    "system": {
+      "type": "healing",
+      "typeCustom": false,
+      "description": "This power temporarily suppresses the chemical and psychological components of fear in the recipient. As a result, the character is unable to feel fear or is barely frightened even if intellectually he realizes he is in grave danger, or is facing a terrifying monster or situation. This en ables the character to think rationally and take calm, calculated action, rather than respond with the typical \"fight or flight\" reactions of those who are scared. While this power is activated, the character automati cally succeeds on any roll to resist Horror Factor, even if magically induced. This power can be used on the psychic himself or on one or two others.",
+      "ispCost": 8,
+      "duration": "One minute per level of experience.",
+      "range": "Self or others by touch.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telekinesis",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 169
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "lbs (4.5 kg) of weight. Telekinesis is the ability to move objects without any other means than directed psychic energy. The character can make an object hop, fall, roll, rise into the air, suspend it there (hover) or make it fly across the room. In order to move an object by Telekinesis, the item must be clearly visible, within the psychic's range (60 feet/I 8.3 m) and the point offo cus. As usual, the psychic must concentrate on what he is doing; thus, each telekinetic feat counts as one of the character's physical attacks. The total number of telekinetic attacks is equal to the character's num ber of physical attacks per melee; usually 4 or 5. One can attack with Telekinesis by hurling an object as if thrown or causing it to buzz about a room, swinging and hitting like a club controlled by an invisible hand. Several objects can be telekinetically thrown around within the same melee round, but not simultaneously. The psychic can only con centrate on one item at a time. For example: A physical psychic with four, normal, hand to hand attacks per melee can perform four attacks with Telekinesis. First, he makes a flower vase fly from the table, aim ing it at his opponent's head. Second, he makes the lamp hurl at the guard at the door. Third, the table is suddenly flipped up on end and, fourth, the doorknob is turned and the door flung open. Four attacks or actions using Telekinesis. As we can see in the example, Telekinesis can be used to do more than making objects fly around. The Telekinetic power can be used to open doors, flick switches, press buttons, turn knobs and dials, open windows, make a rocking chair rock and so on. The range of possibili ties is extensive when you stop and think about it. Remember, each ac tion counts as one of the character's physical actions/attacks per melee. It is easiest to move or hurl small objects weighing two pounds (0.9 kg or less). Maximum height or distance is 60 feet (18.3 m). Medium sized objects weighing 3 to 20 pounds (1.35 to 9 kg) are more difficult to manipulate. Maximum height or distance is reduced by half; 30 feet (9.1 m). Large or heavy objects weighing over 20 Ibs (9 kg) are the most difficult to maneuver, reducing maximum height and distance to 15 feet (4.6 m). LS.P. cost for large, heavy objects is 8 LS.P. for the first 20 Ibs (9 kg) plus one LS.P. for each additional 10 Ibs (4.5 kg) of weight. This means it would cost 19 LS.P. to move a 125 Ib (56.2 kg) weight (8 LS.P. for the first 20 Ibs (9 kg) + 11 LS.P. for the remaining 105 Ibs). Remember, the height and distance of effect is limited to 15 feet (4.6 m) for such a heavy object. Telekinesis Combat Bonuses: • +3 to strike with Telekinesis; physical/skill bonuses to strike do not apply when Telekinesis is used. • +4 to parry with Telekinesis by using a controlled object to parry or sheer telekinetic force to block an attack. Counts as a medium heavy object; costs 8 LS.P. Note: Only these two bonuses apply to TK combat. • S.D.C. Damage from Hurled Objects: Very Small: 6 ounces to 1 pound (0.23 to 0.45 kg): 1D4. Small: 1.5 to 2 Ibs (0.6 to 0.9 kg): 1D6. Medium Small: 2-4 Ibs (0.9 to 1.8 kg): 2D4. Medium: 5 to 10 Ibs (2.25 to 4.5 kg): 3D4. Medium Large: 11 to 25 Ibs (4.95 to 11.2 kg): 3D6. Large: 26 to 40 Ibs (11.7 to 18 kg): 4D6. Add 1D6 dam age for each additional 20 Ibs (9 kg). Note: This form of Telekinesis is not a force field, thus, while it can be used to parry/block a punch, kick, club, knife or even sword, it can not stop bullets, arrows, gas, flying tackles, and similar attacks. Fur thermore, a failed roll to make a telekinetic parry means the psychic did not parry and is struck by his opponent. Telekinesis moves, lifts and throws physical objects with the power of the mind, so it may be used to hurl a victim into something as a slam attack but NOT as a crushing or thrusting attack in and of itself. Ob jects thrown would be equivalent to objects thrown by a physical hand. Telekinesis does not allow psychics to levitate themselves or fly, due to the weight limitation (see Super Telekinesis).",
+      "ispCost": 3,
+      "duration": "2 minutes per level of experience.",
+      "range": "Up to 60 feet (18.3 m) away.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telekinesis (Super)",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 182
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "I.S.P. per each additional 100 lbs (45 kg). S.D.C. points equals one (1) M.D. point. The power is basically the same as the ability described in the Phys ical category of psionic powers, but greatly enhanced. Differences are increased range, and dramatically increased weight and damage. The character can use Super Telekinesis to manipulate as many as one ob ject per level of his experience, as long as the combined weight does not exceed his total weight capacity. • +3 to strike with Telekinesis; physicaVskill bonuses to strike do not apply when Telekinesis is used. • +4 to parry with Telekinesis by using a controlled object to parry or sheer telekinetic force to block an attack. Counts as a medium heavy object; costs 8 I. S.P. • S.D.C. Damage from Hurled Objects: Very Small: 6 ounces to I pound (0.2 to 0.45 kg): 1D4. Small: 1.5 to 2 lbs (0.6 to 0.9 kg): 1D6 S.D.C. Medium Small: 2-4 lbs (0.9 to 1.8 kg): 2D4 S.D.C. Medium: 5 to 10 lbs (2.25 to 4.5 kg): 3D4 S.D.C. Medium Large: 11 to 25 lbs (4.95 to 11.2 kg): 3D6 S.D.C. Large: 26 to 40 lbs (11.7 to 18 kg): 4D6 S.D.C. and add 1D6 damage for each additional 20 lbs (9 kg) up to 200 lbs (90 kg). • Mega-Damage from Huge Hurled Objects: M.D. is only possible with Super Telekinesis and only when the hurled object is 100 lbs (45 kg) or heavier and is a hard material like wood, stone or metal (not people). Does 1D4 M.D. per 100 pounds (45 kg).",
+      "ispCost": 10,
+      "duration": "2 minutes per level of experience.",
+      "range": "100 feet (30.5 m) per level of experience.",
+      "savingThrow": "",
+      "damage": "1D4xlO S.D.C. per 100 lbs (45 kg) of weight. Note: 100",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telekinetic Acceleration Attack",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 183
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "This power works on the same principle as the rail gun but uses telekinetic power rather than electromagnetic force. Rather than use Telekinesis to lift and move one or more objects, this Super-Psionic power causes a half dozen to a dozen small objects (coins, pencils, small stones, arrows, unloaded bullets, etc.) to hurl at an incredibly high velocity in a powerful (if short-range) burst of telekinetic energy. All items strike one target at tornado wind velocity. Damage: If 10 I.S.P. are expended the damage inflicted is 2D4x1O S.D.C. If 20 I.S.P. are expended, the damage is 3D6+4 Mega-Damage! The psychic must roll to strike at + 1 to do so (no other bonuses apply except any O.C.c./R.C.C. psi-power bonus) and the target must be clearly visible. The psionic attack counts as one of the character's melee attacks.",
+      "ispCost": 10,
+      "duration": "Instant.",
+      "range": "50 feet (15 m) + 10 (3 m) per level of experience; line of sight.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telekinetic Force Field",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 183
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "The psychic can instantly erect a force field around himself or oth ers in the blink of an eye. If the creation of the force field is to parry an attack, the psionic must roll a successful parry to see if he was able to create the field before the attack strikes. A successful parry means the force field beat the attacker's strike and it absorbs the damage. TK Force Fields parry incoming attacks (both energy and projectiles) sim ply by being created before the attack arrives. Any parries with the Force Field are done with straight rolls (normal parry bonuses do not apply). Once created, they have neither bonuses or penalties, they sim ply absorb the incoming damage. The TK Force Field can be made so that it only encircles its creator, or as large an area as a 10 foot (3 m) diameter per level of experience, and can be created yards/meters away, but always within the line ofvi sian. The smallest force field possible covers about a three foot area (0.9 m). The field is a Mega-Damage structure with 25 M.D.C. per level of experience. Once one field is created, the psychic can create as many others as his I.S.P. will allow. All must be in the character's line of vision. The TK Force Field(s) will remain in place until all its M.D.C. is destroyed or its creator dispels it. If the psychic is rendered unconscious or killed, the force fields instantly vanish. However, the psychic can choose to leave the area with his force fields still in place. They will remain until the duration time limit expires. People may be able to move around in side a force field, but the force field itself cannot be moved once it is in place. The TK Force Field is actually a force bubble and is airtight, with enough air inside for the duration of the field. If attempting to cast a Force Field around an unwilling target, they would get the chance to dodge out before the force field made it com pletely around them, but only if they knew in advance that the entrap ment attack was coming, and even then they'd be -6 to dodge. For an attacker to get inside a force field he must destroy all of its M.D.C. and in so doing, destroy the field itself. Any weapon blasts, explosions and magical energy attacks, such as Call Lightning, Fire Ball, etc., will hit the Force Field, they cannot be made to appear inside the field. It will also stop area effect magic. For instance, a Carpet of Adhe sion will adhere to the force field instead of the people inside, and a magic cloud may cover the sphere of force but it does not penetrate the protective field. However, Teleportation can be used to pop inside be cause the mage can see his destination inside. Likewise, intangible spir its and Astral Beings can pass through force fields. Psionic mental attacks, Empathic Transmission and Bio-Manipulation can still be made to affect the minds of those inside the force field, provided the at tacker has line of sight. Likewise, any psychic can use his psionic pow ers on those outside while he is inside the walls of the force field; line of sight. Characters inside the force field suffer from the same limitations and cannot fire weapons or energy magic from within the force field without hitting and damaging their protective bubble, and anyone caught inside a force field bubble is trapped inside until they blast their way out (destroying its M.D.C.) or the duration time elapses. Note: A TK Force Field can NOT be used to suffocate someone by putting an airtight bubble around their head. Force Field requires some form of support (even though it is composed of energy) and must be created on solid ground. Once created, it can NOT be moved. A Dispel Magic Barriers will not affect a psionic force field (it's not magical).",
+      "ispCost": 30,
+      "duration": "10 minutes per level of experience.",
+      "range": "Self or 40 feet (12.2 m) per level of experience within line of vision.",
+      "savingThrow": "Dodge at -6.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telekinetic Leap",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 170
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "This telekinetic application boosts the person's leaping ability, pro pelling the psychic an additional two feet (0.6 m) when leaping up wards, and three feet (0.9 m) when leaping across or lengthwise, per level of experience. This power can be used in conjunction with a Leap Kick attack (damage: 6D6+6 plus P.S. bonuses), but the character will take 2D6 S.D.C. points of damage himself from the hard impact. A die roll with impact may be needed to land safely after one of these leaps.",
+      "ispCost": 8,
+      "duration": "One melee attack/action; in this case, a leap.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telekinetic Lift",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 170
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "Rather than moving objects solely with the power of the mind, this use of telekinesis increases the character's ability to lift and carry heavy weights. The psychic creates a telekinetic field around the object and lifts both physically and mentally (via telekinesis). This enables the psychic to lift and carry weights 20% heavier than his P.S. normally al lows. This use oftelekinetics is limited exclusively to lifting and carry ing heavy weights and cannot be used to hurl boulders and heavy objects as weapons, nor can it be used to augment the damage inflicted by a punch, kick or other physical attacks.",
+      "ispCost": 6,
+      "duration": "2 melees per level of experience.",
+      "range": "Self or Touch.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telekinetic Punch",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 170
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "This telekinetic power enables the psychic to deliver a powerful punch or kick-like force through telekinetic energy. The character must actually make a physical punch or kick, but a successful strike delivers a telekinetically enhanced blow. A Telekinetic Punch will inflict 3D6 S.D.C.lHit Point damage plus P.S. bonus (if any), and a kick will do 4D6 S.D.C. plus P.S. bonus. The LS.P. is spent whether or not the punch or kick actually hits the target (roll to strike as normal). The power is used in conjunction with a normal, physical attack that can be parried or dodged by the enemy. Every time the power is used, the psy chic must make a save of 14 or higher or he will take 1D6 points of damage himself as a result of wrenched muscles or a dislocated joint from the extra strain on his body.",
+      "ispCost": 6,
+      "duration": "Instant.",
+      "range": "By touch or one foot (0.3 m) per level ofe xperience.",
+      "savingThrow": "Dodge or parry as usual.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telekinetic Push",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 170
+    },
+    "system": {
+      "type": "physical",
+      "typeCustom": false,
+      "description": "The psychic can effectively create a telekinetic force that pushes away an attacker or anything within range (a door, chair, cart, statue, etc.). The pushing force has the rough equivalent of a P.S. 16 +1 per level of the psychic. The Telekinetic Push is roughly equal to a body block and does 1D4 S.D.C. or Hit Point damage, will knock most ordi nary humans back two yards/meters and has a 01-60% chance of knocking the person off his feet (if so, that character loses initiative and one melee action). Characters weighing more than 200 pounds (90 kg) or who possess Robotic P.S. or Supernatural P.S. are only shoved a foot or two and there is only a 01-12% chance of being knocked off their feet. Inanimate objects weighing under 50 pounds (22.5 kg) are \"pushed\" or slid across the ground twice as far, roughly four yards/me ters (12 feetl3.6 m).",
+      "ispCost": 4,
+      "duration": "Instant.",
+      "range": "By touch or one foot (0.3 m) per level ofe xperience.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telemechanic Mental Operation",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 184
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "Prerequisite: Psychic must also have the Telemechanics power. flesh, sentient machines and magic items and devices are impervious. This power is a step beyond the mere understanding of machines granted by Telemechanics, it allows the psychic to telepathically oper ate machines with his mind! As long as the machine functions, he knows how to use it, and it is turned \"on,\" the psychic can manipulate it with his mind as if his fingers were on the controls! This means he can operate computers, key pads, set/program an alarm clock, change the radio station, operate a VCR or television, drive a hover car (even if there is already a driver, but at -30% when usurping the pilot), cook something in a microwave, tum off (or on) a surveillance video camera, and so on. The Telemechanic Mental Operation power will only work on ma chines that have an electronic or other power source. This power does not work on artificially intelligent machines (i.e. intelligent computers, robots, etc.), nor on cybernetics, bionics, Techno-Wizard devices, rune weapons or magic items. Note: Also see Machine Ghost and Teleme chanic Possession. The psychic can use other psionic powers and engage in other activ ities, but must maintain some level of mental concentration and contact to keep control of the machine. During this period he is -I melee at tack/action and -5% on skill performance. He must also stay within range. If he steps out of range or loses concentration, the machine re turns to normal in 1 D4 seconds.",
+      "ispCost": 12,
+      "duration": "2 melee rounds per level of the psychic.",
+      "range": "20 feet (6.1 m) +5 feet (1.5 m) per level of experience.",
+      "savingThrow": "Special. Regular, non-intelligent machines cannot save vs Telemechanic Operation. Cybernetics and bionics attached to living",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telemechanic Paralysis",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 184
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "Prerequisite: Psychic must also have the Telemechanics power. flesh, sentient machines and magic items and devices are impervious. This is a form of techno-manipulation whereby the psychic is able to psychically bond with the machine and momentarily prevent it from functioning. The psychic blocks the transmission of signals along the machine's \"nervous system,\" effectively incapacitating it. This means the power is only effective against machines that require an energy source. Simple devices like wind-up toys, scissors, old revolvers and pistols, swords, knives, crossbows, and similar items cannot be af fected. The paralyzed machine freezes in place and does not respond to any of its controls until the psionic influence comes to an end. The psychic can use other psionic powers and engage in other activ ities, but must maintain some level of mental concentration and contact to keep the machine inactive. During this period, he is -1 melee attack/ action and -5% on skill performance. He must also stay within range (40 feet/12.2 m). Ifhe steps out of range or loses concentration, the ma chine returns to normal in 1D4 seconds.",
+      "ispCost": 20,
+      "duration": "One minute per level of experience.",
+      "range": "Touch or 40 feet (12.2 m).",
+      "savingThrow": "Special. Regular, non-intelligent machines cannot save vs Telemechanic Paralysis. Cybernetics and bionics attached to living",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telemechanic Possession",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 184
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "Prerequisite: Psychic must be a master psionic and also have the pow ers of Object Read and Telemechanics. bots) need a 15 or higher to save and sentient machines (like Archie-3) require a 12 or better to save. Artificial intelligences and sentient ma chines also get to save when being forced to do something that is con trary to their programing. Cybernetic and bionic devices attached to living tissue can NOT be possessed. Neither can magic items, including Rune Weapons and Techno-Wizard devices. This ability is identical to the psionic power, Mentally Possess Oth ers, in every way, except that the psychic possesses a machine rather than another person. The character overrides the programming/controls of the machine, even in the case of sentient machines, and controls it like a living robot. Essentially, the possessing psychic is an immaterial pilot who controls the machine as he desires; cO!llputers, factory equip ment, vehicles, robots, empty power armor, a toaster, etc. While the psychic possesses the machine, it responds to the charac ter's thoughts and does whatever he desires. Of course, physical, me chanical limitations still apply. The machine needs a power source and cannot do anything it is not normally capable of doing. For example, the psychic may be able to take possession of an energy rifle and make it shoot (or not) seemingly of its own volition, but he cannot make the rifle aim, move or hop around. Likewise, if the device is unplugged, or runs out of fuel, the machine is deactivated with no ill effect to the psy chic, except his possession comes to a premature end. Likewise, if it needs wheels to move, destroying the wheels will cripple it, etc. If the machine he possesses is destroyed while the psychic's essence is still inside it, the character loses one third of his Hit Points (or one third of his M.D.C. if a Mega-Damage creature) from the shock and pain from the destruction of his surrogate machine body. Furthermore, he is stunned for 1D4 minutes (reduce attacks per melee, speed, combat bonuses, and skill performance by half while stunned). During the period that the machine is possessed, the psychic's natu ral body falls into a coma-like state and is vulnerable to attack unless protected by others. While in mental possession of a simple machine, the psychic has only a vague awareness of his surroundings and can see, hear and feel things around him but as if in a cloud or haze. However, if the machine has optics and/or sensors, he is able to use them like his own natural eyes and senses. The machine, regardless of its capabilities and pro gramming, has attacks and actions equal to those of the character pos sessing it.",
+      "ispCost": 50,
+      "duration": "Two minutes (8 melees) per level of experience.",
+      "range": "Touch or 10 feet (3 m) per level of experience.",
+      "savingThrow": "Special. Regular, non-intelligent machines cannot save vs Telemechanic Possession. Artificial intelligences (robots like Skele",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telemechanics",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 183
+    },
+    "system": {
+      "type": "superPsionics",
+      "typeCustom": false,
+      "description": "This ability allows the psychic to mentally communicate and under stand machines. This psi-power is a bizarre combination of Object Read and Telepathy, except that it applies to mechanical devices only. By touching any non-artificially intelligent machine, whether it be a bicycle, gun, car or airplane, the psionic will instantly have a complete (although temporary) knowledge of exactly how the machine operates. I must stress that the psychic knows everything about the machine; the complete schematic diagram and operation knowledge are clearly seen in his mind's eye. The level of skill expertise is equal to 80%. When touching an artificially intelligent machine, i.e., computers, the psionic not only understands everything about its operation, repair, access codes, etc., but can actually communicate with it telepathically. This means he can tap into a computer's memory bank without using a terminal because the information would be sent directly into the psy chic's mind. Remember, the telepathic link and memory are temporary abilities (although a Total Recall would be able to call up small bits of info). The psychic's skill knowledge is equal to an 88% skill proficiency and applies to all aspects of the machine, its operation, repair, special codes, programing, etc.",
+      "ispCost": 10,
+      "duration": "10 minutes plus 2 minutes per level of psionic.",
+      "range": "By touch or up to 5 feet (1.5 m) away.",
+      "savingThrow": "None.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Telepathy",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 177
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "level of experience. Mind Blocks will completely prevent telepathic probes or communica tions as long as the block is up. The power of Telepathy allows the psychic to eavesdrop on what another person is thinking at a particular moment. This is done by fo cusing on that one individual and picking up on his or her surface thoughts. Surface thoughts are those thoughts and musings uppermost in a target's mind. A deep probe into memory is not possible. Although the psychic can read the thoughts of several people, he can only do so by focusing on one person at a time. Simultaneous, multiple mind read ing is impossible for the character. Limited telepathic communication is also possible. The telepath can send a directed thought message to one person at a time. The message must be as brief and clear as possible. Like, \"John, I need you immedi ately. Hurry!\" or \"Stop! Don't do that.\" \"Come here,\" \"Look out\" or \"Press the green button.\" However, two-way telepathic communication is not possible except between two characters both with telepathic abili ties.",
+      "ispCost": 4,
+      "duration": "2 minutes per level of experience.",
+      "range": "Read surface thoughts up to 60 feet (18.3 m) away or two-way telepathic communication up to 140 feet (42.7 m) +40 feet (12.2 m) per",
+      "savingThrow": "Conditional. When a character suspects he is being telepathically probed he can resist, getting the standard saving throw.",
+      "damage": "",
+      "isMDC": false
+    }
+  },
+  {
+    "name": "Total Recall",
+    "type": "psionicPower",
+    "img": "icons/svg/aura.svg",
+    "source": {
+      "printedPage": 177
+    },
+    "system": {
+      "type": "sensitive",
+      "typeCustom": false,
+      "description": "The character remembers every word he reads. Specific blocks of written and visual information can be recalled in perfect detail at will. Each block of information costs 3 LS.P. to recall in absolute detail. If all LS.P. have been expended the memory is a little fuzzy, so that exact quotes and details may be impossible to recall. Roll percentile to see how much is retained: 01%-50%: Remembered in full detail, word for word. 51% -80%: Details are forgotten, but the full essence of the ideas are clear. 810/0-00%: Can only recall the most basic concepts; no details nor strong comprehension. Note: Does apply to the spoken word, although psychics with this ability usually have very good memories.",
+      "ispCost": 2,
+      "duration": "Permanent.",
+      "range": "Self.",
+      "savingThrow": "",
+      "damage": "",
+      "isMDC": false
+    }
+  }
+]

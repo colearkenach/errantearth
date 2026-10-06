@@ -1,0 +1,86 @@
+{{!-- ===== POWERS TAB ===== --}}
+        <div class="tab" data-group="primary" data-tab="powers">
+            <h2 class="ee-bar">POWERS</h2>
+
+            
+
+            {{#if grantedAbilities.length}}
+            <section class="ee-panel ee-combat-equipment">
+                <div class="ee-combat-equipment-header"><h3>Granted Abilities</h3><span class="ee-hint">From equipped OCC / Race</span></div>
+                <table class="ee-table ee-compact-power-items">
+                    <thead><tr><th>Source</th><th>Ability</th><th>Description</th></tr></thead>
+                    <tbody>{{#each grantedAbilities}}<tr><td>{{source}}</td><td><strong>{{name}}</strong></td><td>{{description}}</td></tr>{{/each}}</tbody>
+                </table>
+            </section>
+            {{/if}}
+
+            {{#if (or grantsMagic grantsPsionics)}}
+            <p class="ee-power-grants">
+                {{#if grantsMagic}}<span class="ee-grants-tag">Grants Magic</span>{{/if}}
+                {{#if grantsPsionics}}<span class="ee-grants-tag">Grants Psionics</span>{{/if}}
+            </p>
+            {{/if}}
+
+            <section class="ee-panel ee-combat-equipment">
+                <div class="ee-combat-equipment-header">
+                    <h3>Spells</h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="spell" title="Create Spell Item"><i class="fas fa-plus"></i> Spell Item</a>
+                </div>
+                {{#if itemsByType.spell.length}}
+                <div class="ee-table-scroll">
+                    <table class="ee-table ee-compact-power-items">
+                        <thead><tr><th>Name</th><th>Level</th><th>PPE</th><th>Range</th><th>Duration</th><th>Save</th><th>Damage</th><th>Roll</th><th></th></tr></thead>
+                        <tbody>
+                            {{#each itemsByType.spell}}
+                            <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                                <td><a data-action="edit-item" data-item-id="{{id}}"><strong>{{name}}</strong></a></td><td>{{system.level}}</td><td>{{system.ppeCost}}</td><td>{{system.range}}</td><td>{{system.duration}}</td><td>{{system.savingThrow}}</td><td>{{system.damage}}</td>
+                                <td class="ee-actions">{{#if system.damage}}{{#if @root.isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{system.damage}}" data-scale="{{#if system.isMDC}}M{{else}}S{{/if}}" data-tier="{{@root.eeDerived.tier}}" data-label="{{name}} Damage" title="Roll Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{system.damage}}" data-label="{{name}} Damage" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}{{/if}}</td>
+                                <td class="ee-item-delete"><a data-action="delete-item" data-item-id="{{id}}" title="Delete Spell"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                {{else}}<p class="ee-hint">No spell items yet.</p>{{/if}}
+            </section>
+
+            <section class="ee-panel ee-combat-equipment">
+                <div class="ee-combat-equipment-header">
+                    <h3>Psionic Powers</h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="psionicPower" title="Create Psionic Power Item"><i class="fas fa-plus"></i> Psionic Power Item</a>
+                </div>
+                {{#if itemsByType.psionicPower.length}}
+                <div class="ee-table-scroll">
+                    <table class="ee-table ee-compact-power-items">
+                        <thead><tr><th>Name</th><th>ISP</th><th>Range</th><th>Duration</th><th>Save</th><th>Damage</th><th>Roll</th><th></th></tr></thead>
+                        <tbody>
+                            {{#each itemsByType.psionicPower}}
+                            <tr class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                                <td><a data-action="edit-item" data-item-id="{{id}}"><strong>{{name}}</strong></a></td><td>{{system.ispCost}}</td><td>{{system.range}}</td><td>{{system.duration}}</td><td>{{system.savingThrow}}</td><td>{{system.damage}}</td>
+                                <td class="ee-actions">{{#if system.damage}}{{#if @root.isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{system.damage}}" data-scale="{{#if system.isMDC}}M{{else}}S{{/if}}" data-tier="{{@root.eeDerived.tier}}" data-label="{{name}} Damage" title="Roll Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{system.damage}}" data-label="{{name}} Damage" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}{{/if}}</td>
+                                <td class="ee-item-delete"><a data-action="delete-item" data-item-id="{{id}}" title="Delete Psionic Power"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                {{else}}<p class="ee-hint">No psionic power items yet.</p>{{/if}}
+            </section>
+
+            <section class="ee-panel ee-combat-equipment">
+                <div class="ee-combat-equipment-header">
+                    <h3>Abilities</h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="ability" title="Create Ability Item"><i class="fas fa-plus"></i> Ability Item</a>
+                </div>
+                {{#if itemsByType.ability.length}}
+                <table class="ee-table ee-compact-power-items">
+                    <thead><tr><th>Ability</th><th>Description</th><th></th></tr></thead>
+                    <tbody>
+                        {{#each itemsByType.ability}}
+                        <tr class="ee-item-row" data-item-id="{{id}}" draggable="true"><td><a data-action="edit-item" data-item-id="{{id}}"><strong>{{name}}</strong></a></td><td>{{system.description}}</td><td class="ee-item-delete"><a data-action="delete-item" data-item-id="{{id}}" title="Delete Ability"><i class="fas fa-times"></i></a></td></tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{else}}<p class="ee-hint">No ability items yet.</p>{{/if}}
+            </section>
+        </div>

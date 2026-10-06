@@ -1,0 +1,71 @@
+{{!-- Errant Earth weapon roll chat card --}}
+<div class="ee-roll-card ee-weapon-roll-card {{#if outcomeClass}}ee-roll-card--{{outcomeClass}}{{/if}}">
+  <header class="ee-roll-card__header">
+    {{#if actorImg}}<img class="ee-roll-card__portrait" src="{{actorImg}}" alt="{{actorName}}"/>{{/if}}
+    <div class="ee-roll-card__heading">
+      <div class="ee-roll-card__actor">{{actorName}}</div>
+      <div class="ee-roll-card__label">{{weaponName}}</div>
+    </div>
+    {{#if weaponImg}}<img class="ee-weapon-roll-card__weapon" src="{{weaponImg}}" alt="{{weaponName}}"/>{{/if}}
+  </header>
+
+  <div class="ee-roll-card__body">
+    <div class="ee-roll-card__subtitle">{{sourceLabel}} - {{rangeLabel}}</div>
+
+    {{#if attack}}
+    <section class="ee-weapon-roll-card__section">
+      <div class="ee-weapon-roll-card__section-head">
+        <span>Attack</span>
+        <strong class="{{attack.outcomeClass}}">{{attack.outcome}}</strong>
+      </div>
+      <dl class="ee-roll-card__details ee-weapon-roll-card__details">
+        <div><dt>TN</dt><dd>{{attack.tn}}+</dd></div>
+        <div><dt>Natural</dt><dd>{{attack.natural}}</dd></div>
+        <div><dt>Strike</dt><dd>{{attack.strike}}</dd></div>
+        {{#if attack.circumstance}}<div><dt>Circ.</dt><dd>{{attack.circumstance}}</dd></div>{{/if}}
+        {{#if attack.modifier}}<div><dt>Mod</dt><dd>{{attack.modifier}}</dd></div>{{/if}}
+      </dl>
+      <div class="ee-roll-card__formula">
+        <span class="ee-roll-card__formula-text">{{attack.formula}}</span>
+        <span class="ee-roll-card__total {{attack.outcomeClass}}">{{attack.total}}</span>
+      </div>
+      {{#if attack.dice}}
+      <div class="ee-roll-card__dice">
+        {{#each attack.dice}}<span class="ee-roll-card__die {{cls}}">{{value}}</span>{{/each}}
+      </div>
+      {{/if}}
+    </section>
+    {{/if}}
+
+    {{#if damage}}
+    <section class="ee-weapon-roll-card__section">
+      <div class="ee-weapon-roll-card__section-head">
+        <span>Damage</span>
+        {{#if damage.scale}}<strong>{{damage.scale}}</strong>{{/if}}
+      </div>
+      <div class="ee-roll-card__formula">
+        <span class="ee-roll-card__formula-text">{{damage.formula}}</span>
+        <span class="ee-roll-card__total">{{damage.total}}</span>
+      </div>
+      {{#if damage.criticalTotal}}
+      <div class="ee-weapon-roll-card__critical">
+        Critical Damage x2: <strong>{{damage.criticalTotal}}</strong>
+      </div>
+      {{/if}}
+      {{#if damage.dice}}
+      <div class="ee-roll-card__dice">
+        {{#each damage.dice}}<span class="ee-roll-card__die {{cls}}">{{value}}</span>{{/each}}
+      </div>
+      {{/if}}
+    </section>
+    {{/if}}
+
+    {{#if notes}}
+    <ul class="ee-weapon-roll-card__notes">
+      {{#each notes}}<li>{{this}}</li>{{/each}}
+    </ul>
+    {{/if}}
+
+    {{#if special}}<div class="ee-roll-card__subtitle">{{special}}</div>{{/if}}
+  </div>
+</div>

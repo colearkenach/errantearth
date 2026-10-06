@@ -1,0 +1,68 @@
+{{!-- ===== MISC TAB ===== --}}
+        <div class="tab" data-group="primary" data-tab="misc">
+            <h2 class="ee-bar">MISC</h2>
+
+            <div class="ee-misc-grid">
+                <div class="ee-panel">
+                    <h3>Currency</h3>
+                    {{#if isEE}}
+                    <div class="ee-kv"><label>Credits (GLC):</label><input type="number" name="system.currency.credits" value="{{system.currency.credits}}" /></div>
+                    {{else}}
+                    <div class="ee-kv"><label>Coalition Credits:</label><input type="number" name="system.currency.coalition" value="{{system.currency.coalition}}" /></div>
+                    <div class="ee-kv"><label>NGMI Credits:</label><input type="number" name="system.currency.ngmi" value="{{system.currency.ngmi}}" /></div>
+                    <div class="ee-kv"><label>Black Market Credits:</label><input type="number" name="system.currency.blackMarket" value="{{system.currency.blackMarket}}" /></div>
+                    <div class="ee-kv"><label>Universal Trade Credits:</label><input type="number" name="system.currency.universalTrade" value="{{system.currency.universalTrade}}" /></div>
+                    <div class="ee-kv"><label>Gold/Silver:</label><input type="number" name="system.currency.goldSilver" value="{{system.currency.goldSilver}}" /></div>
+                    <div class="ee-kv"><label>Other:</label><input type="number" name="system.currency.other" value="{{system.currency.other}}" /></div>
+                    <div class="ee-kv"><label>Salary:</label><input type="text" name="system.money.salary" value="{{system.money.salary}}" /></div>
+                    <div class="ee-kv"><label>Black Market Items:</label><input type="text" name="system.money.blackMarketItems" value="{{system.money.blackMarketItems}}" /></div>
+                    {{/if}}
+                </div>
+
+                <div class="ee-panel ee-equipment">
+                    <h3>Equipment</h3>
+                    <textarea name="system.equipment">{{system.equipment}}</textarea>
+                </div>
+
+                <div class="ee-panel">
+                    <h3>Outfits</h3>
+                    <table class="ee-table">
+                        <tbody>
+                            {{#each system.money.outfits}}
+                            <tr>
+                                <td><input type="hidden" name="system.money.outfits.{{@index}}.checked" value="false" /><input type="checkbox" name="system.money.outfits.{{@index}}.checked" value="true" {{eeChecked checked}} /></td>
+                                <td><input type="text" name="system.money.outfits.{{@index}}.name" value="{{name}}" /></td>
+                                <td><a data-action="delete-row" data-path="money.outfits" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <button type="button" class="ee-add" data-action="add-row" data-path="money.outfits" data-kind="outfit">+ Add</button>
+                </div>
+            </div>
+
+            <h2 class="ee-bar">CONTACTS</h2>
+            <table class="ee-table">
+                <thead><tr><th>Name</th><th>Occupation</th><th>Notes</th><th></th></tr></thead>
+                <tbody>
+                    {{#each system.contacts}}
+                    <tr>
+                        <td><input type="text" name="system.contacts.{{@index}}.name" value="{{name}}" /></td>
+                        <td><input type="text" name="system.contacts.{{@index}}.occupation" value="{{occupation}}" /></td>
+                        <td><input type="text" name="system.contacts.{{@index}}.notes" value="{{notes}}" /></td>
+                        <td><a data-action="delete-row" data-path="contacts" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <button type="button" class="ee-add" data-action="add-row" data-path="contacts" data-kind="contact">+ Add</button>
+
+            <h2 class="ee-bar">CHARACTER HISTORY</h2>
+            <textarea name="system.characterHistory" class="ee-bigtext">{{system.characterHistory}}</textarea>
+
+            <h2 class="ee-bar">BIONICS / CYBERNETICS / BIO-WIZARDRY / PSYNETICS</h2>
+            <textarea name="system.augments" class="ee-bigtext">{{system.augments}}</textarea>
+
+            <h2 class="ee-bar">NOTES</h2>
+            <textarea name="system.notes" class="ee-bigtext">{{system.notes}}</textarea>
+        </div>

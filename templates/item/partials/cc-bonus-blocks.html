@@ -1,5 +1,8 @@
-{{!-- Shared OCC/Race bonus & ability blocks. `system` is passed in by parent. --}}
-<h4 class="ee-section-h">Attribute Bonuses</h4>
+{{!-- Shared OCC/Race fields, grouped without changing their saved paths. --}}
+{{#unless trainingOnly}}
+<details class="ee-item-disclosure ee-cc-group" data-disclosure="ccAttributes" {{#if disclosureState.ccAttributes}}open{{/if}}>
+  <summary><i class="fas fa-user" aria-hidden="true"></i><span>Attributes</span><span class="ee-cc-group-status">{{ccGroupSummary.attributes}}</span></summary>
+  <div class="ee-item-disclosure-body">
 <p class="ee-hint">Legacy character-creation rolls. Equip this item on a character, then roll each formula once from the Active EE Legacy Sources panel.</p>
 <div class="ee-cc-attr-grid">
   <div class="ee-cc-grid-head">Attr</div>
@@ -16,8 +19,14 @@
   <label>PB</label><input type="number" name="system.attributeBonuses.pb.bonus" value="{{system.attributeBonuses.pb.bonus}}"/><input type="text" name="system.attributeBonuses.pb.formula" value="{{system.attributeBonuses.pb.formula}}" placeholder="1d6"/><input type="number" name="system.attributeBonuses.pb.value" value="{{system.attributeBonuses.pb.value}}"/><label class="ee-check"><input type="hidden" name="system.attributeBonuses.pb.rolled" value="false" /><input type="checkbox" name="system.attributeBonuses.pb.rolled" {{eeChecked system.attributeBonuses.pb.rolled}}/></label>
   <label>SPD</label><input type="number" name="system.attributeBonuses.spd.bonus" value="{{system.attributeBonuses.spd.bonus}}"/><input type="text" name="system.attributeBonuses.spd.formula" value="{{system.attributeBonuses.spd.formula}}" placeholder="1d6"/><input type="number" name="system.attributeBonuses.spd.value" value="{{system.attributeBonuses.spd.value}}"/><label class="ee-check"><input type="hidden" name="system.attributeBonuses.spd.rolled" value="false" /><input type="checkbox" name="system.attributeBonuses.spd.rolled" {{eeChecked system.attributeBonuses.spd.rolled}}/></label>
 </div>
+  </div>
+</details>
+{{/unless}}
 
-<h4 class="ee-section-h">Pool Bonuses</h4>
+{{#unless trainingOnly}}
+<details class="ee-item-disclosure ee-cc-group" data-disclosure="ccPools" {{#if disclosureState.ccPools}}open{{/if}}>
+  <summary><i class="fas fa-heart" aria-hidden="true"></i><span>Resource Pools</span><span class="ee-cc-group-status">{{ccGroupSummary.pools}}</span></summary>
+  <div class="ee-item-disclosure-body">
 <div class="ee-grid-4">
   <label>HP <input type="text" name="system.poolBonuses.hp" value="{{system.poolBonuses.hp}}"/></label>
   <label>SDC <input type="text" name="system.poolBonuses.sdc" value="{{system.poolBonuses.sdc}}"/></label>
@@ -25,8 +34,14 @@
   <label>ISP <input type="text" name="system.poolBonuses.isp" value="{{system.poolBonuses.isp}}"/></label>
   <label>PPE <input type="text" name="system.poolBonuses.ppe" value="{{system.poolBonuses.ppe}}"/></label>
 </div>
+  </div>
+</details>
+{{/unless}}
 
-<h4 class="ee-section-h">Skill Bonuses</h4>
+{{#unless effectsOnly}}
+<details class="ee-item-disclosure ee-cc-group" data-disclosure="ccSkills" {{#if disclosureState.ccSkills}}open{{/if}}>
+  <summary><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Skill Bonuses</span><span class="ee-cc-group-status">{{ccGroupSummary.skills}}</span></summary>
+  <div class="ee-item-disclosure-body">
 <table class="ee-table ee-cc-skill-bonuses">
   <thead><tr><th>Skill</th><th>Bonus %</th><th>Note</th><th></th></tr></thead>
   <tbody>
@@ -64,8 +79,14 @@
   </select>
   <button type="button" class="ee-add" data-action="add-cc-skill-bonus">+ Custom</button>
 </div>
+  </div>
+</details>
+{{/unless}}
 
-<h4 class="ee-section-h">Weapon Proficiencies</h4>
+{{#unless effectsOnly}}
+<details class="ee-item-disclosure ee-cc-group" data-disclosure="ccWeapons" {{#if disclosureState.ccWeapons}}open{{/if}}>
+  <summary><i class="fas fa-crosshairs" aria-hidden="true"></i><span>Weapon Proficiencies</span><span class="ee-cc-group-status">{{ccGroupSummary.weapons}}</span></summary>
+  <div class="ee-item-disclosure-body">
 <div class="ee-cc-wp-groups">
   <section>
     <h5>Ancient</h5>
@@ -100,8 +121,9 @@
 <button type="button" class="ee-add" data-action="add-cc-wp-custom">+ Add Custom W.P.</button>
 
 <h4 class="ee-section-h">Selectable W.P. Grants</h4>
+<p class="ee-hint">Choose a broad pool, or add specific W.P.s for an either/or choice. A specific list overrides the pool.</p>
 <table class="ee-table ee-cc-wp-choices">
-  <thead><tr><th>Prompt</th><th>Count</th><th>Pool</th><th></th></tr></thead>
+  <thead><tr><th>Prompt</th><th>Count</th><th>Pool</th><th>Specific Allowed W.P.s</th><th></th></tr></thead>
   <tbody>
     {{#each system.weaponProficiencies.choices}}
     <tr>
@@ -114,17 +136,42 @@
           <option value="modern" {{#if (eq pool "modern")}}selected{{/if}}>Modern W.P.</option>
         </select>
       </td>
+      <td>
+        <div class="ee-choice-tags">
+          {{#each selectedWpRows}}
+          <span class="ee-choice-tag">{{name}} <a data-action="delete-cc-wp-choice-option" data-index="{{../_index}}" data-option-index="{{@index}}" title="Remove W.P."><i class="fas fa-times"></i></a></span>
+          <input type="hidden" name="system.weaponProficiencies.choices.{{../_index}}.allowedKeys.{{@index}}" value="{{key}}"/>
+          {{/each}}
+          {{#unless selectedWpRows.length}}<span class="ee-muted">Uses pool</span>{{/unless}}
+        </div>
+        <select data-action="add-cc-wp-choice-option" data-index="{{_index}}">
+          <option value="">+ Add allowed W.P....</option>
+          {{#each wpPicker}}
+          <optgroup label="{{group}}">
+            {{#each items}}<option value="{{key}}">{{name}}</option>{{/each}}
+          </optgroup>
+          {{/each}}
+        </select>
+      </td>
       <td><a data-action="delete-cc-wp-choice" data-index="{{_index}}"><i class="fas fa-times"></i></a></td>
     </tr>
     {{/each}}
   </tbody>
 </table>
 <button type="button" class="ee-add" data-action="add-cc-wp-choice">+ Add W.P. Choice</button>
+  </div>
+</details>
+{{/unless}}
 
+{{#unless trainingOnly}}
+<details class="ee-item-disclosure ee-cc-group" data-disclosure="ccCombat" {{#if disclosureState.ccCombat}}open{{/if}}>
+  <summary><i class="fas fa-shield-alt" aria-hidden="true"></i><span>Combat &amp; Saves</span><span class="ee-cc-group-status">{{ccGroupSummary.combat}}</span></summary>
+  <div class="ee-item-disclosure-body">
 <h4 class="ee-section-h">Combat Bonuses</h4>
 <div class="ee-cc-bonus-grid">
   <label>Attacks/Melee <input type="number" name="system.combatBonuses.attacks" value="{{system.combatBonuses.attacks}}"/></label>
   <label>Initiative <input type="number" name="system.combatBonuses.initiative" value="{{system.combatBonuses.initiative}}"/></label>
+  <label>Perception <input type="number" name="system.combatBonuses.perception" value="{{system.combatBonuses.perception}}"/></label>
   <label>Damage <input type="number" name="system.combatBonuses.damage" value="{{system.combatBonuses.damage}}"/></label>
   <label>Strike <input type="number" name="system.combatBonuses.strike" value="{{system.combatBonuses.strike}}"/></label>
   <label>Parry <input type="number" name="system.combatBonuses.parry" value="{{system.combatBonuses.parry}}"/></label>
@@ -148,10 +195,17 @@
   <label>Coma/Death <input type="number" name="system.saveBonuses.death" value="{{system.saveBonuses.death}}"/></label>
   <label>Pain <input type="number" name="system.saveBonuses.pain" value="{{system.saveBonuses.pain}}"/></label>
 </div>
+  </div>
+</details>
+{{/unless}}
 
+{{#unless trainingOnly}}
+<details class="ee-item-disclosure ee-cc-group" data-disclosure="ccPowers" {{#if disclosureState.ccPowers}}open{{/if}}>
+  <summary><i class="fas fa-star" aria-hidden="true"></i><span>Powers &amp; Abilities</span><span class="ee-cc-group-status">{{ccGroupSummary.powers}}</span></summary>
+  <div class="ee-item-disclosure-body">
 <div class="ee-grid-2">
-  <label class="ee-check"><input type="checkbox" name="system.grantsMagic"    {{eeChecked system.grantsMagic}}/> Grants Magic (spells)</label>
-  <label class="ee-check"><input type="checkbox" name="system.grantsPsionics" {{eeChecked system.grantsPsionics}}/> Grants Psionics</label>
+  <label class="ee-check"><input type="hidden" name="system.grantsMagic" value="false"/><input type="checkbox" name="system.grantsMagic" {{eeChecked system.grantsMagic}}/> Grants Magic (spells)</label>
+  <label class="ee-check"><input type="hidden" name="system.grantsPsionics" value="false"/><input type="checkbox" name="system.grantsPsionics" {{eeChecked system.grantsPsionics}}/> Grants Psionics</label>
 </div>
 
 <h4 class="ee-section-h">Granted Abilities</h4>
@@ -169,5 +223,7 @@
   </tbody>
 </table>
 <button type="button" class="ee-add" data-action="add-cc-ability">+ Add Ability</button>
-
+  </div>
+</details>
+{{/unless}}
 

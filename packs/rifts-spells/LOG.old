@@ -1,0 +1,5 @@
+2026/09/29-12:15:57.358 80ac Recovering log #44
+2026/09/29-12:15:57.358 80ac Level-0 table #47: started
+2026/09/29-12:15:57.361 80ac Level-0 table #47: 56163 bytes OK
+2026/09/29-12:15:57.365 80ac Delete type=0 #44
+2026/09/29-12:15:57.365 80ac Delete type=3 #42
