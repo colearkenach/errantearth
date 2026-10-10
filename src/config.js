@@ -761,7 +761,48 @@ EE.WEAPON_CATEGORIES = {
 EE.SKILL_CATEGORIES = {
   occ:        "OCC",
   occRelated: "OCC Related",
-  secondary:  "Secondary"
+  secondary:  "Secondary",
+  racial:     "Racial"
+};
+
+// The nine major languages of Rifts Earth (Ultimate Edition p.305) plus the
+// common regional and supernatural tongues it names.
+EE.RIFTS_LANGUAGES = [
+  "American", "Techno-Can", "Spanish", "Japanese", "Chinese", "Euro",
+  "Dragonese/Elven", "Gobblely", "Faerie Speak", "Demongogian", "Russian", "Mongolian"
+];
+
+EE.LEGACY_ATTRIBUTE_MODES = {
+  "": "Detect automatically",
+  bonus: "Bonuses added to the character's 3D6 rolls",
+  roll: "Package dice are the attribute rolls"
+};
+
+// Targets for package bonuses gained at listed levels, such as "+1 to save
+// vs magic at levels 3, 6, 9, 11 and 14".
+EE.LEGACY_LEVEL_BONUS_TARGETS = {
+  "combat.attacks": "Attacks per Melee",
+  "combat.initiative": "Initiative",
+  "combat.perception": "Perception",
+  "combat.strike": "Strike",
+  "combat.parry": "Parry",
+  "combat.dodge": "Dodge",
+  "combat.damage": "Damage",
+  "combat.disarm": "Disarm",
+  "combat.entangle": "Entangle",
+  "combat.pullPunch": "Pull Punch",
+  "combat.roll": "Roll with Impact",
+  "save.spell": "Save vs Spell / Magic",
+  "save.ritual": "Save vs Ritual",
+  "save.psionics": "Save vs Psionics",
+  "save.drugPoison": "Save vs Toxins / Poison",
+  "save.harmfulDrugs": "Save vs Harmful Drugs",
+  "save.insanity": "Save vs Insanity",
+  "save.possession": "Save vs Possession",
+  "save.horrorFactor": "Save vs Horror Factor",
+  "save.death": "Save vs Coma / Death",
+  "save.pain": "Save vs Pain",
+  note: "Other (note only)"
 };
 
 // Master EE Legacy skill list (p.302–303). Each entry seeds a row

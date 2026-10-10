@@ -1,164 +1,21 @@
 {{!-- ===== VEHICLE TAB ===== --}}
         <div class="tab" data-group="primary" data-tab="vehicle">
-            <h2 class="ee-bar">ROBOT / VEHICLE LOG</h2>
-
-            {{#if hasLegacyVehicle}}
-<details class="ee-disclosure" data-disclosure-key="saved-vehicle">
-<summary>Saved vehicle log — {{system.vehicle.name}}</summary>
-<div class="ee-row">
-                <label>Name:</label><input type="text" name="system.vehicle.name" value="{{system.vehicle.name}}" />
-                <label>Type:</label>
-                <select name="system.vehicle.type">{{eeSelectOptions config.VEHICLE_TYPES system.vehicle.type}}</select>
-            </div>
-
-            <div class="ee-pa-grid">
-                <div class="ee-panel">
-                    <h3>Combat</h3>
-                    <div class="ee-kv">
-                        <label>Type:</label>
-                        <select name="system.vehicle.handToHand.type">{{eeSelectOptions config.POWER_ARMOR_HTH_TYPES system.vehicle.handToHand.type false}}</select>
-                    </div>
-                    <p class="ee-hth-summary">Using {{riftsDerived.vehicleHandToHand.label}} base bonuses through level {{riftsDerived.vehicleHandToHand.level}}. Manual values below are misc adjustments added to the table.</p>
-                    <table class="ee-table">
-                        <thead><tr><th>Combat Bonus</th><th>Base</th><th>Manual / Misc</th><th>Total</th><th>Roll</th></tr></thead>
-                        <tbody>
-                            <tr><td>Attacks per Melee:</td><td>{{riftsDerived.vehicleHandToHand.attacks.base}}</td><td><input type="number" name="system.vehicle.handToHand.attacks" value="{{riftsDerived.vehicleHandToHand.attacks.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.attacks.total}}</td><td></td></tr>
-                            <tr><td>Initiative:</td><td>{{riftsDerived.vehicleHandToHand.initiative.base}}</td><td><input type="number" name="system.vehicle.handToHand.initiative" value="{{riftsDerived.vehicleHandToHand.initiative.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.initiative.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.initiative.total}}" data-label="Vehicle Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Damage:</td><td>{{riftsDerived.vehicleHandToHand.damage.base}}</td><td><input type="number" name="system.vehicle.handToHand.damage" value="{{riftsDerived.vehicleHandToHand.damage.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.damage.total}}</td><td><a data-action="roll" data-roll-type="damage" data-formula="0 + {{riftsDerived.vehicleHandToHand.damage.total}}" data-label="Vehicle HtH Damage Bonus" title="Roll Damage Bonus"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Strike:</td><td>{{riftsDerived.vehicleHandToHand.strike.base}}</td><td><input type="number" name="system.vehicle.handToHand.strike" value="{{riftsDerived.vehicleHandToHand.strike.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.strike.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.strike.total}}" data-label="Vehicle Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Parry:</td><td>{{riftsDerived.vehicleHandToHand.parry.base}}</td><td><input type="number" name="system.vehicle.handToHand.parry" value="{{riftsDerived.vehicleHandToHand.parry.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.parry.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.parry.total}}" data-label="Vehicle Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Dodge:</td><td>{{riftsDerived.vehicleHandToHand.dodge.base}}</td><td><input type="number" name="system.vehicle.handToHand.dodge" value="{{riftsDerived.vehicleHandToHand.dodge.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.dodge.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.dodge.total}}" data-label="Vehicle Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Disarm:</td><td>{{riftsDerived.vehicleHandToHand.disarm.base}}</td><td><input type="number" name="system.vehicle.handToHand.disarm" value="{{riftsDerived.vehicleHandToHand.disarm.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.disarm.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.disarm.total}}" data-label="Vehicle Disarm" title="Roll Disarm"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Entangle:</td><td>{{riftsDerived.vehicleHandToHand.entangle.base}}</td><td><input type="number" name="system.vehicle.handToHand.entangle" value="{{riftsDerived.vehicleHandToHand.entangle.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.entangle.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.entangle.total}}" data-label="Vehicle Entangle" title="Roll Entangle"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Pull Punch:</td><td>{{riftsDerived.vehicleHandToHand.pullPunch.base}}</td><td><input type="number" name="system.vehicle.handToHand.pullPunch" value="{{riftsDerived.vehicleHandToHand.pullPunch.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.pullPunch.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.pullPunch.total}}" data-label="Vehicle Pull Punch" title="Roll Pull Punch"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Roll w/ Punch/Fall:</td><td>{{riftsDerived.vehicleHandToHand.roll.base}}</td><td><input type="number" name="system.vehicle.handToHand.roll" value="{{riftsDerived.vehicleHandToHand.roll.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.roll.total}}</td><td><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.roll.total}}" data-label="Vehicle Roll w/ Punch/Fall" title="Roll w/ Punch/Fall"><i class="fas fa-dice-d20"></i></a></td></tr>
-                            <tr><td>Critical:</td><td>{{riftsDerived.vehicleHandToHand.critical.base}}</td><td><input type="text" name="system.vehicle.handToHand.critical" value="{{riftsDerived.vehicleHandToHand.critical.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.critical.total}}</td><td></td></tr>
-                            <tr><td>Knockout/Stun:</td><td>{{riftsDerived.vehicleHandToHand.knockout.base}}</td><td><input type="text" name="system.vehicle.handToHand.knockout" value="{{riftsDerived.vehicleHandToHand.knockout.manual}}" /></td><td>{{riftsDerived.vehicleHandToHand.knockout.total}}</td><td></td></tr>
-                        </tbody>
-                    </table>
-                    {{#if riftsDerived.vehicleHandToHand.notes.length}}
-                    <div class="ee-kv">
-                        <label>Special Abilities:</label>
-                        <ul>
-                            {{#each riftsDerived.vehicleHandToHand.notes}}
-                            <li>Level {{level}}: {{text}}</li>
-                            {{/each}}
-                        </ul>
-                    </div>
-                    {{/if}}
-                    <div class="ee-kv"><label>Tear:</label><input type="text" name="system.vehicle.handToHand.tear" value="{{system.vehicle.handToHand.tear}}" /></div>
-                    <div class="ee-kv"><label>Restr. Punch:</label><input type="text" name="system.vehicle.handToHand.restrPunch" value="{{system.vehicle.handToHand.restrPunch}}" /></div>
-                    <div class="ee-kv"><label>Punch:</label><input type="text" name="system.vehicle.handToHand.punch" value="{{system.vehicle.handToHand.punch}}" /></div>
-                    <div class="ee-kv"><label>Power Punch:</label><input type="text" name="system.vehicle.handToHand.powerPunch" value="{{system.vehicle.handToHand.powerPunch}}" /></div>
-                    <div class="ee-kv"><label>Kick:</label><input type="text" name="system.vehicle.handToHand.kick" value="{{system.vehicle.handToHand.kick}}" /></div>
-                    <div class="ee-kv"><label>Leap Kick:</label><input type="text" name="system.vehicle.handToHand.leapKick" value="{{system.vehicle.handToHand.leapKick}}" /></div>
-                    <div class="ee-kv"><label>Stomp:</label><input type="text" name="system.vehicle.handToHand.stomp" value="{{system.vehicle.handToHand.stomp}}" /></div>
-                    <div class="ee-kv"><label>Body Flip/Throw:</label><input type="text" name="system.vehicle.handToHand.bodyFlip" value="{{system.vehicle.handToHand.bodyFlip}}" /></div>
-                    <div class="ee-kv"><label>Body Block/Tackle:</label><input type="text" name="system.vehicle.handToHand.bodyBlock" value="{{system.vehicle.handToHand.bodyBlock}}" /></div>
-                    {{#each system.vehicle.handToHand.extras}}
-                    <div class="ee-kv">
-                        <input type="text" name="system.vehicle.handToHand.extras.{{@index}}.name" value="{{name}}" placeholder="Bonus" />
-                        <input type="number" name="system.vehicle.handToHand.extras.{{@index}}.value" value="{{value}}" />
-                        <a data-action="delete-row" data-path="vehicle.handToHand.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
-                    </div>
-                    {{/each}}
-                    <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.handToHand.extras" data-kind="h2hExtra">+ Add</button>
-                </div>
-
-                <div class="ee-panel">
-                    <h3>Speed</h3>
-                    <div class="ee-kv"><label>Flying (Space):</label><input type="text" name="system.vehicle.speed.flyingSpace" value="{{system.vehicle.speed.flyingSpace}}" /></div>
-                    <div class="ee-kv"><label>Flying (Atm):</label><input type="text" name="system.vehicle.speed.flyingAtm" value="{{system.vehicle.speed.flyingAtm}}" /></div>
-                    <div class="ee-kv"><label>FTL:</label><input type="text" name="system.vehicle.speed.ftl" value="{{system.vehicle.speed.ftl}}" /></div>
-                    <div class="ee-kv"><label>Running:</label><input type="text" name="system.vehicle.speed.running" value="{{system.vehicle.speed.running}}" /></div>
-                    <div class="ee-kv"><label>Range:</label><input type="text" name="system.vehicle.speed.range" value="{{system.vehicle.speed.range}}" /></div>
-
-                    <h3>Statistical Data</h3>
-                    <div class="ee-kv"><label>Height:</label><input type="text" name="system.vehicle.stats.height" value="{{system.vehicle.stats.height}}" /></div>
-                    <div class="ee-kv"><label>Width:</label><input type="text" name="system.vehicle.stats.width" value="{{system.vehicle.stats.width}}" /></div>
-                    <div class="ee-kv"><label>Length:</label><input type="text" name="system.vehicle.stats.length" value="{{system.vehicle.stats.length}}" /></div>
-                    <div class="ee-kv"><label>Weight:</label><input type="text" name="system.vehicle.stats.weight" value="{{system.vehicle.stats.weight}}" /></div>
-                    <div class="ee-kv"><label>Cargo:</label><input type="text" name="system.vehicle.stats.cargo" value="{{system.vehicle.stats.cargo}}" /></div>
-                    <div class="ee-kv"><label>Power System:</label><input type="text" name="system.vehicle.stats.powerSystem" value="{{system.vehicle.stats.powerSystem}}" /></div>
-                    <div class="ee-kv"><label>Value (New):</label><input type="text" name="system.vehicle.stats.valueNew" value="{{system.vehicle.stats.valueNew}}" /></div>
-                    <div class="ee-kv"><label>Value (Used):</label><input type="text" name="system.vehicle.stats.valueUsed" value="{{system.vehicle.stats.valueUsed}}" /></div>
-                </div>
-
-                <div class="ee-panel">
-                    <h3>Armor / D.C.</h3>
-                    <div class="ee-kv"><label>A.R.:</label><input type="number" name="system.vehicle.armor.ar" value="{{system.vehicle.armor.ar}}" /></div>
-                    <div class="ee-kv"><label>Sensor Bonus:</label><input type="text" name="system.vehicle.armor.sensorBonus" value="{{system.vehicle.armor.sensorBonus}}" /></div>
-                    <div class="ee-kv"><label>Pilot's Comp.:</label><input type="text" name="system.vehicle.armor.pilotComp" value="{{system.vehicle.armor.pilotComp}}" /></div>
-                    <table class="ee-table">
-                        <thead><tr><th></th><th>Current</th><th>Max</th></tr></thead>
-                        <tbody>
-                            <tr><td>MainBody:</td> <td><input type="number" name="system.vehicle.armor.mainBody.current" value="{{system.vehicle.armor.mainBody.current}}" /></td><td><input type="number" name="system.vehicle.armor.mainBody.max" value="{{system.vehicle.armor.mainBody.max}}" /></td></tr>
-                            <tr><td>Head:</td>     <td><input type="number" name="system.vehicle.armor.head.current" value="{{system.vehicle.armor.head.current}}" /></td>    <td><input type="number" name="system.vehicle.armor.head.max" value="{{system.vehicle.armor.head.max}}" /></td></tr>
-                            <tr><td>Left Arm:</td> <td><input type="number" name="system.vehicle.armor.leftArm.current" value="{{system.vehicle.armor.leftArm.current}}" /></td> <td><input type="number" name="system.vehicle.armor.leftArm.max" value="{{system.vehicle.armor.leftArm.max}}" /></td></tr>
-                            <tr><td>Right Arm:</td><td><input type="number" name="system.vehicle.armor.rightArm.current" value="{{system.vehicle.armor.rightArm.current}}" /></td><td><input type="number" name="system.vehicle.armor.rightArm.max" value="{{system.vehicle.armor.rightArm.max}}" /></td></tr>
-                            <tr><td>Left Leg:</td> <td><input type="number" name="system.vehicle.armor.leftLeg.current" value="{{system.vehicle.armor.leftLeg.current}}" /></td> <td><input type="number" name="system.vehicle.armor.leftLeg.max" value="{{system.vehicle.armor.leftLeg.max}}" /></td></tr>
-                            <tr><td>Right Leg:</td><td><input type="number" name="system.vehicle.armor.rightLeg.current" value="{{system.vehicle.armor.rightLeg.current}}" /></td><td><input type="number" name="system.vehicle.armor.rightLeg.max" value="{{system.vehicle.armor.rightLeg.max}}" /></td></tr>
-                            {{#each system.vehicle.armor.extras}}
-                            <tr>
-                                <td><input type="text" name="system.vehicle.armor.extras.{{@index}}.name" value="{{name}}" placeholder="Location" /></td>
-                                <td><input type="number" name="system.vehicle.armor.extras.{{@index}}.current" value="{{current}}" /></td>
-                                <td>
-                                    <input type="number" name="system.vehicle.armor.extras.{{@index}}.max" value="{{max}}" />
-                                    <a data-action="delete-row" data-path="vehicle.armor.extras" data-index="{{@index}}"><i class="fas fa-times"></i></a>
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.armor.extras" data-kind="armorExtra">+ Add</button>
-                </div>
-
-                <div class="ee-panel">
-                    <h3>Weapon Systems</h3>
-                    <div class="ee-weapon-list">
-                        {{#each system.vehicle.weapons}}
-                        <div class="ee-weapon-row ee-weapon-row-modern">
-                            <label class="ee-weapon-field ee-weapon-name"><span>Name</span><input type="text" name="system.vehicle.weapons.{{@index}}.name" value="{{name}}" /></label>
-                            <label class="ee-weapon-field"><span>Dmg Type</span><select name="system.vehicle.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></label>
-                            <label class="ee-weapon-field"><span>Damage</span><input type="text" name="system.vehicle.weapons.{{@index}}.damage" value="{{damage}}" /></label>
-                            <label class="ee-weapon-field ee-weapon-small"><span>Scale</span><select name="system.vehicle.weapons.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></label>
-                            <label class="ee-weapon-field"><span>Ammo</span><input type="text" name="system.vehicle.weapons.{{@index}}.ammo" value="{{ammo}}" /></label>
-                            <label class="ee-weapon-field"><span>Payload</span><input type="text" name="system.vehicle.weapons.{{@index}}.payload" value="{{payload}}" /></label>
-                            <label class="ee-weapon-field"><span>Strike</span><input type="text" name="system.vehicle.weapons.{{@index}}.strike" value="{{strike}}" /></label>
-                            <label class="ee-weapon-field"><span>Range</span><input type="text" name="system.vehicle.weapons.{{@index}}.range" value="{{range}}" /></label>
-                            <label class="ee-weapon-field"><span>Rate</span><input type="text" name="system.vehicle.weapons.{{@index}}.rate" value="{{rate}}" /></label>
-                            <label class="ee-weapon-field ee-weapon-special"><span>Special</span><input type="text" name="system.vehicle.weapons.{{@index}}.special" value="{{special}}" /></label>
-                            <div class="ee-weapon-rolls">
-                                <a data-action="roll" data-roll-type="d20" data-bonus="{{strike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
-                                {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
-                                <a data-action="delete-row" data-path="vehicle.weapons" data-index="{{@index}}" title="Delete Weapon"><i class="fas fa-times"></i></a>
-                            </div>
-                        </div>
-                        {{/each}}
-                    </div>
-                    <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.weapons" data-kind="vehicleWeapon">+ Add</button>
-                </div>
-            </div>
-
-            
-</details>
-{{/if}}
 
             <section class="ee-panel ee-combat-equipment">
-                <div class="ee-combat-equipment-header">
-                    <h3>Power Armor</h3>
-                    <a class="ee-create-item" data-action="create-item" data-type="powerArmor" title="Create Power Armor Item"><i class="fas fa-plus"></i> Power Armor Item</a>
-                </div>
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title">Power Armor</h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="powerArmor" title="Create Power Armor Item"><i class="fas fa-plus"></i> Power Armor</a>
+                </header>
                 {{#if itemsByType.powerArmor.length}}
                 <div class="ee-armor-item-list">
                     {{#each itemsByType.powerArmor}}
                     <article class="ee-armor-item-card ee-item-row" data-item-id="{{id}}" draggable="true">
                         <header>
-                            <a data-action="edit-item" data-item-id="{{id}}"><strong>{{name}}</strong></a>
-                            <span class="ee-chip">{{#if system.isMDC}}MDC{{else}}SDC{{/if}}</span>
-                            <span>AR {{system.ar}}</span>
-                            {{#if system.speed}}<span>Speed {{system.speed}}</span>{{/if}}
-                            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}" title="Delete Power Armor"><i class="fas fa-times"></i></a></span>
+                            <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" /><strong>{{name}}</strong></a>
+                            <span class="ee-chip ee-chip--strong">{{#if system.isMDC}}MDC{{else}}SDC{{/if}}</span>
+                            <span class="ee-chip">A.R. {{system.ar}}</span>
+                            {{#if system.speed}}<span class="ee-chip">Speed {{system.speed}}</span>{{/if}}
+                            <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Power Armor"><i class="fas fa-times"></i></a>
                         </header>
                         <div class="ee-armor-location-grid">
                             <label>Main Body <span><input type="number" min="0" max="{{system.locations.mainBody.max}}" value="{{system.locations.mainBody.current}}" data-action="update-armor-location" data-item-id="{{id}}" data-location="mainBody" /> / {{system.locations.mainBody.max}}</span></label>
@@ -171,27 +28,27 @@
                     </article>
                     {{/each}}
                 </div>
-                {{else}}<p class="ee-hint">No power armor items yet.</p>{{/if}}
+                {{else}}<p class="ee-empty">No power armor yet. Create one here, or drag one onto the sheet.</p>{{/if}}
             </section>
 
             <section class="ee-panel ee-combat-equipment">
-                <div class="ee-combat-equipment-header">
-                    <h3>Vehicles</h3>
-                    <a class="ee-create-item" data-action="create-item" data-type="vehicle" title="Create Vehicle Item"><i class="fas fa-plus"></i> Vehicle Item</a>
-                </div>
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title">Vehicles</h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="vehicle" title="Create Vehicle Item"><i class="fas fa-plus"></i> Vehicle</a>
+                </header>
                 {{#if itemsByType.vehicle.length}}
                 <div class="ee-armor-item-list">
                     {{#each itemsByType.vehicle}}
                     <article class="ee-armor-item-card ee-vehicle-item-card ee-item-row" data-item-id="{{id}}" draggable="true">
                         <header>
-                            <a data-action="edit-item" data-item-id="{{id}}"><strong>{{name}}</strong></a>
-                            <span class="ee-chip">{{lookup ../config.VEHICLE_TYPES system.vehicleType}}</span>
-                            <span>{{#if system.isMDC}}MDC{{else}}SDC{{/if}}</span>
-                            <span>AR {{system.armor.ar}}</span>
-                            {{#if system.speed.max}}<span>Speed {{system.speed.max}}</span>{{/if}}
-                            {{#if system.stats.cargo}}<span>Cargo {{system.stats.cargo}}</span>{{/if}}
-                            {{#if system.weapons.length}}<span>{{system.weapons.length}} weapon system(s)</span>{{/if}}
-                            <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}" title="Delete Vehicle"><i class="fas fa-times"></i></a></span>
+                            <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" /><strong>{{name}}</strong></a>
+                            {{#if system.vehicleType}}<span class="ee-chip">{{lookup ../config.VEHICLE_TYPES system.vehicleType}}</span>{{/if}}
+                            <span class="ee-chip ee-chip--strong">{{#if system.isMDC}}MDC{{else}}SDC{{/if}}</span>
+                            <span class="ee-chip">A.R. {{system.armor.ar}}</span>
+                            {{#if system.speed.max}}<span class="ee-chip">Speed {{system.speed.max}}</span>{{/if}}
+                            {{#if system.stats.cargo}}<span class="ee-chip">Cargo {{system.stats.cargo}}</span>{{/if}}
+                            {{#if system.weapons.length}}<span class="ee-chip">{{system.weapons.length}} weapon system(s)</span>{{/if}}
+                            <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Vehicle"><i class="fas fa-times"></i></a>
                         </header>
                         <div class="ee-armor-location-grid">
                             <label>Main Body <span><input type="number" min="0" max="{{system.armor.mainBody.max}}" value="{{system.armor.mainBody.current}}" data-action="update-armor-location" data-item-id="{{id}}" data-location="mainBody" /> / {{system.armor.mainBody.max}}</span></label>
@@ -204,6 +61,162 @@
                     </article>
                     {{/each}}
                 </div>
-                {{else}}<p class="ee-hint">No vehicle items yet.</p>{{/if}}
+                {{else}}<p class="ee-empty">No vehicles yet. Create one here, or drag one onto the sheet.</p>{{/if}}
             </section>
+
+            {{#if hasLegacyVehicle}}
+            <details class="ee-disclosure" data-disclosure-key="saved-vehicle">
+                <summary>Saved Robot / Vehicle Log{{#if system.vehicle.name}} — {{system.vehicle.name}}{{/if}}</summary>
+                <div class="ee-disclosure-body">
+                    <div class="ee-form-grid">
+                        <label class="ee-field ee-field--wide"><span>Name</span><input type="text" name="system.vehicle.name" value="{{system.vehicle.name}}" /></label>
+                        <label class="ee-field"><span>Type</span><select name="system.vehicle.type">{{eeSelectOptions config.VEHICLE_TYPES system.vehicle.type}}</select></label>
+                    </div>
+
+                    <div class="ee-grid ee-grid--2 ee-pa-grid">
+                        <section class="ee-panel ee-panel--flat">
+                            <h3 class="ee-panel-title">Robot / Power Armor Combat</h3>
+                            <div class="ee-form-grid">
+                                <label class="ee-field ee-field--wide"><span>Combat Training</span><select name="system.vehicle.handToHand.type">{{eeSelectOptions config.POWER_ARMOR_HTH_TYPES system.vehicle.handToHand.type false}}</select></label>
+                            </div>
+                            <p class="ee-hint ee-hth-summary">Using {{riftsDerived.vehicleHandToHand.label}} base bonuses through level {{riftsDerived.vehicleHandToHand.level}}. Manual values are misc adjustments added to the table.</p>
+                            <table class="ee-table ee-hth-table">
+                                <thead><tr><th>Bonus</th><th class="ee-col-num">Base</th><th class="ee-col-num">Manual</th><th class="ee-col-num">Total</th><th class="ee-col-icon"></th></tr></thead>
+                                <tbody>
+                                    <tr><td>Attacks per Melee</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.attacks.base}}</td><td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.attacks" value="{{riftsDerived.vehicleHandToHand.attacks.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.attacks.total}}</td><td></td></tr>
+                                    <tr><td>Initiative</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.initiative.base}}</td><td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.initiative" value="{{riftsDerived.vehicleHandToHand.initiative.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.initiative.total}}</td><td class="ee-col-icon"><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.initiative.total}}" data-label="Vehicle Initiative" title="Roll Initiative"><i class="fas fa-dice-d20"></i></a></td></tr>
+                                    <tr><td>Damage</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.damage.base}}</td><td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.damage" value="{{riftsDerived.vehicleHandToHand.damage.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.damage.total}}</td><td class="ee-col-icon"><a data-action="roll" data-roll-type="damage" data-formula="0 + {{riftsDerived.vehicleHandToHand.damage.total}}" data-label="Vehicle HtH Damage Bonus" title="Roll Damage Bonus"><i class="fas fa-dice-d20"></i></a></td></tr>
+                                    <tr><td>Strike</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.strike.base}}</td><td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.strike" value="{{riftsDerived.vehicleHandToHand.strike.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.strike.total}}</td><td class="ee-col-icon"><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.strike.total}}" data-label="Vehicle Strike" title="Roll Strike"><i class="fas fa-dice-d20"></i></a></td></tr>
+                                    <tr><td>Parry</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.parry.base}}</td><td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.parry" value="{{riftsDerived.vehicleHandToHand.parry.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.parry.total}}</td><td class="ee-col-icon"><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.parry.total}}" data-label="Vehicle Parry" title="Roll Parry"><i class="fas fa-dice-d20"></i></a></td></tr>
+                                    <tr><td>Dodge</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.dodge.base}}</td><td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.dodge" value="{{riftsDerived.vehicleHandToHand.dodge.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.dodge.total}}</td><td class="ee-col-icon"><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.dodge.total}}" data-label="Vehicle Dodge" title="Roll Dodge"><i class="fas fa-dice-d20"></i></a></td></tr>
+                                    <tr><td>Disarm</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.disarm.base}}</td><td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.disarm" value="{{riftsDerived.vehicleHandToHand.disarm.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.disarm.total}}</td><td class="ee-col-icon"><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.disarm.total}}" data-label="Vehicle Disarm" title="Roll Disarm"><i class="fas fa-dice-d20"></i></a></td></tr>
+                                    <tr><td>Entangle</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.entangle.base}}</td><td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.entangle" value="{{riftsDerived.vehicleHandToHand.entangle.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.entangle.total}}</td><td class="ee-col-icon"><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.entangle.total}}" data-label="Vehicle Entangle" title="Roll Entangle"><i class="fas fa-dice-d20"></i></a></td></tr>
+                                    <tr><td>Pull Punch</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.pullPunch.base}}</td><td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.pullPunch" value="{{riftsDerived.vehicleHandToHand.pullPunch.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.pullPunch.total}}</td><td class="ee-col-icon"><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.pullPunch.total}}" data-label="Vehicle Pull Punch" title="Roll Pull Punch"><i class="fas fa-dice-d20"></i></a></td></tr>
+                                    <tr><td>Roll w/ Punch/Fall</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.roll.base}}</td><td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.roll" value="{{riftsDerived.vehicleHandToHand.roll.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.roll.total}}</td><td class="ee-col-icon"><a data-action="roll" data-roll-type="d20" data-bonus="{{riftsDerived.vehicleHandToHand.roll.total}}" data-label="Vehicle Roll w/ Punch/Fall" title="Roll w/ Punch/Fall"><i class="fas fa-dice-d20"></i></a></td></tr>
+                                    <tr><td>Critical</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.critical.base}}</td><td class="ee-col-num"><input type="text" name="system.vehicle.handToHand.critical" value="{{riftsDerived.vehicleHandToHand.critical.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.critical.total}}</td><td></td></tr>
+                                    <tr><td>Knockout / Stun</td><td class="ee-num">{{riftsDerived.vehicleHandToHand.knockout.base}}</td><td class="ee-col-num"><input type="text" name="system.vehicle.handToHand.knockout" value="{{riftsDerived.vehicleHandToHand.knockout.manual}}" /></td><td class="ee-num ee-total">{{riftsDerived.vehicleHandToHand.knockout.total}}</td><td></td></tr>
+                                    {{#each system.vehicle.handToHand.extras}}
+                                    <tr>
+                                        <td colspan="2"><input type="text" name="system.vehicle.handToHand.extras.{{@index}}.name" value="{{name}}" placeholder="Bonus" /></td>
+                                        <td class="ee-col-num"><input type="number" name="system.vehicle.handToHand.extras.{{@index}}.value" value="{{value}}" /></td>
+                                        <td></td>
+                                        <td class="ee-col-icon"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-row" data-path="vehicle.handToHand.extras" data-index="{{@index}}" title="Remove"><i class="fas fa-times"></i></a></td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            <div class="ee-panel-foot">
+                                <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.handToHand.extras" data-kind="h2hExtra"><i class="fas fa-plus"></i> Extra Bonus</button>
+                            </div>
+                            {{#if riftsDerived.vehicleHandToHand.notes.length}}
+                            <h4 class="ee-subhead">Special Abilities</h4>
+                            <ul class="ee-compact-list">
+                                {{#each riftsDerived.vehicleHandToHand.notes}}
+                                <li><strong>Level {{level}}:</strong> {{text}}</li>
+                                {{/each}}
+                            </ul>
+                            {{/if}}
+                            <h4 class="ee-subhead">Melee Damage</h4>
+                            <div class="ee-form-grid ee-form-grid--3">
+                                <label class="ee-field"><span>Tear</span><input type="text" name="system.vehicle.handToHand.tear" value="{{system.vehicle.handToHand.tear}}" /></label>
+                                <label class="ee-field"><span>Restrained Punch</span><input type="text" name="system.vehicle.handToHand.restrPunch" value="{{system.vehicle.handToHand.restrPunch}}" /></label>
+                                <label class="ee-field"><span>Punch</span><input type="text" name="system.vehicle.handToHand.punch" value="{{system.vehicle.handToHand.punch}}" /></label>
+                                <label class="ee-field"><span>Power Punch</span><input type="text" name="system.vehicle.handToHand.powerPunch" value="{{system.vehicle.handToHand.powerPunch}}" /></label>
+                                <label class="ee-field"><span>Kick</span><input type="text" name="system.vehicle.handToHand.kick" value="{{system.vehicle.handToHand.kick}}" /></label>
+                                <label class="ee-field"><span>Leap Kick</span><input type="text" name="system.vehicle.handToHand.leapKick" value="{{system.vehicle.handToHand.leapKick}}" /></label>
+                                <label class="ee-field"><span>Stomp</span><input type="text" name="system.vehicle.handToHand.stomp" value="{{system.vehicle.handToHand.stomp}}" /></label>
+                                <label class="ee-field"><span>Body Flip / Throw</span><input type="text" name="system.vehicle.handToHand.bodyFlip" value="{{system.vehicle.handToHand.bodyFlip}}" /></label>
+                                <label class="ee-field"><span>Body Block / Tackle</span><input type="text" name="system.vehicle.handToHand.bodyBlock" value="{{system.vehicle.handToHand.bodyBlock}}" /></label>
+                            </div>
+                        </section>
+
+                        <div class="ee-stack">
+                            <section class="ee-panel ee-panel--flat">
+                                <h3 class="ee-panel-title">Speed</h3>
+                                <div class="ee-form-grid">
+                                    <label class="ee-field"><span>Flying (Space)</span><input type="text" name="system.vehicle.speed.flyingSpace" value="{{system.vehicle.speed.flyingSpace}}" /></label>
+                                    <label class="ee-field"><span>Flying (Atm)</span><input type="text" name="system.vehicle.speed.flyingAtm" value="{{system.vehicle.speed.flyingAtm}}" /></label>
+                                    <label class="ee-field"><span>FTL</span><input type="text" name="system.vehicle.speed.ftl" value="{{system.vehicle.speed.ftl}}" /></label>
+                                    <label class="ee-field"><span>Running</span><input type="text" name="system.vehicle.speed.running" value="{{system.vehicle.speed.running}}" /></label>
+                                    <label class="ee-field"><span>Range</span><input type="text" name="system.vehicle.speed.range" value="{{system.vehicle.speed.range}}" /></label>
+                                </div>
+                            </section>
+
+                            <section class="ee-panel ee-panel--flat">
+                                <h3 class="ee-panel-title">Statistical Data</h3>
+                                <div class="ee-form-grid">
+                                    <label class="ee-field"><span>Height</span><input type="text" name="system.vehicle.stats.height" value="{{system.vehicle.stats.height}}" /></label>
+                                    <label class="ee-field"><span>Width</span><input type="text" name="system.vehicle.stats.width" value="{{system.vehicle.stats.width}}" /></label>
+                                    <label class="ee-field"><span>Length</span><input type="text" name="system.vehicle.stats.length" value="{{system.vehicle.stats.length}}" /></label>
+                                    <label class="ee-field"><span>Weight</span><input type="text" name="system.vehicle.stats.weight" value="{{system.vehicle.stats.weight}}" /></label>
+                                    <label class="ee-field"><span>Cargo</span><input type="text" name="system.vehicle.stats.cargo" value="{{system.vehicle.stats.cargo}}" /></label>
+                                    <label class="ee-field"><span>Power System</span><input type="text" name="system.vehicle.stats.powerSystem" value="{{system.vehicle.stats.powerSystem}}" /></label>
+                                    <label class="ee-field"><span>Value (New)</span><input type="text" name="system.vehicle.stats.valueNew" value="{{system.vehicle.stats.valueNew}}" /></label>
+                                    <label class="ee-field"><span>Value (Used)</span><input type="text" name="system.vehicle.stats.valueUsed" value="{{system.vehicle.stats.valueUsed}}" /></label>
+                                </div>
+                            </section>
+
+                            <section class="ee-panel ee-panel--flat">
+                                <h3 class="ee-panel-title">Armor / M.D.C.</h3>
+                                <div class="ee-form-grid ee-form-grid--3">
+                                    <label class="ee-field"><span>A.R.</span><input type="number" name="system.vehicle.armor.ar" value="{{system.vehicle.armor.ar}}" /></label>
+                                    <label class="ee-field"><span>Sensor Bonus</span><input type="text" name="system.vehicle.armor.sensorBonus" value="{{system.vehicle.armor.sensorBonus}}" /></label>
+                                    <label class="ee-field"><span>Pilot's Comp.</span><input type="text" name="system.vehicle.armor.pilotComp" value="{{system.vehicle.armor.pilotComp}}" /></label>
+                                </div>
+                                <table class="ee-table ee-locations">
+                                    <thead><tr><th>Location</th><th class="ee-col-num">Current</th><th class="ee-col-num">Max</th><th class="ee-col-icon"></th></tr></thead>
+                                    <tbody>
+                                        <tr><td>Main Body</td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.mainBody.current" value="{{system.vehicle.armor.mainBody.current}}" /></td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.mainBody.max" value="{{system.vehicle.armor.mainBody.max}}" /></td><td></td></tr>
+                                        <tr><td>Head</td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.head.current" value="{{system.vehicle.armor.head.current}}" /></td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.head.max" value="{{system.vehicle.armor.head.max}}" /></td><td></td></tr>
+                                        <tr><td>Left Arm</td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.leftArm.current" value="{{system.vehicle.armor.leftArm.current}}" /></td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.leftArm.max" value="{{system.vehicle.armor.leftArm.max}}" /></td><td></td></tr>
+                                        <tr><td>Right Arm</td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.rightArm.current" value="{{system.vehicle.armor.rightArm.current}}" /></td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.rightArm.max" value="{{system.vehicle.armor.rightArm.max}}" /></td><td></td></tr>
+                                        <tr><td>Left Leg</td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.leftLeg.current" value="{{system.vehicle.armor.leftLeg.current}}" /></td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.leftLeg.max" value="{{system.vehicle.armor.leftLeg.max}}" /></td><td></td></tr>
+                                        <tr><td>Right Leg</td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.rightLeg.current" value="{{system.vehicle.armor.rightLeg.current}}" /></td><td class="ee-col-num"><input type="number" name="system.vehicle.armor.rightLeg.max" value="{{system.vehicle.armor.rightLeg.max}}" /></td><td></td></tr>
+                                        {{#each system.vehicle.armor.extras}}
+                                        <tr>
+                                            <td><input type="text" name="system.vehicle.armor.extras.{{@index}}.name" value="{{name}}" placeholder="Location" /></td>
+                                            <td class="ee-col-num"><input type="number" name="system.vehicle.armor.extras.{{@index}}.current" value="{{current}}" /></td>
+                                            <td class="ee-col-num"><input type="number" name="system.vehicle.armor.extras.{{@index}}.max" value="{{max}}" /></td>
+                                            <td class="ee-col-icon"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-row" data-path="vehicle.armor.extras" data-index="{{@index}}" title="Remove"><i class="fas fa-times"></i></a></td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                                <div class="ee-panel-foot">
+                                    <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.armor.extras" data-kind="armorExtra"><i class="fas fa-plus"></i> Location</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <section class="ee-panel ee-panel--flat ee-weapons">
+                        <h3 class="ee-panel-title">Weapon Systems</h3>
+                        <div class="ee-weapon-list">
+                            {{#each system.vehicle.weapons}}
+                            <div class="ee-weapon-row ee-weapon-row-modern">
+                                <label class="ee-weapon-field ee-weapon-name"><span>Name</span><input type="text" name="system.vehicle.weapons.{{@index}}.name" value="{{name}}" /></label>
+                                <label class="ee-weapon-field"><span>Dmg Type</span><select name="system.vehicle.weapons.{{@index}}.damageType">{{eeSelectOptions ../config.DAMAGE_TYPES damageType}}</select></label>
+                                <label class="ee-weapon-field"><span>Damage</span><input type="text" name="system.vehicle.weapons.{{@index}}.damage" value="{{damage}}" /></label>
+                                <label class="ee-weapon-field ee-weapon-small"><span>Scale</span><select name="system.vehicle.weapons.{{@index}}.damageScale">{{eeSelectOptions ../config.EE_DAMAGE_SCALES damageScale}}</select></label>
+                                <label class="ee-weapon-field"><span>Ammo</span><input type="text" name="system.vehicle.weapons.{{@index}}.ammo" value="{{ammo}}" /></label>
+                                <label class="ee-weapon-field"><span>Payload</span><input type="text" name="system.vehicle.weapons.{{@index}}.payload" value="{{payload}}" /></label>
+                                <label class="ee-weapon-field"><span>Strike</span><input type="text" name="system.vehicle.weapons.{{@index}}.strike" value="{{strike}}" /></label>
+                                <label class="ee-weapon-field"><span>Range</span><input type="text" name="system.vehicle.weapons.{{@index}}.range" value="{{range}}" /></label>
+                                <label class="ee-weapon-field"><span>Rate</span><input type="text" name="system.vehicle.weapons.{{@index}}.rate" value="{{rate}}" /></label>
+                                <label class="ee-weapon-field ee-weapon-special"><span>Special</span><input type="text" name="system.vehicle.weapons.{{@index}}.special" value="{{special}}" /></label>
+                                <div class="ee-weapon-rolls">
+                                    <a data-action="roll" data-roll-type="d20" data-bonus="{{strike}}" data-label="{{name}} Strike" title="Roll Strike"><i class="fas fa-crosshairs"></i></a>
+                                    {{#if ../isEE}}<a data-action="roll" data-roll-type="eeDamage" data-formula="{{damage}}" data-scale="{{damageScale}}" data-tier="{{../eeDerived.tier}}" data-label="{{name}}" title="Roll Errant Earth Damage"><i class="fas fa-burst"></i></a>{{else}}<a data-action="roll" data-roll-type="damage" data-formula="{{damage}}" data-label="{{name}}" title="Roll Damage"><i class="fas fa-burst"></i></a>{{/if}}
+                                    <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-row" data-path="vehicle.weapons" data-index="{{@index}}" title="Delete Weapon"><i class="fas fa-times"></i></a>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                        <div class="ee-panel-foot">
+                            <button type="button" class="ee-add" data-action="add-row" data-path="vehicle.weapons" data-kind="vehicleWeapon"><i class="fas fa-plus"></i> Weapon System</button>
+                        </div>
+                    </section>
+                </div>
+            </details>
+            {{/if}}
         </div>

@@ -1,3 +1,5 @@
+import { LegacyPackages } from "./legacy-packages.js";
+
 /** Shared EE Legacy rules. These helpers read data and never update documents. */
 export class LegacyRules {
   /** EE Legacy attribute-bonus chart (p.281). Each table is keyed 16..30; values
@@ -426,7 +428,7 @@ export class LegacyRules {
     return {
       attributeBonuses: { iq: 0, me: 0, ma: 0, ps: 0, pp: 0, pe: 0, pb: 0, spd: 0 },
       poolBonuses: { hp: 0, sdc: 0, mdc: 0, isp: 0, ppe: 0 },
-      skillBonuses: { byKey: {}, byName: {} },
+      skillBonuses: { byKey: {}, byName: {}, entries: [] },
       weaponProficiencies: { selected: {}, custom: [] },
       combatBonuses: { attacks: 0, initiative: 0, perception: 0, damage: 0, strike: 0, parry: 0, dodge: 0, disarm: 0, entangle: 0, pullPunch: 0, roll: 0 },
       saveBonuses: { spell: 0, ritual: 0, psionics: 0, drugPoison: 0, harmfulDrugs: 0, insanity: 0, possession: 0, horrorFactor: 0, death: 0, pain: 0 }
@@ -438,21 +440,36 @@ export class LegacyRules {
     target[section][key] += Number(value ?? 0) || 0;
   }
 
-  static _addRiftsSkillBonus(target, row, value) {
+  static _addRiftsSkillBonus(target, row, value, meta = {}) {
     const bonus = Number(value ?? 0) || 0;
     if (!bonus) return;
     const key = String(row?.key ?? "").trim();
     const name = String(row?.name ?? "").trim().toLowerCase();
     if (key) target.skillBonuses.byKey[key] = (target.skillBonuses.byKey[key] ?? 0) + bonus;
     else if (name) target.skillBonuses.byName[name] = (target.skillBonuses.byName[name] ?? 0) + bonus;
+    target.skillBonuses.entries ??= [];
+    target.skillBonuses.entries.push({ key, name, value: bonus, itemId: meta.itemId ?? "", fixedDuplicate: !!meta.fixedDuplicate });
   }
 
+  /** Package skill bonuses that repeat a fixed skill's own O.C.C. bonus only
+   *  reach skill rows saved before rows carried their own occBonus; newer rows,
+   *  chosen skills and Secondary Skills are not bonused twice. */
   static _riftsSkillSourceBonus(totals, row) {
-    const byKey = totals?.skillBonuses?.byKey ?? {};
-    const byName = totals?.skillBonuses?.byName ?? {};
     const key = String(row?.key ?? "").trim();
     const name = String(row?.name ?? "").trim().toLowerCase();
-    return Number((key ? byKey[key] : undefined) ?? byName[name] ?? 0) || 0;
+    const entries = totals?.skillBonuses?.entries;
+    if (!Array.isArray(entries)) {
+      const byKey = totals?.skillBonuses?.byKey ?? {};
+      const byName = totals?.skillBonuses?.byName ?? {};
+      return Number((key ? byKey[key] : undefined) ?? byName[name] ?? 0) || 0;
+    }
+    const hasOwnBonus = row?.occBonus !== undefined && row?.occBonus !== null && row?.occBonus !== "";
+    const isChoice = row?.sourceChoiceIndex !== undefined && row?.sourceChoiceIndex !== null && row?.sourceChoiceIndex !== "";
+    const keyed = key ? entries.filter(entry => entry.key === key) : [];
+    const matching = keyed.length ? keyed : entries.filter(entry => !entry.key && entry.name && entry.name === name);
+    return matching
+      .filter(entry => !(entry.fixedDuplicate && (hasOwnBonus || isChoice || row?.category === "secondary")))
+      .reduce((sum, entry) => sum + (Number(entry.value) || 0), 0);
   }
 
   static _parseRiftsTextBonuses(text, patterns) {
@@ -481,7 +498,7 @@ export class LegacyRules {
     return { applied, ambiguous };
   }
 
-  static _buildRiftsSources(items) {
+  static _buildRiftsSources(items, { level = 1 } = {}) {
     const toArr = LegacyRules._toArray;
     const totals = LegacyRules._blankRiftsSourceTotals();
     const sources = [];
@@ -544,6 +561,8 @@ export class LegacyRules {
         name: item.name,
         type: item.system?.isRCC ? "RCC" : (item.type === "race" ? "Race" : "OCC"),
         isRCC: !!item.system?.isRCC,
+        handToHand: null,
+        levelBonuses: [],
         attributeBonuses: [],
         poolBonuses: [],
         skillBonuses: [],
@@ -577,16 +596,32 @@ export class LegacyRules {
         }
       }
 
-      for (const [key, label] of Object.entries(poolLabels)) {
-        const raw = item.system?.poolBonuses?.[key];
-        const parsed = LegacyRules._parseFlatBonus(raw);
-        if (parsed === null) {
-          source.poolBonuses.push({ key, label, raw, applied: false });
-          source.warnings.push(`${label} pool bonus “${raw}” was not auto-applied.`);
-        } else if (parsed) {
-          LegacyRules._addRiftsSourceTotal(totals, "poolBonuses", key, parsed);
-          source.poolBonuses.push({ key, label, value: parsed, display: LegacyRules._formatSigned(parsed), applied: true });
+      for (const choice of LegacyPackages.attributeChoices(item.system)) {
+        const value = LegacyPackages.isFlatNumber(choice.formula) ? Number(choice.formula) : (choice.rolled ? choice.value : 0);
+        if (choice.chosen && value) {
+          LegacyRules._addRiftsSourceTotal(totals, "attributeBonuses", choice.chosen, value);
+          source.attributeBonuses.push({ key: choice.chosen, label: attrLabels[choice.chosen], value, display: `${LegacyRules._formatSigned(value)} (${choice.label || "choice"})`, applied: true });
+        } else if (choice.formula) {
+          source.attributeBonuses.push({ key: "", label: choice.label || "Attribute choice", formula: choice.formula, applied: false, pendingChoice: true });
         }
+      }
+
+      // Flat starting values apply automatically; dice formulas are rolled from
+      // the character's Advancement panel and counted from its ledger.
+      for (const [key, label] of Object.entries(poolLabels)) {
+        const { start, perLevel } = LegacyPackages.poolFormulas(item.system, key);
+        if (start) {
+          const flat = LegacyPackages.flatValue(start);
+          if (flat !== null) {
+            if (flat) {
+              LegacyRules._addRiftsSourceTotal(totals, "poolBonuses", key, flat);
+              source.poolBonuses.push({ key, label, value: flat, display: LegacyRules._formatSigned(flat), applied: true });
+            }
+          } else {
+            source.poolBonuses.push({ key, label, raw: start, display: start, applied: false, rolled: true });
+          }
+        }
+        if (perLevel) source.poolBonuses.push({ key, label, raw: perLevel, display: `${perLevel} / level`, applied: LegacyPackages.flatValue(perLevel) !== null, perLevel: true });
       }
 
       const combatData = item.system?.combatBonuses;
@@ -629,10 +664,14 @@ export class LegacyRules {
         }
       }
 
+      const fixedBonuses = new Map(LegacyPackages.fixedSkills(item.system)
+        .filter(row => row.key && row.bonus)
+        .map(row => [row.key, row.bonus]));
       for (const row of toArr(item.system?.skillBonuses)) {
         const value = Number(row?.bonus ?? 0) || 0;
         if (!value) continue;
-        LegacyRules._addRiftsSkillBonus(totals, row, value);
+        const fixedDuplicate = !!row?.key && fixedBonuses.get(row.key) === value;
+        LegacyRules._addRiftsSkillBonus(totals, row, value, { itemId: item.id, fixedDuplicate });
         source.skillBonuses.push({
           key: row.key ?? "",
           name: row.name ?? "",
@@ -664,7 +703,37 @@ export class LegacyRules {
         .filter(a => a?.name || a?.description)
         .map(a => ({ name: a.name ?? "", description: a.description ?? "" }));
 
-      source.hasDetails = !!(source.attributeBonuses.length || source.poolBonuses.length || source.skillBonuses.length || source.weaponProficiencies.length || source.combatBonuses.length || source.saveBonuses.length || source.abilities.length || source.warnings.length);
+      const levelBonuses = LegacyPackages.levelBonusTotals([item], level);
+      for (const [key, value] of Object.entries(levelBonuses.combat)) LegacyRules._addRiftsSourceTotal(totals, "combatBonuses", key, value);
+      for (const [key, value] of Object.entries(levelBonuses.saves)) LegacyRules._addRiftsSourceTotal(totals, "saveBonuses", key, value);
+      const targetLabels = CONFIG.EE?.LEGACY_LEVEL_BONUS_TARGETS ?? {};
+      source.levelBonuses = levelBonuses.entries
+        .filter(entry => entry.target || entry.note)
+        .map(entry => {
+          const label = targetLabels[entry.target] ?? (entry.note || entry.target);
+          return {
+            label,
+            note: entry.note,
+            value: entry.total,
+            display: entry.target && entry.target !== "note" ? `${LegacyRules._formatSigned(entry.total)} ${label}` : label,
+            levels: entry.levelList.join(", "),
+            applied: !!entry.total
+          };
+        });
+
+      const hth = LegacyPackages.handToHand(item.system);
+      if (hth.type) {
+        const hthLabels = CONFIG.EE?.HTH_TYPES ?? {};
+        source.handToHand = {
+          label: hthLabels[hth.type] ?? hth.type,
+          upgrades: hth.upgrades
+            .filter(upgrade => upgrade.type)
+            .map(upgrade => `${hthLabels[upgrade.type] ?? upgrade.type} (${upgrade.cost} pick${upgrade.cost === 1 ? "" : "s"})`)
+            .join(", ")
+        };
+      }
+
+      source.hasDetails = !!(source.attributeBonuses.length || source.poolBonuses.length || source.skillBonuses.length || source.weaponProficiencies.length || source.combatBonuses.length || source.saveBonuses.length || source.abilities.length || source.levelBonuses.length || source.handToHand || source.warnings.length);
       sources.push(source);
     }
 
@@ -815,7 +884,7 @@ export class LegacyRules {
     const rawLegacySkillRows = C._toArray(sys.skills?.list);
     const legacySkillStatSources = C._buildLegacySkillStatSources(rawLegacySkillRows);
 
-    const riftsSources = C._buildRiftsSources([equippedOccItem, equippedRaceItem]);
+    const riftsSources = C._buildRiftsSources([equippedOccItem, equippedRaceItem], { level });
     if (isRCC && equippedRaceItem) riftsSources.warnings.push("RCC replaces Race.");
     const riftsSourceTotals = riftsSources.totals;
     for (const [key, value] of Object.entries(legacySkillStatSources.totals.attributeBonuses)) {
@@ -843,6 +912,9 @@ export class LegacyRules {
       Object.entries(attributeScores).map(([key, score]) => [key, score + temporaryAttributeModifiers[key]])
     );
 
+    const packages = LegacyPackages.equippedPackages(sys, items);
+    riftsSources.warnings.push(...LegacyPackages.requirementWarnings(packages, attributeScores));
+    const poolAdvancement = LegacyPackages.poolAdvancementTotals(sys, items);
     const flatModifiers = C.flatAttributeModifiers(effectiveAttrs);
     const riftsNumber = value => Number(value ?? 0) || 0;
     const riftsText = value => value == null ? "" : String(value);
@@ -1041,13 +1113,12 @@ export class LegacyRules {
       attributeScores,
       temporaryAttributeModifiers,
       effectiveAttrs,
-      pools: {
-        hp: { base: riftsNumber(sys.hp?.max), bonus: riftsSourceTotals.poolBonuses.hp, total: riftsNumber(sys.hp?.max) + riftsSourceTotals.poolBonuses.hp },
-        sdc: { base: riftsNumber(sys.sdc?.max), bonus: riftsSourceTotals.poolBonuses.sdc, total: riftsNumber(sys.sdc?.max) + riftsSourceTotals.poolBonuses.sdc },
-        mdc: { base: riftsNumber(sys.mdc?.max), bonus: riftsSourceTotals.poolBonuses.mdc, total: riftsNumber(sys.mdc?.max) + riftsSourceTotals.poolBonuses.mdc },
-        isp: { base: riftsNumber(sys.isp?.max), bonus: riftsSourceTotals.poolBonuses.isp, total: riftsNumber(sys.isp?.max) + riftsSourceTotals.poolBonuses.isp },
-        ppe: { base: riftsNumber(sys.ppe?.max), bonus: riftsSourceTotals.poolBonuses.ppe, total: riftsNumber(sys.ppe?.max) + riftsSourceTotals.poolBonuses.ppe }
-      }
+      pools: Object.fromEntries(["hp", "sdc", "mdc", "isp", "ppe"].map(key => {
+        const base = riftsNumber(sys[key]?.max);
+        const sourceBonus = riftsSourceTotals.poolBonuses[key];
+        const rolled = poolAdvancement[key];
+        return [key, { base, bonus: sourceBonus + rolled, sourceBonus, rolled, total: base + sourceBonus + rolled }];
+      }))
     };
     for (const [key, modifier] of Object.entries(flatModifiers.saves)) {
       const save = derived.saves[key];

@@ -660,6 +660,10 @@
       "equipment": "",
       "augments": "",
       "notes": "",
+      "advancement": {
+        "pools": [],
+        "trades": []
+      },
       "eeDerived": {
         "health": {
           "endurance": {
@@ -1064,16 +1068,19 @@
       "size": "",
       "bonuses": "",
       "languages": "",
+      "nativeLanguage": "",
+      "languageList": [],
+      "skills": [],
       "isMDC": false,
       "attributeBonuses": {
-        "iq": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "me": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "ma": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "ps": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "pp": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "pe": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "pb": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "spd": { "bonus": 0, "formula": "", "value": 0, "rolled": false }
+        "iq": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "me": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "ma": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "ps": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "pp": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "pe": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "pb": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "spd": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 }
       },
       "poolBonuses": {
         "hp": "",
@@ -1116,6 +1123,26 @@
       },
       "grantsMagic": false,
       "grantsPsionics": false,
+      "attributeMode": "",
+      "attributeChoices": [],
+      "physical": {
+        "strengthType": "",
+        "enduranceType": ""
+      },
+      "standardHitPoints": "",
+      "poolPerLevel": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "handToHand": {
+        "type": "",
+        "upgrades": []
+      },
+      "levelBonuses": [],
+      "psionicLevel": "",
       "abilities": []
     },
     "occ": {
@@ -1134,14 +1161,14 @@
       "equipment": "",
       "money": "",
       "attributeBonuses": {
-        "iq": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "me": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "ma": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "ps": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "pp": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "pe": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "pb": { "bonus": 0, "formula": "", "value": 0, "rolled": false },
-        "spd": { "bonus": 0, "formula": "", "value": 0, "rolled": false }
+        "iq": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "me": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "ma": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "ps": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "pp": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "pe": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "pb": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 },
+        "spd": { "bonus": 0, "formula": "", "value": 0, "rolled": false, "min": 0 }
       },
       "poolBonuses": {
         "hp": "",
@@ -1183,6 +1210,26 @@
       },
       "grantsMagic": false,
       "grantsPsionics": false,
+      "attributeMode": "",
+      "attributeChoices": [],
+      "physical": {
+        "strengthType": "",
+        "enduranceType": ""
+      },
+      "standardHitPoints": "",
+      "poolPerLevel": {
+        "hp": "",
+        "sdc": "",
+        "mdc": "",
+        "isp": "",
+        "ppe": ""
+      },
+      "handToHand": {
+        "type": "",
+        "upgrades": []
+      },
+      "levelBonuses": [],
+      "psionicLevel": "",
       "abilities": []
     },
     "gear": {

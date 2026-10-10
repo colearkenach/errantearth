@@ -1,0 +1,636 @@
+{{!-- Shared Race / O.C.C. / R.C.C. editor. Every array field is rendered in
+     full because Foundry replaces arrays wholesale on submit. --}}
+<nav class="ee-item-tabs" data-group="primary" aria-label="{{pkg.typeLabel}} editor sections">
+  <a class="item" data-tab="overview"><i class="fas {{itemTypeMeta.icon}}"></i> Overview</a>
+  <a class="item" data-tab="attributes" title="Attributes, Hit Points, S.D.C., M.D.C., I.S.P. and P.P.E."><i class="fas fa-user"></i> Attributes</a>
+  <a class="item" data-tab="skills" title="{{#if pkg.isRace}}Languages, racial skills and skill choices{{else}}Skills and skill choices{{/if}}"><i class="fas fa-graduation-cap"></i> Skills</a>
+  <a class="item" data-tab="combat"><i class="fas fa-fist-raised"></i> Combat</a>
+  <a class="item" data-tab="powers"><i class="fas fa-star"></i> Powers</a>
+  {{#if pkg.isOcc}}<a class="item" data-tab="advancement"><i class="fas fa-chart-line"></i> Advancement</a>{{/if}}
+</nav>
+
+<datalist id="ee-languages-{{item.id}}">{{#each config.RIFTS_LANGUAGES}}<option value="{{this}}"></option>{{/each}}</datalist>
+
+<div class="ee-item-tab-body">
+
+  {{!-- ============================================================ Overview --}}
+  <div class="tab ee-item-tab" data-group="primary" data-tab="overview">
+    {{#if pkg.isRace}}
+    <section class="ee-item-panel ee-item-panel--primary">
+      <h3><i class="fas fa-dna"></i> Ancestry Profile</h3>
+      <div class="ee-grid-3">
+        <label>Lifespan <input type="text" name="system.lifespan" value="{{system.lifespan}}"/></label>
+        <label>Size <input type="text" name="system.size" value="{{system.size}}"/></label>
+        <label class="ee-check"><input type="hidden" name="system.isMDC" value="false"/><input type="checkbox" name="system.isMDC" {{eeChecked system.isMDC}}/> Mega-Damage being</label>
+      </div>
+    </section>
+    {{else}}
+    <section class="ee-item-panel ee-item-panel--primary">
+      <h3><i class="fas fa-id-badge"></i> Class Profile</h3>
+      <div class="ee-grid-2">
+        <label>Category <input type="text" name="system.category" value="{{system.category}}" placeholder="Men at Arms, Practitioners of Magic…"/></label>
+        <label>Starting Money <input type="text" name="system.money" value="{{system.money}}"/></label>
+        <label class="ee-check ee-item-wide" title="An R.C.C. replaces the separate Race package when equipped."><input type="hidden" name="system.isRCC" value="false"/><input type="checkbox" name="system.isRCC" {{eeChecked system.isRCC}}/> Racial Character Class (R.C.C.) — replaces the Race</label>
+        {{#if system.isRCC}}
+        <label class="ee-check ee-item-wide" title="Equip this R.C.C. in the Race slot, allowing a separate O.C.C. while retaining its racial benefits."><input type="hidden" name="system.rccAsRace" value="false"/><input type="checkbox" name="system.rccAsRace" {{eeChecked system.rccAsRace}}/> Counts as a Race (the character may also take an O.C.C.)</label>
+        {{/if}}
+      </div>
+    </section>
+    {{/if}}
+
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-scroll"></i> Description</h3>
+      <label class="ee-block"><span class="ee-sr-only">Description</span><textarea name="system.description" rows="8">{{system.description}}</textarea></label>
+    </section>
+
+    {{#if pkg.isOcc}}
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-briefcase"></i> Standard Equipment</h3>
+      <label class="ee-block"><span class="ee-sr-only">Equipment</span><textarea name="system.equipment" rows="5">{{system.equipment}}</textarea></label>
+    </section>
+    {{/if}}
+
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-sticky-note"></i> Other Rules &amp; Notes</h3>
+      <p class="ee-hint">Anything the other tabs cannot express. This text is shown for reference and is not applied to the character.</p>
+      <label class="ee-block"><span class="ee-sr-only">Other rules and notes</span><textarea name="system.bonuses" rows="4">{{system.bonuses}}</textarea></label>
+      {{#if pkg.bonusSuggestion}}
+      <div class="ee-pkg-suggestion ee-pkg-suggestion--list">
+        <i class="fas fa-lightbulb"></i>
+        <span>These notes contain bonuses that can be applied automatically:
+          <span class="ee-pkg-suggestion-chips">{{#each pkg.bonusSuggestion.chips}}<span class="ee-chip">{{this}}</span>{{/each}}</span>
+          {{#if pkg.bonusSuggestion.unparsed.length}}<small>Left as notes: {{#each pkg.bonusSuggestion.unparsed}}{{#if @index}}; {{/if}}{{this}}{{/each}}</small>{{/if}}
+        </span>
+        <button type="button" class="ee-add" data-action="apply-bonus-suggestion"><i class="fas fa-check"></i> Add These</button>
+      </div>
+      {{/if}}
+    </section>
+  </div>
+
+  {{!-- ================================================== Attributes & Pools --}}
+  <div class="tab ee-item-tab" data-group="primary" data-tab="attributes">
+    <section class="ee-item-panel ee-item-panel--primary">
+      <h3><i class="fas fa-user"></i> Attributes</h3>
+      <label class="ee-pkg-mode">How this {{pkg.typeLabel}} uses dice
+        <select name="system.attributeMode">{{eeSelectOptions config.LEGACY_ATTRIBUTE_MODES system.attributeMode false}}</select>
+      </label>
+      {{#if pkg.attributeRollsReplace}}
+      <p class="ee-hint"><strong>Attribute rolls:</strong> each Dice entry is that attribute's whole roll (for example <em>3D6+5</em>) and replaces the standard 3D6. Flat + adds on top.{{#unless system.attributeMode}} Detected from the dice entered; change it above if wrong.{{/unless}}</p>
+      {{else}}
+      <p class="ee-hint"><strong>Bonuses:</strong> the character rolls 3D6 as normal; Flat + and Dice (rolled once, such as <em>1D4</em>) are added to it.{{#unless system.attributeMode}} Detected from the dice entered; change it above if wrong.{{/unless}}</p>
+      {{/if}}
+      <div class="ee-pkg-attr-grid {{#if pkg.embedded}}ee-pkg-attr-grid--embedded{{/if}}">
+        <div class="ee-cc-grid-head">Attr</div>
+        <div class="ee-cc-grid-head" title="Minimum attribute required to take this {{pkg.typeLabel}}">Requires</div>
+        <div class="ee-cc-grid-head">Flat +</div>
+        <div class="ee-cc-grid-head">{{#if pkg.attributeRollsReplace}}Dice (roll){{else}}Dice (bonus){{/if}}</div>
+        {{#if pkg.embedded}}<div class="ee-cc-grid-head" title="This character's roll">Rolled</div>{{/if}}
+        {{#each pkg.attributeRows}}
+        <span class="ee-pkg-attr-key" title="{{label}}">{{short}}</span>
+        <input type="number" name="system.attributeBonuses.{{key}}.min" value="{{ee_default min ""}}" min="0" placeholder="—" aria-label="{{label}} requirement"/>
+        <input type="number" name="system.attributeBonuses.{{key}}.bonus" value="{{bonus}}" aria-label="{{label}} flat bonus"/>
+        <input type="text" name="system.attributeBonuses.{{key}}.formula" value="{{formula}}" placeholder="{{#if ../pkg.attributeRollsReplace}}3D6{{else}}1D4{{/if}}" aria-label="{{label}} dice"/>
+        {{#if ../pkg.embedded}}
+        <span class="ee-pkg-attr-result">
+          {{#if rolled}}<strong>{{value}}</strong> <a class="ee-icon-btn" data-action="reset-cc-attribute" data-key="{{key}}" title="Clear this roll so it can be rolled again"><i class="fas fa-undo"></i></a>{{else}}<span class="ee-muted">—</span>{{/if}}
+        </span>
+        {{/if}}
+        {{/each}}
+      </div>
+    </section>
+
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-random"></i> Attribute Choices</h3>
+      <p class="ee-hint">For bonuses such as "+1D4 to any one Mental attribute". The player picks the attribute when the {{pkg.typeLabel}} is applied, and dice are rolled then.</p>
+      {{#each pkg.attributeChoices}}
+      <article class="ee-pkg-row-card">
+        <div class="ee-pkg-choice-head">
+          <label>Prompt <input type="text" name="system.attributeChoices.{{_index}}.label" value="{{label}}" placeholder="Any one Mental attribute"/></label>
+          <label>Amount <input type="text" name="system.attributeChoices.{{_index}}.formula" value="{{formula}}" placeholder="1D4 or 2"/></label>
+          <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-cc-row" data-path="attributeChoices" data-index="{{_index}}" title="Delete attribute choice"><i class="fas fa-trash"></i></a>
+        </div>
+        <div class="ee-pkg-attr-options">
+          {{#each options}}
+          <label class="ee-check"><input type="hidden" name="system.attributeChoices.{{../_index}}.options.{{key}}" value="false"/><input type="checkbox" name="system.attributeChoices.{{../_index}}.options.{{key}}" {{eeChecked checked}}/> {{short}}</label>
+          {{/each}}
+        </div>
+        <input type="hidden" name="system.attributeChoices.{{_index}}.chosen" value="{{chosen}}"/>
+        <input type="hidden" name="system.attributeChoices.{{_index}}.value" value="{{value}}"/>
+        <input type="hidden" name="system.attributeChoices.{{_index}}.rolled" value="{{rolled}}"/>
+        {{#if ../pkg.embedded}}{{#if chosen}}<p class="ee-hint">This character chose <strong>{{chosenLabel}}</strong>{{#if rolled}} and rolled <strong>{{value}}</strong>{{/if}}. <a data-action="reset-cc-attribute-choice" data-index="{{_index}}"><i class="fas fa-undo"></i> Clear</a></p>{{/if}}{{/if}}
+      </article>
+      {{else}}
+      <p class="ee-empty">No attribute choices.</p>
+      {{/each}}
+      <button type="button" class="ee-add" data-action="add-cc-row" data-path="attributeChoices" data-kind="attributeChoice"><i class="fas fa-plus"></i> Attribute Choice</button>
+    </section>
+
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-dumbbell"></i> Physical Type</h3>
+      <div class="ee-grid-2">
+        <label>Strength (P.S.) <select name="system.physical.strengthType"><option value="">Unchanged</option>{{eeSelectOptions config.LEGACY_PHYSICAL_TYPES system.physical.strengthType false}}</select></label>
+        <label>Endurance (P.E.) <select name="system.physical.enduranceType"><option value="">Unchanged</option>{{eeSelectOptions config.LEGACY_PHYSICAL_TYPES system.physical.enduranceType false}}</select></label>
+      </div>
+      <p class="ee-hint">Set when this {{pkg.typeLabel}} grants Augmented, Robotic or Supernatural strength. Applied to the character's combat tab when the {{pkg.typeLabel}} is taken.</p>
+    </section>
+
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-heart"></i> Hit Points, S.D.C., M.D.C., I.S.P. &amp; P.P.E.</h3>
+      <label class="ee-pkg-mode">Hit Points
+        <select name="system.standardHitPoints">{{eeSelectOptions pkg.standardHpOptions system.standardHitPoints false}}</select>
+      </label>
+      <div class="ee-table-wrap">
+        <table class="ee-table ee-pkg-pools">
+          <thead><tr><th>Pool</th><th title="Gained once at first level">Starting</th><th title="Gained at each level from level 2">Per Level</th></tr></thead>
+          <tbody>
+            {{#each pkg.poolRows}}
+            <tr>
+              <td>{{label}}</td>
+              <td><input type="text" name="system.poolBonuses.{{key}}" value="{{start}}" placeholder="{{placeholderStart}}"/></td>
+              <td><input type="text" name="system.poolPerLevel.{{key}}" value="{{perLevel}}" placeholder="{{placeholderPerLevel}}"/></td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <p class="ee-hint">Plain numbers apply automatically. Dice and attribute formulas such as <em>3D6x10+20 + P.E.</em> or <em>M.E. + 4D6</em> are rolled once from the character's Profile tab (Creation &amp; Advancement), and per-level formulas when the character levels up.</p>
+    </section>
+  </div>
+
+  {{!-- ============================================== Skills (& Languages) --}}
+  <div class="tab ee-item-tab" data-group="primary" data-tab="skills">
+    {{#if pkg.isRace}}
+    <section class="ee-item-panel ee-item-panel--primary">
+      <h3><i class="fas fa-language"></i> Languages</h3>
+      <label class="ee-pkg-mode">Native language
+        <input type="text" name="system.nativeLanguage" value="{{system.nativeLanguage}}" list="ee-languages-{{item.id}}" placeholder="American, Dragonese/Elven, Gobblely…"/>
+      </label>
+      <p class="ee-hint">Names the O.C.C.'s "Language: Native Tongue" and "Literacy: Native Language" skills for characters of this race. Leave blank to let the player choose.</p>
+      {{#if pkg.languageSuggestion}}
+      <div class="ee-pkg-suggestion">
+        <i class="fas fa-lightbulb"></i>
+        <span>From the older language notes: native <strong>{{pkg.languageSuggestion.native}}</strong>{{#if pkg.languageSuggestion.others}}, racial languages <strong>{{pkg.languageSuggestion.others}}</strong> (50% +3%/level, adjust as needed){{/if}}.</span>
+        <button type="button" class="ee-add" data-action="apply-language-suggestion"><i class="fas fa-check"></i> Use These</button>
+      </div>
+      {{/if}}
+      <div class="ee-table-wrap">
+        <table class="ee-table ee-pkg-languages">
+          <thead><tr><th>Racial Language</th><th class="ee-col-num">Base %</th><th class="ee-col-num">Per Level</th><th class="ee-col-scale">Literate</th><th class="ee-col-icon"></th></tr></thead>
+          <tbody>
+            {{#each pkg.languageList}}
+            <tr>
+              <td><input type="text" name="system.languageList.{{_index}}.name" value="{{name}}" list="ee-languages-{{../item.id}}" placeholder="Language"/></td>
+              <td class="ee-col-num"><input type="number" name="system.languageList.{{_index}}.base" value="{{base}}"/></td>
+              <td class="ee-col-num"><input type="number" name="system.languageList.{{_index}}.perLvl" value="{{perLvl}}"/></td>
+              <td><label class="ee-check"><input type="hidden" name="system.languageList.{{_index}}.literacy" value="false"/><input type="checkbox" name="system.languageList.{{_index}}.literacy" {{eeChecked literacy}}/></label></td>
+              <td><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-cc-row" data-path="languageList" data-index="{{_index}}" title="Remove language"><i class="fas fa-times"></i></a></td>
+            </tr>
+            {{else}}
+            <tr class="ee-empty-row"><td colspan="5">No racial languages beyond the native tongue.</td></tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <button type="button" class="ee-add" data-action="add-cc-row" data-path="languageList" data-kind="language"><i class="fas fa-plus"></i> Racial Language</button>
+      {{#if system.languages}}
+      <label class="ee-block">Language notes (older free text)<input type="text" name="system.languages" value="{{system.languages}}"/></label>
+      {{/if}}
+    </section>
+    {{/if}}
+
+    <section class="ee-item-panel {{#unless pkg.isRace}}ee-item-panel--primary{{/unless}}">
+      <h3 title="Granted automatically when this {{pkg.typeLabel}} is taken."><i class="fas fa-graduation-cap"></i> {{pkg.skillsTitle}}</h3>
+      <p class="ee-hint">Skills everyone with this {{pkg.typeLabel}} receives, with the bonus printed beside each. For a language or literacy skill, name it under Language, or leave it blank so the player names it; set Count for entries such as "Language: Other: Two of choice". For "one of these" picks, add a choice rule below with Add As set to {{#if pkg.isRace}}Racial{{else}}OCC{{/if}}.</p>
+      <div class="ee-table-wrap">
+        <table class="ee-table ee-occ-skills">
+          <thead><tr><th>Skill</th><th class="ee-col-num" title="First-level base percentage">Base %</th><th class="ee-col-num" title="Increase per level from level 2">Per Lvl</th><th class="ee-col-num" title="{{pkg.typeLabel}} bonus printed with the skill">Bonus %</th><th title="Language or specialty, and how many">Language / Count</th>{{#unless pkg.isRace}}<th class="ee-col-scale">Add As</th>{{/unless}}<th class="ee-col-icon"></th></tr></thead>
+          <tbody>
+            {{#each pkg.fixedSkills}}
+            <tr>
+              <td>
+                {{#if custom}}
+                <input type="text" name="system.skills.{{_index}}.name" value="{{name}}" placeholder="Custom skill"/>
+                <input type="hidden" name="system.skills.{{_index}}.key" value=""/>
+                <input type="hidden" name="system.skills.{{_index}}.custom" value="true"/>
+                {{else}}
+                <span class="ee-item-skill-name" title="{{name}}">{{name}}</span>
+                <input type="hidden" name="system.skills.{{_index}}.name" value="{{name}}"/>
+                <input type="hidden" name="system.skills.{{_index}}.key" value="{{key}}"/>
+                <input type="hidden" name="system.skills.{{_index}}.custom" value="false"/>
+                {{/if}}
+              </td>
+              <td class="ee-col-num"><input type="number" name="system.skills.{{_index}}.base" value="{{base}}"/></td>
+              <td class="ee-col-num"><input type="number" name="system.skills.{{_index}}.perLvl" value="{{perLvl}}"/></td>
+              <td class="ee-col-num"><input type="number" name="system.skills.{{_index}}.bonus" value="{{bonus}}"/></td>
+              <td>
+                {{#if isSpecialization}}
+                <div class="ee-pkg-spec">
+                  <input type="text" name="system.skills.{{_index}}.spec" value="{{spec}}" list="ee-languages-{{../item.id}}" placeholder="{{specPlaceholder}}" aria-label="{{specializationLabel}}"/>
+                  <input type="number" name="system.skills.{{_index}}.count" value="{{count}}" min="1" max="9" title="How many of this skill" aria-label="Count"/>
+                </div>
+                {{else}}
+                <input type="hidden" name="system.skills.{{_index}}.spec" value="{{spec}}"/>
+                <input type="hidden" name="system.skills.{{_index}}.count" value="1"/>
+                <span class="ee-muted">—</span>
+                {{/if}}
+              </td>
+              {{#unless ../pkg.isRace}}
+              <td><select name="system.skills.{{_index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category false}}</select></td>
+              {{/unless}}
+              <td>
+                {{#if ../pkg.isRace}}<input type="hidden" name="system.skills.{{_index}}.category" value="racial"/>{{/if}}
+                <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-occ-skill" data-index="{{_index}}" title="Remove skill"><i class="fas fa-times"></i></a>
+              </td>
+            </tr>
+            {{else}}
+            <tr class="ee-empty-row"><td colspan="7">No fixed skills.</td></tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="ee-skill-add-row">
+        <select data-action="add-occ-skill-from-list" data-category="{{#if pkg.isRace}}racial{{else}}occ{{/if}}">
+          <option value="">+ Add from master skill list…</option>
+          {{#each skillPicker}}
+          <optgroup label="{{group}}">
+            {{#each items}}<option value="{{key}}">{{name}}</option>{{/each}}
+          </optgroup>
+          {{/each}}
+        </select>
+        <button type="button" class="ee-add" data-action="add-occ-skill"><i class="fas fa-plus"></i> Custom Skill</button>
+      </div>
+    </section>
+
+    <section class="ee-item-panel">
+      <h3 title="Groups of skills the player chooses at first or later levels."><i class="fas fa-tasks"></i> Player Skill Choices</h3>
+      <p class="ee-hint">One rule per printed list, for example "O.C.C. Related Skills: Select five other skills at level one, +1 additional at levels 3, 7, 10 and 13". Give each allowed category or skill its printed bonus, mark skills that "count as two", and allow W.P.s where the list says "W.P.: Any". Hand to Hand upgrades (Combat tab) are paid for from the first O.C.C. Related rule.</p>
+      <div class="ee-choice-rule-list">
+        {{#each system.skillChoices}}
+        <article class="ee-choice-rule">
+          <header>
+            <label>Prompt <input type="text" name="system.skillChoices.{{_index}}.label" value="{{label}}" placeholder="O.C.C. Related Skills"/></label>
+            <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-occ-skill-choice" data-index="{{_index}}" title="Delete choice rule"><i class="fas fa-trash"></i></a>
+          </header>
+
+          <div class="ee-choice-rule-fields ee-choice-rule-fields--schedule">
+            <label>Choose <input type="number" name="system.skillChoices.{{_index}}.count" value="{{count}}" min="0"/></label>
+            <label>At Level <input type="number" name="system.skillChoices.{{_index}}.level" value="{{level}}" min="1" max="15"/></label>
+            <label title="Levels that grant more picks, e.g. 3, 7, 10, 13">Plus at Levels <input type="text" name="system.skillChoices.{{_index}}.laterLevels" value="{{laterLevels}}" placeholder="3, 7, 10, 13"/></label>
+            <label title="Picks gained at each of those levels">Each <input type="number" name="system.skillChoices.{{_index}}.laterCount" value="{{laterCount}}" min="1"/></label>
+            <label>Add As <select name="system.skillChoices.{{_index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category false}}</select></label>
+            <label title="Bonus for every pick from this rule (Secondary Skills get none)">Bonus % <input type="number" name="system.skillChoices.{{_index}}.bonus" value="{{bonus}}"/></label>
+          </div>
+          <p class="ee-hint ee-choice-schedule">{{scheduleText}}</p>
+
+          <div class="ee-choice-rule-allowed">
+            <strong>Allowed skills</strong>
+            <div class="ee-choice-tags">
+              {{#each selectedSkillRows}}
+              <span class="ee-choice-tag ee-choice-tag--tuned">
+                {{name}}
+                <input type="number" name="system.skillChoices.{{../_index}}.keyBonuses.{{key}}" value="{{bonus}}" title="Bonus % for {{name}}" aria-label="Bonus for {{name}}" placeholder="+%"/>
+                <input type="number" name="system.skillChoices.{{../_index}}.costs.{{key}}" value="{{cost}}" min="1" max="4" title="Picks {{name}} costs (2 if it counts as two skills)" aria-label="Pick cost for {{name}}"/>
+                <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-occ-choice-skill" data-index="{{../_index}}" data-skill-index="{{@index}}" title="Remove skill"><i class="fas fa-times"></i></a>
+              </span>
+              <input type="hidden" name="system.skillChoices.{{../_index}}.allowedKeys.{{@index}}" value="{{key}}"/>
+              {{/each}}
+              {{#unless hasRestrictions}}<span class="ee-muted">Any eligible skill</span>{{/unless}}
+            </div>
+
+            {{#each selectedGroupRows}}
+            <div class="ee-choice-group-rule">
+              <div class="ee-choice-tags">
+                <span class="ee-choice-tag ee-choice-tag--group ee-choice-tag--tuned">Any {{group}}
+                  <input type="number" name="system.skillChoices.{{../_index}}.allowedGroups.{{_groupIndex}}.bonus" value="{{bonus}}" title="Bonus % for {{group}} picks" aria-label="Bonus for {{group}}" placeholder="+%"/>
+                  <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-occ-choice-group" data-index="{{../_index}}" data-group-index="{{_groupIndex}}" title="Remove category"><i class="fas fa-times"></i></a></span>
+                <input type="hidden" name="system.skillChoices.{{../_index}}.allowedGroups.{{_groupIndex}}.group" value="{{group}}"/>
+                {{#each excludedSkillRows}}
+                <span class="ee-choice-tag ee-choice-tag--exception">except {{name}} <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-occ-choice-group-exclusion" data-index="{{../../_index}}" data-group-index="{{../_groupIndex}}" data-exclusion-index="{{@index}}" title="Remove exception"><i class="fas fa-times"></i></a></span>
+                <input type="hidden" name="system.skillChoices.{{../../_index}}.allowedGroups.{{../_groupIndex}}.excludedKeys.{{@index}}" value="{{key}}"/>
+                {{/each}}
+              </div>
+              {{#if exclusionPicker.length}}
+              <select data-action="exclude-occ-choice-group-skill" data-index="{{../_index}}" data-group-index="{{_groupIndex}}">
+                <option value="">+ Add exception to {{group}}…</option>
+                {{#each exclusionPicker}}<option value="{{key}}">{{name}}</option>{{/each}}
+              </select>
+              {{/if}}
+            </div>
+            {{/each}}
+
+            {{#each extraCostRows}}
+            <input type="hidden" name="system.skillChoices.{{../_index}}.costs.{{key}}" value="{{cost}}"/>
+            {{/each}}
+
+            <div class="ee-choice-adders">
+              <select data-action="add-occ-choice-group" data-index="{{_index}}">
+                <option value="">+ Allow a whole category…</option>
+                {{#each groupPicker}}<option value="{{this}}">Any {{this}}</option>{{/each}}
+              </select>
+              <select data-action="add-occ-choice-skill" data-index="{{_index}}">
+                <option value="">+ Allow an individual skill…</option>
+                {{#each picker}}
+                <optgroup label="{{group}}">
+                  {{#each items}}<option value="{{key}}">{{name}}</option>{{/each}}
+                </optgroup>
+                {{/each}}
+              </select>
+            </div>
+            <div class="ee-choice-wp">
+              <label class="ee-check"><input type="hidden" name="system.skillChoices.{{_index}}.allowWp" value="false"/><input type="checkbox" name="system.skillChoices.{{_index}}.allowWp" {{eeChecked allowWp}}/> W.P.s may be chosen ("W.P.: Any")</label>
+              <label title="Picks each W.P. costs">W.P. cost <input type="number" name="system.skillChoices.{{_index}}.wpCost" value="{{wpCost}}" min="1" max="4"/></label>
+            </div>
+          </div>
+        </article>
+        {{else}}
+        <p class="ee-empty">No player choices. Add one for O.C.C. Related Skills, Secondary Skills, or "one of" picks.</p>
+        {{/each}}
+      </div>
+      <div class="ee-choice-presets">
+        <button type="button" class="ee-add" data-action="add-occ-skill-choice" data-preset="related"><i class="fas fa-plus"></i> O.C.C. Related Rule</button>
+        <button type="button" class="ee-add" data-action="add-occ-skill-choice" data-preset="secondary"><i class="fas fa-plus"></i> Secondary Rule</button>
+        <button type="button" class="ee-add" data-action="add-occ-skill-choice" data-preset="pick"><i class="fas fa-plus"></i> "One Of" Pick</button>
+      </div>
+    </section>
+
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-percent"></i> Other Skill Bonuses</h3>
+      <p class="ee-hint">Bonuses that apply to a skill whenever the character has it, however it was gained, such as a racial "+10% to Prowl". Bonuses for fixed skills go in their Bonus % column above.</p>
+      <table class="ee-table ee-cc-skill-bonuses">
+        <thead><tr><th>Skill</th><th class="ee-col-num">Bonus %</th><th>Note</th><th class="ee-col-icon"></th></tr></thead>
+        <tbody>
+          {{#each system.skillBonuses}}
+          <tr>
+            <td>
+              {{#if custom}}
+              <input type="hidden" name="system.skillBonuses.{{@index}}.key" value=""/>
+              <input type="hidden" name="system.skillBonuses.{{@index}}.custom" value="true"/>
+              <input type="text" name="system.skillBonuses.{{@index}}.name" value="{{name}}" placeholder="Custom skill"/>
+              {{else}}
+              <input type="hidden" name="system.skillBonuses.{{@index}}.key" value="{{key}}"/>
+              <input type="hidden" name="system.skillBonuses.{{@index}}.name" value="{{name}}"/>
+              <input type="hidden" name="system.skillBonuses.{{@index}}.custom" value="false"/>
+              <span>{{name}}</span>{{#if duplicatesFixed}} <span class="ee-muted" title="Repeats the fixed skill's own bonus; it is not added to that skill twice.">(fixed skill bonus)</span>{{/if}}
+              {{/if}}
+            </td>
+            <td class="ee-col-num"><input type="number" name="system.skillBonuses.{{@index}}.bonus" value="{{bonus}}"/></td>
+            <td><input type="text" name="system.skillBonuses.{{@index}}.note" value="{{note}}"/></td>
+            <td><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-cc-skill-bonus" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{else}}
+          <tr class="ee-empty-row"><td colspan="4">No other skill bonuses.</td></tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <div class="ee-skill-add-row">
+        <select data-action="add-cc-skill-bonus-from-list">
+          <option value="">+ Add from list…</option>
+          {{#each ccSkillBonusPicker}}
+          <optgroup label="{{group}}">{{#each items}}<option value="{{key}}">{{name}}</option>{{/each}}</optgroup>
+          {{/each}}
+        </select>
+        <button type="button" class="ee-add" data-action="add-cc-skill-bonus"><i class="fas fa-plus"></i> Custom</button>
+      </div>
+    </section>
+  </div>
+
+  {{!-- ============================================================== Combat --}}
+  <div class="tab ee-item-tab" data-group="primary" data-tab="combat">
+    <section class="ee-item-panel ee-item-panel--primary">
+      <h3><i class="fas fa-fist-raised"></i> Hand to Hand</h3>
+      <label class="ee-pkg-mode">Granted combat training
+        <select name="system.handToHand.type"><option value="">Not granted</option>{{eeSelectOptions config.HTH_TYPES pkg.hthType false}}</select>
+      </label>
+      {{#if pkg.hthSuggestion}}
+      <div class="ee-pkg-suggestion">
+        <i class="fas fa-lightbulb"></i>
+        <span>Found in this {{pkg.typeLabel}}'s notes: <strong>{{pkg.hthSuggestion.label}}</strong><small>{{pkg.hthSuggestion.source}}</small></span>
+        <button type="button" class="ee-add" data-action="apply-hth-suggestion"><i class="fas fa-check"></i> Use This</button>
+      </div>
+      {{/if}}
+      <p class="ee-hint">Upgrades the player may buy at character creation, e.g. "can be changed to Martial Arts (or Assassin, if evil) at the cost of one O.C.C. Related Skill". Cost is in O.C.C. Related picks.</p>
+      <div class="ee-table-wrap">
+        <table class="ee-table ee-pkg-hth">
+          <thead><tr><th>Upgrade To</th><th class="ee-col-num">Cost</th><th>Note</th><th class="ee-col-icon"></th></tr></thead>
+          <tbody>
+            {{#each pkg.hthUpgrades}}
+            <tr>
+              <td><select name="system.handToHand.upgrades.{{_index}}.type">{{eeSelectOptions ../config.HTH_TYPES type false}}</select></td>
+              <td class="ee-col-num"><input type="number" name="system.handToHand.upgrades.{{_index}}.cost" value="{{cost}}" min="0" max="6"/></td>
+              <td><input type="text" name="system.handToHand.upgrades.{{_index}}.note" value="{{note}}" placeholder="Evil alignments only"/></td>
+              <td><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-cc-row" data-path="handToHand.upgrades" data-index="{{_index}}" title="Remove upgrade"><i class="fas fa-times"></i></a></td>
+            </tr>
+            {{else}}
+            <tr class="ee-empty-row"><td colspan="4">No upgrade options.</td></tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <button type="button" class="ee-add" data-action="add-cc-row" data-path="handToHand.upgrades" data-kind="hthUpgrade"><i class="fas fa-plus"></i> Upgrade Option</button>
+    </section>
+
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-crosshairs"></i> Weapon Proficiencies</h3>
+      <div class="ee-cc-wp-groups">
+        <section>
+          <h5>Ancient</h5>
+          <div class="ee-cc-check-grid">
+            {{#each wpAncient}}
+            <label class="ee-check"><input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" /><input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}}/> {{name}}</label>
+            {{/each}}
+          </div>
+        </section>
+        <section>
+          <h5>Modern</h5>
+          <div class="ee-cc-check-grid">
+            {{#each wpModern}}
+            <label class="ee-check"><input type="hidden" name="system.weaponProficiencies.selected.{{key}}" value="false" /><input type="checkbox" name="system.weaponProficiencies.selected.{{key}}" {{eeChecked checked}}/> {{name}}</label>
+            {{/each}}
+          </div>
+        </section>
+      </div>
+      <table class="ee-table ee-cc-wp-custom">
+        <thead><tr><th>Other W.P.</th><th class="ee-col-icon"></th></tr></thead>
+        <tbody>
+          {{#each system.weaponProficiencies.custom}}
+          <tr>
+            <td><input type="text" name="system.weaponProficiencies.custom.{{@index}}.name" value="{{name}}" placeholder="W.P. from another book"/></td>
+            <td><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-cc-wp-custom" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button type="button" class="ee-add" data-action="add-cc-wp-custom"><i class="fas fa-plus"></i> Other W.P.</button>
+
+      <h4 class="ee-section-h">W.P. Choices</h4>
+      <p class="ee-hint">For "W.P. Modern Weapons: Two of choice". Choose a pool, or list specific W.P.s for an either/or choice (a list overrides the pool).</p>
+      <table class="ee-table ee-cc-wp-choices">
+        <thead><tr><th>Prompt</th><th class="ee-col-num">Count</th><th class="ee-col-scale">Pool</th><th>Specific W.P.s</th><th class="ee-col-icon"></th></tr></thead>
+        <tbody>
+          {{#each system.weaponProficiencies.choices}}
+          <tr>
+            <td><input type="text" name="system.weaponProficiencies.choices.{{_index}}.label" value="{{label}}" placeholder="W.P. of choice"/></td>
+            <td class="ee-col-num"><input type="number" name="system.weaponProficiencies.choices.{{_index}}.count" value="{{count}}" min="1"/></td>
+            <td>
+              <select name="system.weaponProficiencies.choices.{{_index}}.pool">
+                <option value="any" {{#if (eq pool "any")}}selected{{/if}}>Any W.P.</option>
+                <option value="ancient" {{#if (eq pool "ancient")}}selected{{/if}}>Ancient W.P.</option>
+                <option value="modern" {{#if (eq pool "modern")}}selected{{/if}}>Modern W.P.</option>
+              </select>
+            </td>
+            <td>
+              <div class="ee-choice-tags">
+                {{#each selectedWpRows}}
+                <span class="ee-choice-tag">{{name}} <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-cc-wp-choice-option" data-index="{{../_index}}" data-option-index="{{@index}}" title="Remove W.P."><i class="fas fa-times"></i></a></span>
+                <input type="hidden" name="system.weaponProficiencies.choices.{{../_index}}.allowedKeys.{{@index}}" value="{{key}}"/>
+                {{/each}}
+                {{#unless selectedWpRows.length}}<span class="ee-muted">Uses pool</span>{{/unless}}
+              </div>
+              <select data-action="add-cc-wp-choice-option" data-index="{{_index}}">
+                <option value="">+ Add allowed W.P.…</option>
+                {{#each wpPicker}}
+                <optgroup label="{{group}}">{{#each items}}<option value="{{key}}">{{name}}</option>{{/each}}</optgroup>
+                {{/each}}
+              </select>
+            </td>
+            <td><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-cc-wp-choice" data-index="{{_index}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button type="button" class="ee-add" data-action="add-cc-wp-choice"><i class="fas fa-plus"></i> W.P. Choice</button>
+    </section>
+
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-shield-alt"></i> Combat Bonuses</h3>
+      <div class="ee-cc-bonus-grid">
+        <label>Attacks/Melee <input type="number" name="system.combatBonuses.attacks" value="{{system.combatBonuses.attacks}}"/></label>
+        <label>Initiative <input type="number" name="system.combatBonuses.initiative" value="{{system.combatBonuses.initiative}}"/></label>
+        <label>Perception <input type="number" name="system.combatBonuses.perception" value="{{system.combatBonuses.perception}}"/></label>
+        <label>Damage <input type="number" name="system.combatBonuses.damage" value="{{system.combatBonuses.damage}}"/></label>
+        <label>Strike <input type="number" name="system.combatBonuses.strike" value="{{system.combatBonuses.strike}}"/></label>
+        <label>Parry <input type="number" name="system.combatBonuses.parry" value="{{system.combatBonuses.parry}}"/></label>
+        <label>Dodge <input type="number" name="system.combatBonuses.dodge" value="{{system.combatBonuses.dodge}}"/></label>
+        <label>Disarm <input type="number" name="system.combatBonuses.disarm" value="{{system.combatBonuses.disarm}}"/></label>
+        <label>Entangle <input type="number" name="system.combatBonuses.entangle" value="{{system.combatBonuses.entangle}}"/></label>
+        <label>Pull Punch <input type="number" name="system.combatBonuses.pullPunch" value="{{system.combatBonuses.pullPunch}}"/></label>
+        <label>Roll w/ Impact <input type="number" name="system.combatBonuses.roll" value="{{system.combatBonuses.roll}}"/></label>
+      </div>
+      <h4 class="ee-section-h">Saving Throw Bonuses</h4>
+      <div class="ee-cc-bonus-grid">
+        <label>Spell / Magic <input type="number" name="system.saveBonuses.spell" value="{{system.saveBonuses.spell}}"/></label>
+        <label>Ritual <input type="number" name="system.saveBonuses.ritual" value="{{system.saveBonuses.ritual}}"/></label>
+        <label>Psionics <input type="number" name="system.saveBonuses.psionics" value="{{system.saveBonuses.psionics}}"/></label>
+        <label>Toxins/Poisons <input type="number" name="system.saveBonuses.drugPoison" value="{{system.saveBonuses.drugPoison}}"/></label>
+        <label>Harmful Drugs <input type="number" name="system.saveBonuses.harmfulDrugs" value="{{system.saveBonuses.harmfulDrugs}}"/></label>
+        <label>Insanity <input type="number" name="system.saveBonuses.insanity" value="{{system.saveBonuses.insanity}}"/></label>
+        <label>Possession <input type="number" name="system.saveBonuses.possession" value="{{system.saveBonuses.possession}}"/></label>
+        <label>Horror Factor <input type="number" name="system.saveBonuses.horrorFactor" value="{{system.saveBonuses.horrorFactor}}"/></label>
+        <label>Coma/Death % <input type="number" name="system.saveBonuses.death" value="{{system.saveBonuses.death}}"/></label>
+        <label>Pain <input type="number" name="system.saveBonuses.pain" value="{{system.saveBonuses.pain}}"/></label>
+      </div>
+    </section>
+
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-layer-group"></i> Bonuses Gained by Level</h3>
+      <p class="ee-hint">For lines such as "+1 to save vs magic at levels 3, 6, 9, 11 and 14". Each listed level the character has reached adds the amount.</p>
+      <div class="ee-table-wrap">
+        <table class="ee-table ee-pkg-level-bonuses">
+          <thead><tr><th>Bonus</th><th>At Levels</th><th class="ee-col-num">Each</th><th>Note</th><th class="ee-col-icon"></th></tr></thead>
+          <tbody>
+            {{#each pkg.levelBonuses}}
+            <tr>
+              <td><select name="system.levelBonuses.{{_index}}.target">{{eeSelectOptions ../config.LEGACY_LEVEL_BONUS_TARGETS target false}}</select></td>
+              <td><input type="text" name="system.levelBonuses.{{_index}}.levels" value="{{levels}}" placeholder="3, 6, 9, 11, 14"/></td>
+              <td class="ee-col-num"><input type="number" name="system.levelBonuses.{{_index}}.value" value="{{value}}"/></td>
+              <td><input type="text" name="system.levelBonuses.{{_index}}.note" value="{{note}}" placeholder="Spell strength, Teleport %, …"/></td>
+              <td><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-cc-row" data-path="levelBonuses" data-index="{{_index}}" title="Remove"><i class="fas fa-times"></i></a></td>
+            </tr>
+            {{else}}
+            <tr class="ee-empty-row"><td colspan="5">No level-based bonuses.</td></tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <button type="button" class="ee-add" data-action="add-cc-row" data-path="levelBonuses" data-kind="levelBonus"><i class="fas fa-plus"></i> Level Bonus</button>
+    </section>
+  </div>
+
+  {{!-- ============================================================== Powers --}}
+  <div class="tab ee-item-tab" data-group="primary" data-tab="powers">
+    <section class="ee-item-panel ee-item-panel--primary">
+      <h3><i class="fas fa-hat-wizard"></i> Magic &amp; Psionics</h3>
+      <div class="ee-grid-3">
+        <label class="ee-check"><input type="hidden" name="system.grantsMagic" value="false"/><input type="checkbox" name="system.grantsMagic" {{eeChecked system.grantsMagic}}/> Grants magic (spells)</label>
+        <label class="ee-check"><input type="hidden" name="system.grantsPsionics" value="false"/><input type="checkbox" name="system.grantsPsionics" {{eeChecked system.grantsPsionics}}/> Grants psionics</label>
+        <label>Psionic Level <select name="system.psionicLevel"><option value="">Unchanged</option>{{eeSelectOptions config.PSIONIC_LEVELS system.psionicLevel false}}</select></label>
+      </div>
+      <p class="ee-hint">Starting P.P.E. and I.S.P. go on the Attributes &amp; Pools tab.</p>
+    </section>
+
+    <section class="ee-item-panel">
+      <h3><i class="fas fa-star"></i> Granted Abilities</h3>
+      <p class="ee-hint">Natural abilities and special powers. They appear on the character's Powers tab while this {{pkg.typeLabel}} is equipped.</p>
+      <table class="ee-table ee-cc-abilities">
+        <thead><tr><th>Name</th><th>Description</th><th class="ee-col-icon"></th></tr></thead>
+        <tbody>
+          {{#each system.abilities}}
+          <tr>
+            <td><input type="text" name="system.abilities.{{@index}}.name" value="{{name}}"/></td>
+            <td><input type="text" name="system.abilities.{{@index}}.description" value="{{description}}"/></td>
+            <td><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-cc-ability" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+          </tr>
+          {{else}}
+          <tr class="ee-empty-row"><td colspan="3">No granted abilities.</td></tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button type="button" class="ee-add" data-action="add-cc-ability"><i class="fas fa-plus"></i> Ability</button>
+    </section>
+  </div>
+
+  {{!-- ========================================================= Advancement --}}
+  {{#if pkg.isOcc}}
+  <div class="tab ee-item-tab" data-group="primary" data-tab="advancement">
+    <section class="ee-item-panel ee-item-panel--primary">
+      <h3><i class="fas fa-chart-line"></i> Experience Track</h3>
+      <p class="ee-hint">Select the shared Ultimate Edition progression used by this {{pkg.typeLabel}}, or enter a custom track for another sourcebook. The equipped track supplies the character sheet's next-level XP.</p>
+      <label>Progression
+        <select name="system.xpTrack.preset">{{eeSelectOptions xpTrackOptions system.xpTrack.preset}}</select>
+      </label>
+
+      {{#if occXpTrack.hasTrack}}
+        {{#if occXpTrack.isCustom}}
+        <div class="ee-xp-custom-grid">
+          {{#each occXpTrack.rows}}
+          <label>Level {{level}}
+            {{#if (eq level 1)}}
+            <input type="hidden" name="system.xpTrack.thresholds.{{index}}" value="0"/>
+            <output>0 XP</output>
+            {{else}}
+            <input type="number" name="system.xpTrack.thresholds.{{index}}" value="{{min}}" min="0" step="1" title="Minimum XP for level {{level}}"/>
+            {{/if}}
+          </label>
+          {{/each}}
+        </div>
+        <label>Level 15 upper range <input type="number" name="system.xpTrack.level15Max" value="{{occXpTrack.level15Max}}" min="0" step="1"/></label>
+        {{#unless occXpTrack.isValid}}<p class="ee-validation-warning"><i class="fas fa-exclamation-triangle"></i> Each level must require more XP than the previous level, and the level 15 upper range cannot be lower than its minimum.</p>{{/unless}}
+        {{else}}
+        <div class="ee-table-wrap">
+          <table class="ee-table ee-xp-track-table">
+            <thead><tr><th>Level</th><th>Minimum XP</th><th>Maximum XP</th></tr></thead>
+            <tbody>
+              {{#each occXpTrack.rows}}
+              <tr><td>{{level}}</td><td>{{minDisplay}}</td><td>{{maxDisplay}}</td></tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+        {{/if}}
+      {{else}}
+        <div class="ee-empty-state"><i class="fas fa-chart-line"></i><span>Choose an experience progression to enable automatic next-level XP.</span></div>
+      {{/if}}
+    </section>
+  </div>
+  {{/if}}
+</div>

@@ -1,10 +1,11 @@
 import { LegacyRules } from "../rules/legacy.js";
+import { LegacyPackages } from "../rules/legacy-packages.js";
 
 export class ErrantEarthItemSheet extends ItemSheet {
   constructor(item, options = {}) {
     const size = ErrantEarthItemSheet.ITEM_SHEET_SIZES[item?.type] ?? {};
     const sizedOptions = foundry.utils.mergeObject(size, options ?? {}, { inplace: false });
-    if (item?.type === "occ" && !sizedOptions.tabs) {
+    if ((item?.type === "occ" || item?.type === "race") && !sizedOptions.tabs) {
       sizedOptions.tabs = [{ navSelector: ".ee-item-tabs", contentSelector: ".ee-item-tab-body", initial: "overview" }];
     }
     super(item, sizedOptions);
@@ -29,12 +30,12 @@ export class ErrantEarthItemSheet extends ItemSheet {
     psionicPower: { width: 580, height: 540 },
     spell: { width: 580, height: 560 },
     ability: { width: 540, height: 430 },
-    weapon: { width: 640, height: 620 },
+    weapon: { width: 640, height: 680 },
     armor: { width: 640, height: 640 },
     powerArmor: { width: 660, height: 680 },
     vehicle: { width: 780, height: 740 },
-    race: { width: 720, height: 680 },
-    occ: { width: 780, height: 720 },
+    race: { width: 780, height: 720 },
+    occ: { width: 780, height: 740 },
     gear: { width: 540, height: 460 }
   };
 
@@ -130,14 +131,14 @@ export class ErrantEarthItemSheet extends ItemSheet {
         break;
       case "race":
         add("Size", system.size);
-        add("Lifespan", system.lifespan);
-        add("Languages", system.languages);
+        add("Native Language", system.nativeLanguage || system.languages);
+        add("Hand to Hand", cfg.HTH_TYPES?.[system.handToHand?.type]);
         add("Structure", system.isMDC ? "MDC being" : "SDC being");
         break;
       case "occ":
-        add("Category", system.category);
         add("Type", system.isRCC ? (system.rccAsRace ? "R.C.C. (Race)" : "R.C.C.") : "O.C.C.");
-        add("Skills", ErrantEarthItemSheet._toArray(system.skills).length);
+        add("Category", system.category);
+        add("Hand to Hand", cfg.HTH_TYPES?.[system.handToHand?.type]);
         add("XP Track", cfg.RIFTS_XP_TRACKS?.[system.xpTrack?.preset]?.label ?? (system.xpTrack?.preset === "custom" ? "Custom" : ""));
         break;
       case "gear":
@@ -270,36 +271,59 @@ export class ErrantEarthItemSheet extends ItemSheet {
       .filter(rule => rule.group);
   }
 
+  static _choiceSchedule(rule) {
+    const later = LegacyPackages.levelList(rule.laterLevels).filter(level => level !== rule.level);
+    const parts = [`${rule.count} at level ${rule.level}`];
+    if (later.length) parts.push(`+${rule.laterCount} at level${later.length === 1 ? "" : "s"} ${later.join(", ")}`);
+    const total = rule.count + later.length * rule.laterCount;
+    return `${parts.join(", ")} — ${total} pick${total === 1 ? "" : "s"} by level 15.`;
+  }
+
   static _decorateOccSkillChoices(choices = []) {
     const master = CONFIG.EE?.SKILL_LIST ?? [];
     const byKey = new Map(master.map(s => [s.key, s]));
     return ErrantEarthItemSheet._toArray(choices).map((choice, index) => {
-      const category = choice?.category || "occRelated";
+      const rule = LegacyPackages.normalizeChoice(choice);
+      const category = rule.category;
       const eligible = master.filter(s => category !== "secondary" || s.secondary !== false);
-      const allowedKeys = ErrantEarthItemSheet._toArray(choice?.allowedKeys).filter(Boolean);
-      const allowedGroups = ErrantEarthItemSheet._normalizeSkillChoiceGroups(choice?.allowedGroups);
+      const allowedKeys = rule.allowedKeys;
+      const allowedGroups = rule.allowedGroups;
       const usedKeys = new Set(allowedKeys);
-      const usedGroups = new Set(allowedGroups.map(rule => rule.group));
-      const selectedGroupRows = allowedGroups.map((rule, groupIndex) => {
-        const groupSkills = eligible.filter(s => s.group === rule.group);
-        const excluded = new Set(rule.excludedKeys);
+      const usedGroups = new Set(allowedGroups.map(group => group.group));
+      const selectedGroupRows = allowedGroups.map((group, groupIndex) => {
+        const groupSkills = eligible.filter(s => s.group === group.group);
+        const excluded = new Set(group.excludedKeys);
         return {
-          ...rule,
+          ...group,
+          bonus: group.bonus || "",
           _groupIndex: groupIndex,
-          excludedSkillRows: rule.excludedKeys.map(key => byKey.get(key)).filter(Boolean),
+          excludedSkillRows: group.excludedKeys.map(key => byKey.get(key)).filter(Boolean),
           exclusionPicker: groupSkills.filter(s => !excluded.has(s.key))
         };
       });
       return {
-        label: choice?.label ?? "",
-        count: Number(choice?.count ?? 1) || 1,
-        level: Math.max(1, Number(choice?.level ?? 1) || 1),
+        label: rule.label,
+        count: rule.count,
+        level: rule.level,
+        laterLevels: rule.laterLevels,
+        laterCount: rule.laterCount,
         category,
-        bonus: Number(choice?.bonus ?? 0) || 0,
+        bonus: rule.bonus,
+        allowWp: rule.allowWp,
+        wpCost: rule.wpCost,
+        scheduleText: ErrantEarthItemSheet._choiceSchedule(rule),
         allowedKeys,
         allowedGroups,
         _index: index,
-        selectedSkillRows: allowedKeys.map(key => byKey.get(key)).filter(Boolean),
+        selectedSkillRows: allowedKeys.map(key => byKey.get(key)).filter(Boolean).map(skill => ({
+          key: skill.key,
+          name: skill.name,
+          bonus: rule.keyBonuses[skill.key] ?? "",
+          cost: rule.costs[skill.key] ?? 1
+        })),
+        extraCostRows: Object.entries(rule.costs)
+          .filter(([key]) => !usedKeys.has(key))
+          .map(([key, cost]) => ({ key, cost })),
         selectedGroupRows,
         hasRestrictions: !!(allowedKeys.length || allowedGroups.length),
         picker: ErrantEarthItemSheet._groupSkillPicker(eligible.filter(s => !usedKeys.has(s.key))),
@@ -394,12 +418,14 @@ export class ErrantEarthItemSheet extends ItemSheet {
     if (this.item.type === "spell") {
       ErrantEarthItemSheet._prepareCustomChoice(ctx.system, "category", "categoryCustom", CONFIG.EE?.SPELL_CATEGORIES);
     }
-    if (this.item.type === "occ") {
+    if (this.item.type === "occ" || this.item.type === "race") {
       const skills = ErrantEarthItemSheet._toArray(this.item.system.skills);
       ctx.system.skills = skills;
       const usedKeys = new Set(skills.map(r => r.key).filter(Boolean));
-      const masterList = (CONFIG.EE?.SKILL_LIST ?? []).filter(s => s.repeatable || !usedKeys.has(s.key));
+      const masterList = (CONFIG.EE?.SKILL_LIST ?? []).filter(s => s.repeatable || s.specialization || !usedKeys.has(s.key));
       ctx.skillPicker = ErrantEarthItemSheet._groupSkillPicker(masterList);
+    }
+    if (this.item.type === "occ") {
       ctx.occXpTrack = ErrantEarthItemSheet._prepareXpTrack(ctx.system);
       ctx.system.xpTrack = {
         preset: ctx.occXpTrack.preset,
@@ -415,6 +441,12 @@ export class ErrantEarthItemSheet extends ItemSheet {
       ctx.system = ErrantEarthItemSheet._normalizeCcData(ctx.system);
       ctx.system.skillChoices = ErrantEarthItemSheet._decorateOccSkillChoices(this.item.system.skillChoices);
       ctx.skillPicker ??= ErrantEarthItemSheet._groupSkillPicker(CONFIG.EE?.SKILL_LIST ?? []);
+      const fixedBonusKeys = new Map(LegacyPackages.fixedSkills(this.item.system)
+        .filter(row => row.key && row.bonus).map(row => [row.key, row.bonus]));
+      ctx.system.skillBonuses = ctx.system.skillBonuses.map(row => ({
+        ...row,
+        duplicatesFixed: !!row?.key && fixedBonusKeys.get(row.key) === (Number(row?.bonus) || 0)
+      }));
       const skillBonuses = ctx.system.skillBonuses;
       const usedBonusKeys = new Set(skillBonuses.map(r => r.key).filter(Boolean));
       const masterList = (CONFIG.EE?.SKILL_LIST ?? []).filter(s => !usedBonusKeys.has(s.key));
@@ -427,6 +459,7 @@ export class ErrantEarthItemSheet extends ItemSheet {
       const attributes = Object.values(ctx.system.attributeBonuses ?? {}).filter(value => Number(value?.bonus) || value?.formula || Number(value?.value)).length;
       const selectedWps = [...wp.ancient, ...wp.modern].filter(value => value.checked).length + ctx.system.weaponProficiencies.custom.length;
       const powers = [ctx.system.grantsMagic && "Magic", ctx.system.grantsPsionics && "Psionics", `${ctx.system.abilities.length} abilities`].filter(Boolean);
+      ctx.pkg = ErrantEarthItemSheet._packageContext(this.item);
       ctx.ccGroupSummary = {
         attributes: `${attributes} configured`,
         pools: `${nonzero(ctx.system.poolBonuses)} configured`,
@@ -451,7 +484,215 @@ export class ErrantEarthItemSheet extends ItemSheet {
     }
     ctx.itemSummary = ErrantEarthItemSheet._summaryFor(this.item.type, ctx.system);
     ctx.disclosureState = this._disclosureState ?? {};
+    ctx.modeKey = ErrantEarthItemSheet._themeMode(this.item);
     return ctx;
+  }
+
+  /** Editor context shared by Race, O.C.C. and R.C.C. packages. */
+  static _packageContext(item) {
+    const system = item.system ?? {};
+    const isRace = item.type === "race";
+    const isRCC = !isRace && !!system.isRCC;
+    const typeLabel = LegacyPackages.typeLabel(item);
+    const short = { iq: "IQ", me: "ME", ma: "MA", ps: "PS", pp: "PP", pe: "PE", pb: "PB", spd: "SPD" };
+    const attributeRollsReplace = LegacyPackages.attributeMode(item) === "roll";
+    const standardHp = LegacyPackages.usesStandardHitPoints([{ system: { ...system, standardHitPoints: "" } }]);
+    const hth = LegacyPackages.handToHand(system);
+    const poolPlaceholders = {
+      hp: ["", ""], sdc: ["e.g. 3D6+10", ""], mdc: ["e.g. 1D4x100+50", "e.g. 10"], isp: ["e.g. M.E. + 4D6", "e.g. 1D6+1"], ppe: ["e.g. 3D6x10+20 + P.E.", "e.g. 3D6"]
+    };
+    return {
+      isRace,
+      isOcc: !isRace,
+      isRCC,
+      typeLabel,
+      embedded: !!item.actor,
+      skillsTitle: isRace ? "Racial Skills" : (isRCC ? "R.C.C. Skills" : "O.C.C. Skills"),
+      attributeRollsReplace,
+      attributeRows: LegacyPackages.ATTR_KEYS.map(key => {
+        const entry = LegacyPackages.attributeEntry(system, key);
+        return { key, short: short[key], label: LegacyPackages.ATTR_LABELS[key], ...entry, min: entry.min || "" };
+      }),
+      attributeChoices: LegacyPackages.attributeChoices(system).map(choice => {
+        const raw = LegacyPackages.toArray(system.attributeChoices)[choice.index] ?? {};
+        const explicit = LegacyPackages.ATTR_KEYS.some(key => LegacyPackages.bool(raw?.options?.[key]));
+        return {
+          ...choice,
+          _index: choice.index,
+          chosenLabel: LegacyPackages.ATTR_LABELS[choice.chosen] ?? "",
+          options: LegacyPackages.ATTR_KEYS.map(key => ({ key, short: short[key], checked: explicit && choice.options.includes(key) }))
+        };
+      }),
+      standardHpOptions: {
+        "": `Detect automatically (${standardHp ? "standard" : "this package defines them"})`,
+        "true": "Standard: P.E. + 1D6, +1D6 per level, plus anything below",
+        "false": "This package defines them (below)"
+      },
+      poolRows: LegacyPackages.POOL_KEYS.map(key => {
+        const { start, perLevel } = LegacyPackages.poolFormulas(system, key);
+        return {
+          key,
+          label: LegacyPackages.POOL_LABELS[key],
+          start,
+          perLevel,
+          placeholderStart: poolPlaceholders[key][0],
+          placeholderPerLevel: poolPlaceholders[key][1]
+        };
+      }),
+      hthType: hth.type,
+      hthUpgrades: hth.upgrades.map(upgrade => ({ ...upgrade, _index: upgrade.index })),
+      hthSuggestion: ErrantEarthItemSheet._hthSuggestion(system, hth),
+      bonusSuggestion: ErrantEarthItemSheet._bonusSuggestion(system),
+      languageSuggestion: isRace ? ErrantEarthItemSheet._languageSuggestion(system) : null,
+      levelBonuses: LegacyPackages.levelBonusRows(system).map(row => ({ ...row, _index: row.index })),
+      fixedSkills: LegacyPackages.fixedSkills(system).map(row => ({
+        ...row,
+        _index: row.index,
+        name: row.name ?? "",
+        specPlaceholder: row.key === "languageNative" || row.key === "literacyNative"
+          ? (isRace ? "Native language" : "Race's native language")
+          : "Player's choice"
+      })),
+      languageList: LegacyPackages.toArray(system.languageList).map((row, index) => ({
+        _index: index,
+        name: row?.name ?? "",
+        base: row?.base ?? 50,
+        perLvl: row?.perLvl ?? 3,
+        literacy: LegacyPackages.bool(row?.literacy)
+      }))
+    };
+  }
+
+  /** Offer the Hand to Hand line printed in a package's notes when the
+   *  structured fields are still empty. */
+  static _hthSuggestion(system = {}, hth = LegacyPackages.handToHand(system)) {
+    if (hth.type) return null;
+    const parsed = LegacyPackages.parseHandToHandText(system.bonuses, system.equipment);
+    if (!parsed) return null;
+    const labels = CONFIG.EE?.HTH_TYPES ?? {};
+    const upgrades = parsed.upgrades.map(upgrade => `${labels[upgrade.type] ?? upgrade.type} (${upgrade.cost} pick${upgrade.cost === 1 ? "" : "s"}${upgrade.note ? `, ${upgrade.note.toLowerCase()}` : ""})`);
+    return {
+      label: `${labels[parsed.type] ?? parsed.type}${upgrades.length ? `; upgrades: ${upgrades.join(", ")}` : ""}`,
+      source: parsed.text.length > 160 ? `${parsed.text.slice(0, 157)}…` : parsed.text
+    };
+  }
+
+  /** Bonuses printed in the notes that the structured fields do not hold
+   *  yet, with the update that adds them. Values already set are left alone,
+   *  so applying twice changes nothing. */
+  static _bonusPlan(system = {}) {
+    const parsed = LegacyPackages.parseBonusText(system.bonuses);
+    const labels = { ...LegacyPackages.ATTR_LABELS };
+    const targetLabels = CONFIG.EE?.LEGACY_LEVEL_BONUS_TARGETS ?? {};
+    const sign = value => (Number(value) >= 0 ? `+${value}` : String(value));
+    const chips = [];
+    const update = {};
+    const skillRows = ErrantEarthItemSheet._editableArray(system.skillBonuses);
+    const haveSkill = new Set(skillRows.map(row => row?.key).filter(Boolean));
+    let skillsChanged = false;
+    for (const entry of parsed.skills) {
+      if (haveSkill.has(entry.key)) continue;
+      haveSkill.add(entry.key);
+      skillRows.push({ key: entry.key, name: entry.name, bonus: entry.bonus, note: "", custom: false });
+      chips.push(`${sign(entry.bonus)}% ${entry.name}`);
+      skillsChanged = true;
+    }
+    if (skillsChanged) update["system.skillBonuses"] = skillRows;
+    for (const entry of parsed.attributes) {
+      const current = LegacyPackages.attributeEntry(system, entry.key);
+      if (entry.formula && !current.formula) {
+        update[`system.attributeBonuses.${entry.key}.formula`] = entry.formula;
+        chips.push(`+${entry.formula} ${labels[entry.key]}`);
+      } else if (entry.bonus && !current.bonus) {
+        update[`system.attributeBonuses.${entry.key}.bonus`] = entry.bonus;
+        chips.push(`${sign(entry.bonus)} ${labels[entry.key]}`);
+      }
+    }
+    const attributeChoices = ErrantEarthItemSheet._editableArray(system.attributeChoices);
+    let choicesChanged = false;
+    for (const entry of parsed.attributeChoices) {
+      if (attributeChoices.some(choice => choice?.label === entry.label && String(choice?.formula) === entry.formula)) continue;
+      const { text, ...choice } = entry;
+      attributeChoices.push(choice);
+      chips.push(`+${entry.formula} ${entry.label}`);
+      choicesChanged = true;
+    }
+    if (choicesChanged) update["system.attributeChoices"] = attributeChoices;
+    for (const [section, key] of [["combat", "combatBonuses"], ["saves", "saveBonuses"]]) {
+      for (const entry of parsed[section]) {
+        if (Number(system?.[key]?.[entry.key]) || update[`system.${key}.${entry.key}`] !== undefined) continue;
+        update[`system.${key}.${entry.key}`] = entry.value;
+        chips.push(`${sign(entry.value)} ${targetLabels[`${section === "combat" ? "combat" : "save"}.${entry.key}`] ?? entry.key}`);
+      }
+    }
+    for (const entry of parsed.pools) {
+      if (!entry.key || String(system?.poolBonuses?.[entry.key] ?? "").trim() || update[`system.poolBonuses.${entry.key}`]) continue;
+      update[`system.poolBonuses.${entry.key}`] = entry.formula;
+      chips.push(`+${entry.formula} ${LegacyPackages.POOL_LABELS[entry.key]}`);
+    }
+    const levelRows = ErrantEarthItemSheet._editableArray(system.levelBonuses);
+    let levelsChanged = false;
+    for (const entry of parsed.levelBonuses) {
+      const levels = LegacyPackages.levelList(entry.levels).join(", ");
+      if (levelRows.some(row => row?.target === entry.target && LegacyPackages.levelList(row?.levels).join(", ") === levels && (entry.target !== "note" || row?.note === entry.note))) continue;
+      levelRows.push({ target: entry.target, levels, value: entry.value, note: entry.note });
+      chips.push(`${sign(entry.value)} ${entry.target === "note" ? entry.note : (targetLabels[entry.target] ?? entry.target)} at ${levels}`);
+      levelsChanged = true;
+    }
+    if (levelsChanged) update["system.levelBonuses"] = levelRows;
+    return { chips, update, unparsed: parsed.unparsed };
+  }
+
+  static _bonusSuggestion(system = {}) {
+    const plan = ErrantEarthItemSheet._bonusPlan(system);
+    if (!plan.chips.length) return null;
+    return { chips: plan.chips, unparsed: plan.unparsed };
+  }
+
+  static _languageSuggestion(system = {}) {
+    if (String(system.nativeLanguage ?? "").trim() || LegacyPackages.toArray(system.languageList).length) return null;
+    const parsed = LegacyPackages.parseLanguageText(system.languages);
+    if (!parsed) return null;
+    return { native: parsed.native, others: parsed.others.join(", ") };
+  }
+
+  async _onApplyBonusSuggestion(ev) {
+    ev.preventDefault();
+    const { update, chips } = ErrantEarthItemSheet._bonusPlan(this.item.system);
+    if (!chips.length) return;
+    await this.item.update(update);
+    ui.notifications?.info(`Added ${chips.length} bonus${chips.length === 1 ? "" : "es"} from ${this.item.name}'s notes.`);
+  }
+
+  async _onApplyLanguageSuggestion(ev) {
+    ev.preventDefault();
+    const parsed = LegacyPackages.parseLanguageText(this.item.system.languages);
+    if (!parsed) return;
+    return this.item.update({
+      "system.nativeLanguage": parsed.native,
+      "system.languageList": parsed.others.map(name => ({ name, base: 50, perLvl: 3, literacy: false }))
+    });
+  }
+
+  async _onApplyHthSuggestion(ev) {
+    ev.preventDefault();
+    const parsed = LegacyPackages.parseHandToHandText(this.item.system.bonuses, this.item.system.equipment);
+    if (!parsed) return;
+    return this.item.update({ "system.handToHand": { type: parsed.type, upgrades: parsed.upgrades } });
+  }
+
+  /** Item sheets follow the rules mode of the owning character, or the world
+   *  setting for unowned items, so they match the sheet they came from. */
+  static _themeMode(item) {
+    let setting = "perSheet";
+    try {
+      setting = game.settings.get("errantearth", "rulesMode") ?? "perSheet";
+    } catch (_err) {
+      // Settings are unavailable outside a running world.
+    }
+    if (setting === "errantEarth") return "ee";
+    if (setting === "rifts") return "legacy";
+    return item?.actor?.system?.mode === "errantEarth" ? "ee" : "legacy";
   }
 
   activateListeners(html) {
@@ -482,6 +723,13 @@ export class ErrantEarthItemSheet extends ItemSheet {
     html.on("click", "[data-action='delete-cc-wp-choice']", this._onDeleteCcWpChoice.bind(this));
     html.on("change", "[data-action='add-cc-wp-choice-option']", this._onAddCcWpChoiceOption.bind(this));
     html.on("click", "[data-action='delete-cc-wp-choice-option']", this._onDeleteCcWpChoiceOption.bind(this));
+    html.on("click", "[data-action='apply-hth-suggestion']", this._onApplyHthSuggestion.bind(this));
+    html.on("click", "[data-action='apply-bonus-suggestion']", this._onApplyBonusSuggestion.bind(this));
+    html.on("click", "[data-action='apply-language-suggestion']", this._onApplyLanguageSuggestion.bind(this));
+    html.on("click", "[data-action='add-cc-row']", this._onAddCcRow.bind(this));
+    html.on("click", "[data-action='delete-cc-row']", this._onDeleteCcRow.bind(this));
+    html.on("click", "[data-action='reset-cc-attribute']", this._onResetCcAttribute.bind(this));
+    html.on("click", "[data-action='reset-cc-attribute-choice']", this._onResetCcAttributeChoice.bind(this));
     html.on("click", "[data-action='add-vehicle-armor-extra']",    this._onAddVehicleArmorExtra.bind(this));
     html.on("click", "[data-action='delete-vehicle-armor-extra']", this._onDeleteVehicleArmorExtra.bind(this));
     html.on("click", "[data-action='add-vehicle-weapon']",         this._onAddVehicleWeapon.bind(this));
@@ -526,6 +774,56 @@ export class ErrantEarthItemSheet extends ItemSheet {
     }
   }
 
+  static CC_ROW_DEFAULTS = {
+    attributeChoice: () => ({ label: "Any one Mental attribute", formula: "1D4", options: { iq: true, me: true, ma: true }, chosen: "", value: 0, rolled: false }),
+    language: () => ({ name: "", base: 50, perLvl: 3, literacy: false }),
+    hthUpgrade: () => ({ type: "martialArts", cost: 1, note: "" }),
+    levelBonus: () => ({ target: "save.spell", levels: "", value: 1, note: "" })
+  };
+
+  /** Package arrays edited through generic add/delete buttons. */
+  static CC_ROW_PATHS = new Set(["attributeChoices", "languageList", "handToHand.upgrades", "levelBonuses"]);
+
+  async _onAddCcRow(ev) {
+    ev.preventDefault();
+    const { path, kind } = ev.currentTarget.dataset;
+    const make = ErrantEarthItemSheet.CC_ROW_DEFAULTS[kind];
+    if (!ErrantEarthItemSheet.CC_ROW_PATHS.has(path) || !make) return;
+    const rows = ErrantEarthItemSheet._editableArray(foundry.utils.getProperty(this.item.system, path));
+    rows.push(make());
+    return this.item.update({ [`system.${path}`]: rows });
+  }
+
+  async _onDeleteCcRow(ev) {
+    ev.preventDefault();
+    const { path } = ev.currentTarget.dataset;
+    if (!ErrantEarthItemSheet.CC_ROW_PATHS.has(path)) return;
+    const rows = ErrantEarthItemSheet._editableArray(foundry.utils.getProperty(this.item.system, path));
+    const idx = ErrantEarthItemSheet._validIndex(ev.currentTarget.dataset.index, rows.length);
+    if (idx < 0) return;
+    rows.splice(idx, 1);
+    return this.item.update({ [`system.${path}`]: rows });
+  }
+
+  async _onResetCcAttribute(ev) {
+    ev.preventDefault();
+    const key = ev.currentTarget.dataset.key;
+    if (!LegacyPackages.ATTR_KEYS.includes(key)) return;
+    return this.item.update({
+      [`system.attributeBonuses.${key}.value`]: 0,
+      [`system.attributeBonuses.${key}.rolled`]: false
+    });
+  }
+
+  async _onResetCcAttributeChoice(ev) {
+    ev.preventDefault();
+    const choices = ErrantEarthItemSheet._editableArray(this.item.system.attributeChoices);
+    const idx = ErrantEarthItemSheet._validIndex(ev.currentTarget.dataset.index, choices.length);
+    if (idx < 0) return;
+    Object.assign(choices[idx], { chosen: "", value: 0, rolled: false });
+    return this.item.update({ "system.attributeChoices": choices });
+  }
+
   async _onAddVehicleArmorExtra(ev) {
     ev.preventDefault();
     const extras = ErrantEarthItemSheet._editableArray(this.item.system.armor?.extras);
@@ -561,7 +859,8 @@ export class ErrantEarthItemSheet extends ItemSheet {
   async _onAddOccSkill(ev) {
     ev.preventDefault();
     const skills = ErrantEarthItemSheet._editableArray(this.item.system.skills);
-    skills.push({ key: "", name: "", base: 0, perLvl: 0, category: "occ", custom: true });
+    const category = this.item.type === "race" ? "racial" : "occ";
+    skills.push({ key: "", name: "", base: 0, perLvl: 0, bonus: 0, spec: "", count: 1, category, custom: true });
     return this.item.update({ "system.skills": skills });
   }
 
@@ -572,13 +871,16 @@ export class ErrantEarthItemSheet extends ItemSheet {
     const master = (CONFIG.EE?.SKILL_LIST ?? []).find(s => s.key === key);
     if (!master) { sel.value = ""; return; }
     const skills = ErrantEarthItemSheet._editableArray(this.item.system.skills);
-    if (skills.some(skill => skill?.key === key && !master.repeatable)) { sel.value = ""; return; }
+    if (skills.some(skill => skill?.key === key && !master.repeatable && !master.specialization)) { sel.value = ""; return; }
     skills.push({
       key: master.key,
       name: master.name,
       base: master.base,
       perLvl: master.perLvl,
-      category: sel.dataset.category || "occ",
+      bonus: 0,
+      spec: "",
+      count: 1,
+      category: sel.dataset.category || (this.item.type === "race" ? "racial" : "occ"),
       custom: false,
       statBonuses: foundry.utils.deepClone(master.statBonuses ?? {})
     });
@@ -595,10 +897,17 @@ export class ErrantEarthItemSheet extends ItemSheet {
     return this.item.update({ "system.skills": skills });
   }
 
+  static SKILL_CHOICE_PRESETS = {
+    related: () => ({ label: "O.C.C. Related Skills", count: 5, level: 1, laterLevels: "3, 7, 10, 13", laterCount: 1, category: "occRelated", bonus: 0, allowedKeys: [], allowedGroups: [], allowWp: true, wpCost: 1 }),
+    secondary: () => ({ label: "Secondary Skills", count: 4, level: 1, laterLevels: "4, 8, 12", laterCount: 1, category: "secondary", bonus: 0, allowedKeys: [], allowedGroups: [], allowWp: false, wpCost: 1 }),
+    pick: item => ({ label: "One of choice", count: 1, level: 1, laterLevels: "", laterCount: 1, category: item?.type === "race" ? "racial" : "occ", bonus: 0, allowedKeys: [], allowedGroups: [], allowWp: false, wpCost: 1 })
+  };
+
   async _onAddOccSkillChoice(ev) {
     ev.preventDefault();
     const choices = ErrantEarthItemSheet._editableArray(this.item.system.skillChoices);
-    choices.push({ label: "O.C.C. Related Skills", count: 1, level: 1, category: "occRelated", bonus: 0, allowedKeys: [], allowedGroups: [] });
+    const preset = ErrantEarthItemSheet.SKILL_CHOICE_PRESETS[ev.currentTarget.dataset.preset] ?? ErrantEarthItemSheet.SKILL_CHOICE_PRESETS.related;
+    choices.push(preset(this.item));
     return this.item.update({ "system.skillChoices": choices });
   }
 
@@ -819,6 +1128,22 @@ export class ErrantEarthItemSheet extends ItemSheet {
     for (const entry of Object.values(sys.attributeBonuses ?? {})) {
       if (entry && typeof entry === "object" && "rolled" in entry) {
         entry.rolled = ErrantEarthItemSheet._coerceBoolean(entry.rolled);
+      }
+    }
+    for (const choice of Array.isArray(sys.skillChoices) ? sys.skillChoices : []) {
+      if (choice && typeof choice === "object" && "allowWp" in choice) choice.allowWp = ErrantEarthItemSheet._coerceBoolean(choice.allowWp);
+    }
+    for (const row of Array.isArray(sys.languageList) ? sys.languageList : []) {
+      if (row && typeof row === "object" && "literacy" in row) row.literacy = ErrantEarthItemSheet._coerceBoolean(row.literacy);
+    }
+    for (const row of Array.isArray(sys.skills) ? sys.skills : []) {
+      if (row && typeof row === "object" && "custom" in row) row.custom = ErrantEarthItemSheet._coerceBoolean(row.custom);
+    }
+    for (const choice of Array.isArray(sys.attributeChoices) ? sys.attributeChoices : []) {
+      if (!choice || typeof choice !== "object") continue;
+      if ("rolled" in choice) choice.rolled = ErrantEarthItemSheet._coerceBoolean(choice.rolled);
+      if (choice.options && typeof choice.options === "object") {
+        for (const key of Object.keys(choice.options)) choice.options[key] = ErrantEarthItemSheet._coerceBoolean(choice.options[key]);
       }
     }
     if ("categoryCustom" in sys) {

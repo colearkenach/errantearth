@@ -1,4 +1,6 @@
 import { LegacyRules } from "../rules/legacy.js";
+import { LegacyPackages } from "../rules/legacy-packages.js";
+import { LegacyPackageWizard } from "../apps/legacy-package-wizard.js";
 
 /**
  * Errant Earth Character Sheet
@@ -10,11 +12,41 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       classes: ["errantearth", "sheet", "actor", "character"],
       template: "systems/errantearth/templates/actor/character-sheet.html",
       width: 980,
-      height: 820,
+      height: 860,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }],
-      scrollY: [".tab"],
+      scrollY: [".sheet-body"],
       dragDrop: [{ dragSelector: ".ee-item-row", dropSelector: null }]
     });
+  }
+
+  /** Header attribute boxes. Tooltips follow the attribute descriptions in each rulebook. */
+  static _LEGACY_ATTRIBUTE_META = [
+    { key: "iq", label: "IQ", tooltip: "Intelligence Quotient — mental acuity, reasoning, and learning ability. Adds a skill bonus at 16+." },
+    { key: "me", label: "ME", tooltip: "Mental Endurance — willpower, mental stamina, and resistance to psionic, magical, and emotional attacks." },
+    { key: "ma", label: "MA", tooltip: "Mental Affinity — personal magnetism and presence. Grants a Trust/Intimidate bonus at 16+." },
+    { key: "ps", label: "PS", tooltip: "Physical Strength — lift/carry, melee damage bonus; augmented or supernatural for some races." },
+    { key: "pp", label: "PP", tooltip: "Physical Prowess — agility, dexterity, hand-eye coordination. Bonuses to strike, parry, and dodge at 16+." },
+    { key: "pe", label: "PE", tooltip: "Physical Endurance — stamina and constitution. Resists fatigue, disease, drugs, and poison; coma/death bonus at 16+." },
+    { key: "pb", label: "PB", tooltip: "Physical Beauty — appearance and charm. Grants a Charm/Impress bonus at 16+." },
+    { key: "spd", label: "SPD", tooltip: "Speed — running speed. ×20 for yards per minute, or SPD × 15 ÷ 22 for miles per hour." }
+  ];
+
+  static _EE_ATTRIBUTE_META = [
+    { key: "anm", label: "ANM", name: "Anima", tooltip: "Anima — the power of the Drifter's soul and their reserves of inner strength." },
+    { key: "brv", label: "BRV", name: "Bravado", tooltip: "Bravado — sense of self, appearance, and charisma; making friends and influencing people." },
+    { key: "com", label: "COM", name: "Comprehension", tooltip: "Comprehension — awareness and a natural knack for finding the truth; perceptive and quick-witted." },
+    { key: "fin", label: "FIN", name: "Finesse", tooltip: "Finesse — agility, dexterity, and hand-eye coordination rolled into one." },
+    { key: "hrd", label: "HRD", name: "Hardiness", tooltip: "Hardiness — natural endurance, resistance, and constitution against injury and trauma." },
+    { key: "pow", label: "POW", name: "Power", tooltip: "Power — physical strength and the force behind the Drifter's blows." },
+    { key: "spd", label: "SPD", name: "Speed", tooltip: "Speed — raw movement speed and innate reaction time." },
+    { key: "wil", label: "WIL", name: "Willpower", tooltip: "Willpower — mental strength; resisting failing morale and despair." }
+  ];
+
+  static _poolPercent(value, max) {
+    const v = Number(value ?? 0) || 0;
+    const m = Number(max ?? 0) || 0;
+    if (m <= 0) return 0;
+    return Math.max(0, Math.min(100, Math.round((v / m) * 100)));
   }
 
   // Compatibility aliases for existing macros and sheet callers. Rules live in LegacyRules.
@@ -464,7 +496,9 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.rulesModeHint = ctx.canToggleMode
       ? "Switch this character between Errant Earth and EE Legacy rules. Character data is preserved."
       : `World setting is forcing ${ctx.rulesModeLabel}; per-sheet switching is disabled.`;
-    ctx.sheetTitle = ctx.isEE ? "ERRANT EARTH" : "EE LEGACY";
+    ctx.sheetTitle = ctx.isEE ? "Errant Earth" : "EE Legacy";
+    ctx.modeKey = ctx.isEE ? "ee" : "legacy";
+    ctx.modeName = ctx.isEE ? "Errant Earth" : "EE Legacy";
 
     const level = Number(sys.level ?? 1);
     ctx.eeSizeOptions = C._EE_SIZE_CATEGORIES;
@@ -485,18 +519,13 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     ctx.isRCC = !!ctx.equippedOccItem?.system?.isRCC;
     ctx.legacyXp = C._legacyXpProgress(sys.xp, level, ctx.equippedOccItem?.system);
     const rawLegacySkillRows = C._toArray(sys.skills?.list);
-    const appliedOccChoiceCounts = new Map();
-    for (const row of rawLegacySkillRows) {
-      if (row?.sourceItemId !== ctx.equippedOccId || row?.sourceChoiceIndex === undefined || row?.sourceChoiceIndex === "") continue;
-      const key = String(row.sourceChoiceIndex);
-      appliedOccChoiceCounts.set(key, (appliedOccChoiceCounts.get(key) ?? 0) + 1);
-    }
-    ctx.pendingOccSkillChoiceCount = ctx.equippedOccItem
-      ? C._toArray(ctx.equippedOccItem.system?.skillChoices)
-        .filter((choice, index) => Number(choice?.count ?? 0) > 0
-          && Math.max(1, Number(choice?.level ?? 1) || 1) <= level
-          && (appliedOccChoiceCounts.get(String(index)) ?? 0) < Math.max(1, Number(choice?.count ?? 1) || 1)).length
-      : 0;
+    ctx.pendingPackageChoices = LegacyPackages.pendingChoices(sys, this.actor.items, level).map(entry => ({
+      itemName: entry.item.name,
+      label: entry.rule.label || "Skill choices",
+      remaining: entry.remaining
+    }));
+    ctx.pendingOccSkillChoiceCount = ctx.pendingPackageChoices.length;
+    ctx.pendingOccSkillPickCount = ctx.pendingPackageChoices.reduce((sum, entry) => sum + entry.remaining, 0);
     ctx.riftsDerived = LegacyRules.derive(sys, this.actor.items);
     const { sourceTotals: riftsSourceTotals, effectiveAttrs, handToHand } = ctx.riftsDerived;
     const saveLabels = { spell: "Spell", ritual: "Ritual", psionics: "Psionics", insanity: "Insanity", drugPoison: "Toxins / Poison", harmfulDrugs: "Harmful Drugs", horrorFactor: "Horror Factor", death: "Coma / Death", possession: "Possession", pain: "Pain" };
@@ -527,17 +556,33 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
       const definition = C._legacySkillDefinition(r);
       const name = !r.custom && r.key && definition && !definition.specialization ? definition.name : r.name;
       const sourceBonus = C._riftsSkillSourceBonus(riftsSourceTotals, r);
+      const hasOccBonus = r.occBonus !== undefined && r.occBonus !== null && r.occBonus !== "";
+      const occBonus = hasOccBonus ? Number(r.occBonus) || 0 : 0;
       const learnedAtLevel = Math.max(1, Number(r.learnedAtLevel ?? 1) || 1);
       const skillLevel = Math.max(1, level - learnedAtLevel + 1);
-      const total  = base + perLvl * Math.max(0, skillLevel - 1) + misc + iqBonusForSkills + sourceBonus;
-      const hasSourceChoice = r.sourceChoiceIndex !== undefined && r.sourceChoiceIndex !== "";
-      return { ...r, name, learnedAtLevel, skillLevel, hasSourceChoice, _index: i, statBonusEntries: C._legacySkillStatEntries(r, i), sourceBonus, total };
+      const total  = base + perLvl * Math.max(0, skillLevel - 1) + occBonus + misc + iqBonusForSkills + sourceBonus;
+      const hasSourceChoice = r.sourceChoiceIndex !== undefined && r.sourceChoiceIndex !== "" && r.sourceChoiceIndex !== null;
+      const hasChoiceCost = r.choiceCost !== undefined && r.choiceCost !== null && r.choiceCost !== "";
+      // Language and literacy rows keep their generic key; the language is
+      // the part of the name after the colon and stays editable.
+      const isSpecialization = !r.custom && !!definition?.specialization;
+      const specPrefix = isSpecialization ? `${definition.specializationBase}: ` : "";
+      const specValue = isSpecialization && String(name ?? "").startsWith(specPrefix) ? String(name).slice(specPrefix.length) : "";
+      const genericName = isSpecialization && (!specValue || /^(?:native (?:tongue|language)|other)$/i.test(specValue.trim()));
+      return {
+        ...r, name, learnedAtLevel, skillLevel, hasSourceChoice, hasChoiceCost, hasOccBonus, occBonus,
+        isSpecialization, specPrefix, specValue: genericName ? "" : specValue, needsSpec: genericName,
+        specLabel: definition?.specializationLabel ?? "",
+        _index: i, statBonusEntries: C._legacySkillStatEntries(r, i), sourceBonus, total
+      };
     });
+    const knownCategories = new Set(["occ", "occRelated", "secondary", "racial"]);
     ctx.skills = {
+      racial:     skillRows.filter(r => r.category === "racial"),
       occ:        skillRows.filter(r => r.category === "occ"),
       occRelated: skillRows.filter(r => r.category === "occRelated"),
       secondary:  skillRows.filter(r => r.category === "secondary"),
-      unassigned: skillRows.filter(r => !r.category)
+      unassigned: skillRows.filter(r => !knownCategories.has(r.category))
     };
 
     const eeSkillRows = toArr(sys.eeSkills?.list).map((r, i) => {
@@ -643,6 +688,42 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     const equipmentSources = this.actor.items.map(item => ({ ...item.system, name: item.name, type: item.type, system: item.system }));
     ctx.eeDerived = C.eeDerivedData(sys, equipmentSources);
     ctx.eePools = C._eePoolState(sys, ctx.eeDerived);
+
+    // Header rows: one entry per attribute box / resource card.
+    const attributeSourceRows = new Map((ctx.riftsDerived.attributeSourceRows ?? []).map(row => [row.key, row]));
+    ctx.legacyAttributeRows = C._LEGACY_ATTRIBUTE_META.map(meta => {
+      const temp = attributeSourceRows.get(meta.key) ?? {};
+      return {
+        ...meta,
+        score: ctx.riftsDerived.attributeScores?.[meta.key] ?? 0,
+        source: ctx.riftsDerived.sourceTotals?.attributeBonuses?.[meta.key] ?? 0,
+        hasTemp: !!temp.hasSource,
+        tempDisplay: temp.display ?? "",
+        total: temp.total ?? 0
+      };
+    });
+    ctx.legacyPoolRows = (ctx.riftsDerived.poolRows ?? []).map(row => ({ ...row, pct: C._poolPercent(row.value, row.total) }));
+    ctx.legacyHunger = {
+      value: sys.hunger?.value ?? 0,
+      max: sys.hunger?.max ?? 0,
+      pct: C._poolPercent(sys.hunger?.value, sys.hunger?.max)
+    };
+    ctx.eeAttributeRows = C._EE_ATTRIBUTE_META.map(meta => ({ ...meta, value: sys.eeAttributes?.[meta.key]?.value ?? 0 }));
+    const eePool = (key, label, name, extra = {}) => {
+      const pool = ctx.eePools[key] ?? { value: 0, max: 0 };
+      return { key, label, name, value: pool.value, max: pool.max, pct: C._poolPercent(pool.value, pool.max), ...extra };
+    };
+    const scars = ctx.eeDerived.health?.scars ?? { value: 0, max: 0 };
+    ctx.eePoolRows = [
+      eePool("endurance", "Endurance", "system.eeCombat.health.enduranceCurrent"),
+      eePool("health", "Health", "system.eeCombat.health.healthCurrent"),
+      { key: "scars", label: "Scars", readonly: true, value: scars.value, max: scars.max, pct: C._poolPercent(scars.value, scars.max), title: "Edit scars on the Derived tab" },
+      eePool("esp", "ESP", "system.eeCombat.resources.espCurrent"),
+      eePool("mp", "MP", "system.eeCombat.resources.mpCurrent"),
+      eePool("glimmer", "Glimmer", "system.eeCombat.resources.glimmerCurrent"),
+      eePool("magicHeat", "Magic Heat", "system.magic.heat", { maxName: "system.magic.heatMax", heat: true }),
+      eePool("psychicHeat", "Psychic Heat", "system.psychic.heat", { maxName: "system.psychic.heatMax", heat: true })
+    ];
     ctx.weaponItems = itemBuckets.weapon.map(item => {
       const raw = foundry.utils.deepClone(item.system ?? {});
       const decorated = ctx.isEE
@@ -675,6 +756,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
         }
       }
     }
+    ctx.legacyAdvancement = ctx.isEE ? null : C._advancementContext(sys, this.actor.items);
     ctx.grantsMagic    = !!(ctx.equippedOccItem?.system?.grantsMagic    || ctx.equippedRaceItem?.system?.grantsMagic);
     ctx.grantsPsionics = !!(ctx.equippedOccItem?.system?.grantsPsionics || ctx.equippedRaceItem?.system?.grantsPsionics);
 
@@ -706,6 +788,13 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     html.on("change", "[data-action='toggle-mode']", this._onToggleMode.bind(this));
     html.on("change", "[data-action='cc-pick']",     this._onCcPick.bind(this));
     html.on("click", "[data-action='apply-occ-skill-choices']", this._onApplyOccSkillChoices.bind(this));
+    html.on("click", "[data-action='roll-attributes']", this._onRollAttributes.bind(this));
+    html.on("click", "[data-action='roll-starting-pools']", this._onRollStartingPools.bind(this));
+    html.on("click", "[data-action='roll-pending-pools']", this._onRollPendingPools.bind(this));
+    html.on("click", "[data-action='level-up']", this._onLevelUp.bind(this));
+    html.on("click", "[data-action='delete-advancement-entry']", this._onDeleteAdvancementEntry.bind(this));
+    html.on("click", "[data-action='delete-skill-trade']", this._onDeleteSkillTrade.bind(this));
+    html.on("input", "[data-action='set-skill-spec']", this._onSkillSpecInput.bind(this));
 
     const dropZone = html.find(".ee-items-tab")[0];
     if (dropZone) {
@@ -762,16 +851,38 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
 
   async _onApplyOccSkillChoices(ev) {
     ev.preventDefault();
-    const occId = this.actor.system.equippedOcc;
-    const occItem = occId ? this.actor.items.get(occId) : null;
-    if (!occItem) return ui.notifications?.warn("Equip an O.C.C. before resolving its skill choices.");
-    const choiceSkills = await this._promptOccSkillChoices(occItem);
-    if (choiceSkills === null) return this.render(false);
-    if (!choiceSkills.length) return ui.notifications?.info(`${occItem.name} has no unresolved skill choices at this level.`);
-    const mergedSkills = this._mergeOccSkillsIntoActor(occItem, choiceSkills);
-    if (!mergedSkills) return ui.notifications?.info("Those skills are already on the character.");
-    await this.actor.update({ "system.skills.list": mergedSkills });
-    return ui.notifications?.info(`Applied ${choiceSkills.length} skill${choiceSkills.length === 1 ? "" : "s"} from ${occItem.name}.`);
+    const level = Math.max(1, Number(this.actor.system.level ?? 1) || 1);
+    const pending = LegacyPackages.pendingChoices(this.actor.system, this.actor.items, level);
+    const packages = [...new Map(pending.map(entry => [entry.item.id, entry.item])).values()];
+    if (!packages.length) return ui.notifications?.info("No package skill picks are available at this level.");
+    for (const item of packages) {
+      const applied = await this._applyPackagePlan(item, "choices");
+      if (applied === null) break;
+    }
+    return this.render(false);
+  }
+
+  /** Open the package window (when anything needs choosing) and return the
+   *  plan, or null when cancelled. */
+  async _promptPackagePlan(item, mode = "equip") {
+    const context = LegacyPackageWizard.buildContext({ sys: this.actor.system, item, items: this.actor.items, mode });
+    if (!LegacyPackageWizard.needsInput(context)) return { hth: null, specs: {}, attributeChoices: [], wp: {}, picks: [], trades: [] };
+    return LegacyPackageWizard.prompt(this.actor, item, { mode });
+  }
+
+  async _applyPackagePlan(item, mode = "equip", extraUpdate = {}) {
+    const plan = await this._promptPackagePlan(item, mode);
+    if (plan === null) return null;
+    const { actorUpdate, itemUpdate, addedSkills } = LegacyPackageWizard.planUpdates({
+      sys: this.actor.system, item, items: this.actor.items, plan, mode
+    });
+    if (Object.keys(itemUpdate).length) await item.update(itemUpdate);
+    const update = { ...extraUpdate, ...actorUpdate };
+    if (Object.keys(update).length) await this.actor.update(update);
+    if (mode === "choices" && addedSkills.length) {
+      ui.notifications?.info(`Added ${addedSkills.length} skill${addedSkills.length === 1 ? "" : "s"} from ${item.name}.`);
+    }
+    return plan;
   }
 
   async _onEquipItem(ev) {
@@ -877,239 +988,6 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
     });
   }
 
-  /** Merge OCC starting skills into the actor's skill list. Skips any that
-   *  are already on the actor (matched by key for canonical skills, by
-   *  name+custom for free-text rows). Existing skill values are never
-   *  overwritten. */
-  _mergeOccSkillsIntoActor(occItem, choiceSkills = []) {
-    const occSkills = [
-      ...ErrantEarthCharacterSheet._toArray(occItem.system?.skills),
-      ...ErrantEarthCharacterSheet._toArray(choiceSkills)
-    ];
-    if (!occSkills.length) return null;
-    const current = ErrantEarthCharacterSheet._toArray(this.actor.system.skills?.list);
-    const usedKeys  = new Set(current.map(r => r.key).filter(Boolean));
-    const usedNames = new Set(current.filter(r => r.custom && r.name).map(r => r.name.trim().toLowerCase()));
-    const merged = foundry.utils.deepClone(current);
-    let added = 0;
-    for (const s of occSkills) {
-      const isCustom = !!s.custom || !s.key;
-      if (isCustom) {
-        const nm = (s.name ?? "").trim();
-        if (!nm || usedNames.has(nm.toLowerCase())) continue;
-        usedNames.add(nm.toLowerCase());
-      } else {
-        const definition = ErrantEarthCharacterSheet._legacySkillDefinition(s);
-        if (!definition?.repeatable && usedKeys.has(s.key)) continue;
-        if (!definition?.repeatable) usedKeys.add(s.key);
-      }
-      merged.push({
-        key: s.key ?? "",
-        name: s.name ?? "",
-        base: Number(s.base ?? 0),
-        perLvl: Number(s.perLvl ?? 0),
-        misc: Number(s.misc ?? 0) || 0,
-        category: s.category || "occ",
-        custom: !!isCustom,
-        learnedAtLevel: Math.max(1, Number(s.learnedAtLevel ?? 1) || 1),
-        sourceItemId: s.sourceItemId ?? occItem.id,
-        ...(s.sourceChoiceIndex !== undefined ? { sourceChoiceIndex: Number(s.sourceChoiceIndex) } : {}),
-        statBonuses: foundry.utils.deepClone(s.statBonuses ?? ErrantEarthCharacterSheet._legacySkillDefinition(s)?.statBonuses ?? {})
-      });
-      added++;
-    }
-    return added ? merged : null;
-  }
-
-  _existingLegacySkillKeys(extraRows = []) {
-    return new Set([
-      ...ErrantEarthCharacterSheet._toArray(this.actor.system.skills?.list),
-      ...ErrantEarthCharacterSheet._toArray(extraRows)
-    ].map(r => r.key).filter(Boolean));
-  }
-
-  static _wpChoicePool(pool = "any") {
-    const ancient = CONFIG.EE?.WP_LIST?.ancient ?? [];
-    const modern = CONFIG.EE?.WP_LIST?.modern ?? [];
-    if (pool === "ancient") return ancient;
-    if (pool === "modern") return modern;
-    return [...ancient, ...modern];
-  }
-
-  static _promptCheckboxChoice({ title, message, options, count, name }) {
-    if (!options.length || !count) return Promise.resolve([]);
-    const safeName = ErrantEarthCharacterSheet._escapeHtml(name);
-    const optionHtml = options.map(opt => `
-      <label class="ee-choice-option">
-        <input type="checkbox" name="${safeName}" value="${ErrantEarthCharacterSheet._escapeHtml(opt.key)}" />
-        <span>${ErrantEarthCharacterSheet._escapeHtml(opt.name)}</span>
-      </label>`).join("");
-    return new Promise((resolve) => {
-      let settled = false;
-      const finish = value => {
-        if (settled) return;
-        settled = true;
-        resolve(value);
-      };
-      new Dialog({
-        title,
-        content: `
-          <form class="ee-choice-dialog">
-            <p>${ErrantEarthCharacterSheet._escapeHtml(message)}</p>
-            <p class="hint">Select exactly ${count}.</p>
-            <div class="ee-choice-options">${optionHtml}</div>
-          </form>`,
-        buttons: {
-          ok: {
-            label: "Apply",
-            callback: (html) => {
-              const checked = Array.from(html[0].querySelectorAll(`input[type="checkbox"]:checked`)).map(el => el.value);
-              if (checked.length !== count) {
-                ui.notifications?.warn(`Select exactly ${count} option${count === 1 ? "" : "s"} for ${title}.`);
-                return false;
-              }
-              finish(checked);
-            }
-          },
-          cancel: { label: "Cancel", callback: () => finish(null) }
-        },
-        default: "ok",
-        close: () => finish(null)
-      }, { classes: ["errantearth", "dialog", "ee-choice-dialog"], width: 520 }).render(true);
-    });
-  }
-
-  async _promptOccSkillChoices(occItem) {
-    const actorLevel = Math.max(1, Number(this.actor.system.level ?? 1) || 1);
-    const appliedCounts = new Map();
-    for (const row of ErrantEarthCharacterSheet._toArray(this.actor.system.skills?.list)) {
-      if (row?.sourceItemId !== occItem.id || row?.sourceChoiceIndex === undefined || row?.sourceChoiceIndex === "") continue;
-      const key = String(row.sourceChoiceIndex);
-      appliedCounts.set(key, (appliedCounts.get(key) ?? 0) + 1);
-    }
-    const choices = ErrantEarthCharacterSheet._toArray(occItem.system?.skillChoices)
-      .map((choice, index) => ({
-        ...choice,
-        _sourceIndex: index,
-        _remainingCount: Math.max(0, Math.max(1, Number(choice?.count ?? 1) || 1) - (appliedCounts.get(String(index)) ?? 0))
-      }))
-      .filter(choice => Number(choice?.count ?? 0) > 0
-        && Math.max(1, Number(choice?.level ?? 1) || 1) <= actorLevel
-        && choice._remainingCount > 0);
-    if (!choices.length) return [];
-
-    const master = CONFIG.EE?.SKILL_LIST ?? [];
-    const fixedOccSkills = ErrantEarthCharacterSheet._toArray(occItem.system?.skills);
-    const usedKeys = this._existingLegacySkillKeys(fixedOccSkills);
-    const rows = [];
-
-    for (const choice of choices) {
-      const choiceIndex = choice._sourceIndex;
-      const count = choice._remainingCount;
-      const learnedAtLevel = Math.max(1, Number(choice.level ?? 1) || 1);
-      const category = choice.category || "occRelated";
-      const allowedKeys = ErrantEarthCharacterSheet._toArray(choice.allowedKeys).filter(Boolean);
-      const allowed = new Set(allowedKeys);
-      const allowedGroups = ErrantEarthCharacterSheet._toArray(choice.allowedGroups)
-        .map(rule => ({
-          group: String(rule?.group ?? "").trim(),
-          excluded: new Set(ErrantEarthCharacterSheet._toArray(rule?.excludedKeys).filter(Boolean))
-        }))
-        .filter(rule => rule.group);
-      const hasRestrictions = !!(allowed.size || allowedGroups.length);
-      const available = master
-        .filter(skill => !hasRestrictions
-          || allowed.has(skill.key)
-          || allowedGroups.some(rule => rule.group === skill.group && !rule.excluded.has(skill.key)))
-        .filter(skill => category !== "secondary" || skill.secondary !== false)
-        .filter(skill => skill.repeatable || !usedKeys.has(skill.key));
-      const label = choice.label || (category === "secondary" ? "Secondary Skills" : "OCC Related Skills");
-
-      if (available.length < count) {
-        ui.notifications?.warn(`${occItem.name}: ${label} has only ${available.length} available option${available.length === 1 ? "" : "s"} for ${count} pick${count === 1 ? "" : "s"}.`);
-        return null;
-      }
-
-      const selected = await ErrantEarthCharacterSheet._promptCheckboxChoice({
-        title: `${occItem.name}: ${label}`,
-        message: `Choose ${count} ${label.toLowerCase()} to add as ${CONFIG.EE?.SKILL_CATEGORIES?.[category] ?? category}.`,
-        options: available,
-        count,
-        name: `skillChoice${choiceIndex}`
-      });
-      if (selected === null) return null;
-
-      for (const key of selected) {
-        const skill = master.find(s => s.key === key);
-        if (!skill) continue;
-        const name = skill.specialization
-          ? await ErrantEarthCharacterSheet._promptSkillSpecialization(skill)
-          : skill.name;
-        if (!name) return null;
-        rows.push({
-          key: skill.key,
-          name,
-          base: skill.base,
-          perLvl: skill.perLvl,
-          misc: Number(choice.bonus ?? 0) || 0,
-          category,
-          custom: false,
-          learnedAtLevel,
-          sourceItemId: occItem.id,
-          sourceChoiceIndex: choiceIndex,
-          statBonuses: foundry.utils.deepClone(skill.statBonuses ?? {})
-        });
-        if (!skill.repeatable) usedKeys.add(skill.key);
-      }
-    }
-
-    return rows;
-  }
-
-  async _promptCcWpChoices(item) {
-    const choices = ErrantEarthCharacterSheet._toArray(item.system?.weaponProficiencies?.choices)
-      .filter(choice => Number(choice?.count ?? 0) > 0);
-    if (!choices.length) return {};
-
-    const actorSelected = this.actor.system.weaponProficiencies?.selected ?? {};
-    const sourceSelected = item.system?.weaponProficiencies?.selected ?? {};
-    const usedKeys = new Set([
-      ...Object.entries(actorSelected).filter(([, selected]) => selected).map(([key]) => key),
-      ...Object.entries(sourceSelected).filter(([, selected]) => selected).map(([key]) => key)
-    ]);
-    const selectedWp = {};
-
-    for (const [choiceIndex, choice] of choices.entries()) {
-      const count = Math.max(1, Number(choice.count ?? 1) || 1);
-      const label = choice.label || "W.P. of choice";
-      const allowedKeys = ErrantEarthCharacterSheet._toArray(choice.allowedKeys).filter(Boolean);
-      const allowed = new Set(allowedKeys);
-      const available = ErrantEarthCharacterSheet._wpChoicePool(allowed.size ? "any" : choice.pool)
-        .filter(wp => !allowed.size || allowed.has(wp.key))
-        .filter(wp => !usedKeys.has(wp.key));
-
-      if (available.length < count) {
-        ui.notifications?.warn(`${item.name}: ${label} has only ${available.length} available option${available.length === 1 ? "" : "s"} for ${count} pick${count === 1 ? "" : "s"}.`);
-        return null;
-      }
-
-      const selected = await ErrantEarthCharacterSheet._promptCheckboxChoice({
-        title: `${item.name}: ${label}`,
-        message: `Choose ${count} ${label}.`,
-        options: available,
-        count,
-        name: `wpChoice${choiceIndex}`
-      });
-      if (selected === null) return null;
-      for (const key of selected) {
-        selectedWp[key] = true;
-        usedKeys.add(key);
-      }
-    }
-
-    return selectedWp;
-  }
-
   async _onUnequipItem(ev) {
     ev.preventDefault();
     const slot = ev.currentTarget.dataset.slot;
@@ -1147,6 +1025,7 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
   }
 
   async _equipCcItem(item) {
+    const update = {};
     if (item.type === "race" || LegacyRules._isRccAsRace(item)) {
       const equippedOccId = this.actor.system.equippedOcc;
       const equippedOcc = equippedOccId ? this.actor.items.get(equippedOccId) : null;
@@ -1160,27 +1039,15 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
           ui.notifications?.warn(`Equipping a Race while an RCC ("${equippedOcc.name}") is equipped. The Active EE Legacy Sources panel will flag this.`);
         }
       }
-      const choiceSkills = await this._promptOccSkillChoices(item);
-      if (choiceSkills === null) return this.render(false);
-      const choiceWps = await this._promptCcWpChoices(item);
-      if (choiceWps === null) return this.render(false);
-      const update = { "system.equippedRace": item.id, "system.race": item.name };
+      update["system.equippedRace"] = item.id;
+      update["system.race"] = item.name;
       if (equippedOccId === item.id) {
         update["system.equippedOcc"] = "";
         update["system.occ"] = "";
       }
-      const mergedSkills = this._mergeOccSkillsIntoActor(item, choiceSkills);
-      if (mergedSkills) update["system.skills.list"] = mergedSkills;
-      if (Object.keys(choiceWps).length) {
-        update["system.weaponProficiencies.selected"] = {
-          ...(this.actor.system.weaponProficiencies?.selected ?? {}),
-          ...choiceWps
-        };
-      }
-      return this.actor.update(update);
-    }
-    if (item.type === "occ") {
-      const update = { "system.equippedOcc": item.id, "system.occ": item.name };
+    } else if (item.type === "occ") {
+      update["system.equippedOcc"] = item.id;
+      update["system.occ"] = item.name;
       if (item.system?.isRCC) {
         const enforcement = ErrantEarthCharacterSheet._legacyPackageEnforcement();
         if (enforcement === "strict") {
@@ -1192,20 +1059,260 @@ export class ErrantEarthCharacterSheet extends ActorSheet {
           update["system.race"] = item.name;
         }
       }
-      const choiceSkills = await this._promptOccSkillChoices(item);
-      if (choiceSkills === null) return this.render(false);
-      const choiceWps = await this._promptCcWpChoices(item);
-      if (choiceWps === null) return this.render(false);
-      const mergedSkills = this._mergeOccSkillsIntoActor(item, choiceSkills);
-      if (mergedSkills) update["system.skills.list"] = mergedSkills;
-      if (Object.keys(choiceWps).length) {
-        update["system.weaponProficiencies.selected"] = {
-          ...(this.actor.system.weaponProficiencies?.selected ?? {}),
-          ...choiceWps
-        };
-      }
-      return this.actor.update(update);
+    } else {
+      return;
     }
+    const applied = await this._applyPackagePlan(item, "equip", update);
+    if (applied === null) return this.render(false);
+    return applied;
+  }
+
+  // ------------------------------------------------ Creation & Advancement
+
+  static _advancementContext(sys = {}, items = []) {
+    const level = Math.max(1, Number(sys.level ?? 1) || 1);
+    const packages = LegacyPackages.equippedPackages(sys, items);
+    const itemList = Array.from(items ?? []);
+    const nameOf = id => id === "standard" ? "Standard" : (itemList.find(item => item.id === id)?.name ?? "Removed package");
+    const activeIds = new Set(packages.map(item => item.id));
+    const ledger = LegacyPackages.ledger(sys).map(entry => ({
+      ...entry,
+      sourceName: nameOf(entry.source),
+      poolLabel: LegacyPackages.POOL_LABELS[entry.key] ?? entry.key,
+      active: (entry.source === "standard" || activeIds.has(entry.source)) && Number(entry.level ?? 1) <= level
+    })).sort((a, b) => (Number(a.level) - Number(b.level)) || String(a.key).localeCompare(String(b.key)));
+    const pending = LegacyPackages.pendingPoolRolls(sys, items);
+    const tracked = ledger.length > 0;
+    const byLevel = new Map();
+    for (const row of pending) {
+      if (!byLevel.has(row.level)) byLevel.set(row.level, []);
+      byLevel.get(row.level).push({ ...row, display: `${row.label} ${row.text}`, sourceName: row.sourceName });
+    }
+    const choiceLabels = new Map();
+    for (const item of itemList) {
+      LegacyPackages.toArray(item.system?.skillChoices).forEach((choice, index) => choiceLabels.set(`${item.id}|${index}`, choice?.label || "Skill picks"));
+    }
+    const trades = LegacyPackages.trades(sys).map(trade => ({
+      ...trade,
+      sourceName: nameOf(trade.sourceItemId),
+      ruleLabel: choiceLabels.get(`${trade.sourceItemId}|${trade.choiceIndex}`) ?? "",
+      costLabel: `${Number(trade.cost) || 0} pick${Number(trade.cost) === 1 ? "" : "s"}`
+    }));
+    const attributePlan = LegacyPackages.attributeRollPlan(sys, items).map(row => ({
+      ...row,
+      text: [row.formula + (row.flat ? ` +${row.flat}` : ""), ...row.bonusRolls.map(bonus => `+${bonus.formula}`)].join(" "),
+      fromPackage: row.source !== "standard"
+    }));
+    const planRows = LegacyPackages.poolPlan(sys, items).map(row => ({
+      ...row,
+      startDisplay: row.start || "—",
+      perLevelDisplay: row.perLevel || "—"
+    }));
+    return {
+      level,
+      hasPackages: packages.length > 0,
+      tracked,
+      ledger,
+      planRows,
+      pendingStart: pending.filter(row => row.level === 1).map(row => `${row.sourceName} ${row.label}: ${row.text}`),
+      pendingLevels: [...byLevel.entries()].filter(([lvl]) => lvl > 1).map(([lvl, rows]) => ({ level: lvl, rows })),
+      pendingCount: pending.length,
+      trades,
+      attributePlan,
+      packageAttributes: attributePlan.some(row => row.fromPackage || row.bonusRolls.length),
+      requirementWarnings: LegacyPackages.requirementWarnings(packages, LegacyRules.derive(sys, items).attributeScores)
+    };
+  }
+
+  _currentRollData() {
+    const derived = LegacyRules.derive(this.actor.system, this.actor.items);
+    return LegacyPackages.rollData(derived.effectiveAttrs);
+  }
+
+  /** Roll pool formulas into ledger entries and post one chat summary. */
+  async _rollPoolRows(rows, title) {
+    if (!rows.length) return [];
+    const data = this._currentRollData();
+    const entries = [];
+    const rolls = [];
+    for (const row of rows) {
+      const formula = row.formula || LegacyPackages.toRollFormula(row.text);
+      if (!formula) {
+        ui.notifications?.warn(`${row.sourceName} ${row.label}: "${row.text}" is not a formula that can be rolled.`);
+        continue;
+      }
+      let roll;
+      try {
+        roll = await new Roll(formula, data).evaluate();
+      } catch (err) {
+        ui.notifications?.warn(`${row.sourceName} ${row.label}: could not roll "${row.text}" (${err.message}).`);
+        continue;
+      }
+      rolls.push(roll);
+      entries.push({ key: row.key, level: row.level, source: row.source, label: `${row.sourceName} ${row.label}`, formula: row.text, value: roll.total });
+    }
+    if (entries.length) {
+      const esc = ErrantEarthCharacterSheet._escapeHtml;
+      const lines = entries.map(entry => `<tr><td>${esc(entry.label)}${entry.level > 1 ? ` (level ${entry.level})` : ""}</td><td>${esc(entry.formula)}</td><td><strong>${entry.value}</strong></td></tr>`).join("");
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        content: `<div class="ee-chat-advancement"><h3>${esc(title)}</h3><table><tbody>${lines}</tbody></table></div>`,
+        rolls
+      });
+    }
+    return entries;
+  }
+
+  async _appendLedger(entries) {
+    if (!entries.length) return;
+    const ledger = foundry.utils.deepClone(LegacyPackages.toArray(this.actor.system.advancement?.pools));
+    await this.actor.update({ "system.advancement.pools": [...ledger, ...entries] });
+  }
+
+  async _onRollStartingPools(ev) {
+    ev.preventDefault();
+    const pending = LegacyPackages.pendingPoolRolls(this.actor.system, this.actor.items).filter(row => row.level === 1);
+    if (!pending.length) return ui.notifications?.info("All starting pools have been rolled.");
+    const entries = await this._rollPoolRows(pending, `${this.actor.name}: starting pools`);
+    return this._appendLedger(entries);
+  }
+
+  async _onRollPendingPools(ev) {
+    ev.preventDefault();
+    const wanted = Number(ev.currentTarget.dataset.level ?? 0) || 0;
+    const pending = LegacyPackages.pendingPoolRolls(this.actor.system, this.actor.items)
+      .filter(row => !wanted || row.level === wanted);
+    if (!pending.length) return;
+    const entries = await this._rollPoolRows(pending, `${this.actor.name}: ${wanted ? `level ${wanted} gains` : "pool rolls"}`);
+    return this._appendLedger(entries);
+  }
+
+  async _onLevelUp(ev) {
+    ev.preventDefault();
+    const current = Math.max(1, Number(this.actor.system.level ?? 1) || 1);
+    if (current >= 15) return ui.notifications?.info("EE Legacy characters top out at level 15.");
+    const next = current + 1;
+    const confirmed = await Dialog.confirm({
+      title: `Level Up: ${this.actor.name}`,
+      content: `<p>Advance from level ${current} to <strong>${next}</strong>, roll this level's Hit Point and pool gains, and open any new skill picks?</p>`,
+      options: { classes: ["errantearth", "dialog"] }
+    });
+    if (!confirmed) return;
+    await this.actor.update({ "system.level": next });
+    const gains = LegacyPackages.pendingPoolRolls(this.actor.system, this.actor.items).filter(row => row.level === next);
+    const entries = await this._rollPoolRows(gains, `${this.actor.name}: level ${next}`);
+    await this._appendLedger(entries);
+    const pending = LegacyPackages.pendingChoices(this.actor.system, this.actor.items, next);
+    if (pending.length) return this._onApplyOccSkillChoices({ preventDefault() {} });
+    return this.render(false);
+  }
+
+  async _onDeleteAdvancementEntry(ev) {
+    ev.preventDefault();
+    const ledger = foundry.utils.deepClone(LegacyPackages.toArray(this.actor.system.advancement?.pools));
+    const idx = ErrantEarthCharacterSheet._validIndex(ev.currentTarget.dataset.index, ledger.length);
+    if (idx < 0) return;
+    ledger.splice(idx, 1);
+    return this.actor.update({ "system.advancement.pools": ledger });
+  }
+
+  async _onDeleteSkillTrade(ev) {
+    ev.preventDefault();
+    const trades = foundry.utils.deepClone(LegacyPackages.toArray(this.actor.system.advancement?.trades));
+    const idx = ErrantEarthCharacterSheet._validIndex(ev.currentTarget.dataset.index, trades.length);
+    if (idx < 0) return;
+    trades.splice(idx, 1);
+    return this.actor.update({ "system.advancement.trades": trades });
+  }
+
+  /** Keep a language/literacy row's saved name in step with its language
+   *  field; the sheet's normal change-submit then saves it. */
+  _onSkillSpecInput(ev) {
+    const input = ev.currentTarget;
+    const rows = ErrantEarthCharacterSheet._toArray(this.actor.system.skills?.list);
+    const idx = ErrantEarthCharacterSheet._validIndex(input.dataset.index, rows.length);
+    if (idx < 0) return;
+    const definition = LegacyPackages.skillDefinition(rows[idx]?.key);
+    if (!definition?.specialization) return;
+    const hidden = input.form?.querySelector(`input[name="system.skills.list.${idx}.name"]`);
+    if (hidden) hidden.value = LegacyPackages.specializationName(definition, input.value, definition.name);
+  }
+
+  async _onRollAttributes(ev) {
+    ev.preventDefault();
+    const plan = LegacyPackages.attributeRollPlan(this.actor.system, this.actor.items);
+    const esc = ErrantEarthCharacterSheet._escapeHtml;
+    const rows = plan.map(row => `<tr><td>${esc(row.label)}</td><td>${esc(row.formula)}${row.flat ? ` +${row.flat}` : ""}${row.bonusRolls.map(bonus => ` +${esc(bonus.formula)}`).join("")}</td><td>${esc(row.sourceName)}${row.bonusRolls.map(bonus => `, ${esc(bonus.itemName)}`).join("")}</td></tr>`).join("");
+    const choice = await new Promise(resolve => {
+      new Dialog({
+        title: `Roll Attributes: ${this.actor.name}`,
+        content: `
+          <form class="ee-roll-attributes">
+            <p>Roll all eight attributes. This replaces the character's current base scores; package bonuses are kept.</p>
+            <table class="ee-table"><thead><tr><th>Attribute</th><th>Roll</th><th>From</th></tr></thead><tbody>${rows}</tbody></table>
+            <label class="ee-check"><input type="checkbox" name="exceptional" checked/> Exceptional: a 3D6 roll of 16, 17 or 18 adds 1D6 (and another 1D6 on a 6)</label>
+          </form>`,
+        buttons: {
+          roll: { icon: '<i class="fas fa-dice"></i>', label: "Roll", callback: html => resolve({ exceptional: !!html[0].querySelector("[name=exceptional]")?.checked }) },
+          cancel: { label: "Cancel", callback: () => resolve(null) }
+        },
+        default: "roll",
+        close: () => resolve(null)
+      }, { classes: ["errantearth", "dialog", "ee-roll-attributes-dialog"], width: 480 }).render(true);
+    });
+    if (!choice) return;
+
+    const actorUpdate = {};
+    const itemUpdates = new Map();
+    const lines = [];
+    const rolls = [];
+    const rollOnce = async formula => {
+      const roll = await new Roll(formula).evaluate();
+      rolls.push(roll);
+      return roll.total;
+    };
+    for (const row of plan) {
+      const formula = LegacyPackages.toRollFormula(row.formula) || "3d6";
+      let total = await rollOnce(formula);
+      const parts = [`${row.formula}: ${total}`];
+      if (choice.exceptional && row.exceptional && total >= 16 && total <= 18) {
+        const extra = await rollOnce("1d6");
+        total += extra;
+        parts.push(`exceptional +${extra}`);
+        if (extra === 6) {
+          const more = await rollOnce("1d6");
+          total += more;
+          parts.push(`+${more}`);
+        }
+      }
+      if (row.source === "standard") {
+        actorUpdate[`system.attributes.${row.key}.value`] = total;
+      } else {
+        actorUpdate[`system.attributes.${row.key}.value`] = 0;
+        const update = itemUpdates.get(row.source) ?? {};
+        update[`system.attributeBonuses.${row.key}.value`] = total;
+        update[`system.attributeBonuses.${row.key}.rolled`] = true;
+        itemUpdates.set(row.source, update);
+      }
+      for (const bonus of row.bonusRolls) {
+        const bonusFormula = LegacyPackages.toRollFormula(bonus.formula);
+        if (!bonusFormula) continue;
+        const value = await rollOnce(bonusFormula);
+        parts.push(`${bonus.itemName} +${value}`);
+        const update = itemUpdates.get(bonus.itemId) ?? {};
+        update[`system.attributeBonuses.${row.key}.value`] = value;
+        update[`system.attributeBonuses.${row.key}.rolled`] = true;
+        itemUpdates.set(bonus.itemId, update);
+      }
+      lines.push(`<tr><td>${esc(row.label)}</td><td>${esc(parts.join(", "))}</td></tr>`);
+    }
+    for (const [id, update] of itemUpdates) await this.actor.items.get(id)?.update(update);
+    await this.actor.update(actorUpdate);
+    return ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      content: `<div class="ee-chat-advancement"><h3>${esc(this.actor.name)}: attributes</h3><table><tbody>${lines.join("")}</tbody></table></div>`,
+      rolls
+    });
   }
 
   /** Errant Earth alignment picker: choose a Morality and an Ethics; the 5x4

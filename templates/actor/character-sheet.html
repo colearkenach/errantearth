@@ -1,434 +1,182 @@
 {{!-- Errant Earth Character Sheet --}}
-<form class="ee-sheet {{cssClass}}" autocomplete="off">
+<form class="ee-sheet ee-mode-{{modeKey}} {{cssClass}}" autocomplete="off">
 
-    {{!-- ============ BANNER ============ --}}
-    <header class="ee-banner">
-        <img class="ee-banner-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
-        <div class="ee-banner-title">{{sheetTitle}}</div>
-        {{#if canToggleMode}}
-        <label class="ee-mode-toggle" title="{{rulesModeHint}}">
-            <input type="checkbox" data-action="toggle-mode" {{#if isEE}} checked{{/if}} />
-            {{rulesModeLabel}}
-        </label>
-        {{else}}
-        <div class="ee-mode-toggle ee-mode-locked" title="{{rulesModeHint}}">
-            <i class="fas fa-lock"></i> {{rulesModeLabel}}
-        </div>
-        {{/if}}
-    </header>
+    {{!-- ============ HEADER ============ --}}
+    <header class="ee-header">
+        <img class="ee-portrait" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" alt="{{actor.name}}" />
 
-    {{!-- ============ CHARACTER OVERVIEW ============ --}}
-    <section class="ee-block">
-        <h2 class="ee-bar">CHARACTER OVERVIEW</h2>
-
-        <div class="ee-row">
-            <label>Name:</label><input type="text" name="name" value="{{actor.name}}" data-dtype="String" />
-            {{#unless isEE}}
-            <label>Race:</label>
-            <select class="ee-cc-pick" data-action="cc-pick" data-slot="race" {{#if isRCC}} disabled title="Locked: an RCC is equipped" {{/if}}>
-                <option value="">— Pick a Race —</option>
-                {{#each itemsByType.race}}
-                <option value="{{id}}" {{#if (eq id ../equippedRaceId)}} selected{{/if}}>{{name}}</option>
-                {{/each}}
-                <option value="__new__">+ Create Custom…</option>
-            </select>
-            {{#if equippedRaceItem}}<span class="ee-equipped-badge" title="Equipped from Race item">{{#if equippedRaceItem.system.isMDC}}MDC{{else}}SDC{{/if}}</span>{{/if}}
+        <div class="ee-header-band">
+            <div class="ee-header-titles">
+                <span class="ee-logotype">{{sheetTitle}}</span>
+                <input class="ee-char-name" type="text" name="name" value="{{actor.name}}" placeholder="Character name" data-dtype="String" aria-label="Character name" />
+            </div>
+            {{#if canToggleMode}}
+            <label class="ee-mode-switch" title="{{rulesModeHint}}">
+                <input type="checkbox" data-action="toggle-mode" {{#if isEE}} checked{{/if}} aria-label="{{rulesModeLabel}}" />
+                <span class="ee-mode-switch__opt ee-mode-switch__opt--legacy">EE Legacy</span>
+                <span class="ee-mode-switch__opt ee-mode-switch__opt--ee">Errant Earth</span>
+            </label>
             {{else}}
-            <label>Species:</label><input type="text" name="system.species.name" value="{{system.species.name}}" />
-            {{/unless}}
-            {{#unless isEE}}
-            <label>OCC:</label>
-            <select class="ee-cc-pick" data-action="cc-pick" data-slot="occ">
-                <option value="">— Pick an OCC —</option>
-                {{#each itemsByType.occ}}
-                <option value="{{id}}" {{#if (eq id ../equippedOccId)}} selected{{/if}}>{{name}}{{#if system.isRCC}} (RCC){{/if}}</option>
-                {{/each}}
-                <option value="__new__">+ Create Custom…</option>
-            </select>
-            {{/unless}}
-        </div>
-
-        <div class="ee-row ee-advancement-row">
-            <label>Alignment:</label>
-            {{#if isEE}}
-            <button type="button" class="ee-ee-alignment-btn" data-action="ee-alignment" title="Choose Errant Earth alignment (Morality × Ethics)">{{#if system.eeAlignment.name}}{{system.eeAlignment.name}}{{else}}— Set Alignment —{{/if}}</button>
-            {{else}}
-            <select name="system.alignment">{{eeSelectOptions config.ALIGNMENTS system.alignment}}</select>
+            <div class="ee-mode-switch ee-mode-locked" title="{{rulesModeHint}}">
+                <i class="fas fa-lock"></i> {{modeName}} rules
+            </div>
             {{/if}}
-            <label>Level:</label><input type="number" name="system.level" value="{{system.level}}" min="1" {{#unless isEE}}max="15"{{/unless}} />
-            <label>XP:</label><input type="number" name="system.xp" value="{{system.xp}}" min="0" />
+        </div>
+
+        <div class="ee-identity">
             {{#if isEE}}
-            <label>Next Level:</label><input type="number" name="system.nextLevel" value="{{system.nextLevel}}" />
+            <label class="ee-field ee-field--wide">
+                <span>Species</span>
+                <input type="text" name="system.species.name" value="{{system.species.name}}" />
+            </label>
+            <div class="ee-field ee-field--wide">
+                <span>Alignment</span>
+                <button type="button" class="ee-ee-alignment-btn" data-action="ee-alignment" title="Choose Errant Earth alignment (Morality × Ethics)">{{#if system.eeAlignment.name}}{{system.eeAlignment.name}}{{else}}Set Alignment…{{/if}}</button>
+            </div>
+            <label class="ee-field">
+                <span>Tier</span>
+                <select name="system.eeAttributeTier">{{eeSelectOptions config.EE_ATTRIBUTE_TIERS system.eeAttributeTier}}</select>
+            </label>
+            {{else}}
+            <label class="ee-field ee-field--wide">
+                <span>Race {{#if equippedRaceItem}}<em class="ee-equipped-badge" title="Equipped from Race item">{{#if equippedRaceItem.system.isMDC}}MDC{{else}}SDC{{/if}}</em>{{/if}}</span>
+                <select class="ee-cc-pick" data-action="cc-pick" data-slot="race" {{#if isRCC}} disabled title="Locked: an RCC is equipped" {{/if}}>
+                    <option value="">— Pick a Race —</option>
+                    {{#each itemsByType.race}}
+                    <option value="{{id}}" {{#if (eq id ../equippedRaceId)}} selected{{/if}}>{{name}}</option>
+                    {{/each}}
+                    <option value="__new__">+ Create Custom…</option>
+                </select>
+            </label>
+            <label class="ee-field ee-field--wide">
+                <span>O.C.C.</span>
+                <select class="ee-cc-pick" data-action="cc-pick" data-slot="occ">
+                    <option value="">— Pick an O.C.C. —</option>
+                    {{#each itemsByType.occ}}
+                    <option value="{{id}}" {{#if (eq id ../equippedOccId)}} selected{{/if}}>{{name}}{{#if system.isRCC}} (RCC){{/if}}</option>
+                    {{/each}}
+                    <option value="__new__">+ Create Custom…</option>
+                </select>
+            </label>
+            <label class="ee-field ee-field--wide">
+                <span>Alignment</span>
+                <select name="system.alignment">{{eeSelectOptions config.ALIGNMENTS system.alignment}}</select>
+            </label>
+            {{/if}}
+            <label class="ee-field ee-field--num">
+                <span>Level</span>
+                <input type="number" name="system.level" value="{{system.level}}" min="1" {{#unless isEE}}max="15"{{/unless}} />
+            </label>
+            <label class="ee-field ee-field--xp">
+                <span>XP</span>
+                <input type="number" name="system.xp" value="{{system.xp}}" min="0" />
+            </label>
+            {{#if isEE}}
+            <label class="ee-field ee-field--xp">
+                <span>Next Level</span>
+                <input type="number" name="system.nextLevel" value="{{system.nextLevel}}" />
+            </label>
             {{else}}
               {{#if legacyXp.hasTrack}}
-              <label class="ee-tooltip" data-tooltip="{{legacyXp.tooltip}}">Next Level:</label>
-              <output class="ee-xp-next" title="{{legacyXp.tooltip}}">{{legacyXp.nextDisplay}}</output>
-              {{#if legacyXp.levelMismatch}}<i class="fas fa-exclamation-triangle ee-xp-mismatch" title="The entered XP corresponds to level {{legacyXp.calculatedLevel}} on the equipped O.C.C. track."></i>{{/if}}
+              <div class="ee-field ee-field--xp">
+                <span class="ee-tooltip" data-tooltip="{{legacyXp.tooltip}}">Next Level {{#if legacyXp.levelMismatch}}<i class="fas fa-exclamation-triangle ee-xp-mismatch" title="The entered XP corresponds to level {{legacyXp.calculatedLevel}} on the equipped O.C.C. track."></i>{{/if}}</span>
+                <output class="ee-xp-next" title="{{legacyXp.tooltip}}">{{legacyXp.nextDisplay}}</output>
+              </div>
               {{else}}
-              <label>Next Level:</label><input type="number" name="system.nextLevel" value="{{system.nextLevel}}" />
+              <label class="ee-field ee-field--xp">
+                <span>Next Level</span>
+                <input type="number" name="system.nextLevel" value="{{system.nextLevel}}" />
+              </label>
               {{/if}}
             {{/if}}
         </div>
 
-        <details class="ee-disclosure ee-profile-details" data-disclosure-key="profile-details">
-            <summary><i class="fas fa-address-card"></i> Profile Details</summary>
-            <div class="ee-row">
-                <label>True Name:</label><input type="text" name="system.trueName" value="{{system.trueName}}" />
-                <label>Gender:</label><input type="text" name="system.gender" value="{{system.gender}}" />
-                <label>Age:</label><input type="text" name="system.bio.age" value="{{system.bio.age}}" />
-                <label>Height:</label><input type="text" name="system.bio.height" value="{{system.bio.height}}" />
-                <label>Weight:</label><input type="text" name="system.bio.weight" value="{{system.bio.weight}}" />
-            </div>
-            {{#if isEE}}
-            <div class="ee-row">
-                <label>Current Karma:</label><input type="number" name="system.karma.current" value="{{system.karma.current}}" />
-                <label>Total Karma:</label><input type="number" name="system.karma.total" value="{{system.karma.total}}" />
-            </div>
-            {{/if}}
-        </details>
-
-        {{#unless isEE}}
-        <div class="ee-row ee-attrs">
-            <label class="ee-tooltip" data-tooltip="Intelligence Quotient — mental acuity, reasoning, and learning ability. Adds a skill bonus at 16+.">IQ:</label>
-            <input class="ee-legacy-attribute-score" type="number" value="{{riftsDerived.attributeScores.iq}}" data-action="set-legacy-attribute" data-attribute="iq" data-label="IQ" data-source="{{riftsDerived.sourceTotals.attributeBonuses.iq}}" title="Permanent IQ score. Right-click for score and temporary modifier." />
-            <label class="ee-tooltip" data-tooltip="Mental Endurance — willpower, mental stamina, and resistance to psionic, magical, and emotional attacks.">ME:</label>
-            <input class="ee-legacy-attribute-score" type="number" value="{{riftsDerived.attributeScores.me}}" data-action="set-legacy-attribute" data-attribute="me" data-label="ME" data-source="{{riftsDerived.sourceTotals.attributeBonuses.me}}" title="Permanent ME score. Right-click for score and temporary modifier." />
-            <label class="ee-tooltip" data-tooltip="Mental Affinity — personal magnetism and presence. High MA grants a Trust/Intimidate bonus at 16+.">MA:</label>
-            <input class="ee-legacy-attribute-score" type="number" value="{{riftsDerived.attributeScores.ma}}" data-action="set-legacy-attribute" data-attribute="ma" data-label="MA" data-source="{{riftsDerived.sourceTotals.attributeBonuses.ma}}" title="Permanent MA score. Right-click for score and temporary modifier." />
-            <label class="ee-tooltip" data-tooltip="Physical Strength — muscle. Determines lift/carry, melee damage bonus, and is augmented or supernatural for some races.">PS:</label>
-            <input class="ee-legacy-attribute-score" type="number" value="{{riftsDerived.attributeScores.ps}}" data-action="set-legacy-attribute" data-attribute="ps" data-label="PS" data-source="{{riftsDerived.sourceTotals.attributeBonuses.ps}}" title="Permanent PS score. Right-click for score and temporary modifier." />
-            <label class="ee-tooltip" data-tooltip="Physical Prowess — agility, dexterity, hand-eye coordination. Adds bonuses to strike, parry, and dodge at 16+.">PP:</label>
-            <input class="ee-legacy-attribute-score" type="number" value="{{riftsDerived.attributeScores.pp}}" data-action="set-legacy-attribute" data-attribute="pp" data-label="PP" data-source="{{riftsDerived.sourceTotals.attributeBonuses.pp}}" title="Permanent PP score. Right-click for score and temporary modifier." />
-            <label class="ee-tooltip" data-tooltip="Physical Endurance — stamina and constitution. Resistance to fatigue, disease, drugs, and poison; bonus to save vs coma/death at 16+.">PE:</label>
-            <input class="ee-legacy-attribute-score" type="number" value="{{riftsDerived.attributeScores.pe}}" data-action="set-legacy-attribute" data-attribute="pe" data-label="PE" data-source="{{riftsDerived.sourceTotals.attributeBonuses.pe}}" title="Permanent PE score. Right-click for score and temporary modifier." />
-            <label class="ee-tooltip" data-tooltip="Physical Beauty — appearance and charm. Grants a Charm/Impress bonus at 16+.">PB:</label>
-            <input class="ee-legacy-attribute-score" type="number" value="{{riftsDerived.attributeScores.pb}}" data-action="set-legacy-attribute" data-attribute="pb" data-label="PB" data-source="{{riftsDerived.sourceTotals.attributeBonuses.pb}}" title="Permanent PB score. Right-click for score and temporary modifier." />
-            <label class="ee-tooltip" data-tooltip="Speed — running speed. Multiply by 20 for yards per minute, or SPD × 15 ÷ 22 miles per hour.">SPD:</label>
-            <input class="ee-legacy-attribute-score" type="number" value="{{riftsDerived.attributeScores.spd}}" data-action="set-legacy-attribute" data-attribute="spd" data-label="SPD" data-source="{{riftsDerived.sourceTotals.attributeBonuses.spd}}" title="Permanent SPD score. Right-click for score and temporary modifier." />
-        </div>
-        {{#if riftsDerived.hasTemporaryAttributeModifiers}}
-        <div class="ee-attr-source-strip">
-            {{#each riftsDerived.attributeSourceRows}}
-            {{#if hasSource}}
-            <span><strong>{{label}}</strong> {{base}} {{display}} = {{total}}</span>
-            {{/if}}
-            {{/each}}
-        </div>
-        {{/if}}
-
-        <details class="ee-disclosure ee-attr-effects" data-disclosure-key="attribute-effects">
-            <summary>Attribute Effects</summary>
-            <div class="ee-effect-chip-grid">
-                {{#each riftsDerived.attrEffectsActive}}
-                <div class="ee-effect-chip ee-effect-chip--{{tone}}">
-                    <strong>{{label}} {{value}}</strong>
-                    {{#if bonus}}<span>{{bonus}}</span>{{/if}}
-                    {{#if penalty}}<span>{{penalty}}</span>{{/if}}
-                </div>
-                {{/each}}
-            </div>
-            {{#unless riftsDerived.attrEffectsActive.length}}<p class="ee-hint">No high-attribute bonuses or low-attribute penalties are active.</p>{{/unless}}
-            <p class="ee-hint">Flat combat and saving-throw attribute modifiers are included in totals. Apply skill-specific effects, skill-selection changes, halved bonuses or damage, and other conditional rules manually.</p>
-        </details>
-        {{/unless}}
-
+        {{!-- Attributes --}}
         {{#if isEE}}
-        <div class="ee-ee-attrs-grid">
-            <div class="ee-ee-attr">
-                <label class="ee-tooltip" data-tooltip="Animus — life force / spiritual presence.">ANM</label>
-                <input type="number" name="system.eeAttributes.anm.value" value="{{system.eeAttributes.anm.value}}" />
-                <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.anm.value}}" data-label="ANM" title="Roll ANM (Errant Earth)"><i class="fas fa-dice-d20"></i></a>
+        <div class="ee-attr-strip ee-attr-strip--ee" aria-label="Errant Earth attributes">
+            {{#each eeAttributeRows}}
+            <div class="ee-attr-box">
+                <label class="ee-attr-label ee-tooltip" data-tooltip="{{tooltip}}" for="ee-attr-{{../actor.id}}-{{key}}">{{label}}</label>
+                <input id="ee-attr-{{../actor.id}}-{{key}}" type="number" name="system.eeAttributes.{{key}}.value" value="{{value}}" />
+                <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{../eeDerived.tier}}" data-target="{{value}}" data-label="{{name}}" title="Roll {{name}}"><i class="fas fa-dice-d20"></i></a>
             </div>
-            <div class="ee-ee-attr">
-                <label class="ee-tooltip" data-tooltip="Bravado — daring, presence under pressure.">BRV</label>
-                <input type="number" name="system.eeAttributes.brv.value" value="{{system.eeAttributes.brv.value}}" />
-                <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.brv.value}}" data-label="BRV" title="Roll BRV"><i class="fas fa-dice-d20"></i></a>
-            </div>
-            <div class="ee-ee-attr">
-                <label class="ee-tooltip" data-tooltip="Composure — mental discipline.">COM</label>
-                <input type="number" name="system.eeAttributes.com.value" value="{{system.eeAttributes.com.value}}" />
-                <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.com.value}}" data-label="COM" title="Roll COM"><i class="fas fa-dice-d20"></i></a>
-            </div>
-            <div class="ee-ee-attr">
-                <label class="ee-tooltip" data-tooltip="Finesse — manual dexterity, agility.">FIN</label>
-                <input type="number" name="system.eeAttributes.fin.value" value="{{system.eeAttributes.fin.value}}" />
-                <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.fin.value}}" data-label="FIN" title="Roll FIN"><i class="fas fa-dice-d20"></i></a>
-            </div>
-            <div class="ee-ee-attr">
-                <label class="ee-tooltip" data-tooltip="Hardiness — physical resilience.">HRD</label>
-                <input type="number" name="system.eeAttributes.hrd.value" value="{{system.eeAttributes.hrd.value}}" />
-                <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.hrd.value}}" data-label="HRD" title="Roll HRD"><i class="fas fa-dice-d20"></i></a>
-            </div>
-            <div class="ee-ee-attr">
-                <label class="ee-tooltip" data-tooltip="Power — raw strength, force.">POW</label>
-                <input type="number" name="system.eeAttributes.pow.value" value="{{system.eeAttributes.pow.value}}" />
-                <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.pow.value}}" data-label="POW" title="Roll POW"><i class="fas fa-dice-d20"></i></a>
-            </div>
-            <div class="ee-ee-attr">
-                <label class="ee-tooltip" data-tooltip="Speed — quickness.">SPD</label>
-                <input type="number" name="system.eeAttributes.spd.value" value="{{system.eeAttributes.spd.value}}" />
-                <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.spd.value}}" data-label="SPD" title="Roll SPD"><i class="fas fa-dice-d20"></i></a>
-            </div>
-            <div class="ee-ee-attr">
-                <label class="ee-tooltip" data-tooltip="Will — resolve, mental defense.">WIL</label>
-                <input type="number" name="system.eeAttributes.wil.value" value="{{system.eeAttributes.wil.value}}" />
-                <a class="ee-roll-attr" data-action="roll" data-roll-type="eeAttribute" data-tier="{{eeDerived.tier}}" data-target="{{system.eeAttributes.wil.value}}" data-label="WIL" title="Roll WIL"><i class="fas fa-dice-d20"></i></a>
-            </div>
+            {{/each}}
         </div>
-        <div class="ee-row ee-ee-tier">
-            <label>Attribute Tier:</label>
-            <select name="system.eeAttributeTier">{{eeSelectOptions config.EE_ATTRIBUTE_TIERS system.eeAttributeTier}}</select>
-            <label>Actions:</label><input type="number" name="system.eeCombat.actions" value="{{system.eeCombat.actions}}" />
-            <label>Momentum:</label><input type="number" name="system.eeCombat.momentum" value="{{system.eeCombat.momentum}}" />
-            <label>Reactions:</label><input type="number" name="system.eeCombat.reactions" value="{{system.eeCombat.reactions}}" />
-        </div>
-        <div class="ee-row ee-ee-resources">
-            <label class="ee-tooltip" data-tooltip="Magic Heat — accumulates as spells are cast.">Magic Heat:</label>
-            <span class="ee-pool-pair">
-                <input type="number" name="system.magic.heat" value="{{eePools.magicHeat.value}}" title="Current Magic Heat" /> /
-                <input type="number" name="system.magic.heatMax" value="{{eePools.magicHeat.max}}" title="Maximum Magic Heat" />
-            </span>
-            <label>Burnout:</label><input type="number" name="system.magic.burnout" value="{{system.magic.burnout}}" />
-            <label class="ee-tooltip" data-tooltip="Psychic Heat — accumulates as psionic powers are used.">Psychic Heat:</label>
-            <span class="ee-pool-pair">
-                <input type="number" name="system.psychic.heat" value="{{eePools.psychicHeat.value}}" title="Current Psychic Heat" /> /
-                <input type="number" name="system.psychic.heatMax" value="{{eePools.psychicHeat.max}}" title="Maximum Psychic Heat" />
-            </span>
-        </div>
-
-        <div class="ee-ee-bgocc">
-            <div class="ee-panel">
-                <h3>Backgrounds <a class="ee-create-item" data-action="add-row" data-path="backgrounds" data-kind="bgocc" title="Add Background"><i class="fas fa-plus"></i></a></h3>
-                <table class="ee-table">
-                    <thead><tr><th>Name</th><th>Notes</th><th></th></tr></thead>
-                    <tbody>
-                        {{#each system.backgrounds}}
-                        <tr>
-                            <td><input type="text" name="system.backgrounds.{{@index}}.name" value="{{name}}" /></td>
-                            <td><input type="text" name="system.backgrounds.{{@index}}.notes" value="{{notes}}" /></td>
-                            <td><a data-action="delete-row" data-path="backgrounds" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
+        {{else}}
+        <div class="ee-attr-strip ee-attrs" aria-label="EE Legacy attributes">
+            {{#each legacyAttributeRows}}
+            <div class="ee-attr-box {{#if hasTemp}}ee-attr-box--temp{{/if}}">
+                <label class="ee-attr-label ee-tooltip" data-tooltip="{{tooltip}}" for="ee-attr-{{../actor.id}}-{{key}}">{{label}}</label>
+                <input id="ee-attr-{{../actor.id}}-{{key}}" class="ee-legacy-attribute-score" type="number" value="{{score}}" data-action="set-legacy-attribute" data-attribute="{{key}}" data-label="{{label}}" data-source="{{source}}" title="Permanent {{label}} score. Right-click for score and temporary modifier." />
+                {{#if hasTemp}}<span class="ee-attr-temp" title="Temporary modifier {{tempDisplay}}; effective {{total}}">{{tempDisplay}} → {{total}}</span>{{/if}}
             </div>
-
-            <div class="ee-panel">
-                <h3>Occupations <a class="ee-create-item" data-action="add-row" data-path="occupations" data-kind="bgocc" title="Add Occupation"><i class="fas fa-plus"></i></a></h3>
-                <table class="ee-table">
-                    <thead><tr><th>Name</th><th>Notes</th><th></th></tr></thead>
-                    <tbody>
-                        {{#each system.occupations}}
-                        <tr>
-                            <td><input type="text" name="system.occupations.{{@index}}.name" value="{{name}}" /></td>
-                            <td><input type="text" name="system.occupations.{{@index}}.notes" value="{{notes}}" /></td>
-                            <td><a data-action="delete-row" data-path="occupations" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
+            {{/each}}
         </div>
         {{/if}}
 
+        {{!-- Resource pools --}}
         {{#if isEE}}
-        <div class="ee-row ee-pools ee-ee-header-pools">
-            <label>Endurance:</label>
-            <span class="ee-pool-pair">
-                <input type="number" name="system.eeCombat.health.enduranceCurrent" value="{{eePools.endurance.value}}" title="Current Endurance" /> /
-                <input type="number" value="{{eePools.endurance.max}}" title="Maximum Endurance" disabled />
-            </span>
-            <label>Health:</label>
-            <span class="ee-pool-pair">
-                <input type="number" name="system.eeCombat.health.healthCurrent" value="{{eePools.health.value}}" title="Current Health" /> /
-                <input type="number" value="{{eePools.health.max}}" title="Maximum Health" disabled />
-            </span>
-            <label>Scars:</label><input type="number" value="{{eeDerived.health.scars.value}}" disabled /> /
-            <input type="number" value="{{eeDerived.health.scars.max}}" disabled />
+        <div class="ee-pool-strip" aria-label="Resources: current / maximum">
+            {{#each eePoolRows}}
+            <div class="ee-pool ee-pool--{{key}} {{#if heat}}ee-pool--heat{{/if}} {{#if readonly}}ee-pool--readonly{{/if}}" {{#if title}}title="{{title}}"{{/if}}>
+                <span class="ee-pool-label">{{label}}</span>
+                <span class="ee-pool-values">
+                    {{#if readonly}}
+                    <output>{{value}}</output>
+                    {{else}}
+                    <input type="number" name="{{name}}" value="{{value}}" aria-label="Current {{label}}" />
+                    {{/if}}
+                    <span class="ee-pool-sep">/</span>
+                    {{#if maxName}}
+                    <input type="number" name="{{maxName}}" value="{{max}}" aria-label="Maximum {{label}}" />
+                    {{else}}
+                    <output class="ee-pool-max" title="Maximum {{label}}">{{max}}</output>
+                    {{/if}}
+                </span>
+                <span class="ee-pool-bar"><span style="width: {{pct}}%"></span></span>
+            </div>
+            {{/each}}
+            <div class="ee-pool ee-pool--burnout ee-pool--single">
+                <span class="ee-pool-label">Burnout</span>
+                <span class="ee-pool-values"><input type="number" name="system.magic.burnout" value="{{system.magic.burnout}}" aria-label="Burnout" /></span>
+            </div>
         </div>
-
-        <div class="ee-row ee-pools ee-ee-header-pools">
-            <label>ESP:</label>
-            <span class="ee-pool-pair">
-                <input type="number" name="system.eeCombat.resources.espCurrent" value="{{eePools.esp.value}}" title="Current ESP" /> /
-                <input type="number" value="{{eePools.esp.max}}" title="Maximum ESP" disabled />
-            </span>
-            <label>MP:</label>
-            <span class="ee-pool-pair">
-                <input type="number" name="system.eeCombat.resources.mpCurrent" value="{{eePools.mp.value}}" title="Current MP" /> /
-                <input type="number" value="{{eePools.mp.max}}" title="Maximum MP" disabled />
-            </span>
-            <label>Glimmer:</label>
-            <span class="ee-pool-pair">
-                <input type="number" name="system.eeCombat.resources.glimmerCurrent" value="{{eePools.glimmer.value}}" title="Current Glimmer" /> /
-                <input type="number" value="{{eePools.glimmer.max}}" title="Maximum Glimmer" disabled />
-            </span>
-            <label>Magic Heat:</label>
-            <span class="ee-pool-pair ee-pool-pair--readonly">
-                <input type="number" value="{{eePools.magicHeat.value}}" title="Current Magic Heat" disabled /> /
-                <input type="number" value="{{eePools.magicHeat.max}}" title="Maximum Magic Heat" disabled />
-            </span>
-            <label>Psychic Heat:</label>
-            <span class="ee-pool-pair ee-pool-pair--readonly">
-                <input type="number" value="{{eePools.psychicHeat.value}}" title="Current Psychic Heat" disabled /> /
-                <input type="number" value="{{eePools.psychicHeat.max}}" title="Maximum Psychic Heat" disabled />
-            </span>
+        {{else}}
+        <div class="ee-pool-strip ee-legacy-pools" aria-label="Resources: current / effective maximum">
+            {{#each legacyPoolRows}}
+            <div class="ee-pool ee-pool--{{key}}">
+                <span class="ee-pool-label">{{label}}</span>
+                <span class="ee-pool-values">
+                    <input type="number" name="system.{{key}}.value" value="{{value}}" aria-label="Current {{label}}" />
+                    <span class="ee-pool-sep">/</span>
+                    <output class="ee-pool-max" title="Base {{base}} + bonus {{bonus}}">{{total}}</output>
+                </span>
+                <span class="ee-pool-bar"><span style="width: {{pct}}%"></span></span>
+            </div>
+            {{/each}}
+            <div class="ee-pool ee-pool--hunger">
+                <span class="ee-pool-label">Hunger</span>
+                <span class="ee-pool-values">
+                    <input type="number" name="system.hunger.value" value="{{legacyHunger.value}}" aria-label="Current Hunger" />
+                    <span class="ee-pool-sep">/</span>
+                    <input type="number" name="system.hunger.max" value="{{legacyHunger.max}}" aria-label="Maximum Hunger" />
+                </span>
+                <span class="ee-pool-bar"><span style="width: {{legacyHunger.pct}}%"></span></span>
+            </div>
         </div>
         {{/if}}
-
-        {{#unless isEE}}
-        <div class="ee-legacy-pools" aria-label="Resources: current / effective maximum">
-            {{#each riftsDerived.poolRows}}
-            <label class="ee-resource-card"><span>{{label}} <small>Current / Max</small></span>
-                <span><input type="number" name="system.{{key}}.value" value="{{value}}" aria-label="Current {{label}}" /> / <output title="Base {{base}} + bonus {{bonus}}">{{total}}</output></span>
-            </label>
-            {{/each}}
-            <label class="ee-resource-card"><span>Hunger <small>Current / Max</small></span><span><input type="number" name="system.hunger.value" value="{{system.hunger.value}}" aria-label="Current Hunger" /> / <input type="number" name="system.hunger.max" value="{{system.hunger.max}}" aria-label="Maximum Hunger" /></span></label>
-        </div>
-        <details class="ee-disclosure" data-disclosure-key="resource-bases">
-            <summary>Resource bases &amp; psionic level</summary>
-            <div class="ee-resource-bases">
-            {{#each riftsDerived.poolRows}}
-            <label>{{label}} base <input type="number" name="system.{{key}}.max" value="{{base}}" /><small>Bonus {{bonus}} · effective max {{total}}</small></label>
-            {{/each}}
-            <label>Psionic Level <select name="system.psionicLevel">{{eeSelectOptions config.PSIONIC_LEVELS system.psionicLevel}}</select></label>
-            </div>
-        </details>
-        {{/unless}}
-
-        <details class="ee-disclosure ee-token-disclosure" data-disclosure-key="token-display">
-            <summary><i class="fas fa-chess-board"></i> Token Display</summary>
-            <div class="ee-token-options">
-            {{#if isEE}}
-            <div class="ee-token-options-row">
-                <label>Bar 1</label>
-                <output>Health</output>
-                <label>Bar 2</label>
-                <select name="system.token.bar2">{{eeSelectOptions tokenBarOptions tokenSettings.bar2 false}}</select>
-            </div>
-            {{else}}
-            <div class="ee-token-options-row">
-                <label>Bar 1</label>
-                <select name="system.token.bar1">{{eeSelectOptions tokenBarOptions tokenSettings.bar1 false}}</select>
-                <label>Bar 2</label>
-                <select name="system.token.bar2">{{eeSelectOptions tokenBarOptions tokenSettings.bar2 false}}</select>
-            </div>
-            {{/if}}
-            </div>
-        </details>
-
-        {{#unless isEE}}
-        {{#if riftsDerived.sources.length}}
-        <details class="ee-panel ee-disclosure ee-rifts-sources" data-disclosure-key="active-sources">
-            <summary>Active EE Legacy Sources ({{riftsDerived.sources.length}})</summary>
-            {{#if riftsDerived.sourceWarnings.length}}
-            <ul class="ee-warnings">
-                {{#each riftsDerived.sourceWarnings}}
-                <li>{{this}}</li>
-                {{/each}}
-            </ul>
-            {{/if}}
-            <div class="ee-rifts-source-grid">
-                {{#each riftsDerived.sources}}
-                <section class="ee-rifts-source-card">
-                    <h4>{{type}}: {{name}}</h4>
-                    {{#if isRCC}}<p class="ee-hint">RCC replaces Race.</p>{{/if}}
-
-                    {{#if poolBonuses.length}}
-                    <div class="ee-rifts-source-line">
-                        <strong>Pools:</strong>
-                        {{#each poolBonuses}}
-                        <span class="ee-chip" title="{{#unless applied}}Not auto-applied{{/unless}}">{{label}} {{#if applied}}{{display}}{{else}}{{raw}}{{/if}}</span>
-                        {{/each}}
-                    </div>
-                    {{/if}}
-
-                    {{#if attributeBonuses.length}}
-                    <div class="ee-rifts-source-line">
-                        <strong>Attributes:</strong>
-                        {{#each attributeBonuses}}
-                        <span class="ee-chip" title="{{#unless applied}}Roll once for character creation{{/unless}}">
-                            {{label}} {{#if applied}}{{display}}{{else}}{{formula}}{{/if}}
-                            {{#if rollable}}<a data-action="roll-cc-attribute" data-item-id="{{../itemId}}" data-attribute="{{key}}" data-label="{{../name}} {{label}}" title="Roll {{label}} bonus"><i class="fas fa-dice-d20"></i></a>{{/if}}
-                        </span>
-                        {{/each}}
-                    </div>
-                    {{/if}}
-
-                    {{#if skillBonuses.length}}
-                    <div class="ee-rifts-source-line">
-                        <strong>Skills:</strong>
-                        {{#each skillBonuses}}
-                        <span class="ee-chip" title="{{note}}">{{display}} {{label}}</span>
-                        {{/each}}
-                    </div>
-                    {{/if}}
-
-                    {{#if weaponProficiencies.length}}
-                    <div class="ee-rifts-source-line">
-                        <strong>W.P.s:</strong>
-                        {{#each weaponProficiencies}}
-                        <span class="ee-chip">{{name}}</span>
-                        {{/each}}
-                    </div>
-                    {{/if}}
-
-                    {{#if combatBonuses.length}}
-                    <div class="ee-rifts-source-line">
-                        <strong>Combat:</strong>
-                        {{#each combatBonuses}}
-                        <span class="ee-chip" title="{{#unless applied}}Left as note{{/unless}}">{{#if applied}}{{display}} {{label}}{{else}}{{raw}}{{/if}}</span>
-                        {{/each}}
-                    </div>
-                    {{/if}}
-
-                    {{#if saveBonuses.length}}
-                    <div class="ee-rifts-source-line">
-                        <strong>Saves:</strong>
-                        {{#each saveBonuses}}
-                        <span class="ee-chip" title="{{#unless applied}}Left as note{{/unless}}">{{#if applied}}{{display}} {{label}}{{else}}{{raw}}{{/if}}</span>
-                        {{/each}}
-                    </div>
-                    {{/if}}
-
-                    {{#if abilities.length}}
-                    <div class="ee-rifts-source-line">
-                        <strong>Abilities:</strong>
-                        <ul class="ee-compact-list">
-                            {{#each abilities}}
-                            <li>{{#if name}}<strong>{{name}}</strong>{{/if}}{{#if description}} — {{description}}{{/if}}</li>
-                            {{/each}}
-                        </ul>
-                    </div>
-                    {{/if}}
-
-                    {{#if warnings.length}}
-                    <ul class="ee-warnings">
-                        {{#each warnings}}
-                        <li>{{this}}</li>
-                        {{/each}}
-                    </ul>
-                    {{/if}}
-                </section>
-                {{/each}}
-            </div>
-            {{#if riftsDerived.sourceTotals.poolBonuses}}
-            <p class="ee-hint">Effective pool maxima: HP {{riftsDerived.pools.hp.total}}, SDC {{riftsDerived.pools.sdc.total}}, MDC {{riftsDerived.pools.mdc.total}}, ISP {{riftsDerived.pools.isp.total}}, PPE {{riftsDerived.pools.ppe.total}}. Non-flat bonuses remain notes.</p>
-            {{/if}}
-        </details>
-        {{/if}}
-        {{/unless}}
-    </section>
+    </header>
 
     {{!-- ============ TABS ============ --}}
     <nav class="sheet-tabs ee-tabs" data-group="primary">
-        <a class="item" data-tab="skills">Skills</a>
-        <a class="item" data-tab="combat">Combat</a>
-        {{#if isEE}}<a class="item" data-tab="derived">Derived</a>{{/if}}
-        <a class="item" data-tab="powers">Powers</a>
-        <a class="item" data-tab="vehicle">Vehicle</a>
-        {{#unless isEE}}<a class="item" data-tab="items">Items</a>{{/unless}}
-        <a class="item" data-tab="misc">Misc</a>
+        <a class="item" data-tab="skills"><i class="fas fa-graduation-cap"></i> Skills</a>
+        <a class="item" data-tab="combat"><i class="fas fa-crosshairs"></i> Combat</a>
+        {{#if isEE}}<a class="item" data-tab="derived"><i class="fas fa-calculator"></i> Derived</a>{{/if}}
+        <a class="item" data-tab="powers"><i class="fas fa-bolt"></i> Powers</a>
+        <a class="item" data-tab="vehicle"><i class="fas fa-truck-monster"></i> Vehicle</a>
+        {{#unless isEE}}<a class="item" data-tab="items"><i class="fas fa-suitcase"></i> Items</a>{{/unless}}
+        <a class="item" data-tab="profile"><i class="fas fa-id-card"></i> Profile</a>
+        <a class="item" data-tab="misc"><i class="fas fa-book-open"></i> Misc</a>
     </nav>
 
     <section class="sheet-body">
@@ -438,8 +186,7 @@
         {{> eeActorPowers}}
         {{> eeActorVehicle}}
         {{> eeActorItems}}
+        {{> eeActorProfile}}
         {{> eeActorMisc}}
     </section>
 </form>
-
-

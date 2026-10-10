@@ -1,147 +1,195 @@
 {{!-- ===== ITEMS TAB ===== --}}
         {{#unless isEE}}
         <div class="tab ee-items-tab" data-group="primary" data-tab="items">
-            <h2 class="ee-bar">ITEMS</h2>
-            <p>Drag items from the Items directory onto this sheet, or click + to create a new one.</p>
+            <p class="ee-hint ee-tab-intro"><i class="fas fa-hand-pointer"></i> Drag items from the Items directory or a compendium onto this sheet, or click <i class="fas fa-plus"></i> to create one.</p>
 
-            <div class="ee-panel">
-                <h3>Psionic Powers <a class="ee-create-item" data-action="create-item" data-type="psionicPower" title="Create Psionic Power"><i class="fas fa-plus"></i></a></h3>
-                <ul class="ee-item-list">
-                    {{#each itemsByType.psionicPower}}
-                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-                        <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-
-            <div class="ee-panel">
-                <h3>Abilities <a class="ee-create-item" data-action="create-item" data-type="ability" title="Create Ability"><i class="fas fa-plus"></i></a></h3>
-                <ul class="ee-item-list">
-                    {{#each itemsByType.ability}}
-                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-                        <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-
-            <div class="ee-panel">
-                <h3>Weapons <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon"><i class="fas fa-plus"></i></a></h3>
-                <ul class="ee-item-list">
-                    {{#each itemsByType.weapon}}
-                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-                        <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-
-            <div class="ee-panel">
-                <h3>Armor <a class="ee-create-item" data-action="create-item" data-type="armor" title="Create Armor"><i class="fas fa-plus"></i></a></h3>
-                <ul class="ee-item-list">
-                    {{#each itemsByType.armor}}
-                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-                        <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-
-            <div class="ee-panel">
-                <h3>Power Armor <a class="ee-create-item" data-action="create-item" data-type="powerArmor" title="Create Power Armor"><i class="fas fa-plus"></i></a></h3>
-                <ul class="ee-item-list">
-                    {{#each itemsByType.powerArmor}}
-                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-                        <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-
-            <div class="ee-panel">
-                <h3>Spells <a class="ee-create-item" data-action="create-item" data-type="spell" title="Create Spell"><i class="fas fa-plus"></i></a></h3>
-                <ul class="ee-item-list">
-                    {{#each itemsByType.spell}}
-                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-                        <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-
-            <div class="ee-panel">
-                <h3>Vehicles <a class="ee-create-item" data-action="create-item" data-type="vehicle" title="Create Vehicle"><i class="fas fa-plus"></i></a></h3>
-                <ul class="ee-item-list">
-                    {{#each itemsByType.vehicle}}
-                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-                        <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-
-            <div class="ee-panel">
-                <h3>
-                    Races <a class="ee-create-item" data-action="create-item" data-type="race" title="Create Race"><i class="fas fa-plus"></i></a>
-                    {{#if isRCC}}<span class="ee-equipped-badge" title="Locked: an RCC is equipped">RCC locked</span>{{/if}}
-                </h3>
+            <div class="ee-grid ee-grid--items">
+            <section class="ee-panel ee-item-list-panel">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-dna"></i> Races <span class="ee-count">{{itemsByType.race.length}}</span> {{#if isRCC}}<span class="ee-equipped-badge" title="Locked: an RCC is equipped">RCC locked</span>{{/if}}</h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="race" title="Create Race"><i class="fas fa-plus"></i></a>
+                </header>
                 <ul class="ee-item-list {{#if isRCC}}ee-rcc-locked{{/if}}">
                     {{#each itemsByType.race}}
-                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
+                    <li class="ee-item-row {{#if (eq id ../equippedRaceId)}}ee-item-row--equipped{{/if}}" data-item-id="{{id}}" draggable="true">
+                        <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" />{{name}}</a>
                         {{#if (eq id ../equippedRaceId)}}<span class="ee-equipped-badge">Equipped</span>{{/if}}
                         <span class="ee-actions">
                             {{#if (eq id ../equippedRaceId)}}
-                            <a class="ee-unequip-btn" data-action="unequip-item" data-slot="race" title="Unequip Race"><i class="fas fa-times-circle"></i></a>
+                            <a class="ee-icon-btn ee-unequip-btn" data-action="unequip-item" data-slot="race" title="Unequip Race"><i class="fas fa-times-circle"></i></a>
                             {{else}}
-                            <a class="ee-equip-btn" data-action="equip-item" data-item-id="{{id}}" title="Equip Race"><i class="fas fa-check-circle"></i></a>
+                            <a class="ee-icon-btn ee-equip-btn" data-action="equip-item" data-item-id="{{id}}" title="Equip Race"><i class="fas fa-check-circle"></i></a>
                             {{/if}}
-                            <a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a>
+                            <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Race"><i class="fas fa-times"></i></a>
                         </span>
                     </li>
+                    {{else}}
+                    <li class="ee-empty">None</li>
                     {{/each}}
                 </ul>
-            </div>
+            </section>
 
-            <div class="ee-panel">
-                <h3>OCCs <a class="ee-create-item" data-action="create-item" data-type="occ" title="Create OCC"><i class="fas fa-plus"></i></a></h3>
+            <section class="ee-panel ee-item-list-panel">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-id-badge"></i> O.C.C.s <span class="ee-count">{{itemsByType.occ.length}}</span></h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="occ" title="Create OCC"><i class="fas fa-plus"></i></a>
+                </header>
                 <ul class="ee-item-list">
                     {{#each itemsByType.occ}}
-                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-                        {{#if system.isRCC}}<span class="ee-equipped-badge" title="Racial Character Class">RCC</span>{{/if}}
+                    <li class="ee-item-row {{#if (eq id ../equippedOccId)}}ee-item-row--equipped{{/if}}" data-item-id="{{id}}" draggable="true">
+                        <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" />{{name}}</a>
+                        {{#if system.isRCC}}<span class="ee-equipped-badge ee-equipped-badge--muted" title="Racial Character Class">RCC</span>{{/if}}
                         {{#if (eq id ../equippedOccId)}}<span class="ee-equipped-badge">Equipped</span>{{/if}}
                         <span class="ee-actions">
                             {{#if (eq id ../equippedOccId)}}
-                            <a class="ee-unequip-btn" data-action="unequip-item" data-slot="occ" title="Unequip OCC"><i class="fas fa-times-circle"></i></a>
+                            <a class="ee-icon-btn ee-unequip-btn" data-action="unequip-item" data-slot="occ" title="Unequip OCC"><i class="fas fa-times-circle"></i></a>
                             {{else}}
-                            <a class="ee-equip-btn" data-action="equip-item" data-item-id="{{id}}" title="Equip OCC"><i class="fas fa-check-circle"></i></a>
+                            <a class="ee-icon-btn ee-equip-btn" data-action="equip-item" data-item-id="{{id}}" title="Equip OCC"><i class="fas fa-check-circle"></i></a>
                             {{/if}}
-                            <a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a>
+                            <a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete OCC"><i class="fas fa-times"></i></a>
                         </span>
                     </li>
+                    {{else}}
+                    <li class="ee-empty">None</li>
                     {{/each}}
                 </ul>
-            </div>
+            </section>
 
-            <div class="ee-panel">
-                <h3>Other Gear <a class="ee-create-item" data-action="create-item" data-type="gear" title="Create Gear"><i class="fas fa-plus"></i></a></h3>
+            <section class="ee-panel ee-item-list-panel">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-brain"></i> Psionic Powers <span class="ee-count">{{itemsByType.psionicPower.length}}</span></h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="psionicPower" title="Create Psionic Power"><i class="fas fa-plus"></i></a>
+                </header>
+                <ul class="ee-item-list">
+                    {{#each itemsByType.psionicPower}}
+                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" />{{name}}</a>
+                        <span class="ee-actions"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Psionic Power"><i class="fas fa-times"></i></a></span>
+                    </li>
+                    {{else}}
+                    <li class="ee-empty">None</li>
+                    {{/each}}
+                </ul>
+            </section>
+
+            <section class="ee-panel ee-item-list-panel">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-hat-wizard"></i> Spells <span class="ee-count">{{itemsByType.spell.length}}</span></h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="spell" title="Create Spell"><i class="fas fa-plus"></i></a>
+                </header>
+                <ul class="ee-item-list">
+                    {{#each itemsByType.spell}}
+                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" />{{name}}</a>
+                        <span class="ee-actions"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Spell"><i class="fas fa-times"></i></a></span>
+                    </li>
+                    {{else}}
+                    <li class="ee-empty">None</li>
+                    {{/each}}
+                </ul>
+            </section>
+
+            <section class="ee-panel ee-item-list-panel">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-star"></i> Abilities <span class="ee-count">{{itemsByType.ability.length}}</span></h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="ability" title="Create Ability"><i class="fas fa-plus"></i></a>
+                </header>
+                <ul class="ee-item-list">
+                    {{#each itemsByType.ability}}
+                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" />{{name}}</a>
+                        <span class="ee-actions"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Ability"><i class="fas fa-times"></i></a></span>
+                    </li>
+                    {{else}}
+                    <li class="ee-empty">None</li>
+                    {{/each}}
+                </ul>
+            </section>
+
+            <section class="ee-panel ee-item-list-panel">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-crosshairs"></i> Weapons <span class="ee-count">{{itemsByType.weapon.length}}</span></h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="weapon" title="Create Weapon"><i class="fas fa-plus"></i></a>
+                </header>
+                <ul class="ee-item-list">
+                    {{#each itemsByType.weapon}}
+                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" />{{name}}</a>
+                        <span class="ee-actions"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Weapon"><i class="fas fa-times"></i></a></span>
+                    </li>
+                    {{else}}
+                    <li class="ee-empty">None</li>
+                    {{/each}}
+                </ul>
+            </section>
+
+            <section class="ee-panel ee-item-list-panel">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-shield-alt"></i> Armor <span class="ee-count">{{itemsByType.armor.length}}</span></h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="armor" title="Create Armor"><i class="fas fa-plus"></i></a>
+                </header>
+                <ul class="ee-item-list">
+                    {{#each itemsByType.armor}}
+                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" />{{name}}</a>
+                        <span class="ee-actions"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Armor"><i class="fas fa-times"></i></a></span>
+                    </li>
+                    {{else}}
+                    <li class="ee-empty">None</li>
+                    {{/each}}
+                </ul>
+            </section>
+
+            <section class="ee-panel ee-item-list-panel">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-robot"></i> Power Armor <span class="ee-count">{{itemsByType.powerArmor.length}}</span></h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="powerArmor" title="Create Power Armor"><i class="fas fa-plus"></i></a>
+                </header>
+                <ul class="ee-item-list">
+                    {{#each itemsByType.powerArmor}}
+                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" />{{name}}</a>
+                        <span class="ee-actions"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Power Armor"><i class="fas fa-times"></i></a></span>
+                    </li>
+                    {{else}}
+                    <li class="ee-empty">None</li>
+                    {{/each}}
+                </ul>
+            </section>
+
+            <section class="ee-panel ee-item-list-panel">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-truck"></i> Vehicles <span class="ee-count">{{itemsByType.vehicle.length}}</span></h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="vehicle" title="Create Vehicle"><i class="fas fa-plus"></i></a>
+                </header>
+                <ul class="ee-item-list">
+                    {{#each itemsByType.vehicle}}
+                    <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
+                        <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" />{{name}}</a>
+                        <span class="ee-actions"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Vehicle"><i class="fas fa-times"></i></a></span>
+                    </li>
+                    {{else}}
+                    <li class="ee-empty">None</li>
+                    {{/each}}
+                </ul>
+            </section>
+
+            <section class="ee-panel ee-item-list-panel">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-box-open"></i> Other Gear <span class="ee-count">{{itemsByType.gear.length}}</span></h3>
+                    <a class="ee-create-item" data-action="create-item" data-type="gear" title="Create Gear"><i class="fas fa-plus"></i></a>
+                </header>
                 <ul class="ee-item-list">
                     {{#each itemsByType.gear}}
                     <li class="ee-item-row" data-item-id="{{id}}" draggable="true">
-                        <a data-action="edit-item" data-item-id="{{id}}">{{name}}</a>
-                        <span class="ee-actions"><a data-action="delete-item" data-item-id="{{id}}"><i class="fas fa-times"></i></a></span>
+                        <a class="ee-item-link" data-action="edit-item" data-item-id="{{id}}"><img src="{{img}}" alt="" />{{name}}</a>
+                        <span class="ee-actions"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-item" data-item-id="{{id}}" title="Delete Gear"><i class="fas fa-times"></i></a></span>
                     </li>
+                    {{else}}
+                    <li class="ee-empty">None</li>
                     {{/each}}
                 </ul>
+            </section>
             </div>
         </div>
         {{/unless}}

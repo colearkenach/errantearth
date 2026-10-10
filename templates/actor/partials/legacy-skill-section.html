@@ -1,56 +1,60 @@
-<section class="ee-skill-col" data-skill-category="{{category}}">
-  <h3>{{title}} <span class="ee-hint">{{rows.length}}</span></h3>
+<section class="ee-panel ee-skill-col" data-skill-category="{{category}}">
+  <h3 class="ee-panel-title">{{title}} <span class="ee-count">{{rows.length}}</span></h3>
   <div class="ee-skill-list">
   {{#each rows}}
     <article class="ee-skill-entry">
       <div class="ee-skill-play-row">
-        <span class="ee-skill-name">{{ee_default name "New custom skill"}}</span>
-        <button type="button" class="ee-skill-roll" data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll {{name}}; skill level {{skillLevel}}"><strong>{{total}}%</strong> <i class="fas fa-dice-d20"></i></button>
+        <span class="ee-skill-name" title="{{name}}">{{ee_default name "New custom skill"}}{{#if needsSpec}} <i class="fas fa-pen ee-skill-needs-spec" title="Name this {{specLabel}} in the skill's settings"></i>{{/if}}</span>
+        <button type="button" class="ee-roll-pill ee-skill-roll" data-action="roll" data-roll-type="skill" data-target="{{total}}" data-label="{{name}}" title="Roll {{name}}; skill level {{skillLevel}}"><strong>{{total}}%</strong> <i class="fas fa-dice-d20"></i></button>
       </div>
       <details class="ee-skill-adjustments" data-disclosure-key="skill-{{_index}}" {{#unless name}}open{{/unless}}>
-        <summary>Adjust / edit</summary>
+        <summary title="Adjust / edit {{name}}"><i class="fas fa-sliders"></i><span class="ee-sr-only">Adjust / edit</span></summary>
         <div class="ee-skill-edit-grid">
           <input type="hidden" name="system.skills.list.{{_index}}.key" value="{{key}}" />
           <input type="hidden" name="system.skills.list.{{_index}}.custom" value="{{custom}}" />
           {{#if custom}}
-          <label>Name <input type="text" name="system.skills.list.{{_index}}.name" value="{{name}}" placeholder="Custom skill" /></label>
-          {{else}}<input type="hidden" name="system.skills.list.{{_index}}.name" value="{{name}}" />{{/if}}
+          <label class="ee-field ee-field--wide"><span>Name</span><input type="text" name="system.skills.list.{{_index}}.name" value="{{name}}" placeholder="Custom skill" /></label>
+          {{else}}<input type="hidden" name="system.skills.list.{{_index}}.name" value="{{name}}" />
+          {{#if isSpecialization}}
+          <label class="ee-field ee-field--wide"><span>{{specLabel}}</span><input type="text" value="{{specValue}}" data-action="set-skill-spec" data-index="{{_index}}" list="ee-skill-languages" placeholder="Which language?" /></label>
+          {{/if}}{{/if}}
+          {{#if hasOccBonus}}<input type="hidden" name="system.skills.list.{{_index}}.occBonus" value="{{occBonus}}" />{{/if}}
+          {{#if hasChoiceCost}}<input type="hidden" name="system.skills.list.{{_index}}.choiceCost" value="{{choiceCost}}" />{{/if}}
           {{#if sourceItemId}}<input type="hidden" name="system.skills.list.{{_index}}.sourceItemId" value="{{sourceItemId}}" />{{/if}}
           {{#if hasSourceChoice}}<input type="hidden" name="system.skills.list.{{_index}}.sourceChoiceIndex" value="{{sourceChoiceIndex}}" />{{/if}}
-          <label>Base % <input type="number" name="system.skills.list.{{_index}}.base" value="{{base}}" /></label>
-          <label>Per level % <input type="number" name="system.skills.list.{{_index}}.perLvl" value="{{perLvl}}" /></label>
-          <label>Misc % <input type="number" name="system.skills.list.{{_index}}.misc" value="{{misc}}" /></label>
-          <label>Learned at level <input type="number" min="1" name="system.skills.list.{{_index}}.learnedAtLevel" value="{{learnedAtLevel}}" /></label>
-          <label>Category <select name="system.skills.list.{{_index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category}}</select></label>
+          <label class="ee-field"><span>Base %</span><input type="number" name="system.skills.list.{{_index}}.base" value="{{base}}" /></label>
+          <label class="ee-field"><span>Per level %</span><input type="number" name="system.skills.list.{{_index}}.perLvl" value="{{perLvl}}" /></label>
+          <label class="ee-field"><span>Misc %</span><input type="number" name="system.skills.list.{{_index}}.misc" value="{{misc}}" /></label>
+          <label class="ee-field"><span>Learned at Lvl</span><input type="number" min="1" name="system.skills.list.{{_index}}.learnedAtLevel" value="{{learnedAtLevel}}" /></label>
+          <label class="ee-field ee-field--wide"><span>Category</span><select name="system.skills.list.{{_index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category}}</select></label>
         </div>
-        <p class="ee-hint">Source bonus {{sourceBonus}}% · IQ bonus {{../riftsDerived.iqSkillBonus}}% · Skill level {{skillLevel}}</p>
-                                {{#if statBonusEntries.length}}
-                                <div class="ee-skill-stat-bonuses">
-                                    {{#each statBonusEntries}}
-                                    <span class="ee-chip">
-                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.bonus" value="{{bonus}}" />
-                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.formula" value="{{formula}}" />
-                                        {{#if manualValue}}
-                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.rolled" value="true" />
-                                        <label class="ee-skill-stat-manual" title="Set {{label}} result from {{formula}}">
-                                            {{label}}
-                                            <input type="number" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.value" value="{{inputValue}}" placeholder="{{formula}}" />
-                                        </label>
-                                        {{else}}
-                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.value" value="{{value}}" />
-                                        <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.rolled" value="{{rolled}}" />
-                                        {{label}} {{display}}
-                                        {{/if}}
-                                    </span>
-                                    {{/each}}
-                                </div>
-                                {{/if}}
-
-        <button type="button" class="ee-skill-remove" data-action="delete-row" data-path="skills.list" data-index="{{_index}}"><i class="fas fa-times"></i> Remove skill</button>
+        <p class="ee-hint">{{#if hasOccBonus}}Package bonus {{occBonus}}% · {{/if}}Other bonuses {{sourceBonus}}% · IQ bonus {{../riftsDerived.iqSkillBonus}}% · Skill level {{skillLevel}}{{#if hasChoiceCost}} · Cost {{choiceCost}} picks{{/if}}</p>
+        {{#if statBonusEntries.length}}
+        <div class="ee-skill-stat-bonuses">
+          {{#each statBonusEntries}}
+          <span class="ee-chip">
+            <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.bonus" value="{{bonus}}" />
+            <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.formula" value="{{formula}}" />
+            {{#if manualValue}}
+            <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.rolled" value="true" />
+            <label class="ee-skill-stat-manual" title="Set {{label}} result from {{formula}}">
+              {{label}}
+              <input type="number" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.value" value="{{inputValue}}" placeholder="{{formula}}" />
+            </label>
+            {{else}}
+            <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.value" value="{{value}}" />
+            <input type="hidden" name="system.skills.list.{{skillIndex}}.statBonuses.{{key}}.rolled" value="{{rolled}}" />
+            {{label}} {{display}}
+            {{/if}}
+          </span>
+          {{/each}}
+        </div>
+        {{/if}}
+        <button type="button" class="ee-skill-remove" data-action="delete-row" data-path="skills.list" data-index="{{_index}}"><i class="fas fa-trash"></i> Remove skill</button>
       </details>
     </article>
   {{else}}
-    <p class="ee-hint">No skills in this category yet.</p>
+    <p class="ee-empty">No skills in this category yet.</p>
   {{/each}}
   </div>
   <div class="ee-skill-add-row">
@@ -58,6 +62,6 @@
       <option value="">+ Add from list…</option>
       {{#each picker}}<optgroup label="{{group}}">{{#each items}}<option value="{{key}}">{{name}}</option>{{/each}}</optgroup>{{/each}}
     </select>
-    <button type="button" class="ee-add" data-action="add-row" data-path="skills.list" data-kind="skill" data-category="{{category}}">+ Custom</button>
+    <button type="button" class="ee-add" data-action="add-row" data-path="skills.list" data-kind="skill" data-category="{{category}}"><i class="fas fa-plus"></i> Custom</button>
   </div>
 </section>

@@ -1,3 +1,5 @@
+import { LegacyPackages } from "../rules/legacy-packages.js";
+
 const ITEM_IMPORT_TYPES = {
   weapon: "Weapon",
   armor: "Armor",
@@ -572,8 +574,29 @@ export class ErrantEarthLegacyImporter {
       grantsPsionics: this._bool(this._field(source, "grantsPsionics", "Psionics", "Grants Psionics"))
         || !!this._field(source, "Powers", "Psionic Powers")
         || /\bI\.?\s*S\.?\s*P\.?\b/i.test(this._sourceText(source)),
+      handToHand: this._packageHandToHand(source),
       abilities: this._abilityRows(this._field(source, "abilities", "Abilities", "Powers"))
     };
+  }
+
+  /** Structured Hand to Hand from a printed "Hand to Hand: ..." line. */
+  static _packageHandToHand(source) {
+    const line = this._field(source, "Hand to Hand");
+    const parsed = LegacyPackages.parseHandToHandText(line ? `Hand to Hand: ${line}` : "", this._field(source, "bonuses", "Bonuses", "Special"));
+    return parsed ? { type: parsed.type, upgrades: parsed.upgrades } : { type: "", upgrades: [] };
+  }
+
+  /** Printed pool lines ("P.P.E.: 2D6x10, +2D6 per level") kept whole; the
+   *  sheet splits them into starting and per-level formulas. */
+  static _packagePoolText(source) {
+    const pools = this._poolBonuses(source);
+    for (const [key, labels] of Object.entries({
+      hp: ["Hit Points"], sdc: ["S.D.C.", "SDC"], mdc: ["M.D.C. Points", "M.D.C.", "MDC"], isp: ["I.S.P.", "ISP"], ppe: ["P.P.E.", "PPE"]
+    })) {
+      const text = this._field(source, ...labels);
+      if (typeof text === "string" && /\dD\d|\d/i.test(text)) pools[key] = this._cleanWhitespace(text).replace(/^Standard:\s*/i, "");
+    }
+    return pools;
   }
 
   static _raceSystem(source) {
@@ -608,14 +631,16 @@ export class ErrantEarthLegacyImporter {
       bonuses: this._textField(source, "bonuses", "Bonuses", "Special"),
       languages: this._textField(source, "languages", "Languages"),
       isMDC: this._bool(this._field(source, "isMDC", "MDC", "Mega-Damage")),
+      attributeMode: attrBlock ? "roll" : "",
       attributeBonuses,
-      poolBonuses: this._poolBonuses(source),
+      poolBonuses: this._packagePoolText(source),
       skillBonuses: this._skillBonusRows(this._field(source, "skillBonuses", "Skill Bonuses")),
       weaponProficiencies: { selected: this._weaponProficiencies(source), custom: [], choices: this._wpChoices(skillsOfNote) },
       combatBonuses: { ...this._numberMap(source, ["attacks", "initiative", "perception", "damage", "strike", "parry", "dodge", "disarm", "entangle", "pullPunch", "roll"], "bonus"), ...bonusMaps.combat },
       saveBonuses: { ...this._numberMap(source, ["spell", "ritual", "psionics", "drugPoison", "harmfulDrugs", "insanity", "possession", "horrorFactor", "death", "pain"], "save"), ...bonusMaps.saves },
       grantsMagic: this._bool(this._field(source, "grantsMagic", "Magic", "Grants Magic")),
       grantsPsionics: this._bool(this._field(source, "grantsPsionics", "Psionics", "Grants Psionics")),
+      handToHand: this._packageHandToHand(source),
       abilities: this._abilityRows(this._joinText(naturalAbilities, skillsOfNote))
     };
   }

@@ -1,314 +1,317 @@
 /* ============================================================
-   Errant Earth — EE Legacy-style character sheet
+   Errant Earth / EE Legacy — sheet styles
+   ------------------------------------------------------------
+   One layout, two themes:
+     .ee-mode-legacy  Palladium-style crimson & black (default)
+     .ee-mode-ee      Errant Earth steel & desert ochre
+   Item sheets add a per-type accent (.ee-item--weapon, …).
+   Everything is scoped under .errantearth.app so Foundry's own
+   form/table defaults never leak into the sheets.
    ============================================================ */
 
-.ee-sheet {
-  --ee-red:    #8b1a1a;
-  --ee-red-2:  #6f1414;
-  --ee-bar:    #8b1a1a;
-  --ee-gray:   #b8b8b8;
-  --ee-line:   #555;
-  --ee-bg:     #f4f4f4;
+/* ---------------- 1. Design tokens ---------------- */
+.ee-sheet,
+.ee-item-sheet,
+.errantearth.dialog .window-content,
+.ee-legacy-tools-app {
+  --ee-font: "Signika", sans-serif;
+  --ee-font-display: "Modesto Condensed", "Signika", sans-serif;
+  --ee-font-logo: "Modesto Condensed", "Signika", sans-serif;
+  --ee-head-size: 15px;
+  --ee-head-spacing: 0.08em;
 
+  --ee-ink: #1f1b18;
+  --ee-ink-2: #4a433d;
+  --ee-ink-3: #7a7068;
+  --ee-paper: #e9e3da;
+  --ee-surface: #fbf9f6;
+  --ee-surface-2: #f2ede6;
+  --ee-surface-3: #e2dbd1;
+  --ee-line: #d6ccbf;
+  --ee-line-2: #b4a797;
+  --ee-field-bg: #ffffff;
+  --ee-field-line: #c3b7a8;
+
+  --ee-accent: #8e1b1b;
+  --ee-accent-ink: #ffffff;
+  --ee-band-1: #141216;
+  --ee-band-2: #42161a;
+  --ee-band-ink: #f5eee6;
+
+  --ee-good: #2e6b38;
+  --ee-bad: #a12222;
+  --ee-warn: #94600a;
+
+  --ee-radius: 4px;
+  --ee-shadow: 0 1px 2px rgba(40, 25, 10, 0.1);
+
+  /* Derived from the accent; declared here so theme/type overrides on the
+     same element recompute them. */
+  --ee-accent-soft: color-mix(in srgb, var(--ee-accent) 9%, transparent);
+  --ee-accent-mid: color-mix(in srgb, var(--ee-accent) 22%, transparent);
+  --ee-accent-line: color-mix(in srgb, var(--ee-accent) 40%, transparent);
+  --ee-accent-deep: color-mix(in srgb, var(--ee-accent) 78%, black);
+  --ee-accent-light: color-mix(in srgb, var(--ee-accent) 55%, white);
+}
+
+.ee-sheet.ee-mode-ee,
+.ee-item-sheet.ee-mode-ee {
+  --ee-font-display: "Signika", sans-serif;
+  --ee-font-logo: "Bruno Ace", "Signika", sans-serif;
+  --ee-head-size: 12px;
+  --ee-head-spacing: 0.12em;
+
+  --ee-paper: #e6e3de;
+  --ee-surface: #fbfaf8;
+  --ee-surface-2: #efede9;
+  --ee-surface-3: #dfdcd5;
+  --ee-line: #d0cbc2;
+  --ee-line-2: #a9a399;
+  --ee-field-line: #bdb7ad;
+
+  --ee-accent: #a24c1d;
+  --ee-band-1: #1d2127;
+  --ee-band-2: #535c67;
+}
+
+/* Item type accents (both themes). */
+.ee-item-sheet.ee-item--race { --ee-accent: #2f6f57; }
+.ee-item-sheet.ee-item--occ { --ee-accent: #7a2430; }
+.ee-item-sheet.ee-item--weapon { --ee-accent: #7a3420; }
+.ee-item-sheet.ee-item--armor,
+.ee-item-sheet.ee-item--powerArmor { --ee-accent: #3f5d78; }
+.ee-item-sheet.ee-item--vehicle { --ee-accent: #4f5e35; }
+.ee-item-sheet.ee-item--spell { --ee-accent: #5e3f82; }
+.ee-item-sheet.ee-item--psionicPower { --ee-accent: #2f6480; }
+.ee-item-sheet.ee-item--gear { --ee-accent: #6a5732; }
+.ee-item-sheet.ee-item--ability { --ee-accent: #87661a; }
+
+/* ---------------- 2. Window shell ---------------- */
+.errantearth.sheet.app .window-content {
+  padding: 0;
+  overflow: hidden;
+  background: #e9e3da;
+}
+
+.ee-sheet,
+.ee-item-sheet {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 6px;
-  background: var(--ee-bg);
-  font-family: "Signika", sans-serif;
-  font-size: 13px;
-  color: #111;
-}
-
-/* ---------------- Banner ---------------- */
-.ee-banner {
-  position: relative;
-  height: 70px;
-  border: 2px solid var(--ee-red);
-  background: linear-gradient(90deg, #1a1a2a, #3a1a2a);
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.ee-banner-img {
+  flex: 1 1 auto;
+  min-height: 0;
   height: 100%;
-  width: auto;
-  object-fit: cover;
-  cursor: pointer;
-  border-right: 2px solid var(--ee-red);
-}
-
-.ee-banner-title {
-  flex: 1;
-  min-width: 0;
-  box-sizing: border-box;
-  text-align: left;
-  padding-left: 16px;
-  padding-right: 180px;
-  color: var(--ee-red);
-  font-family: "Signika", sans-serif;
-  font-weight: 900;
-  font-size: 36px;
-  letter-spacing: 2px;
-  text-shadow: 2px 2px 0 #000;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* ---------------- Section bars / blocks ---------------- */
-.ee-bar {
-  background: var(--ee-red);
-  color: #fff;
-  text-align: center;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin: 6px 0 4px 0;
-  padding: 4px 6px;
-  border: 1px solid #000;
-  font-size: 14px;
-}
-
-.ee-subbar {
-  background: #555;
-  color: #fff;
-  text-align: center;
-  margin: 4px 0;
-  padding: 3px;
+  margin: 0;
+  background: var(--ee-paper);
+  color: var(--ee-ink);
+  font-family: var(--ee-font);
   font-size: 13px;
-  font-weight: 600;
+  line-height: 1.35;
 }
 
-.ee-block {
-  border: 1px solid var(--ee-line);
-  background: #ddd;
-  padding: 4px;
+/* ---------------- 3. Controls (reset Foundry defaults) ---------------- */
+.errantearth.app :is(.ee-sheet, .ee-item-sheet, .window-content) :is(h1, h2, h3, h4, h5) {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: var(--ee-font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: inherit;
 }
 
-/* ---------------- Rows ---------------- */
-.ee-row {
-display: flex;
-  flex-wrap: nowrap;
-  gap: 6px 10px;
-  padding: 4px 6px;
-  background: #ddd;
-  justify-content: center;
-  align-items: baseline;
-}
-
-.ee-row > label {
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.ee-row input[type="text"],
-.ee-row input[type="number"],
-.ee-row select {
-  height: 22px;
-  padding: 0 4px;
-  border: 1px solid #888;
-  background: #fff;
-  flex: 1 1 80px;
-  min-width: 60px;
-  max-width: 200px;
-}
-
-.ee-row input[type="number"] {
-    flex: 0 0 60px;
-}
-
-.ee-attrs input {
-    width: 44px;
-    min-width: 44px;
-    text-align: center;
-}
-
-.ee-row.ee-attrs {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 4px 8px;
-}
-
-.ee-advancement-row {
-  flex-wrap: wrap;
-}
-
-.ee-xp-next {
-  display: inline-flex;
-  align-items: center;
-  min-width: 92px;
-  height: 22px;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) :is(input[type="text"], input[type="number"], input:not([type]), select) {
+  width: 100%;
+  min-width: 0;
+  height: 26px;
+  margin: 0;
   padding: 0 6px;
-  border: 1px solid #888;
-  background: #f7f3ec;
-  color: #3f352d;
-  font-weight: 800;
+  border: 1px solid var(--ee-field-line);
+  border-radius: 3px;
+  background: var(--ee-field-bg);
+  box-shadow: none;
+  color: var(--ee-ink);
+  font-family: var(--ee-font);
+  font-size: 13px;
+  line-height: 24px;
+  text-align: left;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) select {
+  padding-right: 2px;
+  cursor: pointer;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) input[type="number"] {
   font-variant-numeric: tabular-nums;
 }
 
-.ee-xp-mismatch {
-  color: #9c5b00;
-  cursor: help;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) :is(input, select, textarea):focus {
+  outline: none;
+  border-color: var(--ee-accent);
+  box-shadow: 0 0 0 2px var(--ee-accent-mid);
 }
 
-.ee-profile-details > .ee-row {
-  flex-wrap: wrap;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) :is(input, select):disabled {
+  border-color: transparent;
+  background: var(--ee-surface-3);
+  color: var(--ee-ink-2);
+  cursor: not-allowed;
 }
 
-.ee-pools input {
-    width: 48px;
-    min-width: 48px;
-    text-align: center;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) textarea,
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-textarea {
+  width: 100%;
+  min-height: 96px;
+  margin: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--ee-field-line);
+  border-radius: 3px;
+  background: var(--ee-field-bg);
+  box-shadow: none;
+  color: var(--ee-ink);
+  font-family: var(--ee-font);
+  font-size: 13px;
+  line-height: 1.45;
+  resize: vertical;
 }
 
-.ee-pool-pair {
-    display: inline-flex;
-    align-items: center;
-    flex: 0 0 auto;
-    gap: 3px;
-    white-space: nowrap;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-bigtext {
+  min-height: 130px;
 }
 
-.ee-row .ee-pool-pair input[type="number"],
-.ee-pool-pair input[type="number"] {
-    flex: 0 0 48px;
-    width: 48px;
-    min-width: 48px;
-    text-align: center;
-}
-
-.ee-pools > label,
-.ee-attrs > label {
-    white-space: nowrap;
-}
-
-.ee-disclosure {
-  margin: 6px 0;
-  border: 1px solid #aaa;
-  background: #eee;
-}
-
-.ee-disclosure > summary {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 24px;
-  padding: 3px 6px;
-  background: var(--ee-red);
-  color: #fff;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) input[type="checkbox"] {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--ee-accent);
   cursor: pointer;
-  font-weight: 700;
+  vertical-align: middle;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) input::placeholder {
+  color: var(--ee-ink-3);
+  opacity: 0.75;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) button {
+  width: auto;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  background: none;
+  box-shadow: none;
+  color: inherit;
+  font-family: var(--ee-font);
+  font-size: 13px;
   line-height: 1.2;
-  list-style-position: inside;
+  cursor: pointer;
 }
 
-.ee-disclosure > summary::-webkit-details-marker {
-  color: #fff;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) button > i {
+  margin: 0;
 }
 
-.ee-disclosure[open] > summary {
-  margin-bottom: 5px;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) a {
+  color: inherit;
+  cursor: pointer;
 }
 
-.ee-summary-chips {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 3px;
-  min-width: 0;
-  font-size: 11px;
-  font-weight: 500;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) a:hover,
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) button:hover {
+  text-shadow: none;
 }
 
-.ee-summary-chips span {
-  padding: 1px 5px;
-  border: 1px solid rgba(255,255,255,0.55);
-  background: rgba(255,255,255,0.12);
-  color: #fff;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) :is(button, a, summary):focus-visible {
+  outline: 2px solid var(--ee-accent);
+  outline-offset: 1px;
+}
+
+.ee-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
   white-space: nowrap;
 }
 
-.ee-effect-chip-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 5px;
-  padding: 0 6px 4px;
+/* Inline action icons */
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) [data-action="roll"]:not(button) {
+  color: var(--ee-accent);
 }
 
-.ee-effect-chip {
-  display: grid;
-  gap: 2px;
-  padding: 5px 6px;
-  border: 1px solid #c7c7c7;
-  background: #fff;
-  font-size: 11px;
-  line-height: 1.25;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) [data-action="roll"]:not(button):hover {
+  color: var(--ee-accent-deep);
 }
 
-.ee-effect-chip strong {
-  color: #333;
+.ee-actions {
+  white-space: nowrap;
 }
 
-.ee-effect-chip--bonus {
-  border-left: 3px solid #4b7c3f;
+.ee-actions > a + a {
+  margin-left: 7px;
 }
 
-.ee-effect-chip--penalty {
-  border-left: 3px solid var(--ee-red);
-}
-
-.ee-attr-effects .ee-hint {
-  margin: 3px 6px 6px;
-}
-
-.ee-attr-source-strip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin: -2px 0 5px;
-  padding: 0 6px;
-}
-
-.ee-attr-source-strip span {
-  padding: 2px 6px;
-  border: 1px solid #c9b8b8;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
   border-radius: 3px;
-  background: #fff8f2;
-  font-size: 11px;
+  color: var(--ee-ink-3);
+  font-size: 12px;
+  vertical-align: middle;
 }
 
-/* ---------------- Tabs ---------------- */
-.ee-tabs {
-  display: flex;
-  border-bottom: 2px solid var(--ee-red);
-  background: #ccc;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-icon-btn:hover {
+  background: var(--ee-accent-soft);
+  color: var(--ee-accent);
 }
 
-.ee-tabs .item {
-  flex: 1;
-  text-align: center;
-  padding: 6px 0;
-  font-weight: 600;
-  letter-spacing: 1px;
-  cursor: pointer;
-  color: #444;
-  border-right: 1px solid #999;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-icon-btn--danger:hover {
+  background: color-mix(in srgb, var(--ee-bad) 12%, transparent);
+  color: var(--ee-bad);
 }
 
-.ee-tabs .item:last-child { border-right: none; }
-.ee-tabs .item.active {
-  background: #fff;
-  color: var(--ee-red);
-  border-bottom: 2px solid #fff;
-  margin-bottom: -2px;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-equip-btn { color: var(--ee-good); }
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-unequip-btn { color: var(--ee-ink-3); }
+
+/* Add / create buttons */
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) :is(.ee-add, .ee-create-item) {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+  padding: 0 9px;
+  border: 1px dashed var(--ee-accent-line);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--ee-accent);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-.ee-sheet .sheet-body {
-    background: #fff;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) :is(.ee-add, .ee-create-item):hover {
+  border-style: solid;
+  background: var(--ee-accent-soft);
+  color: var(--ee-accent-deep);
 }
 
-.ee-sheet .sheet-body .tab {
-    padding: 4px;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-panel-head .ee-create-item {
+  border-style: solid;
+  border-color: var(--ee-accent-line);
+  background: var(--ee-surface);
+}
+
+/* ---------------- 4. Building blocks ---------------- */
+.ee-sheet .tab {
+  flex-direction: column;
+  gap: 10px;
 }
 
 .ee-sheet .sheet-body > .tab:not(.active) {
@@ -316,158 +319,1341 @@ display: flex;
 }
 
 .ee-sheet .sheet-body > .tab.active {
-  display: block !important;
+  display: flex !important;
 }
 
-/* ---------------- Tables ---------------- */
-.ee-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
+.ee-panel {
+  min-width: 0;
+  padding: 0 10px 10px;
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface);
+  box-shadow: var(--ee-shadow);
+}
+
+.ee-panel--flat {
+  box-shadow: none;
+}
+
+.errantearth.app .ee-sheet .ee-panel-title,
+.errantearth.app .ee-item-sheet .ee-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 -10px 8px;
+  padding: 7px 10px 5px;
+  border-bottom: 2px solid var(--ee-accent);
+  border-radius: var(--ee-radius) var(--ee-radius) 0 0;
+  background: linear-gradient(180deg, var(--ee-surface-2), var(--ee-surface));
+  color: var(--ee-accent);
+  font-family: var(--ee-font-display);
+  font-size: var(--ee-head-size);
+  font-weight: 700;
+  letter-spacing: var(--ee-head-spacing);
+  text-transform: uppercase;
+}
+
+.ee-panel-title > i {
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+.ee-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 -10px 8px;
+  padding-right: 8px;
+  border-bottom: 2px solid var(--ee-accent);
+  border-radius: var(--ee-radius) var(--ee-radius) 0 0;
+  background: linear-gradient(180deg, var(--ee-surface-2), var(--ee-surface));
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-panel-head .ee-panel-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  border-bottom: none;
+  background: none;
+}
+
+.ee-panel-note {
+  color: var(--ee-ink-3);
+  font-size: 11px;
+  text-align: right;
+}
+
+.ee-panel-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-subhead {
+  margin: 10px 0 6px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--ee-line);
+  color: var(--ee-ink-2);
+  font-family: var(--ee-font);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ee-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--ee-accent-soft);
+  color: var(--ee-accent);
+  font-family: var(--ee-font);
+  font-size: 10px;
+  letter-spacing: 0;
+}
+
+.ee-hint {
+  margin: 6px 0 0;
+  color: var(--ee-ink-3);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.ee-hint code {
+  padding: 0 3px;
+  border-radius: 2px;
+  background: var(--ee-surface-3);
+  font-size: 11px;
+}
+
+.ee-tab-intro {
+  margin: 0;
+}
+
+.ee-muted {
+  color: var(--ee-ink-3);
+}
+
+.ee-empty {
+  margin: 0;
+  padding: 10px;
+  border: 1px dashed var(--ee-line);
+  border-radius: var(--ee-radius);
+  color: var(--ee-ink-3);
+  font-size: 12px;
+  font-style: italic;
+  text-align: center;
+}
+
+.ee-tooltip {
+  cursor: help;
+}
+
+/* Layout grids */
+.ee-grid {
+  display: grid;
+  gap: 10px;
+  align-items: start;
+}
+
+.ee-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ee-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* Stacked label + control */
+.ee-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  margin: 0;
+}
+
+.ee-field > span:first-child {
+  overflow: hidden;
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ee-field > output {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 7px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: var(--ee-surface-3);
+  color: var(--ee-ink);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ee-field > small {
+  color: var(--ee-ink-3);
+  font-size: 10px;
+}
+
+.ee-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px 10px;
+}
+
+.ee-form-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ee-form-grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.ee-form-grid .ee-field--wide {
+  grid-column: span 2;
+}
+
+/* Read-only stat chips */
+.ee-stat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ee-stat-chip {
+  display: flex;
+  flex: 1 1 110px;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  padding: 5px 9px;
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface);
+}
+
+.ee-stat-chip--wide {
+  flex-basis: 240px;
+}
+
+.ee-stat-chip > span {
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ee-stat-chip > strong {
+  color: var(--ee-ink);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ee-panel .ee-stat-chip {
+  background: var(--ee-surface-2);
+}
+
+.ee-panel .ee-stat-chips + .ee-adj-grid,
+.ee-panel .ee-adj-grid + .ee-stat-chips,
+.ee-panel .ee-form-grid + .ee-adj-grid,
+.ee-panel .ee-form-grid + .ee-stat-chips {
+  margin-top: 8px;
+}
+
+/* Chips & badges */
+.ee-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 1px 3px 1px 0;
+  padding: 1px 7px;
+  border: 1px solid var(--ee-line);
+  border-radius: 999px;
+  background: var(--ee-surface-2);
+  color: var(--ee-ink-2);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.ee-chip--strong {
+  border-color: var(--ee-accent-line);
+  background: var(--ee-accent-soft);
+  color: var(--ee-accent);
+  font-weight: 700;
+}
+
+.ee-chip a {
+  color: var(--ee-accent);
+}
+
+.ee-equipped-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: var(--ee-accent);
+  color: var(--ee-accent-ink);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.ee-equipped-badge--muted {
+  background: var(--ee-surface-3);
+  color: var(--ee-ink-2);
+}
+
+.ee-warnings {
+  margin: 4px 0;
+  padding: 6px 8px 6px 24px;
+  border-left: 3px solid var(--ee-warn);
+  border-radius: 0 3px 3px 0;
+  background: color-mix(in srgb, var(--ee-warn) 10%, transparent);
+  color: var(--ee-warn);
   font-size: 12px;
 }
 
+.ee-compact-list {
+  margin: 4px 0 0 16px;
+  padding: 0;
+  font-size: 12px;
+}
+
+.ee-compact-list li + li {
+  margin-top: 2px;
+}
+
+/* Disclosures */
+.ee-disclosure {
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface);
+  box-shadow: var(--ee-shadow);
+}
+
+.ee-disclosure > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 6px 10px;
+  border-radius: var(--ee-radius);
+  color: var(--ee-ink-2);
+  font-family: var(--ee-font-display);
+  font-size: var(--ee-head-size);
+  font-weight: 700;
+  letter-spacing: var(--ee-head-spacing);
+  list-style: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ee-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.ee-disclosure > summary::before {
+  content: "\f054";
+  flex: none;
+  width: 12px;
+  color: var(--ee-accent);
+  font-family: var(--font-awesome, "Font Awesome 6 Pro");
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+  transition: transform 120ms ease;
+}
+
+.ee-disclosure[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.ee-disclosure > summary:hover {
+  background: var(--ee-accent-soft);
+  color: var(--ee-accent);
+}
+
+.ee-disclosure[open] > summary {
+  border-bottom: 2px solid var(--ee-accent);
+  border-radius: var(--ee-radius) var(--ee-radius) 0 0;
+  background: linear-gradient(180deg, var(--ee-surface-2), var(--ee-surface));
+  color: var(--ee-accent);
+}
+
+.ee-disclosure-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px;
+}
+
+.ee-disclosure-body.ee-grid {
+  display: grid;
+}
+
+.ee-disclosure--sub {
+  box-shadow: none;
+  background: var(--ee-surface);
+}
+
+.ee-disclosure--sub > summary {
+  min-height: 28px;
+  font-family: var(--ee-font);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.ee-disclosure--sub[open] > summary {
+  border-bottom-width: 1px;
+}
+
+.ee-summary-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  min-width: 0;
+  font-family: var(--ee-font);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.ee-summary-chips span {
+  padding: 1px 6px;
+  border: 1px solid var(--ee-line);
+  border-radius: 999px;
+  background: var(--ee-surface-2);
+  color: var(--ee-ink-2);
+  white-space: nowrap;
+}
+
+/* Tables */
 .ee-table-scroll {
   width: 100%;
   overflow-x: auto;
 }
 
-.ee-table thead th {
-  background: #ccc;
-  border: 1px solid #888;
-  padding: 2px 4px;
-  text-align: left;
-  font-weight: 600;
-}
-
-.ee-table td {
-  border: 1px solid #ccc;
-  padding: 1px 2px;
-}
-
-.ee-table input {
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-table {
   width: 100%;
-  height: 20px;
+  margin: 0;
   border: none;
+  border-collapse: separate;
+  border-spacing: 0;
   background: transparent;
-  padding: 0 3px;
-  box-sizing: border-box;
-}
-
-.ee-table input:focus {
-    background: #fff8c6;
-    outline: none;
-}
-
-.ee-skill-table {
-  font-size: 11px;
-  line-height: 1.25;
-}
-
-.ee-weapon-table {
-  table-layout: auto;
-  min-width: 860px;
-  margin-bottom: 6px;
   font-size: 12px;
-  line-height: 1.25;
 }
 
-.ee-skill-table thead th,
-.ee-weapon-table thead th {
-  padding: 2px 3px;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-table thead {
+  border: none;
+  background: none;
+  color: inherit;
+  text-shadow: none;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-table th {
+  padding: 5px 6px 4px;
+  border-bottom: 1px solid var(--ee-line-2);
+  background: var(--ee-surface-2);
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-align: left;
+  text-shadow: none;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
-.ee-skill-table td,
-.ee-weapon-table td {
-  padding: 1px 3px;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-table td {
+  padding: 3px 4px;
+  border-bottom: 1px solid var(--ee-line);
+  color: var(--ee-ink);
   vertical-align: middle;
 }
 
-.ee-skill-table input,
-.ee-skill-table select,
-.ee-weapon-table input,
-.ee-weapon-table select {
-  width: 100%;
-  min-width: 5rem;
-  height: 19px;
-  padding: 0 2px;
-  box-sizing: border-box;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-table tbody tr {
+  background: transparent;
 }
 
-.ee-weapon-table th:first-child,
-.ee-weapon-table td:first-child {
-  min-width: 7rem;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-table tbody tr:hover {
+  background: var(--ee-accent-soft);
 }
 
-.ee-weapon-table th:nth-child(3),
-.ee-weapon-table td:nth-child(3),
-.ee-weapon-table th:nth-child(10),
-.ee-weapon-table td:nth-child(10) {
-  min-width: 6rem;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
-.ee-weapon-table th:last-child,
-.ee-weapon-table td:last-child {
-  width: 1.5rem;
-  min-width: 1.5rem;
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-table td :is(input[type="text"], input[type="number"], select) {
+  height: 24px;
+  padding: 0 5px;
+  border-color: transparent;
+  background: rgba(0, 0, 0, 0.035);
+  font-size: 12px;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-table td :is(input[type="text"], input[type="number"], select):hover {
+  border-color: var(--ee-field-line);
+  background: var(--ee-field-bg);
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-table td :is(input, select):focus {
+  border-color: var(--ee-accent);
+  background: var(--ee-field-bg);
+}
+
+.ee-table td small {
+  display: block;
+  margin-top: 1px;
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.ee-table .ee-empty-row td {
+  padding: 10px;
+  color: var(--ee-ink-3);
+  font-style: italic;
   text-align: center;
 }
 
-.ee-skill-table input,
-.ee-skill-table select {
-  font-size: 11px;
+.ee-table .ee-row-active td {
+  background: var(--ee-accent-soft);
 }
 
-.ee-weapon-table input,
-.ee-weapon-table select {
-  font-size: 12px;
+.ee-col-num { width: 62px; text-align: center; }
+.ee-col-short { width: 82px; }
+.ee-col-scale { width: 120px; }
+.ee-col-pair { width: 112px; }
+.ee-col-roll { width: 84px; text-align: center; }
+.ee-col-rolls { width: 74px; text-align: center; }
+.ee-col-check { width: 44px; text-align: center; }
+.ee-col-icon { width: 30px; text-align: center; }
+.ee-col-source { width: 130px; }
+.ee-col-name { min-width: 170px; }
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) :is(.ee-col-num, .ee-col-pair) input {
+  text-align: center;
 }
 
-.ee-weapons .ee-create-item {
-  float: none !important;
-  clear: both;
-  display: inline-block;
-  margin: 0 0 8px 0;
+.ee-table th.ee-col-num,
+.ee-table th.ee-col-check,
+.ee-table th.ee-col-icon,
+.ee-table th.ee-col-roll,
+.ee-table th.ee-col-rolls {
+  text-align: center;
 }
 
-.ee-weapons h3,
-.ee-weapons h4,
-.ee-weapons .ee-weapon-table,
-.ee-weapons .ee-add {
-  clear: both;
+.ee-num {
+  font-variant-numeric: tabular-nums;
+  text-align: center;
 }
 
-.ee-weapons h4 {
-  margin: 8px 0 4px;
-  padding-bottom: 2px;
-  border-bottom: 1px solid var(--ee-red);
-  text-align: left;
-  font-size: 12px;
+.ee-total {
   font-weight: 700;
 }
 
-.ee-weapons .ee-add {
-  display: inline-block;
-  margin: 2px 0 8px;
+.ee-wrap {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
-.ee-weapon-disclosure {
-  clear: both;
-  margin-top: 10px;
+.ee-pair {
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 
-.ee-weapon-disclosure > .ee-weapon-list,
-.ee-weapon-disclosure > .ee-weapon-toolbar {
-  margin-right: 5px;
-  margin-left: 5px;
+.ee-pair > span {
+  color: var(--ee-ink-3);
+}
+
+.ee-input-with-icon {
+  position: relative;
+  display: block;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-input-with-icon input {
+  padding-right: 22px;
+}
+
+.ee-input-with-icon > a {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  color: var(--ee-ink-3);
+  transform: translateY(-50%);
+}
+
+.ee-item-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  max-width: 100%;
+  color: var(--ee-ink);
+  font-weight: 600;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-item-link:hover {
+  color: var(--ee-accent);
+}
+
+.ee-item-link img {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--ee-line);
+  border-radius: 3px;
+  background: var(--ee-band-1);
+  object-fit: cover;
+}
+
+.ee-item-row {
+  cursor: grab;
+}
+
+.ee-item-row:active {
+  cursor: grabbing;
+}
+
+/* Roll tiles and pills */
+.ee-roll-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 66px;
+  height: 24px;
+  padding: 0 9px;
+  border: 1px solid var(--ee-line-2) !important;
+  border-radius: 12px !important;
+  background: var(--ee-surface-2) !important;
+  color: var(--ee-ink) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.ee-roll-pill strong {
+  font-size: 13px;
+}
+
+.ee-roll-pill i {
+  color: var(--ee-accent);
+  font-size: 11px;
+}
+
+.ee-roll-pill:hover {
+  border-color: var(--ee-accent) !important;
+  background: var(--ee-accent) !important;
+  color: var(--ee-accent-ink) !important;
+}
+
+.ee-roll-pill:hover i {
+  color: var(--ee-accent-ink);
+}
+
+.errantearth.app .ee-sheet .ee-roll-tile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: end;
+  gap: 2px 6px;
+  min-height: 50px;
+  padding: 6px 9px;
+  border: 1px solid var(--ee-line);
+  border-left: 3px solid var(--ee-accent);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface);
+  box-shadow: var(--ee-shadow);
+  color: var(--ee-ink);
+  text-align: left;
+}
+
+.ee-roll-tile > span {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ee-roll-tile > strong {
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.ee-roll-tile > i {
+  color: var(--ee-accent);
+  font-size: 13px;
+  opacity: 0.45;
+}
+
+.errantearth.app .ee-sheet .ee-roll-tile:hover {
+  background: var(--ee-accent-soft);
+  border-color: var(--ee-accent-line);
+  border-left-color: var(--ee-accent);
+}
+
+.ee-roll-tile:hover > i {
+  opacity: 1;
+}
+
+.errantearth.app .ee-sheet .ee-roll-tile--static {
+  border-left-color: var(--ee-ink-2);
+  cursor: default;
+}
+
+.errantearth.app .ee-sheet .ee-roll-tile--static:hover {
+  background: var(--ee-surface);
+  border-color: var(--ee-line);
+  border-left-color: var(--ee-ink-2);
+}
+
+.ee-roll-tile--save > strong {
+  font-size: 17px;
+}
+
+/* ---------------- 5. Character sheet header ---------------- */
+.ee-header {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: 108px minmax(0, 1fr);
+  grid-template-areas:
+    "portrait band"
+    "portrait identity"
+    "attrs attrs"
+    "pools pools";
+  background: var(--ee-surface-2);
+}
+
+.errantearth.app .ee-sheet .ee-portrait {
+  grid-area: portrait;
+  width: 108px;
+  height: 100%;
+  min-height: 108px;
+  max-height: none;
+  border: none;
+  border-right: 3px solid var(--ee-accent);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.12), transparent 50%),
+    var(--ee-band-1);
+  object-fit: cover;
+  object-position: top center;
+  cursor: pointer;
+}
+
+.ee-header-band {
+  grid-area: band;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 54px;
+  padding: 6px 12px 6px 14px;
+  background:
+    linear-gradient(100deg, var(--ee-band-1) 0%, var(--ee-band-1) 35%, var(--ee-band-2) 100%);
+  color: var(--ee-band-ink);
+}
+
+.ee-mode-ee .ee-header-band {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 45%),
+    linear-gradient(100deg, var(--ee-band-1) 0%, var(--ee-band-1) 30%, var(--ee-band-2) 100%);
+}
+
+.ee-header-titles {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ee-logotype {
+  color: var(--ee-accent-light);
+  font-family: var(--ee-font-logo);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.ee-mode-ee .ee-logotype {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  background: linear-gradient(180deg, #ffffff 0%, #c8ccd2 45%, #8a929c 55%, #e6e8eb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.errantearth.app .ee-sheet .ee-header-band input.ee-char-name {
+  height: 32px;
+  padding: 0 2px;
+  border: none;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #ffffff;
+  font-family: var(--ee-font);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.errantearth.app .ee-sheet .ee-header-band input.ee-char-name:hover {
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+.errantearth.app .ee-sheet .ee-header-band input.ee-char-name:focus {
+  border-bottom-color: var(--ee-accent-light);
+  box-shadow: none;
+}
+
+/* Rules-mode switch */
+.ee-mode-switch {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  padding: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.errantearth.app .ee-sheet .ee-mode-switch input[type="checkbox"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ee-mode-switch__opt {
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.ee-mode-switch:hover .ee-mode-switch__opt {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.ee-mode-switch input:not(:checked) ~ .ee-mode-switch__opt--legacy,
+.ee-mode-switch input:checked ~ .ee-mode-switch__opt--ee {
+  background: var(--ee-accent);
+  color: #ffffff;
+}
+
+.ee-mode-switch:focus-within {
+  outline: 2px solid var(--ee-accent-light);
+  outline-offset: 2px;
+}
+
+.ee-mode-switch.ee-mode-locked {
+  gap: 6px;
+  padding: 4px 11px;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: default;
+}
+
+/* Identity row */
+.ee-identity {
+  grid-area: identity;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 6px 10px;
+  padding: 7px 12px 8px 14px;
+  background: var(--ee-surface);
+}
+
+.ee-identity .ee-field { flex: 1 1 90px; }
+.ee-identity .ee-field--wide { flex: 2 1 150px; }
+.ee-identity .ee-field--num { flex: 0 0 60px; }
+.ee-identity .ee-field--xp { flex: 0 1 96px; }
+
+.ee-identity .ee-field > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ee-xp-next {
+  justify-content: flex-start;
+}
+
+.ee-xp-mismatch {
+  color: var(--ee-warn);
+  cursor: help;
+}
+
+.errantearth.app .ee-sheet .ee-ee-alignment-btn {
+  width: 100%;
+  height: 26px;
+  padding: 0 8px;
+  overflow: hidden;
+  border: 1px solid var(--ee-field-line);
+  border-radius: 3px;
+  background: var(--ee-field-bg);
+  color: var(--ee-ink);
+  font-weight: 600;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.errantearth.app .ee-sheet .ee-ee-alignment-btn::after {
+  content: "\f044";
+  float: right;
+  color: var(--ee-ink-3);
+  font-family: var(--font-awesome, "Font Awesome 6 Pro");
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.errantearth.app .ee-sheet .ee-ee-alignment-btn:hover {
+  border-color: var(--ee-accent);
+}
+
+/* Attribute strip */
+.ee-attr-strip {
+  grid-area: attrs;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 6px;
+  padding: 8px 12px 6px;
+  border-top: 1px solid var(--ee-line);
+}
+
+.ee-attr-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 3px 4px 4px;
+  border: 1px solid var(--ee-line);
+  border-top: 3px solid var(--ee-accent);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface);
+  box-shadow: var(--ee-shadow);
+}
+
+.ee-attr-label {
+  color: var(--ee-accent);
+  font-family: var(--ee-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+
+.ee-mode-ee .ee-attr-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.errantearth.app .ee-sheet .ee-attr-box input[type="number"] {
+  width: 100%;
+  max-width: 72px;
+  height: 28px;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+  color: var(--ee-ink);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.errantearth.app .ee-sheet .ee-attr-box input[type="number"]:hover {
+  border-color: var(--ee-field-line);
+  background: var(--ee-field-bg);
+}
+
+.errantearth.app .ee-sheet .ee-attr-box input[type="number"]:focus {
+  border-color: var(--ee-accent);
+  background: var(--ee-field-bg);
+}
+
+.ee-attr-box .ee-roll-attr {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  font-size: 11px;
+  opacity: 0.55;
+}
+
+.ee-attr-box .ee-roll-attr:hover {
+  opacity: 1;
+}
+
+.ee-attr-box--temp {
+  border-top-color: var(--ee-warn);
+}
+
+.ee-attr-temp {
+  margin-top: -2px;
+  color: var(--ee-warn);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ee-legacy-attribute-score {
+  cursor: context-menu;
+}
+
+/* Resource pools */
+.ee-pool-strip {
+  grid-area: pools;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 2px 12px 10px;
+}
+
+.ee-pool {
+  --pool-color: var(--ee-accent);
+  display: grid;
+  flex: 1 1 92px;
+  grid-template-rows: auto 1fr auto;
+  gap: 2px;
+  min-width: 0;
+  padding: 4px 7px 6px;
+  border: 1px solid var(--ee-line);
+  border-left: 3px solid var(--pool-color);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface);
+  box-shadow: var(--ee-shadow);
+}
+
+.ee-pool--hp,
+.ee-pool--health { --pool-color: #b02a24; }
+.ee-pool--sdc,
+.ee-pool--endurance { --pool-color: #b7791f; }
+.ee-pool--mdc { --pool-color: #3d6f8f; }
+.ee-pool--isp,
+.ee-pool--esp { --pool-color: #7445a6; }
+.ee-pool--ppe,
+.ee-pool--mp { --pool-color: #2f5fa8; }
+.ee-pool--hunger { --pool-color: #6b7d2f; }
+.ee-pool--glimmer { --pool-color: #c29a12; }
+.ee-pool--scars { --pool-color: #5b4a43; }
+.ee-pool--heat { --pool-color: #d1541c; }
+.ee-pool--burnout { --pool-color: #6e3a2a; }
+
+.ee-pool-label {
+  overflow: hidden;
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ee-pool-values {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.errantearth.app .ee-sheet .ee-pool-values input[type="number"] {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 60px;
+  height: 26px;
+  padding: 0 3px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.ee-pool-values output {
+  min-width: 26px;
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ee-pool-values .ee-pool-max {
+  color: var(--ee-ink-2);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.ee-pool-sep {
+  color: var(--ee-ink-3);
+}
+
+.ee-pool-bar {
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--ee-surface-3);
+}
+
+.ee-pool-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--pool-color);
+  transition: width 200ms ease;
+}
+
+.ee-pool--single {
+  flex: 0 1 72px;
+  grid-template-rows: auto 1fr;
+}
+
+.ee-pool--readonly .ee-pool-values output {
+  padding-left: 4px;
+}
+
+/* ---------------- 6. Tabs ---------------- */
+.ee-tabs {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 0 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 3px solid var(--ee-accent);
+  background: var(--ee-band-1);
+}
+
+.errantearth.app .ee-sheet .ee-tabs .item {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 7px 6px 6px;
+  overflow: hidden;
+  border: none;
+  border-radius: 3px 3px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-family: var(--ee-font);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-shadow: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ee-tabs .item i {
+  margin-right: 4px;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.errantearth.app .ee-sheet .ee-tabs .item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.errantearth.app .ee-sheet .ee-tabs .item.active {
+  background: var(--ee-accent);
+  color: #ffffff;
+}
+
+.ee-sheet .sheet-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 10px 12px 16px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+/* ---------------- 7. Tabs: content ---------------- */
+
+/* Skills */
+.ee-skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 10px;
+  align-items: start;
+}
+
+.ee-skill-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ee-skill-entry {
+  position: relative;
+  border-bottom: 1px solid var(--ee-line);
+}
+
+.ee-skill-entry:last-child {
+  border-bottom: none;
+}
+
+.ee-skill-play-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 3px 30px 3px 2px;
+}
+
+.ee-skill-entry:hover {
+  background: var(--ee-accent-soft);
+}
+
+.ee-skill-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ee-skill-adjustments > summary {
+  position: absolute;
+  top: 5px;
+  right: 2px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 22px;
+  border-radius: 3px;
+  color: var(--ee-ink-3);
+  font-size: 11px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.ee-skill-adjustments > summary::-webkit-details-marker {
+  display: none;
+}
+
+.ee-skill-adjustments > summary:hover,
+.ee-skill-adjustments[open] > summary {
+  background: var(--ee-accent-mid);
+  color: var(--ee-accent);
+}
+
+.ee-skill-adjustments[open] {
+  margin: 0 2px 6px;
+  padding: 8px;
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface-2);
+}
+
+.ee-skill-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px 8px;
+}
+
+.ee-skill-edit-grid .ee-field--wide {
+  grid-column: span 2;
 }
 
 .ee-skill-stat-bonuses {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2px;
-    margin-top: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 6px;
+}
+
+.ee-skill-stat-manual {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.errantearth.app .ee-sheet .ee-skill-stat-manual input[type="number"] {
+  width: 44px;
+  height: 18px;
+  padding: 0 2px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.errantearth.app .ee-sheet .ee-skill-remove {
+  margin-top: 8px;
+  padding: 3px 8px;
+  border: 1px solid transparent;
+  color: var(--ee-bad);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.errantearth.app .ee-sheet .ee-skill-remove:hover {
+  border-color: color-mix(in srgb, var(--ee-bad) 40%, transparent);
+  background: color-mix(in srgb, var(--ee-bad) 10%, transparent);
+}
+
+.ee-skill-add-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-skill-add-row select {
+  flex: 1 1 220px;
+  width: auto;
+  height: 24px;
+  border-style: dashed;
+  background: transparent;
+  color: var(--ee-ink-2);
+  font-size: 12px;
+}
+
+.ee-skill-bonuses .ee-stat-chip {
+  flex: 0 1 180px;
 }
 
 .ee-occ-choice-alert {
@@ -475,114 +1661,205 @@ display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin: 5px 0;
-  padding: 6px 8px;
-  border: 1px solid #b99451;
-  border-left: 4px solid #8b1a1a;
-  background: #fff4d8;
-  color: #4d3714;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--ee-warn) 45%, transparent);
+  border-left: 4px solid var(--ee-warn);
+  border-radius: var(--ee-radius);
+  background: color-mix(in srgb, var(--ee-warn) 12%, var(--ee-surface));
+  color: color-mix(in srgb, var(--ee-warn) 70%, black);
   font-size: 12px;
   font-weight: 700;
 }
 
-.ee-occ-choice-alert button {
-  flex: 0 0 auto;
-  width: auto;
-  padding: 3px 9px;
-  border: 1px solid #7b4d21;
-  background: #8b1a1a;
-  color: #fff;
-  cursor: pointer;
-  font-weight: 800;
+.errantearth.app .ee-sheet .ee-occ-choice-alert button {
+  flex: none;
+  padding: 4px 10px;
+  border-radius: 3px;
+  background: var(--ee-accent);
+  color: var(--ee-accent-ink);
+  font-size: 12px;
+  font-weight: 700;
 }
 
-.ee-skill-stat-bonuses .ee-chip {
-    font-size: 10px;
-    line-height: 1.2;
-    padding: 2px 6px;
-    border-radius: 3px;
+.errantearth.app .ee-sheet .ee-occ-choice-alert button:hover {
+  background: var(--ee-accent-deep);
 }
 
-.ee-skill-stat-manual {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    white-space: nowrap;
+.ee-ee-skill-table .ee-skill-name {
+  display: block;
+  padding-left: 5px;
 }
 
-.ee-skill-stat-manual input[type="number"] {
-    width: 36px;
-    height: 16px;
-    min-width: 36px;
-    padding: 0 2px;
-    font-size: 10px;
-    line-height: 1;
-    text-align: center;
+.ee-ee-skill-table td:first-child {
+  min-width: 150px;
 }
 
-.ee-skill-stat-bonuses .ee-chip a,
-.ee-rifts-source-line .ee-chip a {
-  margin-left: 4px;
-  color: var(--ee-red, #8a1f1f);
-  cursor: pointer;
-}
-
-.ee-skill-stat-bonuses input[type="hidden"] {
-    display: none;
-}
-
-.ee-weapon-list {
+/* Combat — Legacy */
+.ee-combat-actions {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
   gap: 6px;
-  margin: 4px 0;
+}
+
+.ee-save-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  gap: 6px;
+}
+
+.ee-save-quick .ee-roll-tile {
+  box-shadow: none;
+  background: var(--ee-surface-2);
+}
+
+.ee-hth-table td:first-child,
+.ee-save-table td:first-child {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ee-hth-table .ee-total,
+.ee-save-table .ee-total {
+  color: var(--ee-accent);
+  font-size: 13px;
+}
+
+.ee-hth-perception td {
+  border-top: 1px solid var(--ee-line-2);
+}
+
+.ee-hth-perception .ee-num {
+  color: var(--ee-ink-3);
+  font-size: 11px;
+}
+
+.ee-compact-weapon-items th.ee-col-short {
+  text-align: center;
+}
+
+.ee-compact-weapon-items td:first-child {
+  min-width: 170px;
+}
+
+.ee-armor-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ee-armor-item-card {
+  overflow: hidden;
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface);
+}
+
+.ee-armor-item-card > header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 4px 6px 4px 8px;
+  border-bottom: 1px solid var(--ee-line);
+  background: var(--ee-surface-2);
+}
+
+.ee-armor-item-card > header > .ee-item-link {
+  flex: 1 1 auto;
+  margin-right: auto;
+}
+
+.ee-armor-location-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.ee-armor-location-grid label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+  padding: 5px 4px 6px;
+  border-right: 1px solid var(--ee-line);
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ee-armor-location-grid label:last-child {
+  border-right: none;
+}
+
+.ee-armor-location-grid label span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--ee-ink-2);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.errantearth.app .ee-sheet .ee-armor-location-grid input[type="number"] {
+  width: 56px;
+  height: 24px;
+  padding: 0 3px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.ee-combat-top > .ee-panel {
+  align-self: start;
+}
+
+/* Saved weapon rows (legacy data) */
+.ee-weapon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .ee-weapon-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
-  gap: 5px 6px;
-  align-items: end;
-  padding: 6px;
-  border: 1px solid #b8b8b8;
-  background: #f7f7f7;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  align-items: start;
+  gap: 6px 8px;
+  padding: 8px;
+  border: 1px solid var(--ee-line);
+  border-left: 3px solid var(--ee-accent);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface-2);
 }
 
 .ee-weapon-field {
-  display: grid;
-  grid-template-rows: auto 22px auto;
+  display: flex;
+  flex-direction: column;
   gap: 2px;
   min-width: 0;
   margin: 0;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.1;
 }
 
-.ee-weapon-field span {
-  color: #333;
+.ee-weapon-field > span {
+  overflow: hidden;
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
-.ee-weapon-field input,
-.ee-weapon-field select {
-  width: 100%;
-  min-width: 0;
-  height: 22px;
-  padding: 0 4px;
-  border: 1px solid #aaa;
-  background: #fff;
-  box-sizing: border-box;
-  font-size: 12px;
-}
-
 .ee-weapon-field em {
-  min-height: 12px;
-  color: #555;
+  color: var(--ee-ink-3);
   font-size: 10px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 1.15;
-  overflow-wrap: anywhere;
 }
 
 .ee-weapon-name,
@@ -592,704 +1869,1973 @@ display: flex;
 }
 
 .ee-weapon-quick {
-  max-width: 74px;
+  align-items: center;
 }
 
 .ee-weapon-quick input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  justify-self: center;
-  margin: 2px 0;
-}
-
-.ee-weapon-small {
-  min-width: 72px;
+  margin-top: 5px !important;
 }
 
 .ee-weapon-rolls {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 7px;
-  min-height: 22px;
-  padding: 0 2px 12px;
-  white-space: nowrap;
-}
-
-.ee-weapon-rolls a {
-  cursor: pointer;
+  gap: 8px;
+  align-self: end;
+  min-height: 26px;
 }
 
 .ee-weapon-toolbar {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 8px;
-  margin: 3px 0 10px;
-}
-
-.ee-weapon-toolbar .ee-add,
-.ee-weapon-toolbar .ee-create-item {
-  float: none !important;
-  clear: none;
-  display: inline-flex;
-  align-items: center;
-  width: auto;
-  margin: 0;
-  padding: 2px 4px;
-  line-height: 1.2;
-}
-
-.ee-weapons .ee-weapon-table {
-  min-width: 0;
-  table-layout: fixed;
-}
-
-.ee-weapons .ee-weapon-table input,
-.ee-weapons .ee-weapon-table select {
-  min-width: 0;
-}
-
-.ee-total {
-  text-align: center;
-  font-weight: 700;
-  background: #f0f0f0;
-}
-
-.ee-add {
-  background: none;
-  color: var(--ee-red);
-  border: none;
-  padding: 2px 4px;
-  cursor: pointer;
-  font-weight: 700;
-  text-align: left;
-  width: auto;
-}
-
-.ee-add:hover {
-    text-decoration: underline;
-}
-
-.ee-token-options {
-  display: grid;
-  gap: 5px;
-  margin: 6px 0;
-  padding: 6px;
-  border: 1px solid #777;
-  background: #ececec;
-}
-
-.ee-token-disclosure .ee-token-options {
-  margin: 0;
-  border: 0;
-}
-
-.ee-token-options h3 {
-  margin: 0;
-  color: var(--ee-red);
-  font-size: 13px;
-  text-transform: uppercase;
-}
-
-.ee-token-options-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 10px;
-}
-
-.ee-token-options-row label {
-  font-weight: 700;
-}
-
-.ee-token-options-row select,
-.ee-token-options-row output {
-  min-width: 140px;
-  height: 24px;
-  padding: 2px 6px;
-  border: 1px solid #888;
-  background: #fff;
-  box-sizing: border-box;
-}
-
-.ee-token-options-row output {
-  display: inline-flex;
-  align-items: center;
-  font-weight: 700;
-}
-
-.ee-token-quick-cell {
-  text-align: center;
-}
-
-.ee-token-quick-cell input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-}
-
-.ee-actions {
-white-space: nowrap;
-}
-
-.ee-actions a {
-    margin-right: 4px;
-    cursor: pointer;
-}
-
-[data-action="roll"] {
-cursor: pointer;
-color: var(--ee-red, #8a1f1f);
-}
-
-[data-action="roll"]:hover {
-    color: #000;
-}
-
-/* ---------------- Skills tab ---------------- */
-.ee-skill-bonuses {
-  background: #ddd;
-  border: 1px solid #888;
-  margin-bottom: 6px;
-}
-
-.ee-skill-bonuses input {
-  width: 50px;
-  text-align: center;
-  background: #f0f0f0;
-}
-
-.ee-skill-grid {
-  display: grid;
-  grid-template-columns: 1fr;
   gap: 6px;
+  margin-top: 6px;
 }
 
-.ee-skill-col {
-  min-width: 0;
-  overflow-x: auto;
-}
-
-@media (max-width: 520px) {
-  .ee-skill-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.ee-skill-col h3 {
-  margin: 0 0 2px 0;
-  font-size: 13px;
-  color: #333;
-  border-bottom: 1px solid #888;
-}
-
-.ee-skill-add-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 2px;
-}
-
-.ee-skill-add-row select {
-  flex: 1 1 260px;
-  min-width: 0;
-  font-size: 11px;
-}
-
-.ee-skill-add-row .ee-add {
-  flex: 0 0 auto;
-}
-
-.ee-skill-unassigned {
-  margin-top: 8px;
-  padding: 4px;
-  border: 1px dashed #888;
-}
-
-.ee-skill-unassigned > summary {
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.ee-legacy-skill-table th:first-child,
-.ee-legacy-skill-table td:first-child {
-  min-width: 9rem;
-  width: 9rem;
-}
-
-.ee-legacy-skill-table th:nth-child(2),
-.ee-legacy-skill-table th:nth-child(3),
-.ee-legacy-skill-table th:nth-child(4),
-.ee-legacy-skill-table th:nth-child(5),
-.ee-legacy-skill-table td:nth-child(2),
-.ee-legacy-skill-table td:nth-child(3),
-.ee-legacy-skill-table td:nth-child(4),
-.ee-legacy-skill-table td:nth-child(5) {
-  text-align: center;
-  width: 3.25rem;
-}
-
-.ee-legacy-skill-table td:nth-child(2) input,
-.ee-legacy-skill-table td:nth-child(3) input,
-.ee-legacy-skill-table td:nth-child(4) input {
-  text-align: center;
-}
-
-.ee-legacy-skill-table th:nth-child(6),
-.ee-legacy-skill-table td:nth-child(6) {
-  width: 4.5rem;
-}
-
-.ee-legacy-skill-table th:last-child,
-.ee-legacy-skill-table td:last-child {
-  text-align: center;
-  width: 2.75rem;
-}
-
-.ee-skill-name {
-  display: block;
-  line-height: 1.2;
-  overflow-wrap: anywhere;
-  white-space: normal;
-}
-
-.ee-skill-name-input {
-  min-width: 8rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
+/* Weapon proficiencies */
 .ee-wp-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  margin-bottom: 6px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .ee-wp-flat {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 2px 12px;
-  margin-bottom: 6px;
-}
-
-.ee-ee-alignment-btn {
-  width: auto;
-  height: 22px;
-  line-height: 20px;
-  padding: 0 10px;
-  font-weight: 600;
-}
-
-.ee-wp-col h4 {
-  margin: 0 0 2px 0;
-  font-size: 12px;
-  border-bottom: 1px solid #aaa;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 2px 10px;
 }
 
 .ee-wp-check {
-    display: flex;
+  display: flex;
   align-items: flex-start;
-  gap: 4px;
+  gap: 7px;
+  margin: 0;
+  padding: 4px 6px;
+  border-radius: 3px;
   font-size: 12px;
-  line-height: 1.25;
-  margin-bottom: 4px;
+  line-height: 1.3;
+  cursor: pointer;
 }
 
-.ee-wp-check input:disabled + span,
+.ee-wp-check:hover {
+  background: var(--ee-accent-soft);
+}
+
+.errantearth.app .ee-sheet .ee-wp-check input[type="checkbox"] {
+  margin-top: 1px;
+}
+
 .ee-wp-check input:disabled ~ span {
-    opacity: 0.78;
-}
-
-.ee-wp-check input {
-  margin-top: 2px;
-  flex: 0 0 auto;
+  opacity: 0.75;
 }
 
 .ee-wp-name {
   display: block;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .ee-wp-rule {
   display: block;
-  color: #555;
+  color: var(--ee-ink-3);
   font-size: 11px;
   overflow-wrap: anywhere;
 }
 
 .ee-wp-notes {
   display: grid;
-  gap: 2px;
-  margin-bottom: 8px;
-  color: #555;
-  font-size: 11px;
-  line-height: 1.25;
-}
-
-.ee-wp-applied {
-  display: block;
-  margin-top: 2px;
-  color: #555;
-  font-size: 11px;
-  line-height: 1.2;
-}
-
-.ee-muted {
-  color: #777;
-  font-style: italic;
-}
-
-/* ---------------- Combat tab ---------------- */
-.ee-combat-top {
-  display: grid;
-  grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
-  gap: 6px;
-}
-
-.ee-weapons {
-  grid-column: 1 / -1;
-  overflow-x: auto;
-}
-
-.ee-combat-reference {
-  grid-column: 1 / -1;
-}
-
-.ee-combat-equipment {
-  margin-top: 8px;
-}
-
-.ee-combat-equipment-header,
-.ee-armor-item-card > header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.ee-combat-equipment-header {
-  justify-content: space-between;
-  margin-bottom: 5px;
-  border-bottom: 2px solid var(--ee-red);
-}
-
-.ee-combat-equipment-header h3,
-.ee-combat-equipment-header .ee-create-item {
-  margin: 0 0 3px;
-}
-
-.ee-compact-weapon-items small,
-.ee-unarmed-reference-table small {
-  display: block;
-  color: #666;
-  font-size: 10px;
-  white-space: nowrap;
-}
-
-.ee-compact-power-items td {
-  vertical-align: middle;
-}
-
-.ee-compact-power-items td.ee-actions,
-.ee-compact-power-items td.ee-item-delete {
-  width: 30px;
-  text-align: center;
-}
-
-.ee-power-grants {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin: 8px 0;
-}
-
-.ee-combat-equipment-header .ee-hint {
-  margin: 0 0 3px;
-}
-
-.ee-armor-item-list {
-  display: grid;
-  gap: 6px;
-}
-
-.ee-armor-item-card {
-  border: 1px solid var(--ee-line);
-  background: #fff;
-}
-
-.ee-armor-item-card > header {
-  min-height: 28px;
-  padding: 3px 7px;
-  background: #eee9e2;
-}
-
-.ee-armor-item-card > header > a:first-child {
-  margin-right: auto;
-}
-
-.ee-armor-item-card > header .ee-actions {
-  margin-left: 4px;
-}
-
-.ee-armor-location-grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(88px, 1fr));
-  gap: 1px;
-  background: var(--ee-line);
-}
-
-.ee-armor-location-grid label {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-  padding: 4px 5px;
-  background: #fafafa;
-  color: #555;
-  font-size: 10px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.ee-armor-location-grid label span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 3px;
-  color: #222;
-  font-size: 12px;
+  padding: 7px 9px;
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface-2);
+  color: var(--ee-ink-2);
+  font-size: 11px;
+  line-height: 1.35;
 }
 
-.ee-armor-location-grid input {
-  width: 52px;
-  min-width: 0;
-  text-align: center;
-}
-
-.ee-combat-reference.ee-panel {
-  margin-top: 10px;
-  padding: 0;
-}
-
+/* Combat reference */
 .ee-combat-reference-body {
-  display: grid;
-  gap: 5px;
-  padding: 0 5px 5px;
+  gap: 6px;
 }
 
 .ee-unarmed-reference-table {
+  min-width: 820px;
   table-layout: fixed;
-  min-width: 850px;
 }
 
-.ee-unarmed-reference-table th:nth-child(1) { width: 15%; }
+.ee-unarmed-reference-table th:nth-child(1) { width: 17%; }
 .ee-unarmed-reference-table th:nth-child(2) { width: 13%; }
 .ee-unarmed-reference-table th:nth-child(3),
-.ee-unarmed-reference-table th:nth-child(4) { width: 11%; }
-.ee-unarmed-reference-table th:nth-child(5) { width: 7%; }
+.ee-unarmed-reference-table th:nth-child(4) { width: 12%; }
+.ee-unarmed-reference-table th:nth-child(5) { width: 8%; }
 .ee-unarmed-reference-table th:nth-child(6) { width: 20%; }
-.ee-unarmed-reference-table th:nth-child(7) { width: 5%; }
-.ee-unarmed-reference-table th:nth-child(8) { width: 10%; }
-.ee-unarmed-reference-table th:nth-child(9) { width: 3%; }
-
-.ee-unarmed-reference-table td {
-  vertical-align: middle;
-}
-
-.ee-unarmed-reference-table td:first-child {
-  position: relative;
-}
-
-.ee-unarmed-reference-table td:first-child > a {
-  position: absolute;
-  top: 7px;
-  right: 5px;
-}
-
-.ee-unarmed-reference-table td:first-child input {
-  padding-right: 20px;
-}
-
-@media (max-width: 760px) {
-  .ee-armor-location-grid {
-    grid-template-columns: repeat(3, minmax(88px, 1fr));
-  }
-}
-
-.ee-combat-ref-section {
-  margin: 4px 0 6px;
-}
 
 .ee-combat-ref-table {
-  min-width: 860px;
-  font-size: 11px;
-  line-height: 1.25;
-}
-
-.ee-combat-ref-table th:nth-child(1),
-.ee-combat-ref-table td:nth-child(1) {
-  width: 10rem;
-}
-
-.ee-combat-ref-table th:nth-child(4),
-.ee-combat-ref-table td:nth-child(4) {
-  width: 5.5rem;
-  text-align: center;
-}
-
-.ee-combat-ref-table th:nth-child(5),
-.ee-combat-ref-table td:nth-child(5) {
-  width: 7rem;
-}
-
-.ee-combat-ref-table th:last-child,
-.ee-combat-ref-table td:last-child {
-  width: 3.5rem;
-  text-align: center;
+  min-width: 820px;
 }
 
 .ee-combat-ref-table td {
   vertical-align: top;
 }
 
+.ee-combat-ref-table td:first-child {
+  width: 11rem;
+  font-weight: 600;
+}
+
 .ee-combat-ref-bonus {
   display: inline-block;
   margin-left: 4px;
-  padding: 0 4px;
-  border: 1px solid #c9b8b8;
+  padding: 0 5px;
+  border: 1px solid var(--ee-accent-line);
   border-radius: 3px;
-  background: #fff8f2;
-  color: var(--ee-red, #8a1f1f);
+  background: var(--ee-accent-soft);
+  color: var(--ee-accent);
   font-size: 10px;
   font-weight: 700;
 }
 
-@media (max-width: 640px) {
-  .ee-combat-top {
-    grid-template-columns: 1fr;
-  }
-
-  .ee-weapons {
-    grid-column: auto;
-  }
+/* Combat — Errant Earth */
+.ee-ee-combat-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.ee-panel {
-  border: 1px solid var(--ee-line);
-  background: #fafafa;
-  padding: 4px;
+.ee-grid--combat-ee {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: stretch;
 }
 
-.ee-panel h3 {
-  background: var(--ee-red);
-  color: #fff;
-  margin: -4px -4px 4px -4px;
-  padding: 3px 6px;
-  font-size: 13px;
-  text-align: center;
-  font-weight: 700;
-}
+.ee-span-2 { grid-column: span 2; }
+.ee-span-3 { grid-column: span 3; }
 
 .ee-kv {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 46px;
   align-items: center;
-  gap: 4px;
-  margin-bottom: 2px;
+  gap: 6px;
+  min-height: 28px;
+  border-bottom: 1px dotted var(--ee-line);
+}
+
+.ee-kv:last-child {
+  border-bottom: none;
 }
 
 .ee-kv > label {
-  flex: 1;
-  white-space: nowrap;
+  overflow: hidden;
+  color: var(--ee-ink-2);
   font-weight: 600;
-  color: #333;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.ee-kv input {
-  width: 60px;
-  height: 20px;
-  border: 1px solid #888;
-  background: #fff;
+.ee-kv > output {
+  color: var(--ee-ink);
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
 }
 
-.ee-kv input[type="text"] {
-    width: 120px;
+.ee-kv > output small {
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 400;
 }
 
-.ee-kv a.ee-edit {
-  opacity: 0.45;
+.errantearth.app .ee-sheet .ee-kv > input {
+  justify-self: end;
+  width: 66px;
+  height: 24px;
+  text-align: center;
+}
+
+.ee-kv-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.ee-kv-actions .ee-edit {
+  color: var(--ee-ink-3);
   font-size: 11px;
-  margin-left: 2px;
+  opacity: 0.6;
 }
-.ee-kv a.ee-edit:hover { opacity: 1; color: #2b6cb0; }
 
-.ee-edit-adjustable .form-group { margin-bottom: 6px; }
-.ee-edit-adjustable .form-group label { display: block; font-weight: 600; }
-.ee-edit-adjustable .form-group input { width: 100%; }
-.ee-edit-adjustable .form-group .hint { font-size: 11px; color: #666; margin: 2px 0 0; }
+.errantearth.app .ee-sheet .ee-kv-actions .ee-edit:hover {
+  color: var(--ee-accent);
+  opacity: 1;
+}
 
-.ee-armor-grid {
+.ee-ee-armor-table {
+  min-width: 940px;
+}
+
+.ee-ee-armor-table td:nth-child(2) {
+  min-width: 130px;
+}
+
+.ee-ee-weapon-table td:first-child {
+  min-width: 140px;
+}
+
+/* Derived (Errant Earth) */
+.ee-adj-grid {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+}
+
+.ee-adj-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(170px, 2.3fr) repeat(5, minmax(58px, 1fr)) 30px;
+  align-items: center;
   gap: 6px;
-  margin-top: 6px;
+  min-width: 600px;
+  padding: 3px 8px;
+  border-bottom: 1px solid var(--ee-line);
 }
 
-.ee-pa-grid {
+.ee-adj-row:last-child {
+  border-bottom: none;
+}
+
+.ee-adj-row:not(.ee-adj-row--head):hover {
+  background: var(--ee-accent-soft);
+}
+
+.ee-adj-row--head {
+  padding-top: 5px;
+  padding-bottom: 4px;
+  background: var(--ee-surface-2);
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ee-adj-row--head > span {
+  text-align: center;
+}
+
+.ee-adj-row--head > span:first-child {
+  text-align: left;
+}
+
+.ee-adj-row > label {
+  color: var(--ee-ink);
+  font-weight: 600;
+}
+
+.ee-adj-row > output {
+  color: var(--ee-ink-2);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.errantearth.app .ee-sheet .ee-adj-row input[type="number"] {
+  height: 24px;
+  text-align: center;
+}
+
+.ee-adj-row > .ee-ee-derived-total {
+  color: var(--ee-accent);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ee-ee-roll-action {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 24px;
+  border: 1px solid var(--ee-accent-line);
+  border-radius: 3px;
+  background: var(--ee-accent-soft);
+}
+
+.errantearth.app .ee-sheet .ee-ee-roll-action:hover {
+  background: var(--ee-accent);
+  color: var(--ee-accent-ink);
+}
+
+/* Powers */
+.ee-power-grants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ee-grants-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid var(--ee-accent-line);
+  border-radius: 999px;
+  background: var(--ee-accent-soft);
+  color: var(--ee-accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ee-compact-power-items td.ee-wrap {
+  max-width: 420px;
+  color: var(--ee-ink-2);
+}
+
+/* Items (Legacy) */
+.ee-grid--items {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.ee-items-tab.ee-drop-hover {
+  outline: 2px dashed var(--ee-accent);
+  outline-offset: -6px;
+  background: var(--ee-accent-soft);
+}
+
+.ee-item-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ee-item-list > li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 2px 0;
+  border-bottom: 1px solid var(--ee-line);
+}
+
+.ee-item-list > li:last-child {
+  border-bottom: none;
+}
+
+.ee-item-list > li .ee-item-link {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ee-item-list > li.ee-empty {
+  justify-content: center;
+  min-height: 28px;
+  border: none;
+}
+
+.ee-item-row--equipped {
+  background: var(--ee-accent-soft);
+}
+
+.ee-rcc-locked {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Profile */
+.ee-grid--profile {
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+}
+
+.ee-token-options .ee-form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ee-effect-chip-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1.4fr;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 6px;
 }
 
-/* ---------------- Powers tab ---------------- */
-.ee-powers-table input {
-    font-size: 12px;
-}
-
-.ee-powers-table td:nth-child(7) input {
-    min-width: 200px;
-}
-
-.ee-psi-grid {
+.ee-effect-chip {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  gap: 2px;
+  padding: 6px 8px;
+  border: 1px solid var(--ee-line);
+  border-left: 3px solid var(--ee-ink-3);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface-2);
+  font-size: 11px;
+  line-height: 1.3;
 }
 
-/* ---------------- Misc tab ---------------- */
-.ee-misc-grid {
-  display: grid;
-  grid-template-columns: 220px 1fr 220px;
-  gap: 6px;
-}
-
-.ee-equipment textarea,
-.ee-bigtext {
-  width: 100%;
-  min-height: 90px;
-  padding: 4px;
-  border: 1px solid #888;
-  background: #fff;
-  resize: vertical;
-  font-family: inherit;
+.ee-effect-chip strong {
+  color: var(--ee-ink);
   font-size: 12px;
 }
 
-.ee-bigtext {
-    min-height: 110px;
+.ee-effect-chip--bonus { border-left-color: var(--ee-good); }
+.ee-effect-chip--penalty { border-left-color: var(--ee-bad); }
+
+.ee-rifts-source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  align-items: start;
+  gap: 8px;
 }
 
-/* delete buttons */
-[data-action="delete-row"] {
-  color: #aa1818;
+.ee-rifts-source-card {
+  padding: 8px 10px;
+  border: 1px solid var(--ee-line);
+  border-top: 3px solid var(--ee-accent);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface-2);
+}
+
+.errantearth.app .ee-sheet .ee-rifts-source-card h4 {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 6px;
+  color: var(--ee-ink);
+  font-family: var(--ee-font);
+  font-size: 14px;
+}
+
+.ee-source-type {
+  color: var(--ee-accent);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ee-rifts-source-line {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 6px;
+  margin: 4px 0;
+  font-size: 12px;
+}
+
+.ee-rifts-source-line > strong {
+  padding-top: 2px;
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ee-rifts-source-line > span {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.ee-rifts-source-line--stack {
+  grid-template-columns: 1fr;
+  gap: 2px;
+}
+
+/* Misc */
+.ee-misc-grid {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.35fr) minmax(0, 1fr);
+}
+
+.ee-misc-grid > .ee-panel {
+  align-self: stretch;
+}
+
+.ee-misc-grid .ee-form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ee-misc-grid > .ee-equipment {
+  display: flex;
+  flex-direction: column;
+}
+
+.errantearth.app .ee-sheet .ee-equipment .ee-textarea {
+  flex: 1 1 auto;
+  min-height: 160px;
+}
+
+.ee-check-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ee-check-list > li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.ee-check-list > li.ee-empty {
+  justify-content: center;
+}
+
+/* ---------------- 8. Item sheets ---------------- */
+.ee-item-sheet {
+  gap: 0;
+}
+
+.ee-item-hero {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 3px solid var(--ee-accent);
+  background:
+    linear-gradient(100deg, var(--ee-band-1) 0%, var(--ee-band-1) 40%, color-mix(in srgb, var(--ee-accent) 55%, var(--ee-band-1)) 100%);
+  color: var(--ee-band-ink);
+}
+
+.errantearth.app .ee-item-sheet .ee-item-img {
+  width: 64px;
+  height: 64px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--ee-radius);
+  background: rgba(0, 0, 0, 0.35);
+  object-fit: cover;
   cursor: pointer;
-  padding: 0 4px;
 }
 
-[data-action="delete-row"]:hover {
-    color: #f00;
+.ee-item-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 
+.ee-item-kicker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ee-accent-light);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ee-item-subtitle {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.errantearth.app .ee-item-sheet .ee-item-hero input.ee-item-name {
+  height: 32px;
+  padding: 0 2px;
+  border: none;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 32px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.errantearth.app .ee-item-sheet .ee-item-hero input.ee-item-name:hover {
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+.errantearth.app .ee-item-sheet .ee-item-hero input.ee-item-name:focus {
+  border-bottom-color: var(--ee-accent-light);
+  box-shadow: none;
+}
+
+.ee-item-summary {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--ee-line);
+  background: var(--ee-surface-2);
+}
+
+.ee-item-summary-card {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  padding: 3px 9px;
+  border: 1px solid var(--ee-line);
+  border-left: 3px solid var(--ee-accent);
+  border-radius: 3px;
+  background: var(--ee-surface);
+}
+
+.ee-item-summary-card span {
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ee-item-summary-card strong {
+  max-width: 220px;
+  overflow: hidden;
+  color: var(--ee-ink);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ee-item-tabs {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 0 10px;
+  border-bottom: 3px solid var(--ee-accent);
+  background: var(--ee-band-1);
+}
+
+.errantearth.app .ee-item-sheet .ee-item-tabs .item {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 7px 6px 6px;
+  overflow: hidden;
+  border-radius: 3px 3px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-shadow: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.errantearth.app .ee-item-sheet .ee-item-tabs .item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.errantearth.app .ee-item-sheet .ee-item-tabs .item.active {
+  background: var(--ee-accent);
+  color: #ffffff;
+}
+
+.ee-item-tabs .item i {
+  margin-right: 4px;
+}
+
+/* The O.C.C. editor's tab strip lives inside the scrolling body; pin it. */
+.ee-item-body > .ee-item-tabs {
+  position: sticky;
+  top: -10px;
+  z-index: 3;
+  margin: -10px -12px 0;
+}
+
+.ee-item-sheet .ee-span-2 {
+  grid-column: span 2;
+}
+
+.ee-item-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  padding: 10px 12px 16px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+/* With tabs the nav sits above the scrolling region */
+.ee-item-tab-body > .tab:not(.active) {
+  display: none !important;
+}
+
+.ee-item-tab-body > .tab.active {
+  display: flex !important;
+}
+
+.ee-item-tab {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ee-item-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 10px 10px;
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface);
+  box-shadow: var(--ee-shadow);
+}
+
+.errantearth.app .ee-item-sheet .ee-item-panel > h3 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 -10px;
+  padding: 7px 10px 5px;
+  border-bottom: 2px solid var(--ee-accent);
+  border-radius: var(--ee-radius) var(--ee-radius) 0 0;
+  background: linear-gradient(180deg, var(--ee-surface-2), var(--ee-surface));
+  color: var(--ee-accent);
+  font-family: var(--ee-font-display);
+  font-size: var(--ee-head-size);
+  font-weight: 700;
+  letter-spacing: var(--ee-head-spacing);
+  text-transform: uppercase;
+}
+
+.ee-item-panel > h3 > i {
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+.ee-item-body label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  margin: 0;
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ee-item-body label > :is(input, select, textarea, output) {
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.ee-item-body label.ee-block {
+  width: 100%;
+}
+
+.ee-item-body label.ee-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  min-height: 26px;
+  padding: 4px 8px;
+  border: 1px solid var(--ee-line);
+  border-radius: 3px;
+  background: var(--ee-surface-2);
+  color: var(--ee-ink-2);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.ee-item-body label.ee-check:hover {
+  border-color: var(--ee-accent-line);
+}
+
+.ee-item-body .ee-table label.ee-check,
+.ee-item-body .ee-cc-attr-grid label.ee-check {
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.ee-item-body .ee-table td > span {
+  font-weight: 600;
+}
+
+.ee-item-wide {
+  grid-column: 1 / -1;
+}
+
+.ee-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 10px;
+}
+
+.ee-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 10px;
+}
+
+.ee-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px 10px;
+}
+
+.ee-grid-2 > label.ee-check,
+.ee-grid-3 > label.ee-check {
+  align-self: end;
+}
+
+.ee-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.ee-locations td:first-child {
+  font-weight: 600;
+}
+
+.ee-item-skill-name {
+  display: block;
+  max-width: 260px;
+  padding-left: 5px;
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ee-occ-skills td:first-child {
+  min-width: 180px;
+}
+
+.ee-item-disclosure {
+  overflow: hidden;
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface);
+  box-shadow: var(--ee-shadow);
+}
+
+.ee-item-disclosure > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 6px 10px;
+  color: var(--ee-ink-2);
+  font-family: var(--ee-font-display);
+  font-size: var(--ee-head-size);
+  font-weight: 700;
+  letter-spacing: var(--ee-head-spacing);
+  list-style: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.ee-item-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.ee-item-disclosure > summary::before {
+  content: "\f054";
+  flex: none;
+  width: 12px;
+  color: var(--ee-accent);
+  font-family: var(--font-awesome, "Font Awesome 6 Pro");
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+  transition: transform 120ms ease;
+}
+
+.ee-item-disclosure[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.ee-item-disclosure > summary:hover {
+  background: var(--ee-accent-soft);
+  color: var(--ee-accent);
+}
+
+.ee-item-disclosure[open] > summary {
+  border-bottom: 2px solid var(--ee-accent);
+  background: linear-gradient(180deg, var(--ee-surface-2), var(--ee-surface));
+  color: var(--ee-accent);
+}
+
+.ee-item-disclosure > summary > i {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.ee-item-disclosure-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+}
+
+.ee-cc-group-status {
+  margin-left: auto;
+  color: var(--ee-ink-3);
+  font-family: var(--ee-font);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.ee-item-panel > .ee-item-disclosure {
+  box-shadow: none;
+}
+
+.errantearth.app .ee-item-sheet .ee-section-h {
+  margin: 6px 0 2px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--ee-line);
+  color: var(--ee-ink-2);
+  font-family: var(--ee-font);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.errantearth.app .ee-item-sheet h5 {
+  margin: 0 0 6px;
+  color: var(--ee-accent);
+  font-family: var(--ee-font);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ee-cc-attr-grid {
+  display: grid;
+  grid-template-columns: 52px 84px minmax(120px, 1fr) 76px 56px;
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.ee-cc-attr-grid > label:not(.ee-check) {
+  color: var(--ee-accent);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+}
+
+.ee-cc-grid-head {
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ee-cc-bonus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 8px;
+}
+
+.ee-cc-wp-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ee-cc-wp-groups section {
+  padding: 8px;
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface-2);
+}
+
+.ee-cc-check-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 4px;
+}
+
+.ee-item-body .ee-cc-check-grid label.ee-check {
+  align-items: flex-start;
+  padding: 3px 6px;
+  background: var(--ee-surface);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.ee-cc-skill-bonuses th:nth-child(2) { width: 80px; }
+.ee-cc-skill-bonuses th:last-child,
+.ee-cc-abilities th:last-child,
+.ee-cc-wp-choices th:last-child,
+.ee-cc-wp-custom th:last-child { width: 30px; }
+
+.ee-choice-rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ee-choice-rule {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--ee-line);
+  border-left: 4px solid var(--ee-accent);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface-2);
+}
+
+.ee-choice-rule > header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 26px;
+  align-items: end;
+  gap: 6px;
+}
+
+.ee-choice-rule > header > a {
+  display: grid;
+  place-items: center;
+  height: 26px;
+  color: var(--ee-bad);
+}
+
+.ee-choice-rule-fields {
+  display: grid;
+  grid-template-columns: 90px 130px minmax(140px, 1fr) 120px;
+  gap: 8px;
+}
+
+.ee-choice-rule-allowed {
+  padding-top: 8px;
+  border-top: 1px solid var(--ee-line);
+}
+
+.ee-choice-rule-allowed > strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ee-choice-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-bottom: 4px;
+}
+
+.ee-choice-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 1px 8px;
+  border: 1px solid var(--ee-line-2);
+  border-radius: 999px;
+  background: var(--ee-surface);
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.ee-choice-tag a {
+  color: var(--ee-ink-3);
+}
+
+.ee-choice-tag a:hover {
+  color: var(--ee-bad);
+}
+
+.ee-choice-tag--group {
+  border-color: var(--ee-accent-line);
+  background: var(--ee-accent-soft);
+  color: var(--ee-accent);
+  font-weight: 700;
+}
+
+.ee-choice-tag--exception {
+  border-style: dashed;
+}
+
+.ee-choice-group-rule {
+  margin: 4px 0;
+  padding: 5px 6px;
+  border-left: 3px solid var(--ee-accent-line);
+  background: var(--ee-surface);
+}
+
+.ee-choice-adders {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  gap: 6px;
+}
+
+.ee-xp-track-table {
+  max-width: 460px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ee-xp-track-table th:first-child,
+.ee-xp-track-table td:first-child {
+  width: 64px;
+  text-align: center;
+}
+
+.ee-xp-track-table td:nth-child(2),
+.ee-xp-track-table td:nth-child(3) {
+  text-align: right;
+}
+
+.ee-xp-custom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ee-xp-custom-grid output {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 7px;
+  border-radius: 3px;
+  background: var(--ee-surface-3);
+  color: var(--ee-ink-2);
+  font-weight: 600;
+}
+
+.ee-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 110px;
+  padding: 18px;
+  border: 1px dashed var(--ee-line-2);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface-2);
+  color: var(--ee-ink-3);
+  text-align: center;
+}
+
+.ee-validation-warning {
+  margin: 0;
+  padding: 6px 8px;
+  border-left: 4px solid var(--ee-warn);
+  background: color-mix(in srgb, var(--ee-warn) 12%, transparent);
+  color: var(--ee-warn);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ---------------- 9. Dialogs ---------------- */
+.errantearth.dialog .window-content {
+  color: var(--ee-ink);
+  font-family: var(--ee-font);
+}
+
+.errantearth.dialog .dialog-content p {
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.errantearth.dialog .hint,
+.errantearth.dialog .ee-muted {
+  color: var(--ee-ink-3);
+  font-size: 11px;
+  font-style: normal;
+}
+
+.errantearth.dialog .form-group {
+  margin-bottom: 6px;
+}
+
+.errantearth.dialog .form-group label {
+  font-weight: 700;
+}
+
+.errantearth.dialog .dialog-buttons {
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.errantearth.dialog.ee-difficulty .dialog-buttons button,
+.errantearth.dialog.ee-complexity .dialog-buttons button,
+.errantearth.dialog.ee-legacy-skill-modifier .dialog-buttons button {
+  flex: 1 1 30%;
+  min-width: 120px;
+}
+
+.errantearth.dialog.ee-legacy-skill-modifier .dialog-buttons button[data-button="standard"] {
+  flex-basis: 100%;
+}
+
+.ee-edit-adjustable .form-group {
+  margin-bottom: 6px;
+}
+
+.ee-edit-adjustable .form-group label {
+  display: block;
+  font-weight: 700;
+}
+
+.ee-edit-adjustable .form-group input {
+  width: 100%;
+}
+
+.ee-edit-adjustable .form-group .hint {
+  margin: 2px 0 0;
+  color: var(--ee-ink-3);
+  font-size: 11px;
+}
+
+.ee-legacy-attribute-editor .hint {
+  margin: -3px 0 9px;
+  color: var(--ee-ink-3);
+  font-size: 11px;
+}
+
+.ee-choice-dialog .ee-choice-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2px 8px;
+  max-height: 360px;
+  padding: 6px;
+  overflow: auto;
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface);
+}
+
+.ee-choice-dialog .ee-choice-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 3px 4px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.ee-choice-dialog .ee-choice-option:hover {
+  background: var(--ee-accent-soft);
+}
+
+.ee-choice-dialog .ee-choice-option input {
+  flex: none;
+  margin: 1px 0 0;
+  accent-color: var(--ee-accent);
+}
+
+/* ---------------- 9b. Legacy packages (Race / O.C.C. / R.C.C.) ---------------- */
+/* Editor */
+.ee-item-body label.ee-pkg-mode {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.ee-item-body label.ee-pkg-mode > :is(select, input) {
+  flex: 1 1 auto;
+  max-width: 420px;
+}
+
+.ee-pkg-attr-grid {
+  display: grid;
+  grid-template-columns: 44px 76px 76px minmax(110px, 1fr);
+  align-items: center;
+  gap: 4px 8px;
+  max-width: 560px;
+}
+
+.ee-pkg-attr-grid--embedded {
+  grid-template-columns: 44px 76px 76px minmax(110px, 1fr) 76px;
+  max-width: 640px;
+}
+
+.ee-pkg-attr-key {
+  color: var(--ee-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.ee-pkg-attr-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ee-pkg-row-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--ee-line);
+  border-left: 4px solid var(--ee-accent);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface-2);
+}
+
+.ee-pkg-choice-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 110px 26px;
+  align-items: end;
+  gap: 8px;
+}
+
+.ee-pkg-attr-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.ee-item-body .ee-pkg-attr-options label.ee-check {
+  min-height: 22px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ee-pkg-pools td:first-child {
+  width: 110px;
+  font-weight: 700;
+}
+
+.ee-pkg-spec {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) 46px;
+  gap: 4px;
+}
+
+.ee-pkg-languages td:first-child,
+.ee-pkg-level-bonuses td:first-child,
+.ee-pkg-hth td:first-child {
+  min-width: 170px;
+}
+
+.ee-choice-rule-fields.ee-choice-rule-fields--schedule {
+  grid-template-columns: 70px 70px minmax(110px, 1.3fr) 58px minmax(110px, 1fr) 72px;
+}
+
+.ee-item-body .ee-choice-schedule {
+  margin: -2px 0 0;
+}
+
+.ee-choice-tag--tuned {
+  padding-right: 4px;
+}
+
+.errantearth.app .ee-item-sheet .ee-choice-tag--tuned input[type="number"] {
+  width: 38px;
+  height: 18px;
+  padding: 0 3px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.ee-choice-wp {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.ee-item-body .ee-choice-wp > label:not(.ee-check) {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.errantearth.app .ee-item-sheet .ee-choice-wp input[type="number"] {
+  width: 46px;
+}
+
+.ee-choice-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ee-pkg-suggestion {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px dashed var(--ee-accent-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-accent-soft);
+  color: var(--ee-ink-2);
+  font-size: 12px;
+}
+
+.ee-pkg-suggestion > i {
+  color: var(--ee-accent);
+}
+
+.ee-pkg-suggestion--list {
+  align-items: start;
+}
+
+.ee-pkg-suggestion-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.ee-pkg-suggestion small {
+  display: block;
+  margin-top: 2px;
+  color: var(--ee-ink-3);
+  font-size: 11px;
+  font-style: italic;
+}
+
+/* Character sheet: Creation & Advancement */
+.ee-advancement .ee-panel-head {
+  flex-wrap: wrap;
+}
+
+.ee-advancement-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid var(--ee-line-2);
+  border-radius: 3px;
+  background: var(--ee-surface);
+  color: var(--ee-ink-2);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-btn:hover {
+  border-color: var(--ee-accent-line);
+  color: var(--ee-accent);
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-btn--primary {
+  border-color: var(--ee-accent);
+  background: var(--ee-accent);
+  color: var(--ee-accent-ink);
+}
+
+.errantearth.app :is(.ee-sheet, .ee-item-sheet) .ee-btn--primary:hover {
+  background: var(--ee-accent-deep);
+  color: var(--ee-accent-ink);
+}
+
+.ee-advancement-plan {
+  align-items: start;
+}
+
+.ee-advancement-attrs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.ee-advancement-attr {
+  display: flex;
+  flex-direction: column;
+  padding: 3px 7px;
+  border: 1px solid var(--ee-line);
+  border-radius: 3px;
+  background: var(--ee-surface);
+  line-height: 1.2;
+}
+
+.ee-advancement-attr > span {
+  color: var(--ee-ink-3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.ee-advancement-attr > strong {
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ee-advancement-attr--package {
+  border-color: var(--ee-accent-line);
+  background: var(--ee-accent-soft);
+}
+
+.ee-advancement-attr--package > strong {
+  color: var(--ee-accent);
+}
+
+.ee-advancement-pools td:first-child {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ee-advancement .ee-row-accent td {
+  background: var(--ee-accent-soft);
+}
+
+.ee-advancement .ee-row-inactive td {
+  color: var(--ee-ink-3);
+  text-decoration: line-through;
+}
+
+.ee-advancement .ee-row-inactive td input {
+  text-decoration: none;
+}
+
+.ee-advancement-ledger td.ee-col-num input {
+  width: 64px;
+}
+
+.ee-advancement-pending {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--ee-warn) 45%, transparent);
+  border-left: 4px solid var(--ee-warn);
+  border-radius: var(--ee-radius);
+  background: color-mix(in srgb, var(--ee-warn) 10%, var(--ee-surface));
+  font-size: 12px;
+}
+
+.ee-advancement-pending > strong {
+  color: color-mix(in srgb, var(--ee-warn) 70%, black);
+}
+
+.ee-advancement-pending-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ee-chip--muted {
+  opacity: 0.55;
+}
+
+.ee-skill-needs-spec {
+  margin-left: 3px;
+  color: var(--ee-warn);
+  font-size: 10px;
+}
+
+/* Package window */
+.ee-pkg-wizard-app .window-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+.ee-pkg-wizard-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.ee-pkg-wizard-head {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 3px solid var(--ee-accent);
+  background: linear-gradient(120deg, var(--ee-band-1), var(--ee-band-2));
+  color: #ffffff;
+}
+
+.ee-pkg-wizard-head img {
+  width: 56px;
+  height: 56px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--ee-radius);
+  background: rgba(0, 0, 0, 0.25);
+  object-fit: cover;
+}
+
+.ee-pkg-kicker {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.errantearth.app .ee-pkg-wizard-head h2 {
+  margin: 1px 0 3px;
+  color: #ffffff;
+  font-family: var(--ee-font-display);
+  font-size: 22px;
+  letter-spacing: 0.04em;
+}
+
+.ee-pkg-wizard-head p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.ee-pkg-wizard-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  padding: 10px 12px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.ee-pkg-wizard-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--ee-line);
+  background: var(--ee-surface-2);
+}
+
+.errantearth.app .ee-pkg-wizard-foot button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 14px;
+  border: 1px solid var(--ee-line-2);
+  border-radius: 3px;
+  background: var(--ee-surface);
+  font-weight: 700;
+}
+
+.errantearth.app .ee-pkg-wizard-foot .ee-pkg-apply {
+  border-color: var(--ee-accent);
+  background: var(--ee-accent);
+  color: var(--ee-accent-ink);
+}
+
+.errantearth.app .ee-pkg-wizard-foot .ee-pkg-apply:hover {
+  background: var(--ee-accent-deep);
+}
+
+.ee-pkg-budget {
+  margin-left: auto;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--ee-surface-3);
+  color: var(--ee-ink-2);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ee-pkg-choice--done .ee-pkg-budget {
+  background: color-mix(in srgb, var(--ee-good) 18%, var(--ee-surface));
+  color: var(--ee-good);
+}
+
+.ee-pkg-choice--over .ee-pkg-budget {
+  background: color-mix(in srgb, var(--ee-bad) 18%, var(--ee-surface));
+  color: var(--ee-bad);
+}
+
+.ee-pkg-radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ee-pkg-radio,
+.ee-pkg-option {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 4px 8px;
+  border: 1px solid var(--ee-line);
+  border-radius: 3px;
+  background: var(--ee-surface);
+  cursor: pointer;
+}
+
+.ee-pkg-radio:hover,
+.ee-pkg-option:hover {
+  border-color: var(--ee-accent-line);
+}
+
+.ee-pkg-radio:has(input:checked),
+.ee-pkg-option:has(> input:checked) {
+  border-color: var(--ee-accent);
+  background: var(--ee-accent-soft);
+}
+
+.ee-pkg-option[hidden],
+.ee-pkg-group[hidden] {
+  display: none;
+}
+
+.ee-pkg-option-name {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ee-pkg-option-meta {
+  color: var(--ee-ink-3);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.errantearth.app .ee-pkg-wizard .ee-pkg-spec-input {
+  grid-column: 2 / -1;
+}
+
+.ee-pkg-option:not(:has(> input:checked)) .ee-pkg-spec-input {
+  display: none;
+}
+
+.ee-pkg-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 4px;
+  padding: 6px 0 2px;
+}
+
+.ee-pkg-options--grid {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.ee-pkg-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ee-pkg-group {
+  padding: 2px 8px 4px;
+  border: 1px solid var(--ee-line);
+  border-radius: var(--ee-radius);
+  background: var(--ee-surface-2);
+}
+
+.ee-pkg-group > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  color: var(--ee-ink-2);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.ee-pkg-group > summary .ee-count {
+  margin-left: auto;
+}
+
+.ee-pkg-chosen {
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--ee-accent);
+  color: var(--ee-accent-ink);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.errantearth.app .ee-pkg-wizard .ee-pkg-filter {
+  width: 100%;
+}
+
+.ee-pkg-trade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--ee-line-2);
+}
+
+.ee-pkg-spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ee-pkg-spec-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.ee-pkg-spec-row small {
+  display: block;
+  color: var(--ee-ink-3);
+  font-size: 11px;
+}
+
+.ee-pkg-spec-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 4px;
+}
+
+.ee-pkg-attr-choice {
+  max-width: 420px;
+}
+
+/* Chat summaries for attribute and pool rolls */
+.ee-chat-advancement h3 {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.ee-chat-advancement table {
+  width: 100%;
+  margin: 0;
+  font-size: 12px;
+}
+
+.ee-chat-advancement td:last-child {
+  text-align: right;
+}
+
+.ee-roll-attributes-dialog .ee-table {
+  width: 100%;
+  margin: 6px 0;
+  font-size: 12px;
+}
+
+.ee-roll-attributes-dialog .ee-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+@container ee-item (max-width: 640px) {
+  .ee-choice-rule-fields.ee-choice-rule-fields--schedule {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container ee-sheet (max-width: 720px) {
+  .ee-advancement-actions {
+    margin-left: 0;
+  }
+}
+
+/* ---------------- 10. Responsive ---------------- */
+/* Sheets can be resized freely, so layouts respond to the sheet width. */
+.ee-sheet {
+  container: ee-sheet / inline-size;
+}
+
+.ee-item-sheet {
+  container: ee-item / inline-size;
+}
+
+@container ee-sheet (max-width: 900px) {
+  .ee-grid--combat-ee {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ee-grid--combat-ee > .ee-span-2,
+  .ee-grid--combat-ee > .ee-span-3 {
+    grid-column: auto;
+  }
+
+  .ee-misc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ee-misc-grid > .ee-equipment {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .ee-tabs .item i {
+    display: none;
+  }
+}
+
+@container ee-sheet (max-width: 720px) {
+  .ee-attr-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .ee-grid--2,
+  .ee-grid--profile,
+  .ee-misc-grid,
+  .ee-grid--combat-ee,
+  .ee-wp-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ee-armor-location-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ee-armor-location-grid label:nth-child(3) {
+    border-right: none;
+  }
+
+  .ee-skill-edit-grid,
+  .ee-form-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ee-tabs .item {
+    font-size: 11px;
+    letter-spacing: 0.02em;
+  }
+}
+
+@container ee-item (max-width: 560px) {
+  .ee-grid-2,
+  .ee-grid-3,
+  .ee-grid-4,
+  .ee-cc-wp-groups,
+  .ee-choice-rule-fields,
+  .ee-choice-adders,
+  .ee-xp-custom-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ee-item-summary {
+    display: none;
+  }
+
+  .ee-item-tabs .item {
+    font-size: 0;
+  }
+
+  .ee-item-tabs .item i {
+    margin: 0;
+    font-size: 13px;
+  }
+}
 /* ---------------- Roll chat card ---------------- */
 .ee-roll-card {
   --ee-card-red:   #8b1a1a;
@@ -1547,1136 +4093,6 @@ color: var(--ee-red, #8a1f1f);
   height: 26px;
 }
 
-/* ---------------- Tooltip helper ---------------- */
-.ee-tooltip {
-  border-bottom: 1px dotted #666;
-  cursor: help;
-}
-
-.ee-item-list {
-    list-style: none;
-    margin: 0;
-    padding: 0
-}
-
-.ee-item-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 0;
-    border-bottom: 1px solid #333
-}
-
-.ee-item-list a {
-    cursor: pointer
-}
-
-.ee-item-row {
-    cursor: grab
-}
-
-.ee-item-row:active {
-    cursor: grabbing
-}
-
-.ee-create-item {
-    float: right;
-    cursor: pointer;
-    /*color: var(--ee-red,#8a1f1f);*/
-    font-size: 0.85em;
-    margin-left: 6px
-}
-
-.ee-create-item:hover {
-    color: #000
-}
-
-.ee-weapons .ee-weapon-toolbar .ee-create-item {
-    float: none;
-    display: inline-flex;
-    align-items: center;
-    margin: 0;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.ee-items-tab.ee-drop-hover {
-    outline: 2px dashed var(--ee-red,#8a1f1f);
-    outline-offset: -4px;
-    background: rgba(138,31,31,0.04)
-}
-
-/* ---------------- Item sheet ---------------- */
-.ee-item-sheet {
-  --ee-item-accent: var(--ee-red, #8a1f1f);
-  --ee-item-accent-2: #2f343b;
-  --ee-item-paper: #fbf8f1;
-  --ee-item-panel: #fffdf8;
-  --ee-item-line: #c9b8a8;
-
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 10px;
-  gap: 9px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.18)),
-    #ebe4d8;
-  font-family: "Signika", sans-serif;
-  color: #191919;
-}
-
-.ee-item--race { --ee-item-accent: #2f6f57; }
-.ee-item--occ { --ee-item-accent: #7a2430; }
-.ee-item--weapon { --ee-item-accent: #6b2f1f; }
-.ee-item--armor,
-.ee-item--powerArmor { --ee-item-accent: #415d75; }
-.ee-item--vehicle { --ee-item-accent: #4e5d36; }
-.ee-item--spell { --ee-item-accent: #5e3f82; }
-.ee-item--psionicPower { --ee-item-accent: #3f647d; }
-.ee-item--gear { --ee-item-accent: #6a5a3c; }
-.ee-item--ability { --ee-item-accent: #8a6b1f; }
-
-.ee-item-hero {
-  display: grid;
-  grid-template-columns: 60px minmax(0, 1fr);
-  gap: 9px;
-  align-items: stretch;
-  min-height: 70px;
-  padding: 7px;
-  border: 1px solid rgba(0,0,0,0.25);
-  border-left: 6px solid var(--ee-item-accent);
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0)),
-    linear-gradient(90deg, #20242a, var(--ee-item-accent-2));
-  box-shadow: 0 1px 2px rgba(0,0,0,0.22);
-}
-
-.ee-item-img {
-  width: 56px;
-  height: 56px;
-  border: 2px solid rgba(255,255,255,0.75);
-  background:
-    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.14), rgba(255,255,255,0) 42%),
-    linear-gradient(135deg, #30343a, #171a1f);
-  object-fit: cover;
-  flex: 0 0 56px;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.35);
-}
-
-.ee-item-identity {
-  display: grid;
-  grid-template-rows: auto minmax(27px, auto) auto;
-  align-content: center;
-  min-width: 0;
-  gap: 4px;
-}
-
-.ee-item-kicker,
-.ee-item-subtitle {
-  color: rgba(255,255,255,0.78);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.ee-item-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.ee-item-name {
-  width: 100%;
-  min-width: 0;
-  height: auto;
-  padding: 3px 0;
-  border: none;
-  border-bottom: 1px solid rgba(255,255,255,0.42);
-  background: transparent;
-  color: #fff;
-  font-size: 22px;
-  font-weight: 900;
-  line-height: 1.1;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
-}
-
-.ee-item-name:focus {
-  box-shadow: none;
-  outline: none;
-  border-bottom-color: #fff;
-}
-
-.ee-item-subtitle {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ee-item-summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.ee-item-summary-card {
-  display: inline-flex;
-  align-items: baseline;
-  min-width: 0;
-  padding: 3px 7px;
-  border: 1px solid var(--ee-item-line);
-  border-left: 3px solid var(--ee-item-accent);
-  background: #fff;
-  gap: 5px;
-}
-
-.ee-item-summary-card span {
-  color: #665f57;
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.ee-item-summary-card strong {
-  min-width: 0;
-  max-width: 220px;
-  overflow: hidden;
-  color: #1f1f1f;
-  font-size: 14px;
-  line-height: 1.25;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ee-item-tabs {
-  position: sticky;
-  top: 0;
-  z-index: 4;
-  display: flex;
-  flex: 0 0 auto;
-  border: 1px solid var(--ee-item-line);
-  border-bottom: 3px solid var(--ee-item-accent);
-  background: #e2dbd0;
-  box-shadow: 0 2px 3px rgba(0,0,0,0.12);
-}
-
-.ee-item-tabs .item {
-  flex: 1 1 0;
-  min-width: 0;
-  padding: 7px 6px;
-  border-right: 1px solid rgba(0,0,0,0.14);
-  color: #3d3935;
-  font-size: 11px;
-  font-weight: 900;
-  text-align: center;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.ee-item-tabs .item:last-child {
-  border-right: none;
-}
-
-.ee-item-tabs .item.active {
-  background: var(--ee-item-accent);
-  color: #fff;
-}
-
-.ee-item-tabs .item i {
-  margin-right: 4px;
-}
-
-.ee-item-tab-body > .tab:not(.active) {
-  display: none !important;
-}
-
-.ee-item-tab-body > .tab.active {
-  display: grid !important;
-}
-
-.ee-item-tab {
-  gap: 9px;
-}
-
-.ee-item-body {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  min-height: 0;
-  padding-right: 3px;
-}
-
-.ee-item-body label {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  font-size: 12px;
-  font-weight: 800;
-  color: #333;
-  gap: 3px;
-}
-
-.ee-item-body label.ee-block {
-  width: 100%;
-}
-
-.ee-item-body input, .ee-item-body select, .ee-item-body textarea {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #a99d91;
-  background: #fff;
-  padding: 4px 6px;
-  color: #161616;
-  font-size: 13px;
-  font-weight: normal;
-}
-
-.ee-item-body textarea {
-  min-height: 92px;
-  resize: vertical;
-  font-family: inherit;
-  line-height: 1.35;
-}
-
-.ee-item-panel {
-  display: grid;
-  gap: 8px;
-  padding: 10px;
-  border: 1px solid var(--ee-item-line);
-  background: var(--ee-item-panel);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.65);
-}
-
-.ee-item-panel--primary {
-  border-top: 4px solid var(--ee-item-accent);
-}
-
-.ee-item-panel h3 {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin: -10px -10px 2px;
-  padding: 6px 9px;
-  border-bottom: 1px solid rgba(0,0,0,0.18);
-  background: linear-gradient(90deg, rgba(0,0,0,0.08), rgba(0,0,0,0));
-  color: #2b2b2b;
-  font-size: 13px;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.ee-item-panel h3 i {
-  color: var(--ee-item-accent);
-}
-
-.ee-item-wide {
-  grid-column: 1 / -1;
-}
-
-.ee-table-wrap {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.ee-item-disclosure {
-  border: 1px solid var(--ee-item-line);
-  background: var(--ee-item-panel);
-}
-
-.ee-item-disclosure > summary {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 34px;
-  padding: 7px 10px;
-  background: var(--ee-item-accent);
-  color: #fff;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.ee-item-disclosure > summary::-webkit-details-marker {
-  color: rgba(255,255,255,0.8);
-}
-
-.ee-item-disclosure-body {
-  display: grid;
-  gap: 8px;
-  padding: 10px;
-}
-
-.ee-cc-group {
-  margin-top: 8px;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.ee-cc-group > summary {
-  flex-wrap: wrap;
-  text-transform: none;
-  min-height: 44px;
-}
-
-.ee-cc-group > summary::before {
-  content: "\25B8";
-}
-
-.ee-cc-group[open] > summary::before {
-  content: "\25BE";
-}
-
-.ee-cc-group > summary:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: -4px;
-}
-
-.ee-cc-group-status {
-  margin-left: auto;
-  font-size: 11px;
-  font-weight: 400;
-  opacity: .85;
-}
-
-.ee-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.ee-grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
-}
-
-.ee-item-body label.ee-check {
-  flex-direction: row;
-  align-items: center;
-  gap: 6px;
-  min-height: 28px;
-  padding: 5px 7px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: rgba(138,31,31,0.05);
-  font-weight: 800;
-}
-
-.ee-item-body label.ee-check input[type="checkbox"] {
-  width: auto;
-  flex: 0 0 auto;
-}
-
-.ee-section-h {
-  margin: 8px 0 4px;
-  padding: 4px 0 3px;
-  border-bottom: 1px solid var(--ee-item-accent);
-  color: #2f2f2f;
-  font-size: 13px;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.ee-hint {
-  margin: 0 0 6px;
-  color: #555;
-  font-size: 11px;
-  font-style: italic;
-  line-height: 1.3;
-}
-
-.ee-hint code {
-  background: #eee;
-  padding: 0 3px;
-  border-radius: 2px;
-  font-size: 11px;
-}
-
-.ee-locations input, .ee-occ-skills input, .ee-occ-skills select {
-  font-size: 12px;
-}
-
-.ee-item-skill-name {
-  display: block;
-  overflow: hidden;
-  max-width: 260px;
-  font-weight: 700;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ee-choice-rule-list {
-  display: grid;
-  gap: 8px;
-}
-
-.ee-choice-rule {
-  display: grid;
-  gap: 7px;
-  padding: 8px;
-  border: 1px solid #c8bbb0;
-  border-left: 4px solid var(--ee-item-accent);
-  background: #fff;
-}
-
-.ee-choice-rule > header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 24px;
-  gap: 6px;
-  align-items: end;
-}
-
-.ee-choice-rule > header > a {
-  align-self: center;
-  color: #8a1f1f;
-  text-align: center;
-}
-
-.ee-choice-rule-fields {
-  display: grid;
-  grid-template-columns: 82px 120px minmax(140px, 1fr) 120px;
-  gap: 7px;
-}
-
-.ee-choice-rule-allowed {
-  padding-top: 6px;
-  border-top: 1px solid #ddd3c9;
-}
-
-.ee-choice-rule-allowed > strong {
-  display: block;
-  margin-bottom: 4px;
-  color: #4f4841;
-  font-size: 11px;
-  text-transform: uppercase;
-}
-
-.ee-xp-track-table {
-  max-width: 460px;
-  margin: 0 auto;
-  font-variant-numeric: tabular-nums;
-}
-
-.ee-xp-track-table th:first-child,
-.ee-xp-track-table td:first-child {
-  width: 64px;
-  text-align: center;
-}
-
-.ee-xp-track-table td:nth-child(2),
-.ee-xp-track-table td:nth-child(3) {
-  text-align: right;
-}
-
-.ee-xp-custom-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 7px;
-}
-
-.ee-xp-custom-grid output {
-  min-height: 28px;
-  padding: 5px 6px;
-  border: 1px solid #c9bfb5;
-  background: #eee9e2;
-  color: #554f49;
-  font-weight: 600;
-}
-
-.ee-empty-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 120px;
-  padding: 18px;
-  border: 1px dashed #b8aa9c;
-  background: #f7f2eb;
-  color: #6b6259;
-  gap: 9px;
-  text-align: center;
-}
-
-.ee-validation-warning {
-  margin: 0;
-  padding: 6px 8px;
-  border-left: 4px solid #a96708;
-  background: #fff2cf;
-  color: #65420d;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-@media (max-width: 560px) {
-  .ee-item-sheet {
-    padding: 7px;
-  }
-
-  .ee-item-hero {
-    grid-template-columns: 50px minmax(0, 1fr);
-    min-height: 62px;
-    gap: 9px;
-  }
-
-  .ee-item-img {
-    width: 46px;
-    height: 46px;
-    flex-basis: 46px;
-  }
-
-  .ee-item-name {
-    font-size: 20px;
-  }
-
-  .ee-grid-2,
-  .ee-grid-4,
-  .ee-cc-wp-groups,
-  .ee-choice-rule-fields,
-  .ee-xp-custom-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .ee-item-summary {
-    display: none;
-  }
-
-  .ee-item-tabs .item {
-    font-size: 0;
-  }
-
-  .ee-item-tabs .item i {
-    margin: 0;
-    font-size: 13px;
-  }
-}
-
-.ee-cc-attr-grid {
-    display: grid;
-    grid-template-columns: 52px 76px minmax(120px, 1fr) 72px 54px;
-    gap: 4px 6px;
-    align-items: center;
-    padding: 8px;
-    border: 1px solid #c8bbb0;
-    background: #fffdf8;
-}
-
-.ee-cc-attr-grid > label {
-    min-height: 26px;
-    justify-content: center;
-    font-weight: 800;
-}
-
-.ee-cc-attr-grid label.ee-check {
-    justify-content: center;
-}
-
-.ee-cc-grid-head {
-    color: #5a2222;
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-}
-
-.ee-cc-bonus-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
-    gap: 7px;
-    padding: 8px;
-    border: 1px solid #c8bbb0;
-    background: #fffdf8;
-}
-
-.ee-cc-bonus-grid label {
-    min-width: 0;
-}
-
-.ee-cc-skill-bonuses,
-.ee-cc-abilities {
-    background: #fffdf8;
-    border: 1px solid #c8bbb0;
-}
-
-.ee-cc-skill-bonuses th:nth-child(2) {
-    width: 76px;
-}
-
-.ee-cc-skill-bonuses th:last-child,
-.ee-cc-abilities th:last-child {
-    width: 28px;
-}
-
-.ee-cc-skill-bonuses td,
-.ee-cc-abilities td {
-    vertical-align: middle;
-}
-
-.ee-cc-wp-groups {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-}
-
-.ee-cc-wp-groups section {
-    border: 1px solid #c8bbb0;
-    background: #fffdf8;
-    padding: 8px;
-}
-
-.ee-cc-wp-groups h5 {
-    margin: 0 0 6px;
-    color: #5a2222;
-    font-size: 12px;
-    text-transform: uppercase;
-}
-
-.ee-cc-check-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 4px 8px;
-}
-
-.ee-item-body .ee-cc-check-grid label.ee-check {
-    align-items: flex-start;
-    font-size: 11px;
-    line-height: 1.25;
-}
-
-.ee-occ-skill-choices select,
-.ee-cc-wp-choices select {
-    width: 100%;
-}
-
-.ee-choice-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3px;
-    margin-bottom: 3px;
-}
-
-.ee-choice-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 1px 5px;
-    border: 1px solid #c9b8b8;
-    border-radius: 999px;
-    background: #f7eeee;
-    line-height: 16px;
-}
-
-.ee-choice-tag a {
-    color: #8a1f1f;
-}
-
-.ee-legacy-attribute-score {
-    cursor: context-menu;
-}
-
-.ee-legacy-attribute-editor .hint {
-    margin: -3px 0 9px;
-    color: #665;
-    font-size: 11px;
-}
-
-.ee-choice-tag--group {
-    border-color: #9a7249;
-    background: #f3e5ce;
-    font-weight: 700;
-}
-
-.ee-choice-tag--exception {
-    border-style: dashed;
-    background: #fff9f2;
-}
-
-.ee-choice-group-rule {
-    margin: 4px 0;
-    padding: 4px;
-    border-left: 3px solid #b58a5b;
-    background: rgba(181, 138, 91, 0.08);
-}
-
-.ee-choice-group-rule .ee-choice-tags {
-    margin-bottom: 3px;
-}
-
-.ee-choice-adders {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(150px, 1fr));
-    gap: 4px;
-}
-
-.ee-choice-dialog .ee-choice-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 4px 8px;
-    max-height: 360px;
-    overflow: auto;
-    padding: 6px;
-    border: 1px solid #c8bbb0;
-    background: #fffdf8;
-}
-
-.ee-choice-dialog .ee-choice-option {
-    display: flex;
-    align-items: flex-start;
-    gap: 5px;
-    font-size: 12px;
-    line-height: 1.25;
-}
-
-.ee-equipped-badge {
-    display: inline-block;
-    margin-left: 6px;
-    padding: 1px 6px;
-    font-size: 10px;
-    border-radius: 3px;
-    background: var(--ee-red,#8a1f1f);
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.05em
-}
-
-.ee-equip-btn, .ee-unequip-btn {
-    cursor: pointer;
-    margin-right: 4px;
-    font-size: 0.85em
-}
-
-.ee-equip-btn {
-    color: #357
-}
-
-.ee-equip-btn:hover {
-    color: #000
-}
-
-.ee-unequip-btn {
-    color: #888
-}
-
-.ee-unequip-btn:hover {
-    color: #000
-}
-
-.ee-attr-bonuses {
-    display: grid;
-    grid-template-columns: repeat(8,1fr);
-    gap: 4px;
-    margin: 6px 0 6px;
-    font-size: 10px;
-    color: #555
-}
-
-.ee-attr-bonus {
-    text-align: center;
-    font-style: italic;
-    line-height: 1.2;
-    min-height: 14px;
-    font-size: 15px;
-}
-
-.ee-rcc-locked {
-    opacity: 0.5;
-    pointer-events: none
-}
-
-.ee-banner { position: relative; }
-.ee-mode-toggle {
-  position: absolute; top: 8px; right: 12px;
-  display: flex; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: bold; color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
-  cursor: pointer; z-index: 2;
-}
-.ee-mode-toggle input { cursor: pointer; }
-.ee-mode-locked {
-  cursor: default;
-  opacity: 0.85;
-}
-.ee-mode-locked i { margin-right: 2px; }
-.ee-ee-attrs label { font-weight: bold; }
-.ee-ee-attrs input { width: 3em; }
-.ee-roll-attr { cursor: pointer; color: var(--ee-red, #8a1f1f); margin-right: 4px; }
-.ee-roll-attr:hover { color: #000; }
-.ee-ee-tier,
-.ee-ee-resources {
-  flex-wrap: wrap;
-  background: rgba(138,31,31,0.05);
-  border-left: 2px solid var(--ee-red, #8a1f1f);
-  padding: 4px 6px;
-}
-
-.ee-ee-attrs-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 6px;
-  margin: 4px 0;
-}
-.ee-ee-attr {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 4px;
-  background: rgba(138,31,31,0.05);
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-.ee-ee-attr label {
-  font-weight: bold;
-  font-size: 11px;
-  letter-spacing: 0.05em;
-}
-.ee-ee-attr input {
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-}
-.ee-ee-attr .ee-roll-attr { margin: 0; font-size: 12px; }
-
-
-.ee-ee-derived-panel {
-  margin: 10px 0;
-  padding: 12px;
-  background: rgba(138,31,31,0.07);
-  border: 1px solid rgba(138,31,31,0.45);
-  border-radius: 6px;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
-}
-
-.ee-ee-derived-panel h3 {
-  margin: 0 0 6px;
-  color: var(--ee-red, #8a1f1f);
-  font-size: 15px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.ee-ee-derived-panel .ee-muted {
-  margin-bottom: 10px;
-  line-height: 1.35;
-}
-
-.ee-ee-derived-category {
-  margin-top: 12px;
-  padding: 10px;
-  background: rgba(255,255,255,0.82);
-  border: 1px solid rgba(120,120,120,0.55);
-  border-radius: 5px;
-}
-
-.ee-ee-derived-category h4 {
-  margin: 0 0 8px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(138,31,31,0.35);
-  color: #272727;
-  font-size: 13px;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-
-.ee-ee-derived-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.ee-ee-derived-card {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-height: 50px;
-  padding: 7px;
-  background: #fbfbfb;
-  border: 1px solid #b8b8b8;
-  border-radius: 4px;
-}
-
-.ee-ee-derived-label,
-.ee-ee-adjust-grid > label,
-.ee-ee-adjust-head {
-  font-weight: 700;
-  font-size: 11px;
-  color: #262626;
-}
-
-.ee-ee-derived-card output,
-.ee-ee-adjust-grid output {
-  display: block;
-  min-height: 24px;
-  padding: 4px 6px;
-  background: #f0f0f0;
-  border: 1px solid #bcbcbc;
-  border-radius: 3px;
-  line-height: 16px;
-}
-
-.ee-ee-derived-card input,
-.ee-ee-adjust-grid input {
-  height: 26px;
-  padding: 2px 6px;
-  background: #fff;
-  border: 1px solid #777;
-  border-radius: 3px;
-}
-
-.ee-ee-adjust-grid {
-  display: grid;
-  grid-template-columns: minmax(150px, 1.8fr) repeat(5, minmax(60px, 1fr));
-  gap: 6px;
-  align-items: stretch;
-  width: 100%;
-  min-width: 0;
-  overflow-x: auto;
-  padding-bottom: 2px;
-}
-
-.ee-ee-save-grid {
-  grid-template-columns: minmax(150px, 1.8fr) repeat(5, minmax(60px, 1fr)) minmax(44px, 0.6fr);
-}
-
-.ee-ee-adjust-head {
-  padding: 5px 6px;
-  background: #d2d2d2;
-  border: 1px solid #a9a9a9;
-  border-radius: 3px;
-  text-align: center;
-}
-
-.ee-ee-adjust-grid > label {
-  align-self: stretch;
-  display: flex;
-  align-items: center;
-  min-height: 30px;
-  padding: 5px 6px;
-  background: rgba(138,31,31,0.11);
-  border: 1px solid rgba(138,31,31,0.26);
-  border-radius: 3px;
-}
-
-.ee-ee-adjust-grid input,
-.ee-ee-adjust-grid output {
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.ee-ee-roll-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 26px;
-  color: var(--ee-red, #8a1f1f);
-  background: rgba(138,31,31,0.08);
-  border: 1px solid rgba(138,31,31,0.28);
-  border-radius: 3px;
-  text-align: center;
-}
-
-.ee-ee-roll-action:hover,
-.ee-ee-roll-action:focus {
-  color: #fff;
-  background: var(--ee-red, #8a1f1f);
-  text-shadow: none;
-}
-
-.ee-ee-derived-total {
-  font-weight: 800;
-  color: var(--ee-red, #8a1f1f);
-  background: rgba(138,31,31,0.1) !important;
-  border-color: rgba(138,31,31,0.35) !important;
-}
-
-@media (max-width: 720px) {
-  .ee-ee-derived-panel {
-    padding: 8px;
-  }
-
-  .ee-ee-derived-category {
-    padding: 8px;
-  }
-
-  .ee-ee-adjust-grid {
-    grid-template-columns: minmax(130px, 1.6fr) repeat(5, minmax(54px, 1fr));
-  }
-
-  .ee-ee-save-grid {
-    grid-template-columns: minmax(130px, 1.6fr) repeat(5, minmax(54px, 1fr)) minmax(42px, 0.6fr);
-  }
-}
-
-.ee-ee-header-pools {
-  flex-wrap: wrap;
-  background: rgba(138,31,31,0.05);
-  border-left: 2px solid var(--ee-red, #8a1f1f);
-}
-
-.ee-ee-header-pools input:disabled {
-  color: #111;
-  background: #eee;
-  opacity: 1;
-  font-weight: 700;
-}
-
-.ee-ee-bgocc {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin: 6px 0;
-}
-.ee-ee-bgocc .ee-panel { padding: 6px; }
-.ee-ee-bgocc h3 { margin: 0 0 4px; font-size: 13px; }
-/* Active Race/OCC/RCC source summary. */
-.ee-rifts-sources {
-  margin-top: 6px;
-}
-
-.ee-rifts-source-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 6px;
-}
-
-.ee-rifts-source-card {
-  border: 1px solid #d4c4c4;
-  background: #fff;
-  padding: 5px;
-}
-
-.ee-rifts-source-card h4 {
-  margin: 0 0 4px;
-  color: var(--ee-red, #8a1f1f);
-  font-size: 12px;
-  text-transform: uppercase;
-}
-
-.ee-rifts-source-line {
-  margin: 3px 0;
-  font-size: 12px;
-}
-
-.ee-chip {
-  display: inline-block;
-  margin: 1px 2px 1px 0;
-  padding: 1px 5px;
-  border: 1px solid #c9b8b8;
-  border-radius: 999px;
-  background: #f7eeee;
-  white-space: nowrap;
-}
-
-.ee-compact-list,
-.ee-warnings {
-  margin: 3px 0 0 16px;
-  padding: 0;
-}
-
-.ee-warnings {
-  color: #8a5a00;
-}
 
 /* ---------------- Directory importers ---------------- */
 .ee-directory-import {
@@ -2944,64 +4360,3 @@ color: var(--ee-red, #8a1f1f);
   justify-content: center;
   text-align: center;
 }
-/* ---------------- Legacy play controls ---------------- */
-.ee-sheet .ee-legacy-pools {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
-  gap: 6px;
-  padding: 6px;
-}
-.ee-sheet .ee-resource-card {
-  display: grid;
-  gap: 5px;
-  padding: 7px;
-  border: 1px solid #aaa;
-  border-top: 3px solid var(--ee-red);
-  background: #fff;
-}
-.ee-sheet .ee-resource-card > span {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-  font-weight: 700;
-}
-.ee-sheet .ee-resource-card small { font-size: 10px; font-weight: 400; color: #555; }
-.ee-sheet .ee-resource-card input { width: 48px; height: 26px; text-align: center; }
-.ee-sheet .ee-resource-card output { min-width: 32px; text-align: center; font-size: 17px; }
-.ee-sheet .ee-resource-bases,
-.ee-sheet .ee-skill-edit-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 8px;
-  padding: 8px;
-}
-.ee-sheet .ee-resource-bases label,
-.ee-sheet .ee-skill-edit-grid label { display: grid; gap: 4px; font-size: 12px; }
-.ee-sheet .ee-resource-bases small { color: #555; }
-.ee-sheet .ee-skill-edit-grid input,
-.ee-sheet .ee-skill-edit-grid select { width: 100%; min-width: 0; }
-.ee-sheet .ee-skill-list { display: grid; gap: 3px; }
-.ee-sheet .ee-skill-entry { position: relative; border: 1px solid #c3c3c3; background: #fff; }
-.ee-sheet .ee-skill-play-row { display: flex; align-items: center; gap: 12px; min-height: 34px; padding: 3px 110px 3px 8px; }
-.ee-sheet .ee-skill-play-row .ee-skill-name { flex: 1; min-width: 0; font-size: 13px; white-space: normal; }
-.ee-sheet .ee-skill-roll { flex: 0 0 auto; width: auto; min-width: 70px; height: 28px; margin: 0; padding: 0 7px; border: 1px solid #b6aaa0; background: #f5f1eb; color: #222; line-height: 26px; }
-.ee-sheet .ee-skill-adjustments > summary { position: absolute; top: 9px; right: 8px; cursor: pointer; font-size: 11px; color: #555; }
-.ee-sheet .ee-skill-adjustments[open] { border-top: 1px solid #ddd; padding-bottom: 6px; background: #f7f7f7; }
-.ee-sheet .ee-skill-adjustments > .ee-hint,
-.ee-sheet .ee-skill-adjustments > .ee-skill-stat-bonuses { margin: 4px 8px; }
-.ee-sheet .ee-skill-remove { width: auto; margin: 4px 8px; font-size: 11px; color: #752020; }
-.ee-sheet .ee-combat-actions,
-.ee-sheet .ee-save-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 6px; margin: 6px 0 10px; }
-.ee-sheet .ee-save-actions { padding: 6px; margin: 0; }
-.ee-sheet .ee-combat-actions > button,
-.ee-sheet .ee-combat-stat,
-.ee-sheet .ee-save-actions > button { display: flex; align-items: center; gap: 7px; min-height: 36px; width: 100%; margin: 0; padding: 5px 8px; border: 1px solid #aaa; background: #fff; color: #222; line-height: 1.2; }
-.ee-sheet .ee-combat-actions span,
-.ee-sheet .ee-save-actions span { flex: 1; text-align: left; font-size: 12px; }
-.ee-sheet .ee-combat-actions strong { font-size: 18px; }
-.ee-sheet .ee-disclosure > summary::before { content: '\25B8'; font-size: 12px; }
-.ee-sheet .ee-disclosure[open] > summary::before { content: '\25BE'; }
-.ee-sheet .ee-disclosure > summary { list-style: none; }
-.ee-sheet button[data-action='roll']:focus-visible,
-.ee-sheet summary:focus-visible { outline: 2px solid var(--ee-red); outline-offset: 2px; }

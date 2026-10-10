@@ -1,75 +1,5 @@
 {{!-- Errant Earth item sheet --}}
-<form class="ee-item-sheet ee-item--{{item.type}} {{cssClass}}" autocomplete="off">
-
-  {{#*inline "selectableSkillGrants"}}
-  <section class="ee-item-panel">
-    <h3 title="Use one rule for each group of skills the player chooses at first or later levels."><i class="fas fa-tasks"></i> Player Skill Choices</h3>
-    <p class="ee-hint">O.C.C. Related and Secondary Skills are player choices. Create one compact rule for each count, level, bonus, or allowed-list combination in the source text.</p>
-    <div class="ee-choice-rule-list">
-      {{#each system.skillChoices}}
-      <article class="ee-choice-rule">
-        <header>
-          <label>Prompt <input type="text" name="system.skillChoices.{{_index}}.label" value="{{label}}" placeholder="O.C.C. Related Skills at level 1"/></label>
-          <a data-action="delete-occ-skill-choice" data-index="{{_index}}" title="Delete choice rule"><i class="fas fa-trash"></i></a>
-        </header>
-
-        <div class="ee-choice-rule-fields">
-          <label>Choose <input type="number" name="system.skillChoices.{{_index}}.count" value="{{count}}" min="1"/></label>
-          <label>Available at Level <input type="number" name="system.skillChoices.{{_index}}.level" value="{{level}}" min="1" max="15"/></label>
-          <label>Add As <select name="system.skillChoices.{{_index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category false}}</select></label>
-          <label>O.C.C. Bonus % <input type="number" name="system.skillChoices.{{_index}}.bonus" value="{{bonus}}"/></label>
-        </div>
-
-        <div class="ee-choice-rule-allowed">
-          <strong>Allowed skills</strong>
-          <div class="ee-choice-tags">
-            {{#each selectedSkillRows}}
-            <span class="ee-choice-tag">{{name}} <a data-action="delete-occ-choice-skill" data-index="{{../_index}}" data-skill-index="{{@index}}" title="Remove skill"><i class="fas fa-times"></i></a></span>
-            <input type="hidden" name="system.skillChoices.{{../_index}}.allowedKeys.{{@index}}" value="{{key}}"/>
-            {{/each}}
-            {{#unless hasRestrictions}}<span class="ee-muted">Any eligible skill</span>{{/unless}}
-          </div>
-
-          {{#each selectedGroupRows}}
-          <div class="ee-choice-group-rule">
-            <div class="ee-choice-tags">
-              <span class="ee-choice-tag ee-choice-tag--group">Any {{group}} <a data-action="delete-occ-choice-group" data-index="{{../_index}}" data-group-index="{{_groupIndex}}" title="Remove category"><i class="fas fa-times"></i></a></span>
-              <input type="hidden" name="system.skillChoices.{{../_index}}.allowedGroups.{{_groupIndex}}.group" value="{{group}}"/>
-              {{#each excludedSkillRows}}
-              <span class="ee-choice-tag ee-choice-tag--exception">except {{name}} <a data-action="delete-occ-choice-group-exclusion" data-index="{{../../_index}}" data-group-index="{{../_groupIndex}}" data-exclusion-index="{{@index}}" title="Remove exception"><i class="fas fa-times"></i></a></span>
-              <input type="hidden" name="system.skillChoices.{{../../_index}}.allowedGroups.{{../_groupIndex}}.excludedKeys.{{@index}}" value="{{key}}"/>
-              {{/each}}
-            </div>
-            {{#if exclusionPicker.length}}
-            <select data-action="exclude-occ-choice-group-skill" data-index="{{../_index}}" data-group-index="{{_groupIndex}}">
-              <option value="">+ Add exception to {{group}}...</option>
-              {{#each exclusionPicker}}<option value="{{key}}">{{name}}</option>{{/each}}
-            </select>
-            {{/if}}
-          </div>
-          {{/each}}
-
-          <div class="ee-choice-adders">
-            <select data-action="add-occ-choice-group" data-index="{{_index}}">
-              <option value="">+ Allow a whole category...</option>
-              {{#each groupPicker}}<option value="{{this}}">Any {{this}}</option>{{/each}}
-            </select>
-            <select data-action="add-occ-choice-skill" data-index="{{_index}}">
-              <option value="">+ Allow an individual skill...</option>
-              {{#each picker}}
-              <optgroup label="{{group}}">
-                {{#each items}}<option value="{{key}}">{{name}}</option>{{/each}}
-              </optgroup>
-              {{/each}}
-            </select>
-          </div>
-        </div>
-      </article>
-      {{/each}}
-    </div>
-    <button type="button" class="ee-add" data-action="add-occ-skill-choice"><i class="fas fa-plus"></i> Add Choice Rule</button>
-  </section>
-  {{/inline}}
+<form class="ee-item-sheet ee-item--{{item.type}} ee-mode-{{modeKey}} {{cssClass}}" autocomplete="off">
 
   <header class="ee-item-hero">
     <img class="ee-item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
@@ -155,16 +85,25 @@
         <div class="ee-grid-2">
           <label>Category <select name="system.category">{{eeSelectOptions config.WEAPON_CATEGORIES system.category}}</select></label>
           <label>W.P. <select name="system.wpKey"><option value="">— None —</option>{{eeSelectOptions weaponProficiencyOptions system.wpKey false}}</select></label>
+        </div>
+        <div class="ee-grid-3">
+          <label>Damage <input type="text" name="system.damage" value="{{system.damage}}" placeholder="e.g. 3D6"/></label>
           <label>Damage Type <select name="system.damageType">{{eeSelectOptions config.DAMAGE_TYPES system.damageType}}</select></label>
-          <label>Damage <input type="text" name="system.damage" value="{{system.damage}}"/></label>
           <label>Damage Scale <select name="system.damageScale">{{eeSelectOptions weaponDamageScales system.damageScale false}}</select></label>
+        </div>
+        <div class="ee-grid-4">
+          <label>Strike Bonus <input type="text" name="system.strike" value="{{system.strike}}" placeholder="+0"/></label>
+          <label>Parry Bonus <input type="text" name="system.parry" value="{{system.parry}}" placeholder="+0"/></label>
+          <label class="ee-check ee-span-2"><input type="hidden" name="system.quickRoll" value="false"/><input type="checkbox" name="system.quickRoll" {{eeChecked system.quickRoll}}/> Show in Token Action HUD</label>
+        </div>
+      </section>
+      <section class="ee-item-panel">
+        <h3><i class="fas fa-bullseye"></i> Range &amp; Ammunition</h3>
+        <div class="ee-grid-4">
           <label>Range <input type="text" name="system.range" value="{{system.range}}"/></label>
+          <label>Rate of Fire <input type="text" name="system.rate" value="{{system.rate}}"/></label>
           <label>Ammo <input type="text" name="system.ammo" value="{{system.ammo}}"/></label>
           <label>Payload <input type="text" name="system.payload" value="{{system.payload}}"/></label>
-          <label>Rate <input type="text" name="system.rate" value="{{system.rate}}"/></label>
-          <label>Strike <input type="text" name="system.strike" value="{{system.strike}}"/></label>
-          <label>Parry <input type="text" name="system.parry" value="{{system.parry}}"/></label>
-          <label class="ee-check"><input type="hidden" name="system.quickRoll" value="false"/><input type="checkbox" name="system.quickRoll" {{eeChecked system.quickRoll}}/> Show in Token Action HUD</label>
         </div>
       </section>
       <section class="ee-item-panel">
@@ -189,14 +128,14 @@
         <h3><i class="fas fa-heartbeat"></i> Location {{#if system.isMDC}}MDC{{else}}SDC{{/if}}</h3>
         <div class="ee-table-wrap">
           <table class="ee-table ee-locations">
-            <thead><tr><th>Location</th><th>Current</th><th>Max</th></tr></thead>
+            <thead><tr><th>Location</th><th class="ee-col-num">Current</th><th class="ee-col-num">Max</th></tr></thead>
             <tbody>
-              <tr><td>Main Body</td><td><input type="number" name="system.locations.mainBody.current" value="{{system.locations.mainBody.current}}"/></td><td><input type="number" name="system.locations.mainBody.max" value="{{system.locations.mainBody.max}}"/></td></tr>
-              <tr><td>Head</td><td><input type="number" name="system.locations.head.current" value="{{system.locations.head.current}}"/></td><td><input type="number" name="system.locations.head.max" value="{{system.locations.head.max}}"/></td></tr>
-              <tr><td>Left Arm</td><td><input type="number" name="system.locations.leftArm.current" value="{{system.locations.leftArm.current}}"/></td><td><input type="number" name="system.locations.leftArm.max" value="{{system.locations.leftArm.max}}"/></td></tr>
-              <tr><td>Right Arm</td><td><input type="number" name="system.locations.rightArm.current" value="{{system.locations.rightArm.current}}"/></td><td><input type="number" name="system.locations.rightArm.max" value="{{system.locations.rightArm.max}}"/></td></tr>
-              <tr><td>Left Leg</td><td><input type="number" name="system.locations.leftLeg.current" value="{{system.locations.leftLeg.current}}"/></td><td><input type="number" name="system.locations.leftLeg.max" value="{{system.locations.leftLeg.max}}"/></td></tr>
-              <tr><td>Right Leg</td><td><input type="number" name="system.locations.rightLeg.current" value="{{system.locations.rightLeg.current}}"/></td><td><input type="number" name="system.locations.rightLeg.max" value="{{system.locations.rightLeg.max}}"/></td></tr>
+              <tr><td>Main Body</td><td class="ee-col-num"><input type="number" name="system.locations.mainBody.current" value="{{system.locations.mainBody.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.mainBody.max" value="{{system.locations.mainBody.max}}"/></td></tr>
+              <tr><td>Head</td><td class="ee-col-num"><input type="number" name="system.locations.head.current" value="{{system.locations.head.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.head.max" value="{{system.locations.head.max}}"/></td></tr>
+              <tr><td>Left Arm</td><td class="ee-col-num"><input type="number" name="system.locations.leftArm.current" value="{{system.locations.leftArm.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.leftArm.max" value="{{system.locations.leftArm.max}}"/></td></tr>
+              <tr><td>Right Arm</td><td class="ee-col-num"><input type="number" name="system.locations.rightArm.current" value="{{system.locations.rightArm.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.rightArm.max" value="{{system.locations.rightArm.max}}"/></td></tr>
+              <tr><td>Left Leg</td><td class="ee-col-num"><input type="number" name="system.locations.leftLeg.current" value="{{system.locations.leftLeg.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.leftLeg.max" value="{{system.locations.leftLeg.max}}"/></td></tr>
+              <tr><td>Right Leg</td><td class="ee-col-num"><input type="number" name="system.locations.rightLeg.current" value="{{system.locations.rightLeg.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.rightLeg.max" value="{{system.locations.rightLeg.max}}"/></td></tr>
             </tbody>
           </table>
         </div>
@@ -219,14 +158,14 @@
         <h3><i class="fas fa-heartbeat"></i> Location {{#if system.isMDC}}MDC{{else}}SDC{{/if}}</h3>
         <div class="ee-table-wrap">
           <table class="ee-table ee-locations">
-            <thead><tr><th>Location</th><th>Current</th><th>Max</th></tr></thead>
+            <thead><tr><th>Location</th><th class="ee-col-num">Current</th><th class="ee-col-num">Max</th></tr></thead>
             <tbody>
-              <tr><td>Main Body</td><td><input type="number" name="system.locations.mainBody.current" value="{{system.locations.mainBody.current}}"/></td><td><input type="number" name="system.locations.mainBody.max" value="{{system.locations.mainBody.max}}"/></td></tr>
-              <tr><td>Head</td><td><input type="number" name="system.locations.head.current" value="{{system.locations.head.current}}"/></td><td><input type="number" name="system.locations.head.max" value="{{system.locations.head.max}}"/></td></tr>
-              <tr><td>Left Arm</td><td><input type="number" name="system.locations.leftArm.current" value="{{system.locations.leftArm.current}}"/></td><td><input type="number" name="system.locations.leftArm.max" value="{{system.locations.leftArm.max}}"/></td></tr>
-              <tr><td>Right Arm</td><td><input type="number" name="system.locations.rightArm.current" value="{{system.locations.rightArm.current}}"/></td><td><input type="number" name="system.locations.rightArm.max" value="{{system.locations.rightArm.max}}"/></td></tr>
-              <tr><td>Left Leg</td><td><input type="number" name="system.locations.leftLeg.current" value="{{system.locations.leftLeg.current}}"/></td><td><input type="number" name="system.locations.leftLeg.max" value="{{system.locations.leftLeg.max}}"/></td></tr>
-              <tr><td>Right Leg</td><td><input type="number" name="system.locations.rightLeg.current" value="{{system.locations.rightLeg.current}}"/></td><td><input type="number" name="system.locations.rightLeg.max" value="{{system.locations.rightLeg.max}}"/></td></tr>
+              <tr><td>Main Body</td><td class="ee-col-num"><input type="number" name="system.locations.mainBody.current" value="{{system.locations.mainBody.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.mainBody.max" value="{{system.locations.mainBody.max}}"/></td></tr>
+              <tr><td>Head</td><td class="ee-col-num"><input type="number" name="system.locations.head.current" value="{{system.locations.head.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.head.max" value="{{system.locations.head.max}}"/></td></tr>
+              <tr><td>Left Arm</td><td class="ee-col-num"><input type="number" name="system.locations.leftArm.current" value="{{system.locations.leftArm.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.leftArm.max" value="{{system.locations.leftArm.max}}"/></td></tr>
+              <tr><td>Right Arm</td><td class="ee-col-num"><input type="number" name="system.locations.rightArm.current" value="{{system.locations.rightArm.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.rightArm.max" value="{{system.locations.rightArm.max}}"/></td></tr>
+              <tr><td>Left Leg</td><td class="ee-col-num"><input type="number" name="system.locations.leftLeg.current" value="{{system.locations.leftLeg.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.leftLeg.max" value="{{system.locations.leftLeg.max}}"/></td></tr>
+              <tr><td>Right Leg</td><td class="ee-col-num"><input type="number" name="system.locations.rightLeg.current" value="{{system.locations.rightLeg.current}}"/></td><td class="ee-col-num"><input type="number" name="system.locations.rightLeg.max" value="{{system.locations.rightLeg.max}}"/></td></tr>
             </tbody>
           </table>
         </div>
@@ -250,8 +189,8 @@
       </section>
 
       <section class="ee-item-panel">
-        <h3><i class="fas fa-ruler-combined"></i> Frame & Speed</h3>
-        <div class="ee-grid-2">
+        <h3><i class="fas fa-ruler-combined"></i> Frame &amp; Speed</h3>
+        <div class="ee-grid-3">
           <label>Height <input type="text" name="system.stats.height" value="{{system.stats.height}}"/></label>
           <label>Width <input type="text" name="system.stats.width" value="{{system.stats.width}}"/></label>
           <label>Length <input type="text" name="system.stats.length" value="{{system.stats.length}}"/></label>
@@ -274,28 +213,28 @@
       </section>
 
       <section class="ee-item-panel">
-        <h3><i class="fas fa-shield-alt"></i> Armor / D.C.</h3>
-        <div class="ee-grid-2">
+        <h3><i class="fas fa-shield-alt"></i> Armor / M.D.C.</h3>
+        <div class="ee-grid-3">
           <label>A.R. <input type="number" name="system.armor.ar" value="{{system.armor.ar}}"/></label>
           <label>Sensor Bonus <input type="text" name="system.armor.sensorBonus" value="{{system.armor.sensorBonus}}"/></label>
           <label>Pilot's Comp. <input type="text" name="system.armor.pilotComp" value="{{system.armor.pilotComp}}"/></label>
         </div>
         <div class="ee-table-wrap">
           <table class="ee-table">
-            <thead><tr><th>Location</th><th>Current</th><th>Max</th><th></th></tr></thead>
+            <thead><tr><th>Location</th><th class="ee-col-num">Current</th><th class="ee-col-num">Max</th><th class="ee-col-icon"></th></tr></thead>
             <tbody>
-              <tr><td>Main Body</td><td><input type="number" name="system.armor.mainBody.current" value="{{system.armor.mainBody.current}}"/></td><td><input type="number" name="system.armor.mainBody.max" value="{{system.armor.mainBody.max}}"/></td><td></td></tr>
-              <tr><td>Head</td><td><input type="number" name="system.armor.head.current" value="{{system.armor.head.current}}"/></td><td><input type="number" name="system.armor.head.max" value="{{system.armor.head.max}}"/></td><td></td></tr>
-              <tr><td>Left Arm</td><td><input type="number" name="system.armor.leftArm.current" value="{{system.armor.leftArm.current}}"/></td><td><input type="number" name="system.armor.leftArm.max" value="{{system.armor.leftArm.max}}"/></td><td></td></tr>
-              <tr><td>Right Arm</td><td><input type="number" name="system.armor.rightArm.current" value="{{system.armor.rightArm.current}}"/></td><td><input type="number" name="system.armor.rightArm.max" value="{{system.armor.rightArm.max}}"/></td><td></td></tr>
-              <tr><td>Left Leg</td><td><input type="number" name="system.armor.leftLeg.current" value="{{system.armor.leftLeg.current}}"/></td><td><input type="number" name="system.armor.leftLeg.max" value="{{system.armor.leftLeg.max}}"/></td><td></td></tr>
-              <tr><td>Right Leg</td><td><input type="number" name="system.armor.rightLeg.current" value="{{system.armor.rightLeg.current}}"/></td><td><input type="number" name="system.armor.rightLeg.max" value="{{system.armor.rightLeg.max}}"/></td><td></td></tr>
+              <tr><td>Main Body</td><td class="ee-col-num"><input type="number" name="system.armor.mainBody.current" value="{{system.armor.mainBody.current}}"/></td><td class="ee-col-num"><input type="number" name="system.armor.mainBody.max" value="{{system.armor.mainBody.max}}"/></td><td></td></tr>
+              <tr><td>Head</td><td class="ee-col-num"><input type="number" name="system.armor.head.current" value="{{system.armor.head.current}}"/></td><td class="ee-col-num"><input type="number" name="system.armor.head.max" value="{{system.armor.head.max}}"/></td><td></td></tr>
+              <tr><td>Left Arm</td><td class="ee-col-num"><input type="number" name="system.armor.leftArm.current" value="{{system.armor.leftArm.current}}"/></td><td class="ee-col-num"><input type="number" name="system.armor.leftArm.max" value="{{system.armor.leftArm.max}}"/></td><td></td></tr>
+              <tr><td>Right Arm</td><td class="ee-col-num"><input type="number" name="system.armor.rightArm.current" value="{{system.armor.rightArm.current}}"/></td><td class="ee-col-num"><input type="number" name="system.armor.rightArm.max" value="{{system.armor.rightArm.max}}"/></td><td></td></tr>
+              <tr><td>Left Leg</td><td class="ee-col-num"><input type="number" name="system.armor.leftLeg.current" value="{{system.armor.leftLeg.current}}"/></td><td class="ee-col-num"><input type="number" name="system.armor.leftLeg.max" value="{{system.armor.leftLeg.max}}"/></td><td></td></tr>
+              <tr><td>Right Leg</td><td class="ee-col-num"><input type="number" name="system.armor.rightLeg.current" value="{{system.armor.rightLeg.current}}"/></td><td class="ee-col-num"><input type="number" name="system.armor.rightLeg.max" value="{{system.armor.rightLeg.max}}"/></td><td></td></tr>
               {{#each system.armor.extras}}
               <tr>
                 <td><input type="text" name="system.armor.extras.{{@index}}.name" value="{{name}}" placeholder="Location"/></td>
-                <td><input type="number" name="system.armor.extras.{{@index}}.current" value="{{current}}"/></td>
-                <td><input type="number" name="system.armor.extras.{{@index}}.max" value="{{max}}"/></td>
-                <td><a data-action="delete-vehicle-armor-extra" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                <td class="ee-col-num"><input type="number" name="system.armor.extras.{{@index}}.current" value="{{current}}"/></td>
+                <td class="ee-col-num"><input type="number" name="system.armor.extras.{{@index}}.max" value="{{max}}"/></td>
+                <td><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-vehicle-armor-extra" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
               {{/each}}
             </tbody>
@@ -308,7 +247,7 @@
         <h3><i class="fas fa-crosshairs"></i> Weapon Systems</h3>
         <div class="ee-table-wrap">
           <table class="ee-table">
-            <thead><tr><th>Type</th><th>Dmg Type</th><th>Damage</th><th>Range</th><th>Rate</th><th>Payload</th><th></th></tr></thead>
+            <thead><tr><th>Weapon System</th><th class="ee-col-scale">Dmg Type</th><th>Damage</th><th>Range</th><th class="ee-col-short">Rate</th><th>Payload</th><th class="ee-col-icon"></th></tr></thead>
             <tbody>
               {{#each system.weapons}}
               <tr>
@@ -318,7 +257,7 @@
                 <td><input type="text" name="system.weapons.{{@index}}.range" value="{{range}}"/></td>
                 <td><input type="text" name="system.weapons.{{@index}}.rate" value="{{rate}}"/></td>
                 <td><input type="text" name="system.weapons.{{@index}}.payload" value="{{payload}}"/></td>
-                <td><a data-action="delete-vehicle-weapon" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
+                <td><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-vehicle-weapon" data-index="{{@index}}"><i class="fas fa-times"></i></a></td>
               </tr>
               {{/each}}
             </tbody>
@@ -334,164 +273,8 @@
       </section>
     {{/if}}
 
-    {{#if (eq item.type "race")}}
-      <section class="ee-item-panel ee-item-panel--primary">
-        <h3><i class="fas fa-dna"></i> Ancestry Profile</h3>
-        <div class="ee-grid-2">
-          <label>Lifespan <input type="text" name="system.lifespan" value="{{system.lifespan}}"/></label>
-          <label>Size <input type="text" name="system.size" value="{{system.size}}"/></label>
-          <label class="ee-item-wide">Languages <input type="text" name="system.languages" value="{{system.languages}}"/></label>
-          <label class="ee-check"><input type="hidden" name="system.isMDC" value="false"/><input type="checkbox" name="system.isMDC" {{eeChecked system.isMDC}}/> MDC being</label>
-        </div>
-      </section>
-
-      <section class="ee-item-panel">
-        <h3><i class="fas fa-scroll"></i> Race Text</h3>
-        <label class="ee-block">Description<textarea name="system.description">{{system.description}}</textarea></label>
-        <label class="ee-block">Bonuses (free text)<textarea name="system.bonuses">{{system.bonuses}}</textarea></label>
-      </section>
-
-      {{> selectableSkillGrants}}
-
-      <details class="ee-item-disclosure" data-disclosure="ccEffects" {{#if disclosureState.ccEffects}}open{{/if}}>
-        <summary><i class="fas fa-sliders-h"></i> Character-Creation Effects</summary>
-        <div class="ee-item-disclosure-body">
-          {{> ccBonusBlocks system=system}}
-        </div>
-      </details>
-    {{/if}}
-
-    {{#if (eq item.type "occ")}}
-      <nav class="ee-item-tabs" data-group="primary" aria-label="O.C.C. editor sections">
-        <a class="item" data-tab="overview"><i class="fas fa-id-badge"></i> Overview</a>
-        <a class="item" data-tab="skills"><i class="fas fa-graduation-cap"></i> Skills</a>
-        <a class="item" data-tab="advancement"><i class="fas fa-chart-line"></i> Advancement</a>
-        <a class="item" data-tab="effects"><i class="fas fa-sliders-h"></i> Effects &amp; Grants</a>
-      </nav>
-
-      <div class="ee-item-tab-body">
-        <div class="tab ee-item-tab" data-group="primary" data-tab="overview">
-          <section class="ee-item-panel ee-item-panel--primary">
-            <h3><i class="fas fa-id-badge"></i> Class Profile</h3>
-            <div class="ee-grid-2">
-              <label>Category <input type="text" name="system.category" value="{{system.category}}"/></label>
-              <label>Starting Money <input type="text" name="system.money" value="{{system.money}}"/></label>
-              <label class="ee-check ee-item-wide" title="An R.C.C. replaces the separate Race package when equipped."><input type="hidden" name="system.isRCC" value="false"/><input type="checkbox" name="system.isRCC" {{eeChecked system.isRCC}}/> R.C.C. (replaces Race)</label>
-              {{#if system.isRCC}}
-              <label class="ee-check ee-item-wide" title="Equip this R.C.C. in the Race slot, allowing a separate O.C.C. while retaining its racial benefits."><input type="hidden" name="system.rccAsRace" value="false"/><input type="checkbox" name="system.rccAsRace" {{eeChecked system.rccAsRace}}/> Counts as Race (allows an O.C.C.)</label>
-              {{/if}}
-            </div>
-          </section>
-
-          <section class="ee-item-panel">
-            <h3><i class="fas fa-scroll"></i> Description</h3>
-            <label class="ee-block">O.C.C. text<textarea name="system.description">{{system.description}}</textarea></label>
-          </section>
-
-          <section class="ee-item-panel">
-            <h3><i class="fas fa-briefcase"></i> Provisions</h3>
-            <label class="ee-block">Bonuses and special notes<textarea name="system.bonuses">{{system.bonuses}}</textarea></label>
-            <label class="ee-block">Equipment<textarea name="system.equipment">{{system.equipment}}</textarea></label>
-          </section>
-        </div>
-
-        <div class="tab ee-item-tab" data-group="primary" data-tab="skills">
-          <section class="ee-item-panel ee-item-panel--primary">
-            <h3 title="Required occupational training automatically granted when this O.C.C. is equipped."><i class="fas fa-graduation-cap"></i> Fixed O.C.C. Skills</h3>
-            <p class="ee-hint">Add the skills everyone in this O.C.C. receives. Base and per-level values come from the master list and remain editable for sourcebook variations.</p>
-            <div class="ee-table-wrap">
-              <table class="ee-table ee-occ-skills">
-                <thead><tr><th>Name</th><th title="First-level base percentage">Base %</th><th title="Increase beginning at second level">Per Level</th><th>Add As</th><th></th></tr></thead>
-                <tbody>
-                  {{#each system.skills}}
-                  <tr>
-                    <td>
-                      {{#if custom}}
-                      <input type="text" name="system.skills.{{@index}}.name" value="{{name}}"/>
-                      <input type="hidden" name="system.skills.{{@index}}.key" value=""/>
-                      <input type="hidden" name="system.skills.{{@index}}.custom" value="true"/>
-                      {{else}}
-                      <span class="ee-item-skill-name" title="{{name}}">{{name}}</span>
-                      <input type="hidden" name="system.skills.{{@index}}.name" value="{{name}}"/>
-                      <input type="hidden" name="system.skills.{{@index}}.key" value="{{key}}"/>
-                      {{/if}}
-                    </td>
-                    <td><input type="number" name="system.skills.{{@index}}.base" value="{{base}}"/></td>
-                    <td><input type="number" name="system.skills.{{@index}}.perLvl" value="{{perLvl}}"/></td>
-                    <td><select name="system.skills.{{@index}}.category">{{eeSelectOptions ../config.SKILL_CATEGORIES category false}}</select></td>
-                    <td><a data-action="delete-occ-skill" data-index="{{@index}}" title="Remove skill"><i class="fas fa-times"></i></a></td>
-                  </tr>
-                  {{/each}}
-                </tbody>
-              </table>
-            </div>
-            <div class="ee-skill-add-row">
-              <select data-action="add-occ-skill-from-list" data-category="occ">
-                <option value="">+ Add from master skill list...</option>
-                {{#each skillPicker}}
-                <optgroup label="{{group}}">
-                  {{#each items}}<option value="{{key}}">{{name}}</option>{{/each}}
-                </optgroup>
-                {{/each}}
-              </select>
-              <button type="button" class="ee-add" data-action="add-occ-skill"><i class="fas fa-plus"></i> Custom Skill</button>
-            </div>
-          </section>
-
-          {{> selectableSkillGrants}}
-          {{> ccBonusBlocks system=system trainingOnly=true}}
-        </div>
-
-        <div class="tab ee-item-tab" data-group="primary" data-tab="advancement">
-          <section class="ee-item-panel ee-item-panel--primary">
-            <h3><i class="fas fa-chart-line"></i> Experience Track</h3>
-            <p class="ee-hint">Select the shared Ultimate Edition progression used by this O.C.C., or enter a custom track for another sourcebook. The equipped track supplies the character sheet's next-level XP.</p>
-            <label>Progression
-              <select name="system.xpTrack.preset">{{eeSelectOptions xpTrackOptions system.xpTrack.preset}}</select>
-            </label>
-
-            {{#if occXpTrack.hasTrack}}
-              {{#if occXpTrack.isCustom}}
-              <div class="ee-xp-custom-grid">
-                {{#each occXpTrack.rows}}
-                <label>Level {{level}}
-                  {{#if (eq level 1)}}
-                  <input type="hidden" name="system.xpTrack.thresholds.{{index}}" value="0"/>
-                  <output>0 XP</output>
-                  {{else}}
-                  <input type="number" name="system.xpTrack.thresholds.{{index}}" value="{{min}}" min="0" step="1" title="Minimum XP for level {{level}}"/>
-                  {{/if}}
-                </label>
-                {{/each}}
-              </div>
-              <label>Level 15 upper range <input type="number" name="system.xpTrack.level15Max" value="{{occXpTrack.level15Max}}" min="0" step="1"/></label>
-              {{#unless occXpTrack.isValid}}<p class="ee-validation-warning"><i class="fas fa-exclamation-triangle"></i> Each level must require more XP than the previous level, and the level 15 upper range cannot be lower than its minimum.</p>{{/unless}}
-              {{else}}
-              <div class="ee-table-wrap">
-                <table class="ee-table ee-xp-track-table">
-                  <thead><tr><th>Level</th><th>Minimum XP</th><th>Maximum XP</th></tr></thead>
-                  <tbody>
-                    {{#each occXpTrack.rows}}
-                    <tr><td>{{level}}</td><td>{{minDisplay}}</td><td>{{maxDisplay}}</td></tr>
-                    {{/each}}
-                  </tbody>
-                </table>
-              </div>
-              {{/if}}
-            {{else}}
-              <div class="ee-empty-state"><i class="fas fa-chart-line"></i><span>Choose an experience progression to enable automatic next-level XP.</span></div>
-            {{/if}}
-          </section>
-        </div>
-
-        <div class="tab ee-item-tab" data-group="primary" data-tab="effects">
-          <section class="ee-item-panel ee-item-panel--primary">
-            <h3><i class="fas fa-sliders-h"></i> Character-Creation Effects &amp; Grants</h3>
-            <p class="ee-hint">Open a group to edit its bonuses or grants. Skill bonuses and weapon proficiencies are on the Skills tab.</p>
-            {{> ccBonusBlocks system=system effectsOnly=true}}
-          </section>
-        </div>
-      </div>
+    {{#if pkg}}
+      {{> ccPackageEditor}}
     {{/if}}
 
     {{#if (eq item.type "gear")}}

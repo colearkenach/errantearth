@@ -1,0 +1,123 @@
+<div class="ee-pkg-wizard-root">
+<form class="ee-sheet ee-mode-legacy ee-pkg-wizard" autocomplete="off">
+  <header class="ee-pkg-wizard-head">
+    <img src="{{itemImg}}" alt=""/>
+    <div>
+      <span class="ee-pkg-kicker">{{typeLabel}} · Level {{level}}</span>
+      <h2>{{title}}</h2>
+      <p>{{intro}}</p>
+    </div>
+  </header>
+
+  <div class="ee-pkg-wizard-body">
+    {{#if hth}}
+    <section class="ee-panel ee-pkg-hth" data-hth-choice="{{hth.choiceIndex}}">
+      <h3 class="ee-panel-title"><i class="fas fa-fist-raised"></i> Hand to Hand</h3>
+      <p class="ee-hint">Upgrades can only be bought now, at character creation.</p>
+      <div class="ee-pkg-radio-list">
+        {{#each hth.options}}
+        <label class="ee-pkg-radio">
+          <input type="radio" name="hth" value="{{value}}" data-cost="{{cost}}" {{#if checked}}checked{{/if}}/>
+          <span class="ee-pkg-option-name">{{label}}</span>
+          <span class="ee-pkg-option-meta">{{note}}</span>
+        </label>
+        {{/each}}
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if specSkills.length}}
+    <section class="ee-panel">
+      <h3 class="ee-panel-title"><i class="fas fa-language"></i> Languages &amp; Specialties</h3>
+      <p class="ee-hint">Name each language this {{typeLabel}} grants. Blank entries keep the generic name, which you can edit later from the skill's settings.</p>
+      <div class="ee-pkg-spec-list">
+        {{#each specSkills}}
+        <div class="ee-pkg-spec-row">
+          <div><strong>{{label}}</strong>{{#if meta}}<small>{{meta}}</small>{{/if}}</div>
+          <div class="ee-pkg-spec-inputs">
+            {{#each inputs}}<input type="text" name="{{name}}" value="{{value}}" list="ee-pkg-languages-{{../../appId}}" placeholder="{{placeholder}}"/>{{/each}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if attributeChoices.length}}
+    <section class="ee-panel">
+      <h3 class="ee-panel-title"><i class="fas fa-random"></i> Attribute Choices</h3>
+      {{#each attributeChoices}}
+      <label class="ee-field ee-pkg-attr-choice">
+        <span>{{label}} ({{formula}})</span>
+        <select name="{{name}}">
+          <option value="">Choose later</option>
+          {{#each options}}<option value="{{key}}">{{label}}</option>{{/each}}
+        </select>
+      </label>
+      {{/each}}
+      <p class="ee-hint">Dice are rolled when you apply, and the result is posted to chat.</p>
+    </section>
+    {{/if}}
+
+    {{#each wpChoices}}
+    <section class="ee-panel ee-pkg-wp-choice" data-count="{{count}}">
+      <header class="ee-panel-head">
+        <h3 class="ee-panel-title"><i class="fas fa-crosshairs"></i> {{label}}</h3>
+        <span class="ee-pkg-budget"><b data-spent>0</b> / {{count}}</span>
+      </header>
+      <div class="ee-pkg-options ee-pkg-options--grid">
+        {{#each options}}
+        <label class="ee-pkg-option"><input type="checkbox" name="{{field}}"/><span class="ee-pkg-option-name">{{name}}</span></label>
+        {{/each}}
+      </div>
+    </section>
+    {{/each}}
+
+    {{#each skillChoices}}
+    <section class="ee-panel ee-pkg-choice" data-choice="{{index}}" data-remaining="{{remaining}}">
+      <header class="ee-panel-head">
+        <h3 class="ee-panel-title"><i class="fas fa-tasks"></i> {{label}}</h3>
+        <span class="ee-pkg-budget" title="Picks spent of those available now"><b data-spent>0</b> / {{remaining}} picks</span>
+      </header>
+      <p class="ee-hint">Added as {{categoryLabel}} skills.{{#if bonusNote}} {{bonusNote}}{{/if}}{{#if hthLinked}} A Hand to Hand upgrade above is paid from these picks.{{/if}}{{#if used}} {{used}} of {{budget}} already spent.{{/if}}</p>
+      {{#if optionCount}}
+      <input type="search" class="ee-pkg-filter" placeholder="Filter {{optionCount}} options…" aria-label="Filter options"/>
+      <div class="ee-pkg-groups">
+        {{#each groups}}
+        <details class="ee-pkg-group" {{#if ../openGroups}}open{{/if}}>
+          <summary><span>{{name}}</span>{{#if bonusLabel}}<span class="ee-chip">{{bonusLabel}}</span>{{/if}}<span class="ee-pkg-chosen" data-chosen hidden></span><span class="ee-count">{{options.length}}</span></summary>
+          <div class="ee-pkg-options">
+            {{#each options}}
+            <label class="ee-pkg-option" data-search="{{search}}">
+              <input type="checkbox" name="{{field}}" data-cost="{{cost}}" {{#if spec}}data-spec="{{specField}}"{{/if}}/>
+              <span class="ee-pkg-option-name">{{displayName}}</span>
+              {{#if meta}}<span class="ee-pkg-option-meta">{{meta}}</span>{{/if}}
+              {{#if spec}}<input type="text" class="ee-pkg-spec-input" name="{{specField}}" list="ee-pkg-languages-{{../../../appId}}" placeholder="{{specPlaceholder}}" disabled/>{{/if}}
+            </label>
+            {{/each}}
+          </div>
+        </details>
+        {{/each}}
+      </div>
+      {{else}}
+      <p class="ee-empty">No eligible skills remain for this rule.</p>
+      {{/if}}
+      <div class="ee-pkg-trade">
+        <label class="ee-field ee-pkg-trade-label"><span>Trade picks for something else</span><input type="text" name="trade.{{index}}.label" placeholder="A psionic power, a spell, a racial ability…"/></label>
+        <label class="ee-field ee-pkg-trade-cost"><span>Picks</span><input type="number" name="trade.{{index}}.cost" value="0" min="0" max="{{remaining}}" data-cost-input/></label>
+      </div>
+    </section>
+    {{/each}}
+
+    {{#unless hth}}{{#unless specSkills.length}}{{#unless attributeChoices.length}}{{#unless wpChoices.length}}{{#unless skillChoices.length}}
+    <p class="ee-empty">Nothing to choose: fixed skills, bonuses and abilities will be applied.</p>
+    {{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}
+  </div>
+
+  <footer class="ee-pkg-wizard-foot">
+    <button type="button" data-action="cancel"><i class="fas fa-times"></i> Cancel</button>
+    <button type="submit" class="ee-pkg-apply"><i class="fas fa-check"></i> {{#if equip}}Take {{itemName}}{{else}}Add Skills{{/if}}</button>
+  </footer>
+  <datalist id="ee-pkg-languages-{{appId}}">{{#each languages}}<option value="{{this}}"></option>{{/each}}</datalist>
+</form>
+</div>

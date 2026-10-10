@@ -114,13 +114,15 @@ Hooks.once("init", async () => {
     "eeActorPowers": "systems/errantearth/templates/actor/partials/powers.html",
     "eeActorVehicle": "systems/errantearth/templates/actor/partials/vehicle.html",
     "eeActorItems": "systems/errantearth/templates/actor/partials/items.html",
+    "eeActorProfile": "systems/errantearth/templates/actor/partials/profile.html",
     "eeActorMisc": "systems/errantearth/templates/actor/partials/misc.html",
     "legacySkillSection": "systems/errantearth/templates/actor/partials/legacy-skill-section.html",
     "ee-roll-card":   "systems/errantearth/templates/chat/roll-card.html",
     "ee-weapon-roll-card": "systems/errantearth/templates/chat/weapon-roll-card.html",
     "ee-item-sheet":  "systems/errantearth/templates/item/item-sheet.html",
     "ee-legacy-tools": "systems/errantearth/templates/apps/legacy-tools.html",
-    "ccBonusBlocks":  "systems/errantearth/templates/item/partials/cc-bonus-blocks.html"
+    "ccPackageEditor": "systems/errantearth/templates/item/partials/package-editor.html",
+    "ee-legacy-package-wizard": "systems/errantearth/templates/apps/legacy-package-wizard.html"
   });
 
   Handlebars.registerHelper("ee_default", (val, fallback) =>

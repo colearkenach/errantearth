@@ -1,0 +1,324 @@
+{{!-- ===== PROFILE TAB ===== --}}
+        <div class="tab ee-profile-tab" data-group="primary" data-tab="profile">
+
+            <div class="ee-grid ee-grid--profile">
+                <section class="ee-panel ee-profile-details">
+                    <h3 class="ee-panel-title"><i class="fas fa-address-card"></i> Profile Details</h3>
+                    <div class="ee-form-grid">
+                        <label class="ee-field ee-field--wide"><span>True Name</span><input type="text" name="system.trueName" value="{{system.trueName}}" /></label>
+                        <label class="ee-field"><span>Gender</span><input type="text" name="system.gender" value="{{system.gender}}" /></label>
+                        <label class="ee-field"><span>Age</span><input type="text" name="system.bio.age" value="{{system.bio.age}}" /></label>
+                        <label class="ee-field"><span>Height</span><input type="text" name="system.bio.height" value="{{system.bio.height}}" /></label>
+                        <label class="ee-field"><span>Weight</span><input type="text" name="system.bio.weight" value="{{system.bio.weight}}" /></label>
+                        {{#if isEE}}
+                        <label class="ee-field"><span>Current Karma</span><input type="number" name="system.karma.current" value="{{system.karma.current}}" /></label>
+                        <label class="ee-field"><span>Total Karma</span><input type="number" name="system.karma.total" value="{{system.karma.total}}" /></label>
+                        {{/if}}
+                    </div>
+                </section>
+
+                <section class="ee-panel ee-token-options">
+                    <h3 class="ee-panel-title"><i class="fas fa-chess-board"></i> Token Display</h3>
+                    <div class="ee-form-grid">
+                        {{#if isEE}}
+                        <div class="ee-field"><span>Bar 1</span><output>Health</output></div>
+                        <label class="ee-field"><span>Bar 2</span><select name="system.token.bar2">{{eeSelectOptions tokenBarOptions tokenSettings.bar2 false}}</select></label>
+                        {{else}}
+                        <label class="ee-field"><span>Bar 1</span><select name="system.token.bar1">{{eeSelectOptions tokenBarOptions tokenSettings.bar1 false}}</select></label>
+                        <label class="ee-field"><span>Bar 2</span><select name="system.token.bar2">{{eeSelectOptions tokenBarOptions tokenSettings.bar2 false}}</select></label>
+                        {{/if}}
+                    </div>
+                    <p class="ee-hint">Choose which resources this character's tokens show as bars.</p>
+                </section>
+            </div>
+
+            {{#if isEE}}
+            <div class="ee-grid ee-grid--2 ee-ee-bgocc">
+                <section class="ee-panel">
+                    <header class="ee-panel-head">
+                        <h3 class="ee-panel-title">Backgrounds</h3>
+                        <a class="ee-create-item" data-action="add-row" data-path="backgrounds" data-kind="bgocc" title="Add Background"><i class="fas fa-plus"></i> Add</a>
+                    </header>
+                    <table class="ee-table">
+                        <thead><tr><th>Name</th><th>Notes</th><th class="ee-col-icon"></th></tr></thead>
+                        <tbody>
+                            {{#each system.backgrounds}}
+                            <tr>
+                                <td><input type="text" name="system.backgrounds.{{@index}}.name" value="{{name}}" /></td>
+                                <td><input type="text" name="system.backgrounds.{{@index}}.notes" value="{{notes}}" /></td>
+                                <td class="ee-col-icon"><a data-action="delete-row" data-path="backgrounds" data-index="{{@index}}" title="Remove"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                            {{else}}
+                            <tr class="ee-empty-row"><td colspan="3">No backgrounds yet.</td></tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="ee-panel">
+                    <header class="ee-panel-head">
+                        <h3 class="ee-panel-title">Occupations</h3>
+                        <a class="ee-create-item" data-action="add-row" data-path="occupations" data-kind="bgocc" title="Add Occupation"><i class="fas fa-plus"></i> Add</a>
+                    </header>
+                    <table class="ee-table">
+                        <thead><tr><th>Name</th><th>Notes</th><th class="ee-col-icon"></th></tr></thead>
+                        <tbody>
+                            {{#each system.occupations}}
+                            <tr>
+                                <td><input type="text" name="system.occupations.{{@index}}.name" value="{{name}}" /></td>
+                                <td><input type="text" name="system.occupations.{{@index}}.notes" value="{{notes}}" /></td>
+                                <td class="ee-col-icon"><a data-action="delete-row" data-path="occupations" data-index="{{@index}}" title="Remove"><i class="fas fa-times"></i></a></td>
+                            </tr>
+                            {{else}}
+                            <tr class="ee-empty-row"><td colspan="3">No occupations yet.</td></tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            {{/if}}
+
+            {{#unless isEE}}
+            <section class="ee-panel ee-advancement">
+                <header class="ee-panel-head">
+                    <h3 class="ee-panel-title"><i class="fas fa-seedling"></i> Creation &amp; Advancement</h3>
+                    <div class="ee-advancement-actions">
+                        <button type="button" class="ee-btn" data-action="roll-attributes" title="Roll all eight attributes using the equipped Race / R.C.C. dice"><i class="fas fa-dice"></i> Roll Attributes</button>
+                        <button type="button" class="ee-btn" data-action="roll-starting-pools" title="Roll first-level Hit Points, S.D.C., P.P.E., I.S.P. and M.D.C. formulas"><i class="fas fa-heart-pulse"></i> Roll Starting Pools</button>
+                        <button type="button" class="ee-btn ee-btn--primary" data-action="level-up" title="Advance one level, roll its gains and open new skill picks"><i class="fas fa-arrow-up"></i> Level Up</button>
+                    </div>
+                </header>
+                {{#with legacyAdvancement}}
+                {{#each requirementWarnings}}<p class="ee-validation-warning"><i class="fas fa-exclamation-triangle"></i> {{this}}</p>{{/each}}
+                <div class="ee-grid ee-grid--2 ee-advancement-plan">
+                    <div>
+                        <h4 class="ee-subhead">Attribute rolls</h4>
+                        <div class="ee-advancement-attrs">
+                            {{#each attributePlan}}
+                            <div class="ee-advancement-attr{{#if fromPackage}} ee-advancement-attr--package{{/if}}" title="{{sourceName}}{{#each bonusRolls}} + {{itemName}}{{/each}}">
+                                <span>{{label}}</span><strong>{{text}}</strong>
+                            </div>
+                            {{/each}}
+                        </div>
+                        <p class="ee-hint">{{#if packageAttributes}}Highlighted rolls come from the equipped packages; the rest are the standard 3D6.{{else}}Every attribute uses the standard 3D6.{{/if}} A 3D6 roll of 16–18 earns an extra 1D6.</p>
+                    </div>
+                    <div>
+                        <h4 class="ee-subhead">Pool formulas</h4>
+                        {{#if planRows.length}}
+                        <table class="ee-table ee-advancement-pools">
+                            <thead><tr><th>Pool</th><th>From</th><th>Starting</th><th>Per Level</th></tr></thead>
+                            <tbody>
+                                {{#each planRows}}
+                                <tr><td>{{label}}</td><td>{{sourceName}}</td><td>{{startDisplay}}</td><td>{{perLevelDisplay}}</td></tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        {{else}}
+                        <p class="ee-hint">No pool formulas from the equipped packages.</p>
+                        {{/if}}
+                        {{#unless tracked}}<p class="ee-hint">Rolls are recorded below and added on top of the base maxima. If the base maxima already hold rolled totals, skip Roll Starting Pools.</p>{{/unless}}
+                    </div>
+                </div>
+
+                {{#if tracked}}{{#if pendingCount}}
+                <div class="ee-advancement-pending">
+                    <strong><i class="fas fa-hourglass-half"></i> Not rolled yet</strong>
+                    {{#if pendingStart.length}}
+                    <div class="ee-advancement-pending-row"><span>Level 1: {{#each pendingStart}}{{#if @index}} · {{/if}}{{this}}{{/each}}</span><button type="button" class="ee-btn" data-action="roll-pending-pools" data-level="1"><i class="fas fa-dice"></i> Roll</button></div>
+                    {{/if}}
+                    {{#each pendingLevels}}
+                    <div class="ee-advancement-pending-row"><span>Level {{level}}: {{#each rows}}{{#if @index}} · {{/if}}{{sourceName}} {{display}}{{/each}}</span><button type="button" class="ee-btn" data-action="roll-pending-pools" data-level="{{level}}"><i class="fas fa-dice"></i> Roll</button></div>
+                    {{/each}}
+                </div>
+                {{/if}}{{/if}}
+
+                {{#if ledger.length}}
+                <h4 class="ee-subhead">Rolled pool gains</h4>
+                <table class="ee-table ee-advancement-ledger">
+                    <thead><tr><th class="ee-col-num">Lvl</th><th>Pool</th><th>From</th><th>Formula</th><th class="ee-col-num">Gain</th><th class="ee-col-icon"></th></tr></thead>
+                    <tbody>
+                        {{#each ledger}}
+                        <tr class="{{#unless active}}ee-row-inactive{{/unless}}" title="{{#unless active}}Not counted: its package is not equipped or its level is above the character's.{{/unless}}">
+                            <td class="ee-col-num">{{level}}</td>
+                            <td>{{poolLabel}}</td>
+                            <td>{{sourceName}}</td>
+                            <td>{{formula}}</td>
+                            <td class="ee-col-num">
+                                <input type="hidden" name="system.advancement.pools.{{_index}}.key" value="{{key}}" />
+                                <input type="hidden" name="system.advancement.pools.{{_index}}.level" value="{{level}}" />
+                                <input type="hidden" name="system.advancement.pools.{{_index}}.source" value="{{source}}" />
+                                <input type="hidden" name="system.advancement.pools.{{_index}}.label" value="{{label}}" />
+                                <input type="hidden" name="system.advancement.pools.{{_index}}.formula" value="{{formula}}" />
+                                <input type="number" name="system.advancement.pools.{{_index}}.value" value="{{value}}" aria-label="Gain" />
+                            </td>
+                            <td class="ee-col-icon"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-advancement-entry" data-index="{{_index}}" title="Remove this roll"><i class="fas fa-times"></i></a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{/if}}
+
+                {{#if trades.length}}
+                <h4 class="ee-subhead">Skill picks traded</h4>
+                <table class="ee-table ee-advancement-trades">
+                    <thead><tr><th>Spent On</th><th>From</th><th class="ee-col-num">Cost</th><th class="ee-col-icon"></th></tr></thead>
+                    <tbody>
+                        {{#each trades}}
+                        <tr>
+                            <td>{{label}}</td>
+                            <td>{{sourceName}}{{#if ruleLabel}} · {{ruleLabel}}{{/if}}</td>
+                            <td class="ee-col-num">{{cost}}</td>
+                            <td class="ee-col-icon"><a class="ee-icon-btn ee-icon-btn--danger" data-action="delete-skill-trade" data-index="{{_index}}" title="Refund these picks"><i class="fas fa-undo"></i></a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{/if}}
+                {{/with}}
+            </section>
+
+            <section class="ee-panel">
+                <h3 class="ee-panel-title"><i class="fas fa-heart-pulse"></i> Resource Bases &amp; Psionic Level</h3>
+                <div class="ee-form-grid ee-resource-bases">
+                    {{#each riftsDerived.poolRows}}
+                    <label class="ee-field">
+                        <span>{{label}} base</span>
+                        <input type="number" name="system.{{key}}.max" value="{{base}}" />
+                        <small>{{#if rolled}}+{{rolled}} rolled · {{/if}}+{{sourceBonus}} bonuses · max {{total}}</small>
+                    </label>
+                    {{/each}}
+                    <label class="ee-field ee-field--wide">
+                        <span>Psionic Level</span>
+                        <select name="system.psionicLevel">{{eeSelectOptions config.PSIONIC_LEVELS system.psionicLevel}}</select>
+                    </label>
+                </div>
+                <p class="ee-hint">Base maxima are values entered by hand. Rolls recorded under Creation &amp; Advancement, plus Race, O.C.C. and skill bonuses, are added on top to give the maximum shown in the header.</p>
+            </section>
+
+            <section class="ee-panel ee-attr-effects">
+                <h3 class="ee-panel-title"><i class="fas fa-chart-simple"></i> Attribute Effects</h3>
+                {{#if riftsDerived.attrEffectsActive.length}}
+                <div class="ee-effect-chip-grid">
+                    {{#each riftsDerived.attrEffectsActive}}
+                    <div class="ee-effect-chip ee-effect-chip--{{tone}}">
+                        <strong>{{label}} {{value}}</strong>
+                        {{#if bonus}}<span>{{bonus}}</span>{{/if}}
+                        {{#if penalty}}<span>{{penalty}}</span>{{/if}}
+                    </div>
+                    {{/each}}
+                </div>
+                {{else}}
+                <p class="ee-hint">No high-attribute bonuses or low-attribute penalties are active.</p>
+                {{/if}}
+                <p class="ee-hint">Flat combat and saving-throw attribute modifiers are included in totals. Apply skill-specific effects, skill-selection changes, halved bonuses or damage, and other conditional rules manually.</p>
+            </section>
+
+            <section class="ee-panel ee-rifts-sources">
+                <h3 class="ee-panel-title"><i class="fas fa-layer-group"></i> Active EE Legacy Sources <span class="ee-count">{{riftsDerived.sources.length}}</span></h3>
+                {{#if riftsDerived.sourceWarnings.length}}
+                <ul class="ee-warnings">
+                    {{#each riftsDerived.sourceWarnings}}
+                    <li>{{this}}</li>
+                    {{/each}}
+                </ul>
+                {{/if}}
+                {{#if riftsDerived.sources.length}}
+                <div class="ee-rifts-source-grid">
+                    {{#each riftsDerived.sources}}
+                    <section class="ee-rifts-source-card">
+                        <h4><span class="ee-source-type">{{type}}</span> {{name}}</h4>
+                        {{#if isRCC}}<p class="ee-hint">RCC replaces Race.</p>{{/if}}
+
+                        {{#if poolBonuses.length}}
+                        <div class="ee-rifts-source-line">
+                            <strong>Pools</strong>
+                            <span>{{#each poolBonuses}}<span class="ee-chip" title="{{#if rolled}}Rolled from Creation &amp; Advancement{{/if}}{{#if perLevel}}Gained each level from level 2{{/if}}">{{label}} {{display}}</span>{{/each}}</span>
+                        </div>
+                        {{/if}}
+
+                        {{#if attributeBonuses.length}}
+                        <div class="ee-rifts-source-line">
+                            <strong>Attributes</strong>
+                            <span>
+                            {{#each attributeBonuses}}
+                            <span class="ee-chip" title="{{#unless applied}}Roll once for character creation{{/unless}}">
+                                {{label}} {{#if applied}}{{display}}{{else}}{{formula}}{{/if}}
+                                {{#if rollable}}<a data-action="roll-cc-attribute" data-item-id="{{../itemId}}" data-attribute="{{key}}" data-label="{{../name}} {{label}}" title="Roll {{label}} bonus"><i class="fas fa-dice-d20"></i></a>{{/if}}
+                            </span>
+                            {{/each}}
+                            </span>
+                        </div>
+                        {{/if}}
+
+                        {{#if skillBonuses.length}}
+                        <div class="ee-rifts-source-line">
+                            <strong>Skills</strong>
+                            <span>{{#each skillBonuses}}<span class="ee-chip" title="{{note}}">{{display}} {{label}}</span>{{/each}}</span>
+                        </div>
+                        {{/if}}
+
+                        {{#if handToHand}}
+                        <div class="ee-rifts-source-line">
+                            <strong>Hand to Hand</strong>
+                            <span><span class="ee-chip">{{handToHand.label}}</span>{{#if handToHand.upgrades}} <span class="ee-muted">upgrades: {{handToHand.upgrades}}</span>{{/if}}</span>
+                        </div>
+                        {{/if}}
+
+                        {{#if levelBonuses.length}}
+                        <div class="ee-rifts-source-line">
+                            <strong>By Level</strong>
+                            <span>{{#each levelBonuses}}<span class="ee-chip{{#unless applied}} ee-chip--muted{{/unless}}" title="Levels {{levels}}">{{display}}</span>{{/each}}</span>
+                        </div>
+                        {{/if}}
+
+                        {{#if weaponProficiencies.length}}
+                        <div class="ee-rifts-source-line">
+                            <strong>W.P.s</strong>
+                            <span>{{#each weaponProficiencies}}<span class="ee-chip">{{name}}</span>{{/each}}</span>
+                        </div>
+                        {{/if}}
+
+                        {{#if combatBonuses.length}}
+                        <div class="ee-rifts-source-line">
+                            <strong>Combat</strong>
+                            <span>{{#each combatBonuses}}<span class="ee-chip" title="{{#unless applied}}Left as note{{/unless}}">{{#if applied}}{{display}} {{label}}{{else}}{{raw}}{{/if}}</span>{{/each}}</span>
+                        </div>
+                        {{/if}}
+
+                        {{#if saveBonuses.length}}
+                        <div class="ee-rifts-source-line">
+                            <strong>Saves</strong>
+                            <span>{{#each saveBonuses}}<span class="ee-chip" title="{{#unless applied}}Left as note{{/unless}}">{{#if applied}}{{display}} {{label}}{{else}}{{raw}}{{/if}}</span>{{/each}}</span>
+                        </div>
+                        {{/if}}
+
+                        {{#if abilities.length}}
+                        <div class="ee-rifts-source-line ee-rifts-source-line--stack">
+                            <strong>Abilities</strong>
+                            <ul class="ee-compact-list">
+                                {{#each abilities}}
+                                <li>{{#if name}}<strong>{{name}}</strong>{{/if}}{{#if description}} — {{description}}{{/if}}</li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        {{/if}}
+
+                        {{#if warnings.length}}
+                        <ul class="ee-warnings">
+                            {{#each warnings}}
+                            <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
+                        {{/if}}
+                    </section>
+                    {{/each}}
+                </div>
+                {{#if riftsDerived.sourceTotals.poolBonuses}}
+                <p class="ee-hint">Effective pool maxima: HP {{riftsDerived.pools.hp.total}}, SDC {{riftsDerived.pools.sdc.total}}, MDC {{riftsDerived.pools.mdc.total}}, ISP {{riftsDerived.pools.isp.total}}, PPE {{riftsDerived.pools.ppe.total}}. Dice formulas count once rolled under Creation &amp; Advancement.</p>
+                {{/if}}
+                {{else}}
+                <p class="ee-hint">No Race, R.C.C., or O.C.C. is equipped. Pick one in the header or drop one onto the sheet.</p>
+                {{/if}}
+            </section>
+            {{/unless}}
+        </div>
